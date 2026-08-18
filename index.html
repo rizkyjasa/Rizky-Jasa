@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rizky Jasa | Layanan Digital & Profesional Premium</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #050505;
+            color: #f3f4f6;
+        }
+        /* Custom Gold Palette & Glows */
+        .text-gold { color: #d4af37; }
+        .bg-gold { background-color: #d4af37; }
+        .border-gold { border-color: rgba(212, 175, 55, 0.3); }
+        .border-gold-strong { border-color: #d4af37; }
+        
+        .gold-glow {
+            box-shadow: 0 0 35px -5px rgba(212, 175, 55, 0.15);
+        }
+        .gold-glow-hover:hover {
+            box-shadow: 0 0 45px 0px rgba(212, 175, 55, 0.3);
+        }
+
+        /* Subtle Background Grid */
+        .bg-grid {
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+        }
+
+        /* Floating Animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-6px); }
+        }
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* Fade in on viewport */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(15px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .fade-in.appear {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="bg-black text-gray-100 min-h-screen relative selection:bg-yellow-500 selection:text-black bg-grid">
+
+    <!-- Ambient Background Glows -->
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[500px] bg-gradient-to-b from-yellow-600/10 via-transparent to-transparent blur-3xl pointer-events-none"></div>
+
+    <!-- HEADER / NAVIGATION -->
+    <header class="sticky top-0 z-50 backdrop-blur-xl bg-black/80 border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <!-- Brand Logo -->
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-neutral-900 to-black border border-gold flex items-center justify-center gold-glow transition duration-300 group-hover:border-gold-strong">
+                    <span class="text-gold font-bold tracking-widest text-sm">RJ</span>
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-bold tracking-wider text-white text-lg">RIZKY JASA</span>
+                    <span class="text-[10px] uppercase tracking-widest text-gold">Professional Services</span>
+                </div>
+            </a>
+
+            <!-- Desktop Nav -->
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
+                <a href="#quick-check" class="hover:text-gold transition">Cek CV</a>
+                <a href="#layanan" class="hover:text-gold transition">Layanan</a>
+                <a href="#testimoni" class="hover:text-gold transition">Testimoni</a>
+                <a href="#kenapa" class="hover:text-gold transition">Kenapa Kami</a>
+            </nav>
+
+            <!-- CTA Header -->
+            <a id="generalWhatsapp" target="_blank" rel="noopener noreferrer" 
+               class="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-yellow-600 to-yellow-500 text-black font-semibold text-xs tracking-wider uppercase gold-glow hover:opacity-95 transition">
+                <span>Hubungi Kami</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="relative pt-16 pb-20 px-6 overflow-hidden">
+        <div class="max-w-5xl mx-auto text-center relative z-10">
+            <!-- Badge -->
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-gold bg-neutral-900/80 mb-6 fade-in">
+                <div class="w-1.5 h-1.5 rounded-full bg-gold animate-ping"></div>
+                <span class="text-xs uppercase tracking-widest text-gold font-medium">Solusi Profesional & Keuangan Usaha</span>
+            </div>
+
+            <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white mb-6 leading-tight fade-in">
+                Elevasikan Karier & Bisnis Anda Bersama <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-yellow-200 to-yellow-600">Rizky Jasa</span>
+            </h1>
+
+            <p class="text-gray-400 text-base sm:text-lg max-w-2xl mx-auto mb-10 font-light fade-in">
+                Penyedia layanan profesional mulai dari optimasi CV, pengeditan dokumen, perbaikan foto, perhitungan HPP & modal, hingga pengecekan omset dan keuangan usaha.
+            </p>
+
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 fade-in">
+                <button type="button" id="lihatLayananBtn" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-yellow-500 to-yellow-600 text-black font-bold text-sm tracking-wide gold-glow hover:scale-105 transition duration-300 cursor-pointer">
+                    LIHAT LAYANAN
+                </button>
+                <a id="generalWhatsappBtn" target="_blank" rel="noopener noreferrer" 
+                   class="w-full sm:w-auto px-8 py-4 rounded-xl border border-gold/40 hover:border-gold bg-neutral-900/50 text-white font-semibold text-sm tracking-wide transition duration-300 text-center">
+                    Konsultasi Gratis
+                </a>
+            </div>
+
+            <!-- Hero Visual Divider / Floating Element -->
+            <div class="mt-14 relative max-w-3xl mx-auto animate-float">
+                <div class="absolute inset-0 bg-yellow-500/10 blur-2xl rounded-full"></div>
+                <div class="relative rounded-2xl border border-gold/30 bg-neutral-950/80 p-6 shadow-2xl flex flex-col sm:flex-row items-center justify-between gap-6">
+                    <div class="flex items-center gap-4 text-left">
+                        <div class="w-12 h-12 rounded-xl bg-gold/10 border border-gold/40 flex items-center justify-center text-gold font-bold">
+                            RJ
+                        </div>
+                        <div>
+                            <h4 class="text-white font-semibold text-sm">Standar Kualitas Premium</h4>
+                            <p class="text-xs text-gray-400">Cepat, rapi, profesional, dan bergaransi revisi.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-6 text-xs text-gold border-t sm:border-t-0 sm:border-l border-white/10 pt-4 sm:pt-0 sm:pl-6 w-full sm:w-auto justify-around">
+                        <div class="text-center">
+                            <span class="block font-bold text-lg text-white">100%</span>
+                            <span class="text-[10px] uppercase tracking-wider text-gray-400">Tepat Waktu</span>
+                        </div>
+                        <div class="text-center">
+                            <span class="block font-bold text-lg text-white">5★</span>
+                            <span class="text-[10px] uppercase tracking-wider text-gray-400">Kepuasan Klien</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PREMIUM VISUAL SEPARATOR -->
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-center gap-4">
+        <div class="h-px bg-gradient-to-r from-transparent via-gold/40 to-transparent flex-1"></div>
+        <div class="w-2 h-2 rounded-full bg-gold/60"></div>
+        <div class="h-px bg-gradient-to-r from-transparent via-gold/40 to-transparent flex-1"></div>
+    </div>
+
+    <!-- 15-POINT CV QUICK CHECK FEATURE SECTION -->
+    <section id="quick-check" class="py-20 px-6 relative">
+        <div class="max-w-3xl mx-auto">
+            <!-- Section Header -->
+            <div class="text-center mb-12 fade-in">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-gold/10 border border-gold/30 text-gold text-xs font-medium uppercase tracking-widest mb-4">
+                    <span>📄 CV Quick Check 15 Poin</span>
+                </div>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight mb-3">
+                    CEK CV KAMU DULU
+                </h2>
+                <p class="text-gold font-medium text-base sm:text-lg mb-2">
+                    "Kira-kira CV kamu sudah siap buat dilirik HR?"
+                </p>
+                <p class="text-gray-400 text-sm max-w-lg mx-auto font-light">
+                    "Jawab 15 pertanyaan cepat berikut untuk mengevaluasi kelayakan CV profesional kamu."
+                </p>
+            </div>
+
+            <!-- Checker Container -->
+            <div class="rounded-3xl border border-gold/30 bg-neutral-950 p-6 sm:p-10 gold-glow relative overflow-hidden fade-in">
+                <div class="absolute -top-24 -right-24 w-48 h-48 bg-gold/10 rounded-full blur-3xl pointer-events-none"></div>
+
+                <!-- Questions View -->
+                <div id="cvCheckerForm">
+                    <!-- Progress Bar & Step Indicator -->
+                    <div class="mb-8">
+                        <div class="flex justify-between items-center text-xs text-gray-400 mb-2 font-mono">
+                            <span id="stepIndicator" class="text-gold font-bold">01 / 15</span>
+                            <span id="stepPercent">7%</span>
+                        </div>
+                        <div class="w-full h-1.5 bg-neutral-900 rounded-full overflow-hidden border border-white/5">
+                            <div id="progressBar" class="h-full bg-gradient-to-r from-yellow-600 to-yellow-400 transition-all duration-300 w-[6.66%]"></div>
+                        </div>
+                    </div>
+
+                    <!-- Question Cards Container -->
+                    <div id="questionContainer" class="min-h-[180px] flex flex-col justify-center mb-8">
+                        <!-- Dynamically injected via JS -->
+                    </div>
+                </div>
+
+                <!-- Result View (Hidden initially) -->
+                <div id="cvCheckerResult" class="hidden text-center">
+                    <div class="mb-6">
+                        <span class="text-xs uppercase tracking-widest text-gold font-semibold block mb-2">HASIL ANALISIS PROFESIONAL</span>
+                        <h3 class="text-xl font-extrabold text-white mb-6 tracking-wide">HASIL CV KAMU</h3>
+                        
+                        <!-- Score Circle Display -->
+                        <div class="w-36 h-36 rounded-full border-2 border-gold bg-neutral-900/80 mx-auto flex flex-col items-center justify-center gold-glow mb-6 relative">
+                            <span id="scoreNumber" class="text-5xl font-extrabold text-white">0</span>
+                            <span class="text-xs text-gold font-mono tracking-widest mt-1">/ 100</span>
+                        </div>
+
+                        <!-- Result Message -->
+                        <p id="resultMessage" class="text-base sm:text-lg font-medium text-gold mb-8 max-w-md mx-auto leading-relaxed">
+                            <!-- Injected message -->
+                        </p>
+                    </div>
+
+                    <!-- Improvements Needed -->
+                    <div id="improvementsBox" class="bg-neutral-900/60 border border-white/10 rounded-2xl p-6 text-left mb-6 max-w-lg mx-auto">
+                        <h4 class="text-xs uppercase tracking-widest text-red-400 font-semibold mb-4 flex items-center gap-2">
+                            <span>⚠</span> Yang Masih Bisa Diperbaiki:
+                        </h4>
+                        <ul id="improvementsList" class="space-y-3 text-sm text-gray-200">
+                            <!-- Injected list items -->
+                        </ul>
+                    </div>
+
+                    <!-- Good Points Box -->
+                    <div id="goodPointsBox" class="bg-neutral-900/60 border border-white/10 rounded-2xl p-6 text-left mb-8 max-w-lg mx-auto">
+                        <h4 class="text-xs uppercase tracking-widest text-emerald-400 font-semibold mb-4 flex items-center gap-2">
+                            <span>✓</span> Yang Sudah Bagus:
+                        </h4>
+                        <ul id="goodPointsList" class="space-y-3 text-sm text-gray-200">
+                            <!-- Injected good points -->
+                        </ul>
+                    </div>
+
+                    <!-- Final CTA & Try Again -->
+                    <div class="space-y-6 max-w-md mx-auto pt-6 border-t border-white/10">
+                        <div>
+                            <h4 class="text-white font-bold text-base mb-1">"Mau CV kamu dibenerin sekalian?"</h4>
+                            <p class="text-gray-400 text-xs font-light mb-4">"Kalau mau lebih rapi, profesional, dan siap dipakai melamar, Rizky Jasa bisa bantu."</p>
+                            
+                            <a id="cvCheckWhatsappBtn" target="_blank" rel="noopener noreferrer" 
+                               class="inline-flex items-center justify-center w-full py-4 rounded-xl bg-gradient-to-r from-yellow-500 to-yellow-600 text-black font-bold text-xs tracking-wider uppercase gold-glow hover:scale-105 transition">
+                                CHAT RIZKY JASA
+                            </a>
+                        </div>
+
+                        <div>
+                            <button type="button" id="resetBtn" class="text-xs text-gray-400 hover:text-gold transition underline underline-offset-4">
+                                CEK LAGI
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PREMIUM VISUAL SEPARATOR -->
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-center gap-4">
+        <div class="h-px bg-gradient-to-r from-transparent via-gold/40 to-transparent flex-1"></div>
+        <div class="w-2 h-2 rounded-full bg-gold/60"></div>
+        <div class="h-px bg-gradient-to-r from-transparent via-gold/40 to-transparent flex-1"></div>
+    </div>
+
+    <!-- SERVICES SECTION -->
+    <section id="layanan" class="py-20 px-6 relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center max-w-2xl mx-auto mb-16 fade-in">
+                <span class="text-xs uppercase tracking-widest text-gold font-semibold mb-3 block">MAU DIBANTU APA?</span>
+                <h2 class="text-3xl sm:text-4xl font-bold text-white tracking-tight">Solusi Profesional untuk Kebutuhan Anda</h2>
+                <div class="w-16 h-0.5 bg-gold mx-auto mt-4"></div>
+            </div>
+
+            <!-- Service Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                <!-- 1. EDIT CV (WITH BADGE) -->
+                <div class="rounded-2xl border border-white/10 bg-neutral-900/40 p-6 flex flex-col justify-between hover:border-gold/50 transition duration-500 gold-glow-hover fade-in group relative">
+                    <!-- Badge -->
+                    <div class="absolute top-4 right-4 bg-gold/10 border border-gold/40 px-2.5 py-0.5 rounded-full text-[9px] font-bold text-gold tracking-widest uppercase">
+                        PALING DICARI
+                    </div>
+
+                    <div>
+                        <!-- CV Preview Visual -->
+                        <div class="w-full h-44 rounded-xl bg-neutral-950 border border-gold/20 p-4 mb-6 relative overflow-hidden flex flex-col justify-between group-hover:border-gold/40 transition">
+                            <div class="absolute -top-10 -right-10 w-24 h-24 bg-gold/10 rounded-full blur-xl"></div>
+                            
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 rounded-full bg-gold/20 border border-gold/40 flex items-center justify-center text-gold text-xs font-bold">CV</div>
+                                <div class="space-y-1 flex-1">
+                                    <div class="h-2 w-24 bg-white/40 rounded"></div>
+                                    <div class="h-1.5 w-16 bg-gold/60 rounded"></div>
+                                </div>
+                            </div>
+
+                            <div class="space-y-2 text-[9px] text-gray-400 font-mono">
+                                <div class="bg-white/5 p-2 rounded border border-white/5 flex justify-between">
+                                    <span class="text-gray-300 font-semibold">EXPERIENCE</span>
+                                    <span class="text-gold">Senior Role</span>
+                                </div>
+                                <div class="bg-white/5 p-2 rounded border border-white/5 flex justify-between">
+                                    <span class="text-gray-300 font-semibold">SKILLS</span>
+                                    <span class="text-gray-400">ATS Optimized</span>
+                                </div>
+                            </div>
+
+                            <div class="flex justify-between items-center text-[8px] text-gray-500 pt-1 border-t border-white/5">
+                                <span>PROFILE • EDUCATION</span>
+                                <span class="text-gold">Rizky Jasa</span>
+                            </div>
+                        </div>
+
+                        <span class="text-[10px] uppercase tracking-widest text-gold font-semibold">Karier Profesional</span>
+                        <h3 class="text-xl font-bold text-white mt-1 mb-3">EDIT CV</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-6 font-light">
+                            CV lebih rapi, profesional, dan siap dipakai buat melamar kerja.
+                        </p>
+                    </div>
+                    <a id="cvWhatsapp" target="_blank" rel="noopener noreferrer" 
+                       class="w-full py-3 rounded-xl bg-neutral-800/80 hover:bg-gold hover:text-black text-white font-semibold text-xs tracking-wider uppercase text-center transition duration-300">
+                        Tanya Sekarang
+                    </a>
+                </div>
+
+                <!-- 2. EDIT DOKUMEN -->
+                <div class="rounded-2xl border border-white/10 bg-neutral-900/40 p-6 flex flex-col justify-between hover:border-gold/50 transition duration-500 gold-glow-hover fade-in group">
+                    <div>
+                        <!-- Document Preview Visual -->
+                        <div class="w-full h-44 rounded-xl bg-neutral-950 border border-gold/20 p-4 mb-6 relative overflow-hidden flex flex-col justify-between group-hover:border-gold/40 transition">
+                            <div class="absolute -bottom-10 -left-10 w-24 h-24 bg-yellow-600/10 rounded-full blur-xl"></div>
+                            
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-6 h-6 rounded bg-gold/10 border border-gold/40 flex items-center justify-center text-gold text-xs">📄</div>
+                                    <span class="text-xs font-semibold text-white">DOC_EDIT.PDF</span>
+                                </div>
+                                <span class="text-[9px] px-2 py-0.5 rounded bg-gold/10 text-gold border border-gold/30">Verified</span>
+                            </div>
+
+                            <div class="space-y-2 py-2">
+                                <div class="h-2 w-full bg-white/10 rounded"></div>
+                                <div class="h-2 w-4/5 bg-white/10 rounded"></div>
+                                <div class="h-2 w-3/5 bg-gold/30 rounded"></div>
+                            </div>
+
+                            <div class="flex justify-between items-center text-[9px] text-gray-400">
+                                <span>Format: Word / PDF / Excel</span>
+                                <span class="text-gold font-medium">Rapi & Presisi</span>
+                            </div>
+                        </div>
+
+                        <span class="text-[10px] uppercase tracking-widest text-gold font-semibold">Administrasi</span>
+                        <h3 class="text-xl font-bold text-white mt-1 mb-3">EDIT DOKUMEN</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-6 font-light">
+                            Bantu rapihin dan edit dokumen sesuai kebutuhan.
+                        </p>
+                    </div>
+                    <a id="dokumenWhatsapp" target="_blank" rel="noopener noreferrer" 
+                       class="w-full py-3 rounded-xl bg-neutral-800/80 hover:bg-gold hover:text-black text-white font-semibold text-xs tracking-wider uppercase text-center transition duration-300">
+                        Tanya Sekarang
+                    </a>
+                </div>
+
+                <!-- 3. EDIT FOTO -->
+                <div class="rounded-2xl border border-white/10 bg-neutral-900/40 p-6 flex flex-col justify-between hover:border-gold/50 transition duration-500 gold-glow-hover fade-in group">
+                    <div>
+                        <!-- Photo Preview Visual -->
+                        <div class="w-full h-44 rounded-xl bg-neutral-950 border border-gold/20 p-4 mb-6 relative overflow-hidden flex flex-col justify-between group-hover:border-gold/40 transition">
+                            <div class="absolute inset-0 bg-gradient-to-tr from-gold/5 via-transparent to-transparent"></div>
+                            
+                            <div class="flex justify-between items-center">
+                                <div class="w-7 h-7 rounded-lg bg-gold/10 border border-gold/40 flex items-center justify-center text-gold text-xs">📷</div>
+                                <div class="flex gap-1">
+                                    <div class="w-1.5 h-1.5 rounded-full bg-gold"></div>
+                                    <div class="w-1.5 h-1.5 rounded-full bg-white/20"></div>
+                                </div>
+                            </div>
+
+                            <div class="border border-dashed border-gold/30 rounded-lg p-3 text-center my-auto bg-black/40">
+                                <span class="text-xs text-gray-300 font-medium block">Retouch • Background • Lighting</span>
+                                <span class="text-[9px] text-gold tracking-widest uppercase mt-0.5 block">Studio Quality Result</span>
+                            </div>
+
+                            <div class="text-[9px] text-gray-500 text-center">
+                                Pas Foto / Dokumen / Keperluan Lain
+                            </div>
+                        </div>
+
+                        <span class="text-[10px] uppercase tracking-widest text-gold font-semibold">Visual Multimedia</span>
+                        <h3 class="text-xl font-bold text-white mt-1 mb-3">EDIT FOTO</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-6 font-light">
+                            Edit foto untuk kebutuhan kerja, dokumen, dan keperluan lainnya.
+                        </p>
+                    </div>
+                    <a id="fotoWhatsapp" target="_blank" rel="noopener noreferrer" 
+                       class="w-full py-3 rounded-xl bg-neutral-800/80 hover:bg-gold hover:text-black text-white font-semibold text-xs tracking-wider uppercase text-center transition duration-300">
+                        Tanya Sekarang
+                    </a>
+                </div>
+
+                <!-- 4. HITUNG HPP, MODAL & HARGA JUAL (WITH BADGE) -->
+                <div class="rounded-2xl border border-white/10 bg-neutral-900/40 p-6 flex flex-col justify-between hover:border-gold/50 transition duration-500 gold-glow-hover fade-in group relative">
+                    <!-- Badge -->
+                    <div class="absolute top-4 right-4 bg-gold/10 border border-gold/40 px-2.5 py-0.5 rounded-full text-[9px] font-bold text-gold tracking-widest uppercase">
+                        BUAT USAHA
+                    </div>
+
+                    <div>
+                        <!-- Business Calculator Visual Mockup -->
+                        <div class="w-full h-44 rounded-xl bg-neutral-950 border border-gold/20 p-3 mb-6 relative overflow-hidden flex flex-col justify-between group-hover:border-gold/40 transition">
+                            <div class="absolute top-0 right-0 w-28 h-28 bg-gold/10 rounded-full blur-2xl"></div>
+
+                            <div class="flex justify-between items-center border-b border-white/10 pb-1.5">
+                                <span class="text-[10px] font-semibold text-white">Kalkulator HPP & Modal</span>
+                                <span class="text-[8px] px-1.5 py-0.5 rounded bg-gold/20 text-gold border border-gold/30">HPP</span>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-2 text-[9px] my-auto">
+                                <div class="bg-white/5 p-1.5 rounded border border-white/5">
+                                    <span class="text-gray-400 block text-[8px]">Modal:</span>
+                                    <span class="text-white font-semibold">Rp500.000</span>
+                                </div>
+                                <div class="bg-white/5 p-1.5 rounded border border-white/5">
+                                    <span class="text-gray-400 block text-[8px]">Jml Produk:</span>
+                                    <span class="text-white font-semibold">50</span>
+                                </div>
+                                <div class="bg-white/5 p-1.5 rounded border border-white/5">
+                                    <span class="text-gray-400 block text-[8px]">HPP:</span>
+                                    <span class="text-gold font-bold">Rp10.000</span>
+                                </div>
+                                <div class="bg-white/5 p-1.5 rounded border border-white/5">
+                                    <span class="text-gray-400 block text-[8px]">Harga Jual:</span>
+                                    <span class="text-emerald-400 font-bold">Rp15.000</span>
+                                </div>
+                            </div>
+
+                            <div class="text-[8px] text-gold/90 text-center border-t border-white/5 pt-1">
+                                Untung: Rp5.000 / produk
+                            </div>
+                        </div>
+
+                        <span class="text-[10px] uppercase tracking-widest text-gold font-semibold">Manajemen Usaha</span>
+                        <h3 class="text-xl font-bold text-white mt-1 mb-3">HITUNG HPP, MODAL & HARGA JUAL</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-6 font-light">
+                            Hitung modal per produk, HPP, sampai bantu tentuin harga jual dan target keuntungan.
+                        </p>
+                    </div>
+                    <a id="hppWhatsapp" target="_blank" rel="noopener noreferrer" 
+                       class="w-full py-3 rounded-xl bg-neutral-800/80 hover:bg-gold hover:text-black text-white font-semibold text-xs tracking-wider uppercase text-center transition duration-300">
+                        COBA HITUNG
+                    </a>
+                </div>
+
+                <!-- 5. CEK OMSET & KEUANGAN USAHA (WITH BADGE) -->
+                <div class="rounded-2xl border border-white/10 bg-neutral-900/40 p-6 flex flex-col justify-between hover:border-gold/50 transition duration-500 gold-glow-hover fade-in group md:col-span-2 lg:col-span-2 relative">
+                    <!-- Badge -->
+                    <div class="absolute top-4 right-4 bg-gold/10 border border-gold/40 px-2.5 py-0.5 rounded-full text-[9px] font-bold text-gold tracking-widest uppercase">
+                        BUAT USAHA
+                    </div>
+
+                    <div>
+                        <!-- Financial Dashboard Visual Mockup -->
+                        <div class="w-full h-44 rounded-xl bg-neutral-950 border border-gold/20 p-3 mb-6 relative overflow-hidden flex flex-col justify-between group-hover:border-gold/40 transition">
+                            <div class="absolute top-0 right-0 w-32 h-32 bg-gold/5 rounded-full blur-2xl"></div>
+
+                            <div class="flex justify-between items-center border-b border-white/10 pb-1.5">
+                                <span class="text-[10px] font-semibold text-white">Dashboard Keuangan Usaha</span>
+                                <span class="text-[8px] px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">Arus Kas</span>
+                            </div>
+
+                            <div class="grid grid-cols-4 gap-2 text-center my-auto">
+                                <div class="bg-white/5 p-2 rounded border border-white/5">
+                                    <span class="text-[8px] text-gray-400 block uppercase">OMSET</span>
+                                    <span class="text-[10px] font-bold text-gold">Rp10 Jt</span>
+                                </div>
+                                <div class="bg-white/5 p-2 rounded border border-white/5">
+                                    <span class="text-[8px] text-gray-400 block uppercase">BIAYA OP</span>
+                                    <span class="text-[10px] font-bold text-gray-300">Rp3 Jt</span>
+                                </div>
+                                <div class="bg-white/5 p-2 rounded border border-white/5">
+                                    <span class="text-[8px] text-gray-400 block uppercase">MODAL</span>
+                                    <span class="text-[10px] font-bold text-gray-300">Rp4 Jt</span>
+                                </div>
+                                <div class="bg-white/5 p-2 rounded border border-white/5">
+                                    <span class="text-[8px] text-gray-400 block uppercase">SISA</span>
+                                    <span class="text-[10px] font-bold text-emerald-400">Rp3 Jt</span>
+                                </div>
+                            </div>
+
+                            <div class="text-[8px] text-gray-500 text-center border-t border-white/5 pt-1">
+                                Analisis estimasi keuntungan & ke mana uang usaha habis
+                            </div>
+                        </div>
+
+                        <span class="text-[10px] uppercase tracking-widest text-gold font-semibold">Keuangan Bisnis</span>
+                        <h3 class="text-xl font-bold text-white mt-1 mb-3">CEK OMSET & KEUANGAN USAHA</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-6 font-light">
+                            Masukin omset dan biaya operasional, lalu lihat estimasi keuntungan dan ke mana aja uang usaha kamu habis.
+                        </p>
+                    </div>
+                    <a id="omsetWhatsapp" target="_blank" rel="noopener noreferrer" 
+                       class="w-full py-3 rounded-xl bg-neutral-800/80 hover:bg-gold hover:text-black text-white font-semibold text-xs tracking-wider uppercase text-center transition duration-300">
+                        CEK OMSET
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- PREMIUM VISUAL SEPARATOR -->
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-center gap-4">
+        <div class="h-px bg-gradient-to-r from-transparent via-gold/40 to-transparent flex-1"></div>
+        <div class="w-2 h-2 rounded-full bg-gold/60"></div>
+        <div class="h-px bg-gradient-to-r from-transparent via-gold/40 to-transparent flex-1"></div>
+    </div>
+
+    <!-- TESTIMONI PELANGGAN SECTION -->
+    <section id="testimoni" class="py-20 px-6 relative bg-neutral-950/40">
+        <div class="max-w-7xl mx-auto">
+            <!-- Section Header -->
+            <div class="text-center max-w-2xl mx-auto mb-16 fade-in">
+                <span class="text-xs uppercase tracking-widest text-gold font-semibold mb-3 block">TESTIMONI PELANGGAN</span>
+                <h2 class="text-3xl sm:text-4xl font-bold text-white tracking-tight mb-2">KATA MEREKA</h2>
+                <p class="text-gray-400 text-sm font-light">"Beberapa pengalaman dari yang sudah pakai Rizky Jasa."</p>
+                <div class="w-16 h-0.5 bg-gold mx-auto mt-4"></div>
+            </div>
+
+            <!-- Testimonial Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div class="rounded-2xl border border-white/10 bg-neutral-900/50 p-8 flex flex-col justify-between hover:border-gold/40 transition duration-300 fade-in group relative overflow-hidden">
+                    <div class="absolute top-4 right-6 text-gold/20 text-6xl font-serif select-none pointer-events-none">“</div>
+                    <div>
+                        <div class="flex items-center gap-1 text-gold mb-4 text-sm">
+                            ★★★★★
+                        </div>
+                        <p class="text-gray-300 text-sm leading-relaxed font-light mb-6">
+                            "CV gue jadi jauh lebih rapi dan enak dilihat. Tinggal kirim lamaran."
+                        </p>
+                    </div>
+                    <div class="pt-4 border-t border-white/5 flex items-center justify-between">
+                        <span class="text-white font-semibold text-xs">— Aulia</span>
+                        <span class="text-[10px] text-gold/80 font-mono">Edit CV</span>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="rounded-2xl border border-white/10 bg-neutral-900/50 p-8 flex flex-col justify-between hover:border-gold/40 transition duration-300 fade-in group relative overflow-hidden">
+                    <div class="absolute top-4 right-6 text-gold/20 text-6xl font-serif select-none pointer-events-none">“</div>
+                    <div>
+                        <div class="flex items-center gap-1 text-gold mb-4 text-sm">
+                            ★★★★★
+                        </div>
+                        <p class="text-gray-300 text-sm leading-relaxed font-light mb-6">
+                            "Jadi lebih gampang nentuin harga jual setelah tahu HPP-nya."
+                        </p>
+                    </div>
+                    <div class="pt-4 border-t border-white/5 flex items-center justify-between">
+                        <span class="text-white font-semibold text-xs">— Rian, UMKM</span>
+                        <span class="text-[10px] text-gold/80 font-mono">Hitung HPP</span>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="rounded-2xl border border-white/10 bg-neutral-900/50 p-8 flex flex-col justify-between hover:border-gold/40 transition duration-300 fade-in group relative overflow-hidden">
+                    <div class="absolute top-4 right-6 text-gold/20 text-6xl font-serif select-none pointer-events-none">“</div>
+                    <div>
+                        <div class="flex items-center gap-1 text-gold mb-4 text-sm">
+                            ★★★★★
+                        </div>
+                        <p class="text-gray-300 text-sm leading-relaxed font-light mb-6">
+                            "Responnya cepat dan hasilnya sesuai kebutuhan."
+                        </p>
+                    </div>
+                    <div class="pt-4 border-t border-white/5 flex items-center justify-between">
+                        <span class="text-white font-semibold text-xs">— Dimas</span>
+                        <span class="text-[10px] text-gold/80 font-mono">Edit Dokumen</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PREMIUM VISUAL SEPARATOR -->
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-center gap-4">
+        <div class="h-px bg-gradient-to-r from-transparent via-gold/40 to-transparent flex-1"></div>
+        <div class="w-2 h-2 rounded-full bg-gold/60"></div>
+        <div class="h-px bg-gradient-to-r from-transparent via-gold/40 to-transparent flex-1"></div>
+    </div>
+
+    <!-- KENAPA RIZKY JASA? SECTION -->
+    <section id="kenapa" class="py-20 px-6 relative">
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center max-w-xl mx-auto mb-16 fade-in">
+                <span class="text-xs uppercase tracking-widest text-gold font-semibold mb-3 block">Keunggulan Layanan</span>
+                <h2 class="text-3xl sm:text-4xl font-bold text-white tracking-tight mb-2">KENAPA RIZKY JASA?</h2>
+                <p class="text-gray-400 text-sm font-light">"Biar urusan kamu nggak makin ribet."</p>
+                <div class="w-16 h-0.5 bg-gold mx-auto mt-4"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+                <!-- Point 1 -->
+                <div class="bg-neutral-900/40 border border-white/10 rounded-2xl p-8 flex flex-col items-text text-left hover:border-gold/40 transition duration-300 fade-in">
+                    <div class="w-10 h-10 rounded-lg bg-gold/10 border border-gold/30 flex items-center justify-center text-gold font-bold text-sm mb-6">
+                        01
+                    </div>
+                    <h3 class="text-base font-bold text-white mb-2 uppercase tracking-wide">SIMPLE</h3>
+                    <p class="text-gray-400 text-sm font-light leading-relaxed">
+                        "Langsung bahas kebutuhan kamu tanpa proses yang ribet."
+                    </p>
+                </div>
+
+                <!-- Point 2 -->
+                <div class="bg-neutral-900/40 border border-white/10 rounded-2xl p-8 flex flex-col items-text text-left hover:border-gold/40 transition duration-300 fade-in">
+                    <div class="w-10 h-10 rounded-lg bg-gold/10 border border-gold/30 flex items-center justify-center text-gold font-bold text-sm mb-6">
+                        02
+                    </div>
+                    <h3 class="text-base font-bold text-white mb-2 uppercase tracking-wide">PRAKTIS</h3>
+                    <p class="text-gray-400 text-sm font-light leading-relaxed">
+                        "Mulai dari CV sampai kebutuhan usaha, semuanya lebih gampang di satu tempat."
+                    </p>
+                </div>
+
+                <!-- Point 3 -->
+                <div class="bg-neutral-900/40 border border-white/10 rounded-2xl p-8 flex flex-col items-text text-left hover:border-gold/40 transition duration-300 fade-in">
+                    <div class="w-10 h-10 rounded-lg bg-gold/10 border border-gold/30 flex items-center justify-center text-gold font-bold text-sm mb-6">
+                        03
+                    </div>
+                    <h3 class="text-base font-bold text-white mb-2 uppercase tracking-wide">PERSONAL</h3>
+                    <p class="text-gray-400 text-sm font-light leading-relaxed">
+                        "Kalau ada yang mau ditanyain, langsung ngobrol lewat WhatsApp."
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PREMIUM VISUAL SEPARATOR -->
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-center gap-4">
+        <div class="h-px bg-gradient-to-r from-transparent via-gold/40 to-transparent flex-1"></div>
+        <div class="w-2 h-2 rounded-full bg-gold/60"></div>
+        <div class="h-px bg-gradient-to-r from-transparent via-gold/40 to-transparent flex-1"></div>
+    </div>
+
+    <!-- CALL TO ACTION SECTION -->
+    <section class="py-20 px-6 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-t from-yellow-600/10 via-transparent to-transparent pointer-events-none"></div>
+        <div class="max-w-4xl mx-auto rounded-3xl border border-gold/40 bg-neutral-950 p-10 sm:p-14 text-center relative z-10 gold-glow fade-in">
+            <div class="w-12 h-12 rounded-xl bg-black border border-gold flex items-center justify-center mx-auto mb-6 text-gold font-bold text-sm">
+                RJ
+            </div>
+
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight mb-4">
+                Siap Meningkatkan Kualitas Dokumen & Usaha Anda?
+            </h2>
+            <p class="text-gray-400 text-sm sm:text-base max-w-xl mx-auto mb-8 font-light">
+                Hubungi kami sekarang melalui WhatsApp untuk konsultasi awal gratis dan dapatkan penawaran terbaik dari Rizky Jasa.
+            </p>
+
+            <a id="generalWhatsappCTA" target="_blank" rel="noopener noreferrer" 
+               class="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-gradient-to-r from-yellow-500 to-yellow-600 text-black font-bold text-sm tracking-wider uppercase gold-glow hover:scale-105 transition duration-300">
+                <span>Hubungi via WhatsApp</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- POLISHED FOOTER -->
+    <footer class="border-t border-gold/30 bg-black py-16 px-6 relative overflow-hidden">
+        <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-96 h-24 bg-gold/5 blur-3xl pointer-events-none"></div>
+        
+        <div class="max-w-4xl mx-auto text-center relative z-10">
+            <!-- Brand Mark -->
+            <div class="flex items-center justify-center gap-3 mb-4">
+                <div class="w-10 h-10 rounded-lg bg-neutral-900 border border-gold flex items-center justify-center gold-glow">
+                    <span class="text-gold font-bold text-sm">RJ</span>
+                </div>
+                <span class="font-extrabold tracking-widest text-white text-lg">RIZKY JASA</span>
+            </div>
+
+            <!-- Tagline -->
+            <p class="text-gray-300 text-sm font-medium mb-6">
+                "Beresin urusan digital, gak pake ribet."
+            </p>
+
+            <!-- Services Bar -->
+            <div class="text-xs text-gold font-mono tracking-widest uppercase mb-8">
+                CV &bull; DOKUMEN &bull; FOTO &bull; UMKM
+            </div>
+
+            <!-- Phone Number & Chat Button -->
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-10">
+                <a id="phoneWhatsapp" class="text-white font-mono font-bold text-lg hover:text-gold transition cursor-pointer">
+                    0821-2542-4346
+                </a>
+                <a id="footerWhatsappBtn" target="_blank" rel="noopener noreferrer" 
+                   class="px-6 py-3 rounded-xl bg-gradient-to-r from-yellow-500 to-yellow-600 text-black font-bold text-xs tracking-wider uppercase gold-glow hover:scale-105 transition duration-300">
+                    CHAT WHATSAPP
+                </a>
+            </div>
+
+            <!-- Divider Line -->
+            <div class="w-24 h-px bg-gold/40 mx-auto mb-6"></div>
+
+            <!-- Copyright -->
+            <p class="text-xs text-gray-500">
+                &copy; 2026 Rizky Jasa. All rights reserved.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Script for 15-Point CV Quick Check, Lihat Layanan Scroll, & WhatsApp Links -->
+    <script>
+        function createWhatsAppURL(message) {
+            const phone = "6282125424346";
+            if (!message) {
+                return "https://wa.me/" + phone;
+            }
+            return "https://wa.me/" + phone + "?text=" + encodeURIComponent(message);
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            // "LIHAT LAYANAN" smooth scroll handler
+            const lihatBtn = document.getElementById("lihatLayananBtn");
+            const layananSection = document.getElementById("layanan");
+
+            if (lihatBtn && layananSection) {
+                lihatBtn.addEventListener("click", function (event) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    layananSection.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start"
+                    });
+                });
+            }
+
+            // Assign WhatsApp links precisely
+            const setLink = (id, msg) => {
+                const el = document.getElementById(id);
+                if (el) el.href = createWhatsAppURL(msg);
+            };
+
+            setLink("cvWhatsapp", "Halo Rizky Jasa, saya mau tanya tentang jasa Edit CV.");
+            setLink("dokumenWhatsapp", "Halo Rizky Jasa, saya mau tanya tentang jasa Edit Dokumen.");
+            setLink("fotoWhatsapp", "Halo Rizky Jasa, saya mau tanya tentang jasa Edit Foto.");
+            setLink("hppWhatsapp", "Halo Rizky Jasa, saya mau tanya tentang jasa Hitung HPP, Modal & Harga Jual.");
+            setLink("omsetWhatsapp", "Halo Rizky Jasa, saya mau tanya tentang jasa Cek Omset & Keuangan Usaha.");
+            setLink("generalWhatsapp", "Halo Rizky Jasa, saya mau konsultasi tentang jasa yang tersedia.");
+            setLink("generalWhatsappBtn", "Halo Rizky Jasa, saya mau konsultasi tentang jasa yang tersedia.");
+            setLink("generalWhatsappCTA", "Halo Rizky Jasa, saya mau konsultasi tentang jasa yang tersedia.");
+            setLink("generalWhatsappFooter", "Halo Rizky Jasa, saya mau konsultasi tentang jasa yang tersedia.");
+            setLink("cvCheckWhatsappBtn", "Halo Rizky Jasa, saya mau sekalian dibantu rapihin CV saya.");
+            setLink("footerWhatsappBtn", "Halo Rizky Jasa, saya mau konsultasi tentang jasa yang tersedia.");
+            
+            const phoneLink = document.getElementById("phoneWhatsapp");
+            if (phoneLink) {
+                phoneLink.href = createWhatsAppURL("");
+            }
+
+            // --- 15-POINT CV QUICK CHECK INTERACTIVE SCRIPT ---
+            const questions = [
+                {
+                    id: 1,
+                    text: "CV kamu sudah mencantumkan nama lengkap?",
+                    goodText: "Nama lengkap sudah dicantumkan",
+                    problemText: "Nama lengkap belum dicantumkan"
+                },
+                {
+                    id: 2,
+                    text: "Nomor WhatsApp atau HP yang aktif sudah dicantumkan?",
+                    goodText: "Nomor WhatsApp/HP aktif sudah tersedia",
+                    problemText: "Nomor WhatsApp atau HP belum dicantumkan"
+                },
+                {
+                    id: 3,
+                    text: "Kamu sudah pakai email yang terlihat profesional? (Contoh: nama@gmail.com, bukan alay123@gmail.com)",
+                    goodText: "Email terlihat profesional",
+                    problemText: "Email belum terlihat profesional"
+                },
+                {
+                    id: 4,
+                    text: "Domisili kamu sudah dicantumkan?",
+                    goodText: "Domisili sudah dicantumkan dengan jelas",
+                    problemText: "Domisili belum dicantumkan"
+                },
+                {
+                    id: 5,
+                    text: "Posisi pekerjaan yang kamu incar sudah jelas?",
+                    goodText: "Posisi yang dituju sudah jelas",
+                    problemText: "Posisi yang dituju belum dicantumkan atau kurang jelas"
+                },
+                {
+                    id: 6,
+                    text: "CV kamu punya profil singkat yang menjelaskan siapa kamu dan keahlian utama kamu?",
+                    goodText: "Profil singkat sudah ada dan menarik",
+                    problemText: "Profil singkat belum ada"
+                },
+                {
+                    id: 7,
+                    text: "Pengalaman kerja kamu sudah ditulis dengan jelas?",
+                    goodText: "Pengalaman kerja sudah jelas",
+                    problemText: "Pengalaman kerja belum ditulis dengan jelas"
+                },
+                {
+                    id: 8,
+                    text: "Selain tugas kerja, kamu sudah mencantumkan hasil atau pencapaian? (Contoh: Memproses 100+ order per hari)",
+                    goodText: "Sudah mencantumkan hasil atau pencapaian konkret",
+                    problemText: "Belum mencantumkan pencapaian / hasil kerja"
+                },
+                {
+                    id: 9,
+                    text: "Riwayat pendidikan kamu sudah dicantumkan dengan jelas?",
+                    goodText: "Riwayat pendidikan sudah tercantum dengan baik",
+                    problemText: "Riwayat pendidikan belum lengkap atau kurang jelas"
+                },
+                {
+                    id: 10,
+                    text: "Skill yang relevan dengan pekerjaan sudah dicantumkan?",
+                    goodText: "Skill yang relevan sudah dicantumkan",
+                    problemText: "Skill belum dicantumkan"
+                },
+                {
+                    id: 11,
+                    text: "Kalau punya sertifikat atau pelatihan yang relevan, sudah kamu cantumkan?",
+                    goodText: "Sertifikat atau pelatihan relevan sudah dicantumkan",
+                    problemText: "Sertifikat/pelatihan belum dicantumkan",
+                    allowTidakAda: true
+                },
+                {
+                    id: 12,
+                    text: "CV kamu sudah rapi dan mudah dibaca dalam sekali lihat?",
+                    goodText: "Format CV sudah rapi dan mudah dibaca",
+                    problemText: "Format CV belum rapi atau kurang mudah dibaca"
+                },
+                {
+                    id: 13,
+                    text: "CV kamu sudah dicek dari typo atau salah ejaan?",
+                    goodText: "Bebas dari typo dan salah ejaan",
+                    problemText: "Masih ada potensi typo atau salah ejaan"
+                },
+                {
+                    id: 14,
+                    text: "Isi CV kamu sudah cukup ringkas dan tidak bertele-tele?",
+                    goodText: "Panjang CV sudah ringkas dan padat",
+                    problemText: "CV terlalu panjang atau bertele-tele"
+                },
+                {
+                    id: 15,
+                    text: "Isi CV kamu sudah disesuaikan dengan posisi yang sedang kamu lamar?",
+                    goodText: "Isi CV sudah disesuaikan dengan posisi lamaran",
+                    problemText: "Isi CV belum disesuaikan dengan posisi yang dilamar"
+                }
+            ];
+
+            let currentStep = 0;
+            const userAnswers = {};
+
+            const questionContainer = document.getElementById("questionContainer");
+            const stepIndicator = document.getElementById("stepIndicator");
+            const stepPercent = document.getElementById("stepPercent");
+            const progressBar = document.getElementById("progressBar");
+            const cvCheckerForm = document.getElementById("cvCheckerForm");
+            const cvCheckerResult = document.getElementById("cvCheckerResult");
+            const scoreNumber = document.getElementById("scoreNumber");
+            const resultMessage = document.getElementById("resultMessage");
+            const improvementsList = document.getElementById("improvementsList");
+            const goodPointsList = document.getElementById("goodPointsList");
+            const improvementsBox = document.getElementById("improvementsBox");
+            const goodPointsBox = document.getElementById("goodPointsBox");
+            const resetBtn = document.getElementById("resetBtn");
+
+            function renderQuestion() {
+                const q = questions[currentStep];
+
+                stepIndicator.textContent = `${String(currentStep + 1).padStart(2, '0')} / ${questions.length}`;
+                const pct = Math.round(((currentStep + 1) / questions.length) * 100);
+                stepPercent.textContent = pct + "%";
+                progressBar.style.width = pct + "%";
+
+                let optionsHTML = `
+                    <div class="grid grid-cols-2 gap-4 max-w-md mx-auto w-full">
+                        <button type="button" class="option-btn py-3.5 px-6 rounded-xl border border-white/10 bg-neutral-900/60 text-gray-300 hover:border-gold hover:text-white transition font-medium" data-val="Sudah">
+                            SUDAH
+                        </button>
+                        <button type="button" class="option-btn py-3.5 px-6 rounded-xl border border-white/10 bg-neutral-900/60 text-gray-300 hover:border-gold hover:text-white transition font-medium" data-val="Belum">
+                            BELUM
+                        </button>
+                    </div>
+                `;
+
+                if (q.allowTidakAda) {
+                    optionsHTML = `
+                        <div class="grid grid-cols-3 gap-3 max-w-lg mx-auto w-full">
+                            <button type="button" class="option-btn py-3.5 px-4 rounded-xl border border-white/10 bg-neutral-900/60 text-gray-300 hover:border-gold hover:text-white transition text-xs font-semibold" data-val="Sudah">
+                                SUDAH
+                            </button>
+                            <button type="button" class="option-btn py-3.5 px-4 rounded-xl border border-white/10 bg-neutral-900/60 text-gray-300 hover:border-gold hover:text-white transition text-xs font-semibold" data-val="Belum">
+                                BELUM
+                            </button>
+                            <button type="button" class="option-btn py-3.5 px-4 rounded-xl border border-white/10 bg-neutral-900/60 text-gray-300 hover:border-gold hover:text-white transition text-xs font-semibold" data-val="Tidak Ada">
+                                TIDAK ADA
+                            </button>
+                        </div>
+                    `;
+                }
+
+                questionContainer.innerHTML = `
+                    <h3 class="text-lg sm:text-xl font-bold text-white mb-6 text-center leading-snug">${q.text}</h3>
+                    ${optionsHTML}
+                `;
+
+                const optionBtns = questionContainer.querySelectorAll(".option-btn");
+                optionBtns.forEach(btn => {
+                    btn.addEventListener("click", function() {
+                        const val = this.getAttribute("data-val");
+                        userAnswers[q.id] = val;
+
+                        if (currentStep < questions.length - 1) {
+                            currentStep++;
+                            renderQuestion();
+                        } else {
+                            showResult();
+                        }
+                    });
+                });
+            }
+
+            function showResult() {
+                let pointsEarned = 0;
+                let problems = [];
+                let goodPoints = [];
+
+                questions.forEach(q => {
+                    const ans = userAnswers[q.id];
+                    if (ans === "Sudah" || (q.allowTidakAda && ans === "Tidak Ada")) {
+                        pointsEarned += 1;
+                        if (ans === "Sudah") {
+                            goodPoints.push(q.goodText);
+                        }
+                    } else {
+                        problems.push(q.problemText);
+                    }
+                });
+
+                const finalScore = Math.round((pointsEarned / questions.length) * 100);
+
+                let currentDisp = 0;
+                const scoreInterval = setInterval(() => {
+                    if (currentDisp >= finalScore) {
+                        scoreNumber.textContent = finalScore;
+                        clearInterval(scoreInterval);
+                    } else {
+                        currentDisp += 2;
+                        if (currentDisp > finalScore) currentDisp = finalScore;
+                        scoreNumber.textContent = currentDisp;
+                    }
+                }, 20);
+
+                if (finalScore >= 90) {
+                    resultMessage.textContent = `"CV kamu sudah cukup siap. Tinggal pastikan isinya benar-benar disesuaikan dengan lowongan yang kamu incar."`;
+                } else if (finalScore >= 75) {
+                    resultMessage.textContent = `"CV kamu sudah lumayan siap, tapi masih ada beberapa bagian yang bisa diperkuat."`;
+                } else if (finalScore >= 60) {
+                    resultMessage.textContent = `"CV kamu masih punya beberapa bagian penting yang sebaiknya diperbaiki sebelum melamar."`;
+                } else {
+                    resultMessage.textContent = `"CV kamu masih perlu banyak dirapikan. Sebaiknya perbaiki beberapa bagian penting sebelum mulai melamar."`;
+                }
+
+                if (problems.length > 0) {
+                    improvementsBox.classList.remove("hidden");
+                    improvementsList.innerHTML = problems.map(p => `<li class="flex items-start gap-2.5"><span class="text-red-400 font-bold mt-0.5">⚠</span> <span>${p}</span></li>`).join("");
+                } else {
+                    improvementsBox.classList.add("hidden");
+                }
+
+                if (goodPoints.length > 0) {
+                    goodPointsBox.classList.remove("hidden");
+                    goodPointsList.innerHTML = goodPoints.map(g => `<li class="flex items-start gap-2.5"><span class="text-emerald-400 font-bold mt-0.5">✓</span> <span>${g}</span></li>`).join("");
+                } else {
+                    goodPointsBox.classList.add("hidden");
+                }
+
+                cvCheckerForm.classList.add("hidden");
+                cvCheckerResult.classList.remove("hidden");
+            }
+
+            resetBtn.addEventListener("click", function() {
+                currentStep = 0;
+                for (let key in userAnswers) {
+                    delete userAnswers[key];
+                }
+                cvCheckerResult.classList.add("hidden");
+                cvCheckerForm.classList.remove("hidden");
+                renderQuestion();
+            });
+
+            renderQuestion();
+
+            // Intersection Observer for Fade-In Animations
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('appear');
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.fade-in').forEach(element => {
+                observer.observe(element);
+            });
+        });
+    </script>
+</body>
+</html>
+
