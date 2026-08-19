@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rizky Jasa - CV Editing Service & Testimoni</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #0b0b0b;
+            color: #ffffff;
+            font-family: 'Poppins', sans-serif;
+            padding: 15px;
+        }
+        .billboard-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #111111;
+            border: 4px solid #ffc107;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 40px rgba(255, 193, 7, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        /* Header Billboard */
+        .brand-top {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        .logo-box {
+            background-color: #ffc107;
+            color: #0b0b0b;
+            font-weight: 900;
+            font-size: 24px;
+            padding: 10px 15px;
+            border-radius: 10px;
+            letter-spacing: -1px;
+        }
+        .brand-title h1 {
+            font-size: 22px;
+            font-weight: 900;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .brand-title p {
+            font-size: 11px;
+            color: #ffc107;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        /* Banner Utama */
+        .hero-section {
+            background: linear-gradient(135deg, #181818, #0f0f0f);
+            border: 2px solid #333;
+            border-radius: 16px;
+            padding: 25px;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        .hero-section h2 {
+            font-size: 14px;
+            color: #ffc107;
+            text-transform: uppercase;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .main-heading {
+            font-size: 32px;
+            font-weight: 900;
+            color: #ffc107;
+            text-transform: uppercase;
+            line-height: 1.1;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 0px #000;
+        }
+        .hero-section p {
+            font-size: 13px;
+            color: #ccc;
+            margin-bottom: 20px;
+        }
+
+        /* Keunggulan Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+        .feature-box {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: left;
+        }
+        .feature-box h4 {
+            color: #ffc107;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        .feature-box p {
+            font-size: 11px;
+            color: #aaa;
+            line-height: 1.3;
+        }
+
+        /* Call To Action WhatsApp */
+        .cta-box {
+            background: linear-gradient(135deg, #ffc107, #e0a800);
+            color: #0b0b0b;
+            border-radius: 14px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 30px;
+            text-decoration: none;
+            display: block;
+            font-weight: 900;
+            box-shadow: 0 5px 15px rgba(255, 193, 7, 0.4);
+            transition: 0.2s;
+        }
+        .cta-box:hover {
+            transform: scale(1.02);
+        }
+        .cta-box h3 {
+            font-size: 18px;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+        .cta-box p {
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        /* Bagian Form Testimoni Interaktif */
+        .form-card {
+            background: #161616;
+            border: 2px solid #ffc107;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+        .form-card h3 {
+            color: #ffc107;
+            font-size: 16px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+        .form-group {
+            margin-bottom: 12px;
+            text-align: left;
+        }
+        .form-group label {
+            display: block;
+            font-size: 12px;
+            color: #ccc;
+            margin-bottom: 4px;
+        }
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            background-color: #1f1f1f;
+            border: 1px solid #333;
+            border-radius: 8px;
+            color: #fff;
+            font-family: 'Poppins', sans-serif;
+            font-size: 13px;
+        }
+        .form-control:focus {
+            border-color: #ffc107;
+            outline: none;
+        }
+        .star-rating {
+            display: flex;
+            gap: 6px;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        .star {
+            color: #444;
+            transition: color 0.2s;
+        }
+        .star.active {
+            color: #ffc107;
+        }
+        .btn-submit {
+            background-color: #ffc107;
+            color: #0b0b0b;
+            width: 100%;
+            padding: 11px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 800;
+            font-size: 14px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        /* List Ulasan Masuk */
+        .testimonial-item {
+            background: #1b1b1b;
+            border-left: 4px solid #ffc107;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            text-align: left;
+        }
+        .testimonial-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4px;
+        }
+        .client-name {
+            font-weight: 700;
+            font-size: 13px;
+            color: #fff;
+        }
+        .client-stars {
+            color: #ffc107;
+            font-size: 11px;
+        }
+        .client-comment {
+            font-size: 12px;
+            color: #b0b0b0;
+        }
+
+        /* Footer Info */
+        .footer-info {
+            text-align: center;
+            font-size: 11px;
+            color: #777;
+            margin-top: 20px;
+        }
+        .footer-info span {
+            color: #ffc107;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="billboard-container">
+        <!-- Header Logo -->
+        <div class="brand-top">
+            <div class="logo-box">RI</div>
+            <div class="brand-title">
+                <h1>Rizky Jasa</h1>
+                <p>CV EDITING SERVICE</p>
+            </div>
+        </div>
+
+        <!-- Banner Utama -->
+        <div class="hero-section">
+            <h2>CV Profesional, Peluang Kerja Makin Maksimal!</h2>
+            <div class="main-heading">Bantu CV-mu Stand Out!</div>
+            <p>Kami siap membantu kamu membuat CV yang menarik, rapi, dan ATS Friendly!</p>
+        </div>
+
+        <!-- Keunggulan (Grid) -->
+        <div class="features-grid">
+            <div class="feature-box">
+                <h4>✨ Desain Menarik</h4>
+                <p>Modern, clean, & eye-catching.</p>
+            </div>
+            <div class="feature-box">
+                <h4>🎯 ATS Friendly</h4>
+                <p>Optimasi lolos sistem ATS perusahaan.</p>
+            </div>
+            <div class="feature-box">
+                <h4>⚡ Proses Cepat</h4>
+                <p>Pengerjaan kilat hasil maksimal.</p>
+            </div>
+            <div class="feature-box">
+                <h4>🔒 Privasi Aman</h4>
+                <p>Data terjamin aman & rahasia.</p>
+            </div>
+        </div>
+
+        <!-- Tombol Chat WhatsApp -->
+        <a href="https://wa.me/6282125424346?text=Halo%20Rizky%20Jasa,%20saya%20mau%20buat/edit%20CV%20nih!" target="_blank" class="cta-box">
+            <h3>💬 Chat Sekarang via WhatsApp</h3>
+            <p>📞 0821-2542-4346</p>
+        </a>
+
+        <!-- KOTAK FORMULIR KIRIM TESTIMONI LANGSUNG DI WEB -->
+        <div class="form-card">
+            <h3>⭐ Tulis Testimoni Kamu</h3>
+            <form id="testi-form" onsubmit="kirimTestimoni(event)">
+                <div class="form-group">
+                    <label>Nama Lengkap / Panggilan</label>
+                    <input type="text" id="nama" class="form-control" placeholder="Contoh: Rian Pratama" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Rating Bintang</label>
+                    <div class="star-rating" id="star-container">
+                        <span class="star" data-value="1" onclick="pilihBintang(1)">★</span>
+                        <span class="star" data-value="2" onclick="pilihBintang(2)">★</span>
+                        <span class="star" data-value="3" onclick="pilihBintang(3)">★</span>
+                        <span class="star" data-value="4" onclick="pilihBintang(4)">★</span>
+                        <span class="star" data-value="5" onclick="pilihBintang(5)">★</span>
+                    </div>
+                    <input type="hidden" id="rating-value" value="5">
+                </div>
+
+                <div class="form-group">
+                    <label>Catatan / Ulasan Opsional</label>
+                    <textarea id="catatan" class="form-control" rows="2" placeholder="Bagaimana pengalamanmu menggunakan layanan ini?"></textarea>
+                </div>
+
+                <button type="submit" class="btn-submit">KIRIM TESTIMONI</button>
+            </form>
+        </div>
+
+        <!-- DAFTAR TESTIMONI MASUK -->
+        <div class="form-card">
+            <h3>Apa Kata Klien Kami?</h3>
+            <div id="list-testimoni">
+                <!-- Testimoni Default -->
+                <div class="testimonial-item">
+                    <div class="testimonial-header">
+                        <span class="client-name">Nadia Putri</span>
+                        <span class="client-stars">★★★★★</span>
+                    </div>
+                    <p class="client-comment">Pelayanan cepat banget, CV jadi rapi dan langsung dapet panggilan interview kerja!</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-info">
+            Follow & Chat Kami di: <span>@rizky.jasa</span> | <span>0821-2542-4346</span>
+        </div>
+    </div>
+
+    <script>
+        let currentRating = 5;
+        function pilihBintang(nilai) {
+            currentRating = nilai;
+            document.getElementById('rating-value').value = nilai;
+            let stars = document.querySelectorAll('.star');
+            stars.forEach((star, index) => {
+                if (index < nilai) {
+                    star.classList.add('active');
+                } else {
+                    star.classList.remove('active');
+                }
+            });
+        }
+        pilihBintang(5);
+
+        window.onload = function() {
+            muatTestimoni();
+        }
+
+        function kirimTestimoni(e) {
+            e.preventDefault();
+            let nama = document.getElementById('nama').value;
+            let rating = document.getElementById('rating-value').value;
+            let catatan = document.getElementById('catatan').value;
+            if(!catatan) catatan = "Memberikan ulasan positif.";
+
+            let dataBaru = {
+                nama: nama,
+                rating: parseInt(rating),
+                catatan: catatan
+            };
+
+            let daftarTesti = JSON.parse(localStorage.getItem('rizky_daftar_testi')) || [];
+            daftarTesti.unshift(dataBaru);
+            localStorage.setItem('rizky_daftar_testi', JSON.stringify(daftarTesti));
+
+            document.getElementById('testi-form').reset();
+            pilihBintang(5);
+            muatTestimoni();
+            alert("Terima kasih! Testimoni kamu berhasil dikirim dan langsung tampil.");
+        }
+
+        function muatTestimoni() {
+            let listContainer = document.getElementById('list-testimoni');
+            let daftarTesti = JSON.parse(localStorage.getItem('rizky_daftar_testi')) || [
+                { nama: "Nadia Putri", rating: 5, catatan: "Pelayanan cepat banget, CV jadi rapi dan langsung dapet panggilan interview kerja!" }
+            ];
+
+            let htmlContent = "";
+            daftarTesti.forEach(item => {
+                let bintangStr = "★".repeat(item.rating) + "☆".repeat(5 - item.rating);
+                htmlContent += `
+                    <div class="testimonial-item">
+                        <div class="testimonial-header">
+                            <span class="client-name">${item.nama}</span>
+                            <span class="client-stars">${bintangStr}</span>
+                        </div>
+                        <p class="client-comment">${item.catatan}</p>
+                    </div>
+                `;
+            });
+            listContainer.innerHTML = htmlContent;
+        }
+    </script>
+</body>
+</html>
