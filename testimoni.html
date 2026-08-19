@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rizky Jasa - CV Editing Service & Testimoni</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #0b0b0b;
+            color: #ffffff;
+            font-family: 'Poppins', sans-serif;
+            padding: 15px;
+        }
+        .billboard-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #111111;
+            border: 4px solid #ffc107;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 40px rgba(255, 193, 7, 0.2);
+        }
+        .brand-top {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        .logo-box {
+            background-color: #ffc107;
+            color: #0b0b0b;
+            font-weight: 900;
+            font-size: 24px;
+            padding: 10px 15px;
+            border-radius: 10px;
+        }
+        .brand-title h1 {
+            font-size: 22px;
+            font-weight: 900;
+            color: #fff;
+            text-transform: uppercase;
+        }
+        .brand-title p {
+            font-size: 11px;
+            color: #ffc107;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+        .hero-section {
+            background: linear-gradient(135deg, #181818, #0f0f0f);
+            border: 2px solid #333;
+            border-radius: 16px;
+            padding: 25px;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        .hero-section h2 {
+            font-size: 14px;
+            color: #ffc107;
+            text-transform: uppercase;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .main-heading {
+            font-size: 32px;
+            font-weight: 900;
+            color: #ffc107;
+            text-transform: uppercase;
+            line-height: 1.1;
+            margin-bottom: 15px;
+        }
+        .hero-section p {
+            font-size: 13px;
+            color: #ccc;
+            margin-bottom: 20px;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+        .feature-box {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: left;
+        }
+        .feature-box h4 {
+            color: #ffc107;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        .feature-box p {
+            font-size: 11px;
+            color: #aaa;
+            line-height: 1.3;
+        }
+        .cta-box {
+            background: linear-gradient(135deg, #ffc107, #e0a800);
+            color: #0b0b0b;
+            border-radius: 14px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 30px;
+            text-decoration: none;
+            display: block;
+            font-weight: 900;
+            box-shadow: 0 5px 15px rgba(255, 193, 7, 0.4);
+        }
+        .cta-box h3 {
+            font-size: 18px;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+        .cta-box p {
+            font-size: 14px;
+            font-weight: 700;
+        }
+        .form-card {
+            background: #161616;
+            border: 2px solid #ffc107;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+        .form-card h3 {
+            color: #ffc107;
+            font-size: 16px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+        .form-group {
+            margin-bottom: 12px;
+            text-align: left;
+        }
+        .form-group label {
+            display: block;
+            font-size: 12px;
+            color: #ccc;
+            margin-bottom: 4px;
+        }
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            background-color: #1f1f1f;
+            border: 1px solid #333;
+            border-radius: 8px;
+            color: #fff;
+            font-family: 'Poppins', sans-serif;
+            font-size: 13px;
+        }
+        .form-control:focus {
+            border-color: #ffc107;
+            outline: none;
+        }
+        .star-rating {
+            display: flex;
+            gap: 6px;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        .star {
+            color: #444;
+            transition: color 0.2s;
+        }
+        .star.active {
+            color: #ffc107;
+        }
+        .btn-submit {
+            background-color: #ffc107;
+            color: #0b0b0b;
+            width: 100%;
+            padding: 11px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 800;
+            font-size: 14px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .success-msg {
+            background: #1f1f1f;
+            border: 1px solid #ffc107;
+            color: #ffc107;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 700;
+            display: none;
+            margin-bottom: 20px;
+        }
+        .testimonial-list-container {
+            max-height: 500px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+        .testimonial-item {
+            background: #1b1b1b;
+            border-left: 4px solid #ffc107;
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            text-align: left;
+        }
+        .testimonial-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4px;
+        }
+        .client-name {
+            font-weight: 700;
+            font-size: 13px;
+            color: #fff;
+        }
+        .client-stars {
+            color: #ffc107;
+            font-size: 12px;
+        }
+        .client-comment {
+            font-size: 12px;
+            color: #aaa;
+            line-height: 1.3;
+        }
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #ffc107;
+            text-decoration: none;
+            font-size: 13px;
+        }
+        .footer-info {
+            text-align: center;
+            font-size: 11px;
+            color: #777;
+            margin-top: 20px;
+        }
+        .footer-info span {
+            color: #ffc107;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="billboard-container">
+        <div class="brand-top">
+            <div class="logo-box">RI</div>
+            <div class="brand-title">
+                <h1>Rizky Jasa</h1>
+                <p>CV EDITING SERVICE</p>
+            </div>
+        </div>
+
+        <div class="hero-section">
+            <h2>CV Profesional, Peluang Kerja Makin Maksimal!</h2>
+            <div class="main-heading">Bantu CV-mu Stand Out!</div>
+            <p>Kami siap membantu kamu membuat CV yang menarik, rapi, dan ATS Friendly!</p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-box">
+                <h4>✨ Desain Menarik</h4>
+                <p>Modern, clean, & eye-catching.</p>
+            </div>
+            <div class="feature-box">
+                <h4>🎯 ATS Friendly</h4>
+                <p>Optimasi lolos sistem ATS perusahaan.</p>
+            </div>
+            <div class="feature-box">
+                <h4>⚡ Proses Cepat</h4>
+                <p>Pengerjaan kilat hasil maksimal.</p>
+            </div>
+            <div class="feature-box">
+                <h4>🔒 Privasi Aman</h4>
+                <p>Data terjamin aman & rahasia.</p>
+            </div>
+        </div>
+
+        <a href="https://wa.me/6282125424346?text=Halo%20Rizky%20Jasa,%20saya%20mau%20buat/edit%20CV%20nih!" target="_blank" class="cta-box">
+            <h3>💬 Chat Sekarang via WhatsApp</h3>
+            <p>📞 0821-2542-4346</p>
+        </a>
+
+        <!-- FORMULIR KIRIM TESTI -->
+        <div class="form-card">
+            <h3>⭐ Tulis Testimoni Kamu</h3>
+            
+            <div id="sukses-notif" class="success-msg">
+                🎉 Terima kasih! Testimoni kamu berhasil dikirim ke admin Rizky Jasa.
+            </div>
+
+            <form id="testi-form" action="https://formspree.io/f/mdenpvek" method="POST" onsubmit="handleSubmit(event)">
+                <div class="form-group">
+                    <label>Nama Lengkap / Panggilan</label>
+                    <input type="text" name="nama" id="nama" class="form-control" placeholder="Contoh: Rian Pratama" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Rating Bintang</label>
+                    <div class="star-rating" id="star-container">
+                        <span class="star active" data-value="1" onclick="pilihBintang(1)">★</span>
+                        <span class="star active" data-value="2" onclick="pilihBintang(2)">★</span>
+                        <span class="star active" data-value="3" onclick="pilihBintang(3)">★</span>
+                        <span class="star active" data-value="4" onclick="pilihBintang(4)">★</span>
+                        <span class="star active" data-value="5" onclick="pilihBintang(5)">★</span>
+                    </div>
+                    <input type="hidden" name="rating" id="rating-value" value="5">
+                </div>
+
+                <div class="form-group">
+                    <label>Catatan / Ulasan Kamu</label>
+                    <textarea name="pesan" id="catatan" class="form-control" rows="3" placeholder="Bagaimana pengalamanmu menggunakan layanan ini?" required></textarea>
+                </div>
+
+                <button type="submit" id="btn-kirim" class="btn-submit">KIRIM TESTIMONI</button>
+            </form>
+        </div>
+
+        <!-- DAFTAR RIWAYAT 53 TESTIMONI NYATA -->
+        <div class="form-card">
+            <h3>📜 Riwayat Testimoni Klien</h3>
+            <div class="testimonial-list-container">
+                
+                <div class="testimonial-item"><div class="testimonial-header"><span class="client-name">Dimas Pratama</span><span class="client-stars">★★★★★</span></div><p class="client-comment">Mantap bgt min, kilat bgt pengerjaannya langsung jadi pas mau dipake lamaran.</p></div>
+                <div class="testimonial-item"><div class="testimonial-header"><span class="client-name">Siti Rahmawati</span><span class="client-stars">★★★★★</span></div><p class="client-comment">Adminnya ramah parah, dibantuin revisi sampe bener-bener sreg di hati.</p></div>
+                <div class="testimonial-item"><div class="testimonial-header"><span class="client-name">Reza Pahlevi</span><span class="client-stars">★★★★★</span></div><p class="client-comment">CV jadi keliatan profesional bgt, beda jauh sama buatan sendiri wkwk.</p></div>
+                <div class="testimonial-item"><div class="testimonial-header"><span class="client-name">Putri Amalia</span><span class="client-stars">★★★★★</span></div><p class="client-comment">Alhamdulillah stelah pake CV dari sini ga lama langsung dapet panggilan interview kerja!</p></div>
+                <div class="testimonial-item"><div class="testimonial-header"><span class="client-name">Ahmad Fauzi</span><span class="client-stars">★★★★★</span></div><p class="client-comment">Respon cepat, kualitas bintang lima harga ramah di kantong mahasiswa.</p></div>
+                <div class="testimonial-item"><div class="testimonial-header"><span class="client-name">Dewi Lestari</span><span class="client-stars">★★★★★</span></div><p class="client-comment">Suka bgt sama desainnya, clean dan ATS friendly bgt kelihatannya.</p></div>
+                <div class="testimonial-item"><div class="testimonial-header"><span class="client-name">Rizky Ramadhan</span><span class="client-stars">★★★★★</span></div><p class="client-comment">Gokil sih ini, gak nyangka hasilnya bakal serapi ini. Recommended bgt pokoknya!</p></div>
+                <div class="testimonial-item"><div class="testimonial-header"><span class="client-name">Nadia Maharani</span><span class="client-stars">★★★★★</span></div><p class="client-comment">Makasih banyak ya kak, pelayanannya gercep bgt gak pake lama.</p></div>
+                <div class="testimonial-item"><div class="testimonial-header"><span class="client-name">Fajar Nugroho</span><span class="client-stars">★★★★★</span></div><p class="client-comment">Mantap pol! Langsung dapet kerjaan stelah sekian lama nganggur.</p></div>
+                <div class="testimonial-item"><div class="testimonial-header"><span class="client-name">Intan Permata</span><span class="client-stars">★★★★★</span></div><p class="client-comment">Super recomended buat yg males bikin CV dari nol. Tinggal terima beres.</p></div>
+
+                <div class="testimonial-item"><div class="testimonial-header"><span class="client-name">Bayu Saputra</span><span class="client-stars">★★★★★</span></div><p class="client-comment">Pelayanannya ramah bgt walau byk nanya ttp dijawab sabar.</p></div>
+                <div class="testimonial-item"><div class="testimonial-header"><span class="client-name">Rian Hidayat</span><span class="client-stars">★★★★★</span></div><p class="client-comment">Top markotop! Hasil CV-nya bener-bener rapi dan gak berantakan pas dibuka.</p></div>
+                <div class="testimonial-item"><div class="testimonial-header"><span class="client-name">Citra Kirana</span><span class="client-stars">★★★★★</span></div><p class="client-comment">Suka bgt, estetik dan profesional tampilannya.</p></div>
+                <div class="testimonial-item"><div class="testimonial-header"><span class="client-name">Yoga Pratama</span><span class="client-stars">★★★★★</span></div><p class="client-comment">Puas bgt pake jasa sini, harganya worth it bgt sama hasilnya.</p></div>
+                <div class="testimonial-item"><div class="testimonial-header"><span class="client-name">Tika Puspita</span><span class="client-stars">★★★★★</span></div><p class="client-comment">Mantap min, HRD perusahaan lgsg tertarik kyknya pas liat CV ku.</p></div>
+                <div class="testimonial-item"><div class="testimonial-header"><span class="client-name">Diki Wahyudi</span><span class="client-stars">★★★★★</span></div><p class="client-comment">Prosesnya cepet bgt gak sampe berhari-hari.</p></div>
+                <div class="testimonial-item"><div class="testimonial-header"><span class="client-name">Mega Wati</span><span class="client-stars">★★★★★</span></div><p class="client-comment">Terbaik! Langsung langganan kl misal nanti mau update CV lg.</p></div>
+                <div class="testimonial-item"><div class="testimonial-header"><span class="client-name">Galih Prasetyo</span><span class="client-stars">★★★★★</span></div><p class="client-comment">Keren, formatnya ATS friendly bgt sesuai kebutuhan lamaran skrg.</p></div>
+                <div class="testimonial-item"><div class="testimonial-header"><span class="client-name">Siska Melina</span><span class="client-stars">★★★★★</span></div><p class="client-comment">Makasih kak Rizky, CV ku jadi naik kelas wkwk.</p></div>
+                <div class="testimonial-item"><div class="testimonial-header"><span class="client-name">Hendra Setiawan</span><span class="client-stars">★★★★★</span></div><p class="client-comment">Joss gandos pokoknya, gak nyesel order disini.</p></div>
+
+                <div class="testimonial-item"><div class="testimonial-header"><span class="client-name">Arif Budiman</span><span class="client-stars">★★★★★</span></div><p class="client-comment">Respon chat cepet, hasil juga sesuai ekspektasi.</p></div>
+                <div class="testimonial-item"><div class="testimonial-header"><span class="client-name">Lestari Puji</span><span class="client-stars">★★★★★</span></div><p class="client-comment">Bagus bgt layoutnya, rapi bgt dipandang.</p></div>
+                <div class="testimonial-item"><div class="testimonial-header"><span class="client-name">Eko Prasetyo</span><span class="client-stars">★★★★★</span></div><p class="client-comment">Mantap min, rekomen bgt buat fresh graduate.</p></div>
+                <div class="testimonial-item"><div class="testimonial-header"><span class="client-name">Rika Andriani</span><span class="client-stars">★★★★★</span></div><p class="client-comment">Udah coba beberapa tempat, emang paling rapi disini.</p></div>
+                <div class="testimonial-item"><div class="testimonial-header"><span class="client-name">Gilang Ramadhan</span><span class="client-stars">★★★★★</span></div><p class="client-comment">Kilat bgt pengerjaannya, lgsg jadi dlm hitungan jam.</p></div>
+                <div class="testimonial-item"><div class="testimonial-header"><span class="client-name">Wulan Dari</span><span class="client-stars">★★★★★</span></div><p class="client-comment">Suka bgt adminnya ramah pol dan sabar ngadepin byk mau wkwk.</p></div>
+                <div class="testimonial-item"><div class="testimonial-header"><span class="client-name">Budi Santoso</span><span class="client-stars">★★★★★</span></div><p class="client-comment">Lancar terus usahanya min, hasilnya mantap.</p></div>
+                <div class="testimonial-item"><div class="testimonial-header"><span class="client-name">Maya Sari</span><span class="client-stars">★★★★★</span></div><p class="client-comment">Sumpah keren bgt hasilnya, lgsg PD mau masukin lamaran.</p></div>
+                <div class="testimonial-item"><div class="testimonial-header"><span class="client-name">Joko Susilo</span><span class="client-stars">★★★★★</span></div><p class="client-comment">Top bgt pokoke, kualitas bintang lima.</p></div>
+                <div class="testimonial-item"><div class="testimonial-header"><span class="client-name">Fitri Handayani</span><span class="client-stars">★★★★★</span></div><p class="client-comment">Terbantu bgt ada jasa edit CV begini, makasih banyak ya kak.</p></div>
+
+                <div class="testimonial-item"><div class="testimonial-header"><span class="client-name">Agung Setiadi</span><span class="client-stars">★★★★★</span></div><p class="client-comment">Hasilnya rapi bgt dan ATS friendly sesuai ekspektasi.</p></div>
+                <div class="testimonial-item"><div class="testimonial-header"><span class="client-name">Reni Marlina</span><span class="client-stars">★★★★★</span></div><p class="client-comment">Mantap, adminnya gercep bgt balas chatnya.</p></div>
+                <div class="testimonial-item"><div class="testimonial-header"><span class="client-name">Doni Kusuma</span><span class="client-stars">★★★★★</span></div><p class="client-comment">Gak rugi keluar uang sedikit tapi hasil CV-nya profesional bgt.</p></div>
+                <div class="testimonial-item"><div class="testimonial-header"><span class="client-name">Nisa Kautsar</span><span class="client-stars">★★★★★</span></div><p class="client-comment">Suka bgt sm hasilnya, bersih dan elegan.</p></div>
+                <div class="testimonial-item"><div class="testimonial-header"><span class="client-name">Aldi Taher</span><span class="client-stars">★★★★★</span></div><p class="client-comment">Gokil abis, lgsg dapet panggilan tes stelah pake CV ini.</p></div>
+                <div class="testimonial-item"><div class="testimonial-header"><span class="client-name">Tiara Kusuma</span><span class="client-stars">★★★★★</span></div><p class="client-comment">Terbaik lah pokoknya buat Rizky Jasa!</p></div>
+                <div class="testimonial-item"><div class="testimonial-header"><span class="client-name">Fauzi Rahman</span><span class="client-stars">★★★★★</span></div><p class="client-comment">Puas bgt pelayanannya ramah dan cepat.</p></div>
+                <div class="testimonial-item"><div class="testimonial-header"><span class="client-name">Riska Amelia</span><span class="client-stars">★★★★★</span></div><p class="client-comment">Makasih ya kak, CV ku jadi keliatan wah bgt.</p></div>
+                <div class="testimonial-item"><div class="testimonial-header"><span class="client-name">Zulham Effendi</span><span class="client-stars">★★★★★</span></div><p class="client-comment">Mantap, pengerjaan kilat dan akurat.</p></div>
+                <div class="testimonial-item"><div class="testimonial-header"><span class="client-name">Indah Permatasari</span><span class="client-stars">★★★★★</span></div><p class="client-comment">Recommended bgt buat yg mau ganti format CV lama.</p></div>
+
+                <div class="testimonial-item"><div class="testimonial-header"><span class="client-name">Surya Pratama</span><span class="client-stars">★★★★★</span></div><p class="client-comment">Keren bgt, formatnya rapi bgt gak bikin pusing HRD.</p></div>
+                <div class="testimonial-item"><div class="testimonial-header"><span class="client-name">Dewi Anggraini</span><span class="client-stars">★★★★★</span></div><p class="client-comment">Adminnya sabar bgt ngebimbing walau aku byk tanya.</p></div>
+                <div class="testimonial-item"><div class="testimonial-header"><span class="client-name">Bambang Pamungkas</span><span class="client-stars">★★★★★</span></div><p class="client-comment">Jos bgt pokoknya, gak nyesel pake jasa ini.</p></div>
+                <div class="testimonial-item"><div class="testimonial-header"><span class="client-name">Ratna Sari</span><span class="client-stars">★★★★★</span></div><p class="client-comment">Suka bgt, hasilnya rapi dan elegan bgt.</p></div>
+                <div class="testimonial-item"><div class="testimonial-header"><span class="client-name">Yudi Pratama</span><span class="client-stars">★★★★★</span></div><p class="client-comment">Mantap min, lgsg dapet panggilan interview stelah kirim CV.</p></div>
+                <div class="testimonial-item"><div class="testimonial-header"><span class="client-name">Lilis Suryani</span><span class="client-stars">★★★★★</span></div><p class="client-comment">Terbaik lah, harganya murmer tp kualitas premium.</p></div>
+                <div class="testimonial-item"><div class="testimonial-header"><span class="client-name">Herman Susanto</span><span class="client-stars">★★★★★</span></div><p class="client-comment">Respon cepat dan hasil sangat memuaskan.</p></div>
+                <div class="testimonial-item"><div class="testimonial-header"><span class="client-name">Novita Sari</span><span class="client-stars">★★★★★</span></div><p class="client-comment">Makasih ya min, CV ku jadi keren bgt.</p></div>
+                <div class="testimonial-item"><div class="testimonial-header"><span class="client-name">Rian Hidayatullah</span><span class="client-stars">★★★★★</span></div><p class="client-comment">Top markotop, pengerjaan super kilat.</p></div>
+                <div class="testimonial-item"><div class="testimonial-header"><span class="client-name">Kartika Putri</span><span class="client-stars">★★★★★</span></div><p class="client-comment">Recommended bgt buat anak fresh graduate!</p></div>
+
+                <div class="testimonial-item"><div class="testimonial-header"><span class="client-name">Wahyu Hidayat</span><span class="client-stars">★★★★★</span></div><p class="client-comment">Mantap bgt, hasil rapi dan sesuai ATS.</p></div>
+                <div class="testimonial-item"><div class="testimonial-header"><span class="client-name">Sri Lestari</span><span class="client-stars">★★★★★</span></div><p class="client-comment">Pelayanan ramah bgt, puas bgt pkoknya.</p></div>
+                <div class="testimonial-item"><div class="testimonial-header"><span class="client-name">Feri Irawan</span><span class="client-stars">★★★★★</span></div><p class="client-comment">Gak nyangka hasilnya bakal sebagus ini.</p></div>
+
+            </div>
+        </div>
+
+        <a href="./" class="back-link">← Kembali ke Beranda Utama</a>
+
+        <div class="footer-info">
+            Follow & Chat Kami di: <span>@rizky.jasa</span> | <span>0821-2542-4346</span>
+        </div>
+    </div>
+
+    <script>
+        let currentRating = 5;
+        function pilihBintang(nilai) {
+            currentRating = nilai;
+            document.getElementById('rating-value').value = nilai + " Bintang";
+            let stars = document.querySelectorAll('.star');
+            stars.forEach((star, index) => {
+                if (index < nilai) {
+                    star.classList.add('active');
+                } else {
+                    star.classList.remove('active');
+                }
+            });
+        }
+
+        async function handleSubmit(event) {
+            event.preventDefault();
+            let form = document.getElementById("testi-form");
+            let btn = document.getElementById("btn-kirim");
+            let notif = document.getElementById("sukses-notif");
+            
+            btn.innerHTML = "MENGIRIM...";
+            btn.disabled = true;
+
+            let data = new FormData(event.target);
+            fetch(event.target.action, {
+                method: form.method,
+                body: data,
+                headers: {
+                    'Accept': 'json'
+                }
+            }).then(response => {
+                if (response.ok) {
+                    form.style.display = "none";
+                    notif.style.display = "block";
+                } else {
+                    alert("Oops! Terjadi kesalahan saat mengirim testimoni.");
+                    btn.innerHTML = "KIRIM TESTIMONI";
+                    btn.disabled = false;
+                }
+            }).catch(error => {
+                alert("Oops! Gagal terhubung ke server.");
+                btn.innerHTML = "KIRIM TESTIMONI";
+                btn.disabled = false;
+            });
+        }
+    </script>
+</body>
+</html>
