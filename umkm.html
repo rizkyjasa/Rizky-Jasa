@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator HPP & Eceran UMKM - Rizky Jasa</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: #f4f6f9;
+            color: #333;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        h2, h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .subtitle {
+            text-align: center;
+            font-size: 14px;
+            color: #7f8c8d;
+            margin-bottom: 25px;
+        }
+        .calculator-card {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            margin-bottom: 25px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 6px;
+            color: #4a5568;
+        }
+        .form-control {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #cbd5e0;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .form-control:focus {
+            border-color: #3182ce;
+        }
+        .btn {
+            background: #3182ce;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            font-size: 15px;
+            transition: background 0.2s;
+        }
+        .btn:hover {
+            background: #2b6cb0;
+        }
+        .btn-eceran {
+            background: #25D366;
+        }
+        .btn-eceran:hover {
+            background: #1ebe57;
+        }
+        .result-box {
+            margin-top: 15px;
+            padding: 15px;
+            background: #f7fafc;
+            border-left: 4px solid #3182ce;
+            border-radius: 6px;
+            display: none;
+        }
+        .result-box p {
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        .result-box p:last-child {
+            margin-bottom: 0;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #a0aec0;
+        }
+        .wa-contact {
+            text-align: center;
+            margin-top: 15px;
+        }
+        .wa-contact a {
+            color: #25D366;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Kalkulator Pintar UMKM</h2>
+    <p class="subtitle">Bikin perhitungan usaha jadi gampang anti boncos by <strong>Rizky Jasa</strong></p>
+
+    <!-- FITUR 1: KALKULATOR HPP & HARGA JUAL -->
+    <div class="calculator-card">
+        <h3>1. Hitung HPP & Harga Jual Produk</h3>
+        <p style="font-size: 13px; color: #666; margin-bottom: 15px;">Cocok buat kuliner, kerajinan, atau produk produksi sendiri.</p>
+        
+        <div class="form-group">
+            <label>Total Biaya Bahan Baku (Rp):</label>
+            <input type="text" id="hppBahan" class="form-control" placeholder="Contoh: 50000" oninput="formatRupiah(this)">
+        </div>
+
+        <div class="form-group">
+            <label>Total Biaya Kemasan & Operasional (Rp):</label>
+            <input type="text" id="hppOperasional" class="form-control" placeholder="Contoh: 10000" oninput="formatRupiah(this)">
+        </div>
+
+        <div class="form-group">
+            <label>Jumlah Hasil Produksi (Pcs/Porsi):</label>
+            <input type="number" id="hppJumlah" class="form-control" placeholder="Contoh: 10">
+        </div>
+
+        <div class="form-group">
+            <label>Target Keuntungan / Profit (%):</label>
+            <input type="number" id="hppProfit" class="form-control" placeholder="Contoh: 30" value="30">
+        </div>
+
+        <button class="btn" onclick="hitungHPP()">Hitung HPP & Harga Jual</button>
+
+        <div id="hasilHPP" class="result-box">
+            <p><strong>Modal / HPP Per Pcs:</strong> <span id="resHppPcs">Rp 0</span></p>
+            <p><strong>Rekomendasi Harga Jual:</strong> <span id="resHargaJual" style="color: #2b6cb0; font-weight: bold;">Rp 0</span></p>
+            <p><strong>Total Keuntungan Bersih:</strong> <span id="resTotalUntung" style="color: green; font-weight: bold;">Rp 0</span></p>
+        </div>
+    </div>
+
+    <!-- FITUR 2: KALKULATOR ECERAN / GROSIR -->
+    <div class="calculator-card">
+        <h3>2. Kalkulator Keuntungan Eceran</h3>
+        <p style="font-size: 13px; color: #666; margin-bottom: 15px;">Cocok buat hitung modal & untung eceran (rokok, sembako, dll).</p>
+        
+        <div class="form-group">
+            <label>Harga Beli Per Bal / Dus / Slop (Rp):</label>
+            <input type="text" id="eceranHargaBeli" class="form-control" placeholder="Contoh: 250000" oninput="formatRupiah(this)">
+        </div>
+
+        <div class="form-group">
+            <label>Isi Total dalam 1 Bal/Dus (Pcs/Batang):</label>
+            <input type="number" id="eceranIsiTotal" class="form-control" placeholder="Contoh: 20">
+        </div>
+
+        <div class="form-group">
+            <label>Rencana Harga Jual Per Satuan/Pcs (Rp):</label>
+            <input type="text" id="eceranHargaJual" class="form-control" placeholder="Contoh: 15000" oninput="formatRupiah(this)">
+        </div>
+
+        <button class="btn btn-eceran" onclick="hitungEceran()">Hitung Keuntungan Eceran</button>
+
+        <div id="hasilEceran" class="result-box" style="border-left-color: #25D366;">
+            <p><strong>Modal Per Satuan:</strong> <span id="resModalSatuan">Rp 0</span></p>
+            <p><strong>Keuntungan Bersih / Pcs:</strong> <span id="resUntungPcs" style="color: green; font-weight: bold;">Rp 0</span></p>
+            <p><strong>Persentase Keuntungan:</strong> <span id="resPersen" style="font-weight: bold;">0%</span></p>
+        </div>
+    </div>
+
+    <div class="wa-contact">
+        <p>Butuh custom web / aplikasi buat usahamu? <br><a href="https://wa.me/6282125424346?text=Halo%20Rizky%20Jasa,%20saya%20mau%20tanya-tanya%20jasa%20pembuatan%20web" target="_blank">Hubungi Rizky Jasa via WhatsApp</a></p>
+    </div>
+
+    <div class="footer">
+        &copy; 2026 Rizky Jasa. All Rights Reserved.
+    </div>
+</div>
+
+<script>
+    // Fungsi format otomatis angka ribuan untuk semua input
+    function formatRupiah(input) {
+        let value = input.value.replace(/[^,\d]/g, '').toString();
+        let split = value.split(',');
+        let sisa = split[0].length % 3;
+        let rupiah = split[0].substr(0, sisa);
+        let ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+        if (ribuan) {
+            let separator = sisa ? '.' : '';
+            rupiah += separator + ribuan.join('.');
+        }
+        input.value = rupiah;
+    }
+
+    // Fungsi bantu ubah string rupiah ber-titik jadi angka integer
+    function parseRupiah(stringRupiah) {
+        if (!stringRupiah) return 0;
+        return parseInt(stringRupiah.replace(/\./g, '')) || 0;
+    }
+
+    // Fungsi Hitung HPP & Harga Jual
+    function hitungHPP() {
+        let bahan = parseRupiah(document.getElementById('hppBahan').value);
+        let operasional = parseRupiah(document.getElementById('hppOperasional').value);
+        let jumlah = parseFloat(document.getElementById('hppJumlah').value) || 0;
+        let profit = parseFloat(document.getElementById('hppProfit').value) || 0;
+
+        if (jumlah <= 0) {
+            alert('Jumlah hasil produksi minimal 1!');
+            return;
+        }
+
+        let totalModal = bahan + operasional;
+        let hppPcs = totalModal / jumlah;
+        let hargaJual = hppPcs + (hppPcs * (profit / 100));
+        let untungPcs = hargaJual - hppPcs;
+        let totalUntung = untungPcs * jumlah;
+
+        document.getElementById('resHppPcs').innerText = 'Rp ' + Math.round(hppPcs).toLocaleString('id-ID');
+        document.getElementById('resHargaJual').innerText = 'Rp ' + Math.round(hargaJual).toLocaleString('id-ID');
+        document.getElementById('resTotalUntung').innerText = 'Rp ' + Math.round(totalUntung).toLocaleString('id-ID');
+
+        document.getElementById('hasilHPP').style.display = 'block';
+    }
+
+    // Fungsi Hitung Eceran / Grosir
+    function hitungEceran() {
+        let hargaBeliBal = parseRupiah(document.getElementById('eceranHargaBeli').value);
+        let isiTotal = parseFloat(document.getElementById('eceranIsiTotal').value) || 0;
+        let hargaJualPcs = parseRupiah(document.getElementById('eceranHargaJual').value);
+
+        if (hargaBeliBal <= 0 || isiTotal <= 0) {
+            alert('Mohon isi Harga Beli Bal dan Jumlah Isi Total dengan benar!');
+            return;
+        }
+
+        let modalPerSatuan = hargaBeliBal / isiTotal;
+        let untungPcs = hargaJualPcs - modalPerSatuan;
+        let persentase = modalPerSatuan > 0 ? (untungPcs / modalPerSatuan) * 100 : 0;
+
+        document.getElementById('resModalSatuan').innerText = 'Rp ' + Math.round(modalPerSatuan).toLocaleString('id-ID');
+        document.getElementById('resUntungPcs').innerText = 'Rp ' + Math.round(untungPcs).toLocaleString('id-ID');
+        document.getElementById('resPersen').innerText = persentase.toFixed(1) + '%';
+
+        document.getElementById('hasilEceran').style.display = 'block';
+    }
+</script>
+
+</body>
+</html>
