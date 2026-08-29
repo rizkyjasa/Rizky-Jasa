@@ -409,23 +409,21 @@
         </div>
     </div>
 
-    <!-- JAVASCRIPT UTAMA DENGAN LOCALSTORAGE STABIL -->
+    <!-- JAVASCRIPT UTAMA -->
     <script>
-        // STORAGE KEY YANG KONSISTEN
         const STORAGE_KEY = 'rizkyAssistantOrders';
+        // Tanggal mulai tracking (disesuaikan dengan kapan Anda mulai mencatat order)
+        const TRACKING_START_DATE = new Date('2026-08-22');
 
-        // State Global
         let orders = [];
         let currentConfirmCallback = null;
 
-        // Inisialisasi Aplikasi saat halaman dimuat
         window.addEventListener('DOMContentLoaded', () => {
             loadOrders();
             updateDashboard();
             setCurrentDateHeader();
         });
 
-        // Set Header Tanggal
         function setCurrentDateHeader() {
             const now = new Date();
             const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
@@ -435,7 +433,6 @@
             document.getElementById('current-month-label').innerText = `${monthNames[now.getMonth()]} ${now.getFullYear()}`;
         }
 
-        // Membaca Data localStorage dengan Aman & Tanpa Overwrite Kosong
         function loadOrders() {
             try {
                 const storedData = localStorage.getItem(STORAGE_KEY);
@@ -449,7 +446,6 @@
                 } else {
                     orders = [];
                 }
-                // Urutkan data dari yang terbaru
                 orders.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
             } catch (e) {
                 console.error("Gagal membaca localStorage:", e);
@@ -458,7 +454,6 @@
             }
         }
 
-        // Menyimpan Data ke localStorage dengan Notifikasi
         function saveOrdersToStorage() {
             try {
                 localStorage.setItem(STORAGE_KEY, JSON.stringify(orders));
@@ -469,7 +464,6 @@
             }
         }
 
-        // Navigasi Tampilan (View Switching)
         function switchView(viewName) {
             document.getElementById('view-dashboard').classList.add('hidden');
             document.getElementById('view-rekap').classList.add('hidden');
@@ -492,7 +486,6 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Toast Notification
         function showToast(message, isError = false) {
             const toast = document.getElementById('toast');
             const msgEl = document.getElementById('toast-message');
@@ -515,7 +508,6 @@
             document.getElementById('toast').classList.add('hidden');
         }
 
-        // Modal Catat Order
         function openModalCatat(editId = null) {
             const modal = document.getElementById('order-modal');
             const title = document.getElementById('modal-title');
@@ -545,7 +537,6 @@
             document.getElementById('order-modal').classList.add('hidden');
         }
 
-        // Simpan Order (Create / Update) & Persist to localStorage
         function saveOrder(event) {
             event.preventDefault();
             const editId = document.getElementById('edit-order-id').value;
@@ -557,7 +548,6 @@
             const durasiVal = document.getElementById('form-durasi').value;
             const durasi = durasiVal ? parseInt(durasiVal) : 0;
 
-            // Validasi
             if (!layanan || isNaN(harga) || harga < 0 || !sumber) {
                 showToast("Mohon lengkapi data wajib dengan benar.", true);
                 return;
@@ -587,13 +577,11 @@
                 orders.unshift(newOrder);
             }
 
-            // Simpan ke localStorage (otomatis menampilkan notifikasi "Data berhasil disimpan")
             saveOrdersToStorage();
             closeModalCatat();
             updateDashboard();
         }
 
-        // Quick Input Handler
         function handleQuickInput() {
             const inputTxt = document.getElementById('quick-input-text').value.trim();
             if (!inputTxt) {
@@ -647,12 +635,10 @@
             updateDashboard();
         }
 
-        // Format Rupiah Helper
         function formatRupiah(number) {
             return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(number);
         }
 
-        // Update Dashboard
         function updateDashboard() {
             const todayStr = new Date().toDateString();
             const now = new Date();
@@ -707,7 +693,6 @@
             recentContainer.innerHTML = html;
         }
 
-        // Update Rekap View
         function updateRekapView() {
             const todayStr = new Date().toDateString();
             const now = new Date();
@@ -822,7 +807,6 @@
             `;
         }
 
-        // Update Analisis 30 Hari View
         function updateAnalisisView() {
             const thirtyDaysAgo = new Date();
             thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
@@ -861,8 +845,15 @@
                 dailyOrderCountMap[dateKey] = (dailyOrderCountMap[dateKey] || 0) + 1;
             });
 
-            const avgOmzetDay = totalOmzet / 30;
-            const avgOrderDay = totalOrder / 30;
+            // === PERBAIKAN BUG: hitung rata-rata berdasarkan jumlah hari sejak mulai tracking, ===
+            // === bukan dibagi fix 30 hari. Kalau belum genap 30 hari sejak TRACKING_START_DATE, ===
+            // === pembaginya ikut jumlah hari yang sudah berjalan (minimal 1). ===
+            const today = new Date();
+            const daysSinceTrackingStart = Math.floor((today - TRACKING_START_DATE) / (1000 * 60 * 60 * 24)) + 1;
+            const effectiveDays = Math.max(1, Math.min(30, daysSinceTrackingStart));
+
+            const avgOmzetDay = totalOmzet / effectiveDays;
+            const avgOrderDay = totalOrder / effectiveDays;
             const aov = totalOrder > 0 ? totalOmzet / totalOrder : 0;
             const repeatRate = totalOrder > 0 ? (repeatCount / totalOrder) * 100 : 0;
             const referralRate = totalOrder > 0 ? (referralCount / totalOrder) * 100 : 0;
@@ -926,7 +917,6 @@
             renderSimpleChart(dailyOmzetMap);
         }
 
-        // Render Canvas Chart Sederhana
         function renderSimpleChart(dailyOmzetMap) {
             const canvas = document.getElementById('chart-omzet');
             const ctx = canvas.getContext('2d');
@@ -989,7 +979,6 @@
             });
         }
 
-        // Render Data Table / Card View
         function renderDataTable() {
             const container = document.getElementById('data-orders-container');
             const searchKeyword = document.getElementById('search-data-input').value.toLowerCase();
@@ -1037,7 +1026,7 @@
             container.innerHTML = html;
         }
 
-        // Hapus Order Tunggal dengan Update localStorage
+        // Hapus Order Tunggal dengan Konfirmasi & Update Statistik Seketika
         function confirmDeleteOrder(id) {
             showConfirmModal(
                 "Hapus Order",
@@ -1047,11 +1036,11 @@
                     saveOrdersToStorage();
                     renderDataTable();
                     updateDashboard();
+                    showToast("Order berhasil dihapus.");
                 }
             );
         }
 
-        // Reset Semua Data dengan Update localStorage
         function confirmResetAll() {
             showConfirmModal(
                 "Reset / Hapus Semua Data",
@@ -1072,7 +1061,6 @@
             );
         }
 
-        // Export Data JSON
         function exportDataJSON() {
             if (orders.length === 0) {
                 showToast("Tidak ada data untuk diexport.", true);
@@ -1088,7 +1076,6 @@
             showToast("Data berhasil di-export ke file JSON.");
         }
 
-        // Import Data JSON
         function importDataJSON(event) {
             const file = event.target.files[0];
             if (!file) return;
@@ -1113,7 +1100,6 @@
             reader.readAsText(file);
         }
 
-        // Custom Confirm Modal Helper
         function showConfirmModal(title, message, callback) {
             document.getElementById('confirm-title').innerText = title;
             document.getElementById('confirm-message').innerText = message;
@@ -1135,4 +1121,3 @@
     </script>
 </body>
 </html>
-
