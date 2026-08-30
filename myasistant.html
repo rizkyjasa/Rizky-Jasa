@@ -97,6 +97,16 @@
                 </div>
             </div>
 
+            <!-- Tabungan Card Tambahan -->
+            <div class="bg-gradient-to-r from-zinc-900 to-zinc-950 border border-gold/40 p-3.5 rounded-xl shadow flex justify-between items-center">
+                <div>
+                    <p class="text-xs text-gold font-medium uppercase tracking-wider">Akumulasi Tabungan (30%)</p>
+                    <h3 id="stat-month-savings" class="text-lg font-bold text-white mt-0.5">Rp 0</h3>
+                    <p class="text-[10px] text-zinc-500">Porsi alokasi bulan ini</p>
+                </div>
+                <span class="text-xl">💰</span>
+            </div>
+
             <!-- Main Menu Action Buttons -->
             <div class="space-y-2.5 pt-2">
                 <button onclick="openModalCatat()" class="w-full bg-gold hover:bg-gold-dark text-black font-semibold py-3 px-4 rounded-xl shadow-lg transition duration-200 flex items-center justify-center space-x-2">
@@ -185,6 +195,13 @@
                         <p class="text-[10px] text-zinc-400">Rata-rata</p>
                         <p id="rekap-month-avg" class="text-sm font-bold text-white mt-0.5 truncate">Rp 0</p>
                     </div>
+                </div>
+                <div class="bg-black/50 p-3 rounded-lg border border-gold/30 flex justify-between items-center mt-2">
+                    <div>
+                        <p class="text-[10px] text-zinc-400">Alokasi Tabungan (30%) Bulan Ini</p>
+                        <p id="rekap-month-savings" class="text-sm font-bold text-gold mt-0.5">Rp 0</p>
+                    </div>
+                    <span class="text-xs text-zinc-400 font-mono">Operasional: <span id="rekap-month-operational" class="text-white">Rp 0</span></span>
                 </div>
             </div>
 
@@ -412,7 +429,6 @@
     <!-- JAVASCRIPT UTAMA -->
     <script>
         const STORAGE_KEY = 'rizkyAssistantOrders';
-        // Tanggal mulai tracking (disesuaikan dengan kapan Anda mulai mencatat order)
         const TRACKING_START_DATE = new Date('2026-08-22');
 
         let orders = [];
@@ -553,11 +569,17 @@
                 return;
             }
 
+            // Perhitungan otomatis alokasi tabungan 30% dan sisa operasional
+            const tabungan = harga * 0.3;
+            const operasional = harga - tabungan;
+
             if (editId) {
                 const index = orders.findIndex(o => o.id === editId);
                 if (index !== -1) {
                     orders[index].layanan = layanan;
                     orders[index].harga = harga;
+                    orders[index].tabungan = tabungan;
+                    orders[index].operasional = operasional;
                     orders[index].sumber = sumber;
                     orders[index].status = status;
                     orders[index].referral = referral;
@@ -569,6 +591,8 @@
                     timestamp: new Date().toISOString(),
                     layanan,
                     harga,
+                    tabungan,
+                    operasional,
                     sumber,
                     status,
                     referral,
@@ -618,11 +642,16 @@
                 return;
             }
 
+            const tabungan = harga * 0.3;
+            const operasional = harga - tabungan;
+
             const newOrder = {
                 id: 'ORD-' + Date.now() + '-' + Math.floor(Math.random() * 1000),
                 timestamp: new Date().toISOString(),
                 layanan: layanan,
                 harga: harga,
+                tabungan: tabungan,
+                operasional: operasional,
                 sumber: sumber,
                 status: "Customer Baru",
                 referral: sumber === "Referral" ? "Referral" : "Bukan Referral",
@@ -649,6 +678,7 @@
             let todayOmzetVal = 0;
             let monthOrdersCount = 0;
             let monthOmzetVal = 0;
+            let monthSavingsVal = 0;
 
             orders.forEach(o => {
                 const oDate = new Date(o.timestamp);
@@ -659,6 +689,7 @@
                 if (oDate.getMonth() === currentMonth && oDate.getFullYear() === currentYear) {
                     monthOrdersCount++;
                     monthOmzetVal += o.harga;
+                    monthSavingsVal += (o.tabungan !== undefined ? o.tabungan : (o.harga * 0.3));
                 }
             });
 
@@ -666,6 +697,7 @@
             document.getElementById('stat-today-omzet').innerText = formatRupiah(todayOmzetVal);
             document.getElementById('stat-month-orders').innerText = monthOrdersCount;
             document.getElementById('stat-month-omzet').innerText = formatRupiah(monthOmzetVal);
+            document.getElementById('stat-month-savings').innerText = formatRupiah(monthSavingsVal);
 
             const recentContainer = document.getElementById('recent-orders-list');
             if (orders.length === 0) {
@@ -677,11 +709,13 @@
             orders.slice(0, 3).forEach(o => {
                 const d = new Date(o.timestamp);
                 const timeStr = d.toLocaleDateString('id-ID', { day: '2-digit', month: 'short' }) + ' ' + d.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+                const tabunganVal = o.tabungan !== undefined ? o.tabungan : (o.harga * 0.3);
                 html += `
                     <div class="bg-black/40 border border-zinc-800 p-2.5 rounded-lg flex justify-between items-center text-xs">
                         <div>
                             <p class="font-semibold text-white">${o.layanan}</p>
                             <p class="text-[10px] text-zinc-400">${o.sumber} &bull; ${timeStr}</p>
+                            <p class="text-[9px] text-gold mt-0.5">Tabungan: ${formatRupiah(tabunganVal)}</p>
                         </div>
                         <div class="text-right">
                             <p class="font-bold text-gold">${formatRupiah(o.harga)}</p>
@@ -700,7 +734,7 @@
             const currentYear = now.getFullYear();
 
             let todayCount = 0, todayOmzet = 0;
-            let monthCount = 0, monthOmzet = 0;
+            let monthCount = 0, monthOmzet = 0, monthSavings = 0, monthOperational = 0;
 
             const layananStats = {
                 "CV": { count: 0, omzet: 0 },
@@ -734,6 +768,10 @@
                 if (oDate.getMonth() === currentMonth && oDate.getFullYear() === currentYear) {
                     monthCount++;
                     monthOmzet += o.harga;
+                    const tabVal = o.tabungan !== undefined ? o.tabungan : (o.harga * 0.3);
+                    const opVal = o.operasional !== undefined ? o.operasional : (o.harga - tabVal);
+                    monthSavings += tabVal;
+                    monthOperational += opVal;
 
                     if (layananStats[o.layanan]) {
                         layananStats[o.layanan].count++;
@@ -764,6 +802,8 @@
             document.getElementById('rekap-month-count').innerText = monthCount;
             document.getElementById('rekap-month-omzet').innerText = formatRupiah(monthOmzet);
             document.getElementById('rekap-month-avg').innerText = formatRupiah(monthCount > 0 ? monthOmzet / monthCount : 0);
+            document.getElementById('rekap-month-savings').innerText = formatRupiah(monthSavings);
+            document.getElementById('rekap-month-operational').innerText = formatRupiah(monthOperational);
 
             let layananHtml = '';
             for (let [key, val] of Object.entries(layananStats)) {
@@ -845,9 +885,6 @@
                 dailyOrderCountMap[dateKey] = (dailyOrderCountMap[dateKey] || 0) + 1;
             });
 
-            // === PERBAIKAN BUG: hitung rata-rata berdasarkan jumlah hari sejak mulai tracking, ===
-            // === bukan dibagi fix 30 hari. Kalau belum genap 30 hari sejak TRACKING_START_DATE, ===
-            // === pembaginya ikut jumlah hari yang sudah berjalan (minimal 1). ===
             const today = new Date();
             const daysSinceTrackingStart = Math.floor((today - TRACKING_START_DATE) / (1000 * 60 * 60 * 24)) + 1;
             const effectiveDays = Math.max(1, Math.min(30, daysSinceTrackingStart));
@@ -1000,6 +1037,7 @@
             filtered.forEach(o => {
                 const d = new Date(o.timestamp);
                 const dateStr = d.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' }) + ' ' + d.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+                const tabunganVal = o.tabungan !== undefined ? o.tabungan : (o.harga * 0.3);
                 
                 html += `
                     <div class="bg-zinc-900 border border-zinc-800 p-3 rounded-xl space-y-2 text-xs">
@@ -1008,7 +1046,10 @@
                                 <span class="font-bold text-white text-sm">${o.layanan}</span>
                                 <p class="text-[10px] text-zinc-400 mt-0.5">${dateStr}</p>
                             </div>
-                            <span class="font-bold text-gold text-sm">${formatRupiah(o.harga)}</span>
+                            <div class="text-right">
+                                <span class="font-bold text-gold text-sm">${formatRupiah(o.harga)}</span>
+                                <p class="text-[9px] text-zinc-400">Tabungan: <span class="text-gold">${formatRupiah(tabunganVal)}</span></p>
+                            </div>
                         </div>
                         <div class="flex flex-wrap gap-1 pt-1">
                             <span class="bg-black/50 border border-zinc-800 px-2 py-0.5 rounded text-[10px] text-zinc-300">Sumber: ${o.sumber}</span>
@@ -1026,7 +1067,6 @@
             container.innerHTML = html;
         }
 
-        // Hapus Order Tunggal dengan Konfirmasi & Update Statistik Seketika
         function confirmDeleteOrder(id) {
             showConfirmModal(
                 "Hapus Order",
