@@ -102,7 +102,7 @@
                 <div>
                     <p class="text-xs text-gold font-medium uppercase tracking-wider">Akumulasi Tabungan (30%)</p>
                     <h3 id="stat-month-savings" class="text-lg font-bold text-white mt-0.5">Rp 0</h3>
-                    <p class="text-[10px] text-zinc-500">Porsi alokasi bulan ini</p>
+                    <p class="text-[10px] text-zinc-500">Mulai hitung tgl 31 Agt - 1 Okt</p>
                 </div>
                 <span class="text-xl">💰</span>
             </div>
@@ -198,7 +198,7 @@
                 </div>
                 <div class="bg-black/50 p-3 rounded-lg border border-gold/30 flex justify-between items-center mt-2">
                     <div>
-                        <p class="text-[10px] text-zinc-400">Alokasi Tabungan (30%) Bulan Ini</p>
+                        <p class="text-[10px] text-zinc-400">Tabungan (30%) Mulai 31 Agt</p>
                         <p id="rekap-month-savings" class="text-sm font-bold text-gold mt-0.5">Rp 0</p>
                     </div>
                     <span class="text-xs text-zinc-400 font-mono">Operasional: <span id="rekap-month-operational" class="text-white">Rp 0</span></span>
@@ -430,6 +430,7 @@
     <script>
         const STORAGE_KEY = 'rizkyAssistantOrders';
         const TRACKING_START_DATE = new Date('2026-08-22');
+        const SAVINGS_START_DATE = new Date('2026-08-31'); // Mulai hitung tabungan dari tgl 31 Agt
 
         let orders = [];
         let currentConfirmCallback = null;
@@ -569,7 +570,6 @@
                 return;
             }
 
-            // Perhitungan otomatis alokasi tabungan 30% dan sisa operasional
             const tabungan = harga * 0.3;
             const operasional = harga - tabungan;
 
@@ -689,6 +689,9 @@
                 if (oDate.getMonth() === currentMonth && oDate.getFullYear() === currentYear) {
                     monthOrdersCount++;
                     monthOmzetVal += o.harga;
+                }
+                // Tabungan hanya dihitung mulai dari tanggal 31 Agustus 2026
+                if (oDate >= SAVINGS_START_DATE) {
                     monthSavingsVal += (o.tabungan !== undefined ? o.tabungan : (o.harga * 0.3));
                 }
             });
@@ -768,11 +771,16 @@
                 if (oDate.getMonth() === currentMonth && oDate.getFullYear() === currentYear) {
                     monthCount++;
                     monthOmzet += o.harga;
+                }
+
+                if (oDate >= SAVINGS_START_DATE) {
                     const tabVal = o.tabungan !== undefined ? o.tabungan : (o.harga * 0.3);
                     const opVal = o.operasional !== undefined ? o.operasional : (o.harga - tabVal);
                     monthSavings += tabVal;
                     monthOperational += opVal;
+                }
 
+                if (oDate.getMonth() === currentMonth && oDate.getFullYear() === currentYear) {
                     if (layananStats[o.layanan]) {
                         layananStats[o.layanan].count++;
                         layananStats[o.layanan].omzet += o.harga;
