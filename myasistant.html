@@ -430,7 +430,7 @@
     <script>
         const STORAGE_KEY = 'rizkyAssistantOrders';
         const TRACKING_START_DATE = new Date('2026-08-22');
-        const SAVINGS_START_DATE = new Date('2026-08-31'); // Mulai hitung tabungan dari tgl 31 Agt
+        const SAVINGS_START_DATE = new Date('2026-08-31T00:00:00'); // Diperbaiki agar aman dari zona waktu lokal
 
         let orders = [];
         let currentConfirmCallback = null;
@@ -690,8 +690,12 @@
                     monthOrdersCount++;
                     monthOmzetVal += o.harga;
                 }
-                // Tabungan hanya dihitung mulai dari tanggal 31 Agustus 2026
-                if (oDate >= SAVINGS_START_DATE) {
+                
+                // Normalisasi pengecekan tanggal tabungan agar aman dari perbedaan zona waktu
+                const orderDayOnly = new Date(oDate.getFullYear(), oDate.getMonth(), oDate.getDate());
+                const savingsStartOnly = new Date(SAVINGS_START_DATE.getFullYear(), SAVINGS_START_DATE.getMonth(), SAVINGS_START_DATE.getDate());
+                
+                if (orderDayOnly >= savingsStartOnly) {
                     monthSavingsVal += (o.tabungan !== undefined ? o.tabungan : (o.harga * 0.3));
                 }
             });
@@ -773,7 +777,10 @@
                     monthOmzet += o.harga;
                 }
 
-                if (oDate >= SAVINGS_START_DATE) {
+                const orderDayOnly = new Date(oDate.getFullYear(), oDate.getMonth(), oDate.getDate());
+                const savingsStartOnly = new Date(SAVINGS_START_DATE.getFullYear(), SAVINGS_START_DATE.getMonth(), SAVINGS_START_DATE.getDate());
+
+                if (orderDayOnly >= savingsStartOnly) {
                     const tabVal = o.tabungan !== undefined ? o.tabungan : (o.harga * 0.3);
                     const opVal = o.operasional !== undefined ? o.operasional : (o.harga - tabVal);
                     monthSavings += tabVal;
