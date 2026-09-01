@@ -465,7 +465,6 @@
             return d;
         }
 
-        // Logika siklus presisi tanggal 22 sampai tanggal 22 bulan berikutnya (pas genap 1 bulan)
         function getCycleDetails(targetDate = new Date()) {
             const target = new Date(targetDate);
             target.setHours(0, 0, 0, 0);
@@ -767,7 +766,6 @@
                     todayOrdersCount++;
                     todayOmzetVal += o.harga;
                     
-                    // Tabungan khusus hari ini (hanya jika tanggal order >= 31 Agustus)
                     if (orderDayOnly >= savingsStartOnly) {
                         todaySavingsVal += (o.tabungan !== undefined ? o.tabungan : (o.harga * 0.3));
                     }
@@ -881,12 +879,13 @@
                     const orderDayOnly = new Date(oDate.getFullYear(), oDate.getMonth(), oDate.getDate());
 
                     let tabVal = 0;
-                    let opVal = o.harga; // Default 100% masuk operasional jika sebelum tgl 31 agt
+                    let opVal = 0; // Operasional HANYA dihitung dari order yang tanggalnya >= 31 Agustus
 
                     if (orderDayOnly >= savingsStartOnly) {
                         tabVal = o.tabungan !== undefined ? o.tabungan : (o.harga * 0.3);
                         opVal = o.harga - tabVal;
                     }
+                    // Order sebelum tgl 31 Agt tidak masuk hitungan operasional tabungan baru
 
                     cycleSavings += tabVal;
                     cycleOperational += opVal;
@@ -1264,7 +1263,7 @@
             document.getElementById('confirm-title').innerText = title;
             document.getElementById('confirm-message').innerText = message;
             currentConfirmCallback = callback;
-            document.getElementById('confirm-modal').classList.add('hidden');
+            document.getElementById('confirm-modal').classList.remove('hidden');
         }
 
         function closeConfirmModal() {
