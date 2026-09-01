@@ -88,7 +88,7 @@
                 <div class="bg-zinc-900/90 border border-zinc-800 p-3.5 rounded-xl shadow">
                     <p class="text-xs text-zinc-400">Order Siklus Ini</p>
                     <h3 id="stat-month-orders" class="text-2xl font-bold text-white mt-1">0</h3>
-                    <p class="text-[10px] text-zinc-500 mt-0.5" id="current-month-label">Siklus 30 Hari</p>
+                    <p class="text-[10px] text-zinc-500 mt-0.5" id="current-month-label">Siklus Bulanan</p>
                 </div>
                 <div class="bg-zinc-900/90 border border-zinc-800 p-3.5 rounded-xl shadow">
                     <p class="text-xs text-zinc-400">Omzet Siklus Ini</p>
@@ -102,7 +102,7 @@
                 <div>
                     <p class="text-xs text-gold font-medium uppercase tracking-wider">Akumulasi Tabungan (30%)</p>
                     <h3 id="stat-month-savings" class="text-lg font-bold text-white mt-0.5">Rp 0</h3>
-                    <p class="text-[10px] text-zinc-500">Mulai hitung tgl 31 Agt - 1 Okt</p>
+                    <p class="text-[10px] text-zinc-500">Mulai hitung tgl 31 Agt</p>
                 </div>
                 <span class="text-xl">💰</span>
             </div>
@@ -206,7 +206,7 @@
                 </div>
                 <div class="bg-black/50 p-3 rounded-lg border border-gold/30 flex justify-between items-center mt-2">
                     <div>
-                        <p class="text-[10px] text-zinc-400">Tabungan (30%)</p>
+                        <p class="text-[10px] text-zinc-400">Tabungan (30%) Mulai 31 Agt</p>
                         <p id="rekap-month-savings" class="text-sm font-bold text-gold mt-0.5">Rp 0</p>
                     </div>
                     <span class="text-xs text-zinc-400 font-mono">Operasional: <span id="rekap-month-operational" class="text-white">Rp 0</span></span>
@@ -437,8 +437,8 @@
     <!-- JAVASCRIPT UTAMA -->
     <script>
         const STORAGE_KEY = 'rizkyAssistantOrders';
-        const TRACKING_START_DATE = new Date(2026, 7, 22, 0, 0, 0); // 22 Agustus 2026 (Bulan 7 dalam JS = Agustus)
-        const SAVINGS_START_DATE = new Date(2026, 7, 31, 0, 0, 0);
+        const TRACKING_START_DATE = new Date(2026, 7, 22, 0, 0, 0); // 22 Agustus 2026
+        const SAVINGS_START_DATE = new Date(2026, 7, 31, 0, 0, 0);   // 31 Agustus 2026
 
         let orders = [];
         let currentConfirmCallback = null;
@@ -459,7 +459,13 @@
             document.getElementById('current-month-label').innerText = activeCycle.label;
         }
 
-        // Fungsi pembantu untuk menentukan siklus 30 harian secara presisi
+        function addMonths(date, months) {
+            const d = new Date(date);
+            d.setMonth(d.getMonth() + months);
+            return d;
+        }
+
+        // Logika siklus presisi tanggal 22 sampai tanggal 22 bulan berikutnya
         function getCycleDetails(targetDate = new Date()) {
             const target = new Date(targetDate);
             target.setHours(0, 0, 0, 0);
@@ -467,23 +473,33 @@
             const start = new Date(TRACKING_START_DATE);
             start.setHours(0, 0, 0, 0);
 
-            const msPerDay = 1000 * 60 * 60 * 24;
-            const msPerCycle = msPerDay * 30;
-
-            const diffMs = target.getTime() - start.getTime();
-            if (diffMs < 0) {
-                const end = new Date(start.getTime() + msPerCycle - 1);
+            if (target < start) {
+                const cycleEnd = new Date(addMonths(start, 1));
+                cycleEnd.setDate(cycleEnd.getDate() - 1);
                 return {
                     cycleIndex: 0,
                     startDate: start,
-                    endDate: end,
-                    label: "Periode Awal"
+                    endDate: cycleEnd,
+                    label: `Periode 22 Agt - 22 Sep 2026`
                 };
             }
 
-            const cycleIndex = Math.floor(diffMs / msPerCycle);
-            const cycleStart = new Date(start.getTime() + (cycleIndex * msPerCycle));
-            const cycleEnd = new Date(cycleStart.getTime() + msPerCycle - 1);
+            let cycleIndex = 0;
+            let cycleStart = new Date(start);
+            let cycleEnd = new Date(addMonths(start, 1));
+            cycleEnd.setDate(cycleEnd.getDate() - 1);
+
+            while (true) {
+                if (target >= cycleStart && target <= cycleEnd) {
+                    break;
+                }
+                cycleIndex++;
+                cycleStart = new Date(addMonths(start, cycleIndex));
+                cycleEnd = new Date(addMonths(start, cycleIndex + 1));
+                cycleEnd.setDate(cycleEnd.getDate() - 1);
+
+                if (cycleIndex > 120) break;
+            }
 
             const opt = { day: 'numeric', month: 'short', year: 'numeric' };
             const label = `Periode ${cycleStart.toLocaleDateString('id-ID', opt)} - ${cycleEnd.toLocaleDateString('id-ID', opt)}`;
@@ -742,7 +758,7 @@
             let todayOmzetVal = 0;
             let cycleOrdersCount = 0;
             let cycleOmzetVal = 0;
-            let monthSavingsVal = 0;
+            let cycleSavingsVal = 0;
 
             orders.forEach(o => {
                 const oDate = new Date(o.timestamp);
@@ -754,13 +770,14 @@
                 if (oDate >= activeCycle.startDate && oDate <= activeCycle.endDate) {
                     cycleOrdersCount++;
                     cycleOmzetVal += o.harga;
-                }
-                
-                const orderDayOnly = new Date(oDate.getFullYear(), oDate.getMonth(), oDate.getDate());
-                const savingsStartOnly = new Date(SAVINGS_START_DATE.getFullYear(), SAVINGS_START_DATE.getMonth(), SAVINGS_START_DATE.getDate());
-                
-                if (orderDayOnly >= savingsStartOnly) {
-                    monthSavingsVal += (o.tabungan !== undefined ? o.tabungan : (o.harga * 0.3));
+                    
+                    // Tabungan 30% HANYA dihitung jika tanggal order >= 31 Agustus 2026
+                    const orderDayOnly = new Date(oDate.getFullYear(), oDate.getMonth(), oDate.getDate());
+                    const savingsStartOnly = new Date(SAVINGS_START_DATE.getFullYear(), SAVINGS_START_DATE.getMonth(), SAVINGS_START_DATE.getDate());
+                    
+                    if (orderDayOnly >= savingsStartOnly) {
+                        cycleSavingsVal += (o.tabungan !== undefined ? o.tabungan : (o.harga * 0.3));
+                    }
                 }
             });
 
@@ -768,7 +785,7 @@
             document.getElementById('stat-today-omzet').innerText = formatRupiah(todayOmzetVal);
             document.getElementById('stat-month-orders').innerText = cycleOrdersCount;
             document.getElementById('stat-month-omzet').innerText = formatRupiah(cycleOmzetVal);
-            document.getElementById('stat-month-savings').innerText = formatRupiah(monthSavingsVal);
+            document.getElementById('stat-month-savings').innerText = formatRupiah(cycleSavingsVal);
 
             const recentContainer = document.getElementById('recent-orders-list');
             if (orders.length === 0) {
@@ -861,8 +878,15 @@
                     cycleCount++;
                     cycleOmzet += o.harga;
 
-                    const tabVal = o.tabungan !== undefined ? o.tabungan : (o.harga * 0.3);
-                    const opVal = o.operasional !== undefined ? o.operasional : (o.harga - tabVal);
+                    const orderDayOnly = new Date(oDate.getFullYear(), oDate.getMonth(), oDate.getDate());
+                    const savingsStartOnly = new Date(SAVINGS_START_DATE.getFullYear(), SAVINGS_START_DATE.getMonth(), SAVINGS_START_DATE.getDate());
+
+                    let tabVal = 0;
+                    if (orderDayOnly >= savingsStartOnly) {
+                        tabVal = o.tabungan !== undefined ? o.tabungan : (o.harga * 0.3);
+                    }
+                    const opVal = o.harga - tabVal;
+
                     cycleSavings += tabVal;
                     cycleOperational += opVal;
 
@@ -1215,8 +1239,10 @@
 
             const reader = new FileReader();
             reader.onload = function(e) {
+                /** @type {any} */
+                const targetResult = e.target.result;
                 try {
-                    const parsed = JSON.parse(e.target.result);
+                    const parsed = JSON.parse(targetResult);
                     if (Array.isArray(parsed)) {
                         orders = parsed;
                         saveOrdersToStorage();
