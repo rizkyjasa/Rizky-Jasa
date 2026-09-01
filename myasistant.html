@@ -437,12 +437,12 @@
     <!-- JAVASCRIPT UTAMA -->
     <script>
         const STORAGE_KEY = 'rizkyAssistantOrders';
-        const TRACKING_START_DATE = new Date('2026-08-22T00:00:00');
-        const SAVINGS_START_DATE = new Date('2026-08-31T00:00:00');
+        const TRACKING_START_DATE = new Date(2026, 7, 22, 0, 0, 0); // 22 Agustus 2026 (Bulan 7 dalam JS = Agustus)
+        const SAVINGS_START_DATE = new Date(2026, 7, 31, 0, 0, 0);
 
         let orders = [];
         let currentConfirmCallback = null;
-        let selectedArchiveIndex = 0; // 0 artinya siklus aktif saat ini
+        let selectedArchiveIndex = 0; 
 
         window.addEventListener('DOMContentLoaded', () => {
             loadOrders();
@@ -459,27 +459,30 @@
             document.getElementById('current-month-label').innerText = activeCycle.label;
         }
 
-        // Fungsi pembantu untuk menentukan siklus 30 harian (Mulai 22 Agustus 2026 dan seterusnya setiap 30 hari)
+        // Fungsi pembantu untuk menentukan siklus 30 harian secara presisi
         function getCycleDetails(targetDate = new Date()) {
-            const startTimestamp = TRACKING_START_DATE.getTime();
-            const targetTimestamp = new Date(targetDate).getTime();
-            
+            const target = new Date(targetDate);
+            target.setHours(0, 0, 0, 0);
+
+            const start = new Date(TRACKING_START_DATE);
+            start.setHours(0, 0, 0, 0);
+
             const msPerDay = 1000 * 60 * 60 * 24;
             const msPerCycle = msPerDay * 30;
 
-            const diffMs = targetTimestamp - startTimestamp;
+            const diffMs = target.getTime() - start.getTime();
             if (diffMs < 0) {
-                // Sebelum tanggal mulai, masukkan ke siklus pertama
+                const end = new Date(start.getTime() + msPerCycle - 1);
                 return {
                     cycleIndex: 0,
-                    startDate: new Date(TRACKING_START_DATE),
-                    endDate: new Date(TRACKING_START_DATE.getTime() + msPerCycle - 1),
-                    label: "Periode 22 Agt - 22 Sep 2026"
+                    startDate: start,
+                    endDate: end,
+                    label: "Periode Awal"
                 };
             }
 
             const cycleIndex = Math.floor(diffMs / msPerCycle);
-            const cycleStart = new Date(startTimestamp + (cycleIndex * msPerCycle));
+            const cycleStart = new Date(start.getTime() + (cycleIndex * msPerCycle));
             const cycleEnd = new Date(cycleStart.getTime() + msPerCycle - 1);
 
             const opt = { day: 'numeric', month: 'short', year: 'numeric' };
@@ -497,12 +500,10 @@
             return getCycleDetails(new Date());
         }
 
-        // Mendapatkan daftar seluruh siklus yang ada berdasarkan data order yang pernah masuk
         function getAllAvailableCycles() {
             const activeCycle = getActiveCycleInfo();
             const cyclesMap = new Map();
 
-            // Selalu masukkan siklus aktif saat ini
             cyclesMap.set(activeCycle.cycleIndex, activeCycle);
 
             orders.forEach(o => {
@@ -511,7 +512,6 @@
                 cyclesMap.set(cycle.cycleIndex, cycle);
             });
 
-            // Urutkan dari siklus terbaru ke terlama
             const sortedCycles = Array.from(cyclesMap.values()).sort((a, b) => b.cycleIndex - a.cycleIndex);
             return sortedCycles;
         }
@@ -751,7 +751,6 @@
                     todayOmzetVal += o.harga;
                 }
 
-                // Cek apakah order masuk dalam siklus 30 harian aktif saat ini
                 if (oDate >= activeCycle.startDate && oDate <= activeCycle.endDate) {
                     cycleOrdersCount++;
                     cycleOmzetVal += o.harga;
@@ -858,7 +857,6 @@
                     todayOmzet += o.harga;
                 }
 
-                // Filter order berdasarkan siklus/arsip yang dipilih
                 if (oDate >= currentCycle.startDate && oDate <= currentCycle.endDate) {
                     cycleCount++;
                     cycleOmzet += o.harga;
@@ -1243,7 +1241,7 @@
         }
 
         function closeConfirmModal() {
-            document.getElementById('confirm-modal').classList.0('hidden') || document.getElementById('confirm-modal').classList.add('hidden');
+            document.getElementById('confirm-modal').classList.add('hidden');
             currentConfirmCallback = null;
         }
 
