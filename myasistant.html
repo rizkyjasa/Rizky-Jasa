@@ -86,14 +86,14 @@
                     <p class="text-[10px] text-zinc-500 mt-0.5">Pendapatan harian</p>
                 </div>
                 <div class="bg-zinc-900/90 border border-zinc-800 p-3.5 rounded-xl shadow">
-                    <p class="text-xs text-zinc-400">Order Bulan Ini</p>
+                    <p class="text-xs text-zinc-400">Order Siklus Ini</p>
                     <h3 id="stat-month-orders" class="text-2xl font-bold text-white mt-1">0</h3>
-                    <p class="text-[10px] text-zinc-500 mt-0.5" id="current-month-label">Bulan berjalan</p>
+                    <p class="text-[10px] text-zinc-500 mt-0.5" id="current-month-label">Siklus 30 Hari</p>
                 </div>
                 <div class="bg-zinc-900/90 border border-zinc-800 p-3.5 rounded-xl shadow">
-                    <p class="text-xs text-zinc-400">Omzet Bulan Ini</p>
+                    <p class="text-xs text-zinc-400">Omzet Siklus Ini</p>
                     <h3 id="stat-month-omzet" class="text-lg font-bold text-gold mt-1 truncate">Rp 0</h3>
-                    <p class="text-[10px] text-zinc-500 mt-0.5">Akumulasi bulanan</p>
+                    <p class="text-[10px] text-zinc-500 mt-0.5">Akumulasi siklus aktif</p>
                 </div>
             </div>
 
@@ -160,6 +160,14 @@
                 <button onclick="switchView('dashboard')" class="text-xs bg-zinc-800 text-zinc-300 px-3 py-1.5 rounded-lg hover:bg-zinc-700">Kembali</button>
             </div>
 
+            <!-- Pilih Arsip Periode Rekap -->
+            <div class="bg-zinc-900 border border-zinc-800 p-3 rounded-xl flex items-center justify-between">
+                <span class="text-xs text-zinc-400 font-medium">Pilih Periode Rekap:</span>
+                <select id="select-archive-cycle" onchange="changeArchiveCycle(this.value)" class="bg-black border border-zinc-700 text-xs text-gold font-medium rounded-lg px-3 py-1.5 focus:outline-none focus:border-gold">
+                    <!-- Populated by JS -->
+                </select>
+            </div>
+
             <!-- Rekap Hari Ini -->
             <div class="bg-zinc-900 border border-zinc-800 p-4 rounded-xl space-y-2">
                 <h3 class="text-xs font-semibold text-gold uppercase tracking-wider">Rekap Hari Ini</h3>
@@ -179,9 +187,9 @@
                 </div>
             </div>
 
-            <!-- Rekap Bulan Ini -->
+            <!-- Rekap Siklus Ini / Arsip Terpilih -->
             <div class="bg-zinc-900 border border-zinc-800 p-4 rounded-xl space-y-2">
-                <h3 class="text-xs font-semibold text-gold uppercase tracking-wider">Rekap Bulan Ini</h3>
+                <h3 id="rekap-cycle-title" class="text-xs font-semibold text-gold uppercase tracking-wider">Rekap Siklus Ini</h3>
                 <div class="grid grid-cols-3 gap-2 pt-1 text-center">
                     <div class="bg-black/40 p-2.5 rounded-lg border border-zinc-800">
                         <p class="text-[10px] text-zinc-400">Jumlah Order</p>
@@ -198,7 +206,7 @@
                 </div>
                 <div class="bg-black/50 p-3 rounded-lg border border-gold/30 flex justify-between items-center mt-2">
                     <div>
-                        <p class="text-[10px] text-zinc-400">Tabungan (30%) Mulai 31 Agt</p>
+                        <p class="text-[10px] text-zinc-400">Tabungan (30%)</p>
                         <p id="rekap-month-savings" class="text-sm font-bold text-gold mt-0.5">Rp 0</p>
                     </div>
                     <span class="text-xs text-zinc-400 font-mono">Operasional: <span id="rekap-month-operational" class="text-white">Rp 0</span></span>
@@ -207,7 +215,7 @@
 
             <!-- Breakdown Layanan -->
             <div class="bg-zinc-900 border border-zinc-800 p-4 rounded-xl space-y-2">
-                <h3 class="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Breakdown Layanan (Bulan Ini)</h3>
+                <h3 class="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Breakdown Layanan (Periode Ini)</h3>
                 <div id="breakdown-layanan" class="space-y-1.5 text-xs">
                     <!-- Populated by JS -->
                 </div>
@@ -429,11 +437,12 @@
     <!-- JAVASCRIPT UTAMA -->
     <script>
         const STORAGE_KEY = 'rizkyAssistantOrders';
-        const TRACKING_START_DATE = new Date('2026-08-22');
-        const SAVINGS_START_DATE = new Date('2026-08-31T00:00:00'); // Diperbaiki agar aman dari zona waktu lokal
+        const TRACKING_START_DATE = new Date('2026-08-22T00:00:00');
+        const SAVINGS_START_DATE = new Date('2026-08-31T00:00:00');
 
         let orders = [];
         let currentConfirmCallback = null;
+        let selectedArchiveIndex = 0; // 0 artinya siklus aktif saat ini
 
         window.addEventListener('DOMContentLoaded', () => {
             loadOrders();
@@ -446,8 +455,65 @@
             const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
             document.getElementById('current-date-display').innerText = now.toLocaleDateString('id-ID', options);
             
-            const monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
-            document.getElementById('current-month-label').innerText = `${monthNames[now.getMonth()]} ${now.getFullYear()}`;
+            const activeCycle = getActiveCycleInfo();
+            document.getElementById('current-month-label').innerText = activeCycle.label;
+        }
+
+        // Fungsi pembantu untuk menentukan siklus 30 harian (Mulai 22 Agustus 2026 dan seterusnya setiap 30 hari)
+        function getCycleDetails(targetDate = new Date()) {
+            const startTimestamp = TRACKING_START_DATE.getTime();
+            const targetTimestamp = new Date(targetDate).getTime();
+            
+            const msPerDay = 1000 * 60 * 60 * 24;
+            const msPerCycle = msPerDay * 30;
+
+            const diffMs = targetTimestamp - startTimestamp;
+            if (diffMs < 0) {
+                // Sebelum tanggal mulai, masukkan ke siklus pertama
+                return {
+                    cycleIndex: 0,
+                    startDate: new Date(TRACKING_START_DATE),
+                    endDate: new Date(TRACKING_START_DATE.getTime() + msPerCycle - 1),
+                    label: "Periode 22 Agt - 22 Sep 2026"
+                };
+            }
+
+            const cycleIndex = Math.floor(diffMs / msPerCycle);
+            const cycleStart = new Date(startTimestamp + (cycleIndex * msPerCycle));
+            const cycleEnd = new Date(cycleStart.getTime() + msPerCycle - 1);
+
+            const opt = { day: 'numeric', month: 'short', year: 'numeric' };
+            const label = `Periode ${cycleStart.toLocaleDateString('id-ID', opt)} - ${cycleEnd.toLocaleDateString('id-ID', opt)}`;
+
+            return {
+                cycleIndex,
+                startDate: cycleStart,
+                endDate: cycleEnd,
+                label
+            };
+        }
+
+        function getActiveCycleInfo() {
+            return getCycleDetails(new Date());
+        }
+
+        // Mendapatkan daftar seluruh siklus yang ada berdasarkan data order yang pernah masuk
+        function getAllAvailableCycles() {
+            const activeCycle = getActiveCycleInfo();
+            const cyclesMap = new Map();
+
+            // Selalu masukkan siklus aktif saat ini
+            cyclesMap.set(activeCycle.cycleIndex, activeCycle);
+
+            orders.forEach(o => {
+                const oDate = new Date(o.timestamp);
+                const cycle = getCycleDetails(oDate);
+                cyclesMap.set(cycle.cycleIndex, cycle);
+            });
+
+            // Urutkan dari siklus terbaru ke terlama
+            const sortedCycles = Array.from(cyclesMap.values()).sort((a, b) => b.cycleIndex - a.cycleIndex);
+            return sortedCycles;
         }
 
         function loadOrders() {
@@ -492,7 +558,7 @@
                 updateDashboard();
             } else if (viewName === 'rekap') {
                 document.getElementById('view-rekap').classList.remove('hidden');
-                updateRekapView();
+                initRekapView();
             } else if (viewName === 'analisis') {
                 document.getElementById('view-analisis').classList.remove('hidden');
                 updateAnalisisView();
@@ -670,14 +736,12 @@
 
         function updateDashboard() {
             const todayStr = new Date().toDateString();
-            const now = new Date();
-            const currentMonth = now.getMonth();
-            const currentYear = now.getFullYear();
+            const activeCycle = getActiveCycleInfo();
 
             let todayOrdersCount = 0;
             let todayOmzetVal = 0;
-            let monthOrdersCount = 0;
-            let monthOmzetVal = 0;
+            let cycleOrdersCount = 0;
+            let cycleOmzetVal = 0;
             let monthSavingsVal = 0;
 
             orders.forEach(o => {
@@ -686,12 +750,13 @@
                     todayOrdersCount++;
                     todayOmzetVal += o.harga;
                 }
-                if (oDate.getMonth() === currentMonth && oDate.getFullYear() === currentYear) {
-                    monthOrdersCount++;
-                    monthOmzetVal += o.harga;
+
+                // Cek apakah order masuk dalam siklus 30 harian aktif saat ini
+                if (oDate >= activeCycle.startDate && oDate <= activeCycle.endDate) {
+                    cycleOrdersCount++;
+                    cycleOmzetVal += o.harga;
                 }
                 
-                // Normalisasi pengecekan tanggal tabungan agar aman dari perbedaan zona waktu
                 const orderDayOnly = new Date(oDate.getFullYear(), oDate.getMonth(), oDate.getDate());
                 const savingsStartOnly = new Date(SAVINGS_START_DATE.getFullYear(), SAVINGS_START_DATE.getMonth(), SAVINGS_START_DATE.getDate());
                 
@@ -702,8 +767,8 @@
 
             document.getElementById('stat-today-orders').innerText = todayOrdersCount;
             document.getElementById('stat-today-omzet').innerText = formatRupiah(todayOmzetVal);
-            document.getElementById('stat-month-orders').innerText = monthOrdersCount;
-            document.getElementById('stat-month-omzet').innerText = formatRupiah(monthOmzetVal);
+            document.getElementById('stat-month-orders').innerText = cycleOrdersCount;
+            document.getElementById('stat-month-omzet').innerText = formatRupiah(cycleOmzetVal);
             document.getElementById('stat-month-savings').innerText = formatRupiah(monthSavingsVal);
 
             const recentContainer = document.getElementById('recent-orders-list');
@@ -734,14 +799,34 @@
             recentContainer.innerHTML = html;
         }
 
-        function updateRekapView() {
+        function initRekapView() {
+            const cycles = getAllAvailableCycles();
+            const selectEl = document.getElementById('select-archive-cycle');
+            
+            let optionsHtml = '';
+            cycles.forEach(c => {
+                const selectedAttr = (c.cycleIndex === selectedArchiveIndex) ? 'selected' : '';
+                optionsHtml += `<option value="${c.cycleIndex}" ${selectedAttr}>${c.label}</option>`;
+            });
+            selectEl.innerHTML = optionsHtml;
+
+            updateRekapViewData();
+        }
+
+        function changeArchiveCycle(val) {
+            selectedArchiveIndex = parseInt(val);
+            updateRekapViewData();
+        }
+
+        function updateRekapViewData() {
             const todayStr = new Date().toDateString();
-            const now = new Date();
-            const currentMonth = now.getMonth();
-            const currentYear = now.getFullYear();
+            const cycles = getAllAvailableCycles();
+            const currentCycle = cycles.find(c => c.cycleIndex === selectedArchiveIndex) || getActiveCycleInfo();
+
+            document.getElementById('rekap-cycle-title').innerText = `Rekap ${currentCycle.label}`;
 
             let todayCount = 0, todayOmzet = 0;
-            let monthCount = 0, monthOmzet = 0, monthSavings = 0, monthOperational = 0;
+            let cycleCount = 0, cycleOmzet = 0, cycleSavings = 0, cycleOperational = 0;
 
             const layananStats = {
                 "CV": { count: 0, omzet: 0 },
@@ -772,22 +857,17 @@
                     todayCount++;
                     todayOmzet += o.harga;
                 }
-                if (oDate.getMonth() === currentMonth && oDate.getFullYear() === currentYear) {
-                    monthCount++;
-                    monthOmzet += o.harga;
-                }
 
-                const orderDayOnly = new Date(oDate.getFullYear(), oDate.getMonth(), oDate.getDate());
-                const savingsStartOnly = new Date(SAVINGS_START_DATE.getFullYear(), SAVINGS_START_DATE.getMonth(), SAVINGS_START_DATE.getDate());
+                // Filter order berdasarkan siklus/arsip yang dipilih
+                if (oDate >= currentCycle.startDate && oDate <= currentCycle.endDate) {
+                    cycleCount++;
+                    cycleOmzet += o.harga;
 
-                if (orderDayOnly >= savingsStartOnly) {
                     const tabVal = o.tabungan !== undefined ? o.tabungan : (o.harga * 0.3);
                     const opVal = o.operasional !== undefined ? o.operasional : (o.harga - tabVal);
-                    monthSavings += tabVal;
-                    monthOperational += opVal;
-                }
+                    cycleSavings += tabVal;
+                    cycleOperational += opVal;
 
-                if (oDate.getMonth() === currentMonth && oDate.getFullYear() === currentYear) {
                     if (layananStats[o.layanan]) {
                         layananStats[o.layanan].count++;
                         layananStats[o.layanan].omzet += o.harga;
@@ -814,11 +894,11 @@
             document.getElementById('rekap-today-omzet').innerText = formatRupiah(todayOmzet);
             document.getElementById('rekap-today-avg').innerText = formatRupiah(todayCount > 0 ? todayOmzet / todayCount : 0);
 
-            document.getElementById('rekap-month-count').innerText = monthCount;
-            document.getElementById('rekap-month-omzet').innerText = formatRupiah(monthOmzet);
-            document.getElementById('rekap-month-avg').innerText = formatRupiah(monthCount > 0 ? monthOmzet / monthCount : 0);
-            document.getElementById('rekap-month-savings').innerText = formatRupiah(monthSavings);
-            document.getElementById('rekap-month-operational').innerText = formatRupiah(monthOperational);
+            document.getElementById('rekap-month-count').innerText = cycleCount;
+            document.getElementById('rekap-month-omzet').innerText = formatRupiah(cycleOmzet);
+            document.getElementById('rekap-month-avg').innerText = formatRupiah(cycleCount > 0 ? cycleOmzet / cycleCount : 0);
+            document.getElementById('rekap-month-savings').innerText = formatRupiah(cycleSavings);
+            document.getElementById('rekap-month-operational').innerText = formatRupiah(cycleOperational);
 
             let layananHtml = '';
             for (let [key, val] of Object.entries(layananStats)) {
@@ -1163,7 +1243,7 @@
         }
 
         function closeConfirmModal() {
-            document.getElementById('confirm-modal').classList.add('hidden');
+            document.getElementById('confirm-modal').classList.0('hidden') || document.getElementById('confirm-modal').classList.add('hidden');
             currentConfirmCallback = null;
         }
 
