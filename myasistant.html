@@ -206,7 +206,10 @@
                 </div>
                 <div class="bg-black/50 p-3 rounded-lg border border-gold/30 flex justify-between items-center mt-2">
                     <div>
-                        <p class="text-[10px] text-zinc-400">Total Tabungan (30% Mulai 31 Agt)</p>
+                        <div class="flex items-center space-x-2">
+                            <p class="text-[10px] text-zinc-400">Total Tabungan (30% Mulai 31 Agt)</p>
+                            <button onclick="toggleSavingsVisibility()" id="btn-toggle-savings" class="text-xs text-gold hover:text-gold-light focus:outline-none" title="Sembunyikan/Tampilkan Nominal">👁️</button>
+                        </div>
                         <p id="rekap-month-savings" class="text-sm font-bold text-gold mt-0.5">Rp 0</p>
                     </div>
                     <span class="text-xs text-zinc-400 font-mono">Operasional: <span id="rekap-month-operational" class="text-white">Rp 0</span></span>
@@ -366,9 +369,10 @@
                         <option value="" disabled selected>Pilih Layanan</option>
                         <option value="CV">CV</option>
                         <option value="Paket CV + Surat Lamaran">Paket CV + Surat Lamaran</option>
+                        <option value="Paket Komplit Kerja">Paket Komplit Kerja</option>
                         <option value="Edit Dokumen">Edit Dokumen</option>
                         <option value="Edit Pas Foto">Edit Pas Foto</option>
-                        <option value="Iklan AI">Iklan AI</option>
+                        <option value="Landing Page">Landing Page</option>
                         <option value="Website">Website</option>
                         <option value="Lainnya">Lainnya</option>
                     </select>
@@ -376,7 +380,7 @@
 
                 <div>
                     <label class="block text-xs font-medium text-zinc-300 mb-1">Harga (Rupiah) *</label>
-                    <input type="number" id="form-harga" required min="0" placeholder="Contoh: 17000" class="w-full bg-black border border-zinc-700 text-xs text-white rounded-lg p-2.5 focus:outline-none focus:border-gold">
+                    <input type="text" id="form-harga" required placeholder="Contoh: 20.000" oninput="formatInputHarga(this)" class="w-full bg-black border border-zinc-700 text-xs text-white rounded-lg p-2.5 focus:outline-none focus:border-gold">
                 </div>
 
                 <div>
@@ -439,12 +443,14 @@
     <!-- JAVASCRIPT UTAMA -->
     <script>
         const STORAGE_KEY = 'rizkyAssistantOrders';
+        const SAVINGS_HIDDEN_KEY = 'rizkyAssistantSavingsHidden';
         const TRACKING_START_DATE = new Date(2026, 7, 22, 0, 0, 0); // 22 Agustus 2026
         const SAVINGS_START_DATE = new Date(2026, 7, 31, 0, 0, 0);   // 31 Agustus 2026
 
         let orders = [];
         let currentConfirmCallback = null;
         let selectedArchiveIndex = 0; 
+        let isSavingsHidden = localStorage.getItem(SAVINGS_HIDDEN_KEY) === 'true';
 
         window.addEventListener('DOMContentLoaded', () => {
             loadOrders();
@@ -561,6 +567,32 @@
             }
         }
 
+        function formatInputHarga(input) {
+            let value = input.value.replace(/[^,\d]/g, '');
+            let splitValue = value.split(',');
+            let sisa = splitValue[0].length % 3;
+            let rupiah = splitValue[0].substr(0, sisa);
+            let ribuan = splitValue[0].substr(sisa).match(/\d{3}/gi);
+
+            if (ribuan) {
+                let separator = sisa ? '.' : '';
+                rupiah += separator + ribuan.join('.');
+            }
+
+            input.value = splitValue[1] !== undefined ? rupiah + ',' + splitValue[1] : rupiah;
+        }
+
+        function getCleanNumberFromInput(valStr) {
+            if (!valStr) return 0;
+            return parseFloat(valStr.toString().replace(/\./g, '').replace(',', '.')) || 0;
+        }
+
+        function toggleSavingsVisibility() {
+            isSavingsHidden = !isSavingsHidden;
+            localStorage.setItem(SAVINGS_HIDDEN_KEY, isSavingsHidden);
+            updateRekapViewData();
+        }
+
         function switchView(viewName) {
             document.getElementById('view-dashboard').classList.add('hidden');
             document.getElementById('view-rekap').classList.add('hidden');
@@ -618,7 +650,7 @@
                 if (order) {
                     document.getElementById('edit-order-id').value = order.id;
                     document.getElementById('form-layanan').value = order.layanan;
-                    document.getElementById('form-harga').value = order.harga;
+                    document.getElementById('form-harga').value = order.harga ? order.harga.toLocaleString('id-ID') : '';
                     document.getElementById('form-sumber').value = order.sumber;
                     document.getElementById('form-status').value = order.status;
                     document.getElementById('form-referral').value = order.referral;
@@ -638,7 +670,8 @@
             event.preventDefault();
             const editId = document.getElementById('edit-order-id').value;
             const layanan = document.getElementById('form-layanan').value;
-            const harga = parseFloat(document.getElementById('form-harga').value);
+            const rawHargaStr = document.getElementById('form-harga').value;
+            const harga = getCleanNumberFromInput(rawHargaStr);
             const sumber = document.getElementById('form-sumber').value;
             const status = document.getElementById('form-status').value;
             const referral = document.getElementById('form-referral').value;
@@ -700,15 +733,16 @@
             }
 
             const rawLayanan = parts[0].toLowerCase();
-            const harga = parseFloat(parts[1]);
+            const harga = getCleanNumberFromInput(parts[1]);
             const rawSumber = parts[2].toLowerCase();
 
             let layanan = "Lainnya";
-            if (rawLayanan.includes("paket")) layanan = "Paket CV + Surat Lamaran";
+            if (rawLayanan.includes("komplit")) layanan = "Paket Komplit Kerja";
+            else if (rawLayanan.includes("paket")) layanan = "Paket CV + Surat Lamaran";
             else if (rawLayanan.includes("cv")) layanan = "CV";
             else if (rawLayanan.includes("dokumen") || rawLayanan.includes("edit")) layanan = "Edit Dokumen";
             else if (rawLayanan.includes("foto")) layanan = "Edit Pas Foto";
-            else if (rawLayanan.includes("ai") || rawLayanan.includes("iklan")) layanan = "Iklan AI";
+            else if (rawLayanan.includes("landing") || rawLayanan.includes("page")) layanan = "Landing Page";
             else if (rawLayanan.includes("web")) layanan = "Website";
 
             let sumber = "Lainnya";
@@ -849,9 +883,10 @@
             const layananStats = {
                 "CV": { count: 0, omzet: 0 },
                 "Paket CV + Surat Lamaran": { count: 0, omzet: 0 },
+                "Paket Komplit Kerja": { count: 0, omzet: 0 },
                 "Edit Dokumen": { count: 0, omzet: 0 },
                 "Edit Pas Foto": { count: 0, omzet: 0 },
-                "Iklan AI": { count: 0, omzet: 0 },
+                "Landing Page": { count: 0, omzet: 0 },
                 "Website": { count: 0, omzet: 0 },
                 "Lainnya": { count: 0, omzet: 0 }
             };
@@ -924,17 +959,31 @@
             document.getElementById('rekap-month-count').innerText = cycleCount;
             document.getElementById('rekap-month-omzet').innerText = formatRupiah(cycleOmzet);
             document.getElementById('rekap-month-avg').innerText = formatRupiah(cycleCount > 0 ? cycleOmzet / cycleCount : 0);
-            document.getElementById('rekap-month-savings').innerText = formatRupiah(cycleSavings);
+            
+            const savingsEl = document.getElementById('rekap-month-savings');
+            const toggleSavingsBtn = document.getElementById('btn-toggle-savings');
+            if (isSavingsHidden) {
+                savingsEl.innerText = "Rp •••••••";
+                toggleSavingsBtn.innerText = "🔒";
+                toggleSavingsBtn.title = "Tampilkan Nominal";
+            } else {
+                savingsEl.innerText = formatRupiah(cycleSavings);
+                toggleSavingsBtn.innerText = "👁️";
+                toggleSavingsBtn.title = "Sembunyikan Nominal";
+            }
+
             document.getElementById('rekap-month-operational').innerText = formatRupiah(cycleOperational);
 
             let layananHtml = '';
             for (let [key, val] of Object.entries(layananStats)) {
-                layananHtml += `
-                    <div class="flex justify-between items-center bg-black/40 p-2 rounded border border-zinc-800">
-                        <span>${key}</span>
-                        <span class="text-zinc-400">${val.count} order (${formatRupiah(val.omzet)})</span>
-                    </div>
-                `;
+                if (val.count > 0 || key === "CV" || key === "Paket CV + Surat Lamaran" || key === "Paket Komplit Kerja" || key === "Edit Dokumen" || key === "Edit Pas Foto" || key === "Landing Page" || key === "Website") {
+                    layananHtml += `
+                        <div class="flex justify-between items-center bg-black/40 p-2 rounded border border-zinc-800">
+                            <span>${key}</span>
+                            <span class="text-zinc-400">${val.count} order (${formatRupiah(val.omzet)})</span>
+                        </div>
+                    `;
+                }
             }
             document.getElementById('breakdown-layanan').innerHTML = layananHtml;
 
@@ -1244,7 +1293,6 @@
 
             const reader = new FileReader();
             reader.onload = function(e) {
-                /** @type {any} */
                 const targetResult = e.target.result;
                 try {
                     const parsed = JSON.parse(targetResult);
