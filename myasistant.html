@@ -133,10 +133,10 @@
             <div class="bg-zinc-900/50 border border-zinc-800 p-3.5 rounded-xl mt-4">
                 <h4 class="text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-2">⚡ Quick Input (Format Cepat)</h4>
                 <div class="flex gap-2">
-                    <input type="text" id="quick-input-text" placeholder="Contoh: CV - 17000 - Facebook" class="flex-grow bg-black border border-zinc-700 text-xs text-white rounded-lg px-3 py-2 focus:outline-none focus:border-gold">
+                    <input type="text" id="quick-input-text" placeholder="Contoh: CV - 17000 - LinkedIn" class="flex-grow bg-black border border-zinc-700 text-xs text-white rounded-lg px-3 py-2 focus:outline-none focus:border-gold">
                     <button onclick="handleQuickInput()" class="bg-zinc-800 hover:bg-zinc-700 border border-zinc-600 text-xs text-gold px-3 py-2 rounded-lg font-medium transition">Kirim</button>
                 </div>
-                <p class="text-[10px] text-zinc-500 mt-1.5">Format: [Layanan] - [Harga] - [Sumber]. Layanan: CV, Paket CV, Edit Dokumen, Edit Foto, AI, Website, Lainnya.</p>
+                <p class="text-[10px] text-zinc-500 mt-1.5">Format: [Layanan] - [Harga] - [Sumber]. Sumber bisa: Facebook, TikTok, Instagram, LinkedIn, Sribu, Referral, dll.</p>
             </div>
 
             <!-- Recent Orders Preview -->
@@ -386,6 +386,8 @@
                         <option value="Facebook">Facebook</option>
                         <option value="TikTok">TikTok</option>
                         <option value="Instagram">Instagram</option>
+                        <option value="LinkedIn">LinkedIn</option>
+                        <option value="Sribu">Sribu</option>
                         <option value="Referral">Referral</option>
                         <option value="Lainnya">Lainnya</option>
                     </select>
@@ -713,6 +715,8 @@
             if (rawSumber.includes("face") || rawSumber.includes("fb")) sumber = "Facebook";
             else if (rawSumber.includes("tik")) sumber = "TikTok";
             else if (rawSumber.includes("ig") || rawSumber.includes("insta")) sumber = "Instagram";
+            else if (rawSumber.includes("link") || rawSumber.includes("in")) sumber = "LinkedIn";
+            else if (rawSumber.includes("srib")) sumber = "Sribu";
             else if (rawSumber.includes("ref")) sumber = "Referral";
 
             if (isNaN(harga) || harga < 0) {
@@ -856,6 +860,8 @@
                 "Facebook": 0,
                 "TikTok": 0,
                 "Instagram": 0,
+                "LinkedIn": 0,
+                "Sribu": 0,
                 "Referral": 0,
                 "Lainnya": 0
             };
@@ -879,13 +885,12 @@
                     const orderDayOnly = new Date(oDate.getFullYear(), oDate.getMonth(), oDate.getDate());
 
                     let tabVal = 0;
-                    let opVal = 0; // Operasional HANYA dihitung dari order yang tanggalnya >= 31 Agustus
+                    let opVal = 0; 
 
                     if (orderDayOnly >= savingsStartOnly) {
                         tabVal = o.tabungan !== undefined ? o.tabungan : (o.harga * 0.3);
                         opVal = o.harga - tabVal;
                     }
-                    // Order sebelum tgl 31 Agt tidak masuk hitungan operasional tabungan baru
 
                     cycleSavings += tabVal;
                     cycleOperational += opVal;
