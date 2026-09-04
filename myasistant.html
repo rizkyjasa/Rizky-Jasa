@@ -296,7 +296,7 @@
             <!-- Rekor Harian & Top Layanan -->
             <div class="bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 p-3.5 rounded-xl space-y-2 text-xs transition-colors">
                 <h3 class="font-semibold text-gold uppercase tracking-wider">Performa & Rekor</h3>
-                <div class="space-y-1.5 text-zinc-700 dark:text-zinc-300" id="an-records-list">
+                <div class="space-y-2 text-zinc-700 dark:text-zinc-300" id="an-records-list">
                     <!-- Populated by JS -->
                 </div>
             </div>
@@ -1141,11 +1141,14 @@
             document.getElementById('an-avg-duration').innerText = avgDuration + ' menit';
 
             document.getElementById('an-records-list').innerHTML = `
-                <div class="flex justify-between"><span>Layanan Terbanyak:</span> <span class="font-bold text-zinc-900 dark:text-white">${topLayananCountName} (${maxC} order)</span></div>
-                <div class="flex justify-between"><span>Omzet Layanan Tertinggi:</span> <span class="font-bold text-zinc-900 dark:text-white">${topLayananOmzetName} (${formatRupiah(maxO)})</span></div>
-                <div class="flex justify-between"><span>Sumber Terbesar:</span> <span class="font-bold text-zinc-900 dark:text-white">${topSumberName} (${maxS} order)</span></div>
-                <div class="flex justify-between"><span>Order Terbanyak (1 Hari):</span> <span class="font-bold text-zinc-900 dark:text-white">${maxOrderInDay} order</span></div>
-                <div class="flex justify-between"><span>Omzet Tertinggi (1 Hari):</span> <span class="font-bold text-zinc-900 dark:text-white">${formatRupiah(maxOmzetInDay)}</span></div>
+                <div class="flex justify-between items-center"><span>Layanan Terbanyak:</span> <span class="font-bold text-zinc-900 dark:text-white text-right">${topLayananCountName} (${maxC} order)</span></div>
+                <div class="flex justify-between items-start pt-1 border-t border-zinc-200 dark:border-zinc-800">
+                    <span class="pt-0.5">Omzet Layanan Tertinggi:</span> 
+                    <span class="font-bold text-zinc-900 dark:text-white text-right leading-tight max-w-[160px]">${topLayananOmzetName}<br><span class="text-gold font-semibold">(${formatRupiah(maxO)})</span></span>
+                </div>
+                <div class="flex justify-between items-center pt-1 border-t border-zinc-200 dark:border-zinc-800"><span>Sumber Terbesar:</span> <span class="font-bold text-zinc-900 dark:text-white text-right">${topSumberName} (${maxS} order)</span></div>
+                <div class="flex justify-between items-center pt-1 border-t border-zinc-200 dark:border-zinc-800"><span>Order Terbanyak (1 Hari):</span> <span class="font-bold text-zinc-900 dark:text-white text-right">${maxOrderInDay} order</span></div>
+                <div class="flex justify-between items-center pt-1 border-t border-zinc-200 dark:border-zinc-800"><span>Omzet Tertinggi (1 Hari):</span> <span class="font-bold text-zinc-900 dark:text-white text-right">${formatRupiah(maxOmzetInDay)}</span></div>
             `;
 
             let insightHtml = '';
