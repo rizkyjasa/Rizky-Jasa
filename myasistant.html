@@ -1,30 +1,36 @@
 <!DOCTYPE html>
-<html lang="id" id="html-root" class="dark">
+<html lang="id" id="html-root">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RIZKY ASSISTANT - 30 Days Business Tracker</title>
-    <!-- Tailwind CSS CDN untuk styling cepat dan responsive -->
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
-            darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
-                        gold: {
-                            DEFAULT: '#D4AF37',
-                            light: '#F3E5AB',
-                            dark: '#AA8C2C',
-                        }
+                        cream: '#FDFBF7',
+                        surface: '#FFFFFF',
+                        orange: {
+                            DEFAULT: '#FF6B2B',
+                            light: '#FFF2EC',
+                            dark: '#E0551A',
+                        },
+                        peach: '#FFE8DF',
+                        charcoal: '#1A1A1A',
+                        muted: '#666666',
+                        bordercolor: '#EFECE6'
                     }
                 }
             }
         }
     </script>
     <style>
-        /* Transisi halus saat ganti mode */
         body {
+            background-color: #FDFBF7;
+            color: #1A1A1A;
             font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             transition: background-color 0.3s ease, color 0.3s ease;
         }
@@ -34,35 +40,32 @@
             height: 6px;
         }
         ::-webkit-scrollbar-track {
-            background: rgba(100, 100, 100, 0.1);
+            background: #FDFBF7;
         }
         ::-webkit-scrollbar-thumb {
-            background: #888;
+            background: #D9D2C9;
             border-radius: 3px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #D4AF37;
+            background: #FF6B2B;
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between selection:bg-gold selection:text-black bg-white text-zinc-900 dark:bg-black dark:text-white">
+<body class="min-h-screen flex flex-col justify-between selection:bg-orange selection:text-white">
 
-    <!-- HEADER -->
-    <header class="border-b border-zinc-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-950/80 backdrop-blur sticky top-0 z-30 px-4 py-3 transition-colors duration-300">
+    <!-- HEADER / NAVBAR -->
+    <header class="border-b border-bordercolor bg-cream/90 backdrop-blur-md sticky top-0 z-30 px-4 py-3 transition-colors">
         <div class="max-w-md mx-auto flex justify-between items-center">
             <div>
-                <h1 class="text-xl font-bold tracking-wider text-gold">RIZKY ASSISTANT</h1>
-                <p class="text-xs text-zinc-500 dark:text-zinc-400">30 Days Business Tracker</p>
+                <h1 class="text-base font-extrabold tracking-tight text-charcoal flex items-center space-x-1.5">
+                    <span class="bg-orange text-white px-2 py-0.5 rounded-lg text-xs font-black">RJ</span>
+                    <span>RIZKY ASSISTANT</span>
+                </h1>
+                <p class="text-[10px] text-muted tracking-wide uppercase font-medium">30 Days Business Tracker</p>
             </div>
-            <div class="flex items-center space-x-3">
-                <!-- Tombol Mode Lampu / Gelap -->
-                <button onclick="toggleThemeMode()" id="btn-theme-toggle" class="bg-zinc-100 dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-700 text-xs px-2.5 py-1.5 rounded-lg hover:border-gold transition flex items-center space-x-1" title="Ganti Mode Terang/Gelap">
-                    <span id="theme-icon">🌙</span>
-                </button>
-                <div class="flex items-center space-x-1.5">
-                    <span id="header-status" class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" title="Sistem Siap"></span>
-                    <span class="text-xs text-zinc-500 dark:text-zinc-400 font-mono" id="current-date-display">--/--/----</span>
-                </div>
+            <div class="flex items-center space-x-2">
+                <span id="header-status" class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" title="Sistem Siap"></span>
+                <span class="text-xs text-muted font-mono" id="current-date-display">--/--/----</span>
             </div>
         </div>
     </header>
@@ -72,9 +75,9 @@
 
         <!-- NOTIFICATION TOAST -->
         <div id="toast" class="hidden fixed top-16 left-1/2 transform -translate-x-1/2 z-50 max-w-sm w-full px-4 transition-all duration-300">
-            <div id="toast-content" class="bg-zinc-900 border border-gold text-white px-4 py-3 rounded-lg shadow-xl flex items-center justify-between">
-                <span id="toast-message" class="text-sm">Notifikasi berhasil.</span>
-                <button onclick="hideToast()" class="text-zinc-400 hover:text-white ml-2">×</button>
+            <div id="toast-content" class="bg-surface border border-bordercolor text-charcoal px-4 py-3 rounded-2xl shadow-xl flex items-center justify-between">
+                <span id="toast-message" class="text-xs font-medium">Notifikasi berhasil.</span>
+                <button onclick="hideToast()" class="text-muted hover:text-charcoal ml-2">×</button>
             </div>
         </div>
 
@@ -82,75 +85,75 @@
         <section id="view-dashboard" class="space-y-4">
             <!-- Stats Cards Grid -->
             <div class="grid grid-cols-2 gap-3">
-                <div class="bg-zinc-100 dark:bg-zinc-900/90 border border-zinc-200 dark:border-zinc-800 p-3.5 rounded-xl shadow transition-colors">
-                    <p class="text-xs text-zinc-500 dark:text-zinc-400">Order Hari Ini</p>
-                    <h3 id="stat-today-orders" class="text-2xl font-bold text-zinc-900 dark:text-white mt-1">0</h3>
-                    <p class="text-[10px] text-zinc-400 dark:text-zinc-500 mt-0.5">Hari ini</p>
+                <div class="bg-surface border border-bordercolor p-3.5 rounded-2xl shadow-[0_2px_10px_rgba(0,0,0,0.02)] transition-all">
+                    <p class="text-[11px] text-muted font-medium">Order Hari Ini</p>
+                    <h3 id="stat-today-orders" class="text-2xl font-bold text-charcoal mt-1">0</h3>
+                    <p class="text-[10px] text-muted/80 mt-0.5">Hari ini</p>
                 </div>
-                <div class="bg-zinc-100 dark:bg-zinc-900/90 border border-zinc-200 dark:border-zinc-800 p-3.5 rounded-xl shadow transition-colors">
-                    <p class="text-xs text-zinc-500 dark:text-zinc-400">Omzet Hari Ini</p>
-                    <h3 id="stat-today-omzet" class="text-lg font-bold text-gold mt-1 truncate">Rp 0</h3>
-                    <p class="text-[10px] text-zinc-400 dark:text-zinc-500 mt-0.5">Pendapatan harian</p>
+                <div class="bg-surface border border-bordercolor p-3.5 rounded-2xl shadow-[0_2px_10px_rgba(0,0,0,0.02)] transition-all">
+                    <p class="text-[11px] text-muted font-medium">Omzet Hari Ini</p>
+                    <h3 id="stat-today-omzet" class="text-lg font-bold text-orange mt-1 truncate">Rp 0</h3>
+                    <p class="text-[10px] text-muted/80 mt-0.5">Pendapatan harian</p>
                 </div>
-                <div class="bg-zinc-100 dark:bg-zinc-900/90 border border-zinc-200 dark:border-zinc-800 p-3.5 rounded-xl shadow transition-colors">
-                    <p class="text-xs text-zinc-500 dark:text-zinc-400">Order Siklus Ini</p>
-                    <h3 id="stat-month-orders" class="text-2xl font-bold text-zinc-900 dark:text-white mt-1">0</h3>
-                    <p class="text-[10px] text-zinc-400 dark:text-zinc-500 mt-0.5" id="current-month-label">Siklus Bulanan</p>
+                <div class="bg-surface border border-bordercolor p-3.5 rounded-2xl shadow-[0_2px_10px_rgba(0,0,0,0.02)] transition-all">
+                    <p class="text-[11px] text-muted font-medium">Order Siklus Ini</p>
+                    <h3 id="stat-month-orders" class="text-2xl font-bold text-charcoal mt-1">0</h3>
+                    <p class="text-[10px] text-muted/80 mt-0.5 truncate" id="current-month-label">Siklus Bulanan</p>
                 </div>
-                <div class="bg-zinc-100 dark:bg-zinc-900/90 border border-zinc-200 dark:border-zinc-800 p-3.5 rounded-xl shadow transition-colors">
-                    <p class="text-xs text-zinc-500 dark:text-zinc-400">Omzet Siklus Ini</p>
-                    <h3 id="stat-month-omzet" class="text-lg font-bold text-gold mt-1 truncate">Rp 0</h3>
-                    <p class="text-[10px] text-zinc-400 dark:text-zinc-500 mt-0.5">Akumulasi siklus aktif</p>
+                <div class="bg-surface border border-bordercolor p-3.5 rounded-2xl shadow-[0_2px_10px_rgba(0,0,0,0.02)] transition-all">
+                    <p class="text-[11px] text-muted font-medium">Omzet Siklus Ini</p>
+                    <h3 id="stat-month-omzet" class="text-lg font-bold text-orange mt-1 truncate">Rp 0</h3>
+                    <p class="text-[10px] text-muted/80 mt-0.5">Akumulasi siklus aktif</p>
                 </div>
             </div>
 
-            <!-- Tabungan Card Beranda (Tabungan Hari Ini) -->
-            <div class="bg-gradient-to-r from-zinc-100 to-zinc-200 dark:from-zinc-900 dark:to-zinc-950 border border-gold/40 p-3.5 rounded-xl shadow flex justify-between items-center transition-colors">
+            <!-- Tabungan Card (Tabungan Hari Ini) -->
+            <div class="bg-gradient-to-r from-orange-light to-peach/40 border border-orange/20 p-3.5 rounded-2xl shadow-sm flex justify-between items-center transition-all">
                 <div>
-                    <p class="text-xs text-gold font-medium uppercase tracking-wider">Tabungan Hari Ini (30%)</p>
-                    <h3 id="stat-today-savings" class="text-lg font-bold text-zinc-900 dark:text-white mt-0.5">Rp 0</h3>
-                    <p class="text-[10px] text-zinc-500 dark:text-zinc-400">Alokasi tabungan dari order hari ini</p>
+                    <p class="text-[11px] text-orange font-bold uppercase tracking-wider">Tabungan Hari Ini (30%)</p>
+                    <h3 id="stat-today-savings" class="text-base font-bold text-charcoal mt-0.5">Rp 0</h3>
+                    <p class="text-[10px] text-muted">Alokasi tabungan dari order hari ini</p>
                 </div>
-                <span class="text-xl">💰</span>
+                <span class="text-xl bg-surface p-2 rounded-xl shadow-sm">💰</span>
             </div>
 
             <!-- Main Menu Action Buttons -->
-            <div class="space-y-2.5 pt-2">
-                <button onclick="openModalCatat()" class="w-full bg-gold hover:bg-gold-dark text-black font-semibold py-3 px-4 rounded-xl shadow-lg transition duration-200 flex items-center justify-center space-x-2">
-                    <span class="text-lg font-bold">+</span>
+            <div class="space-y-2.5 pt-1">
+                <button onclick="openModalCatat()" class="w-full bg-orange hover:bg-orange-dark text-white font-semibold py-3 px-4 rounded-2xl shadow-sm transition duration-200 flex items-center justify-center space-x-2 text-xs tracking-wider">
+                    <span class="text-base font-bold">+</span>
                     <span>CATAT ORDER</span>
                 </button>
                 <div class="grid grid-cols-3 gap-2">
-                    <button onclick="switchView('rekap')" class="bg-zinc-100 dark:bg-zinc-900 hover:bg-zinc-200 dark:hover:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 text-zinc-800 dark:text-white font-medium py-2.5 px-2 rounded-xl text-xs transition flex flex-col items-center justify-center space-y-1">
-                        <span class="text-gold text-base">📊</span>
-                        <span>REKAP</span>
+                    <button onclick="switchView('rekap')" class="bg-surface hover:bg-peach/30 border border-bordercolor text-charcoal font-medium py-2.5 px-2 rounded-2xl text-xs transition flex flex-col items-center justify-center space-y-1 shadow-[0_2px_8px_rgba(0,0,0,0.02)]">
+                        <span class="text-orange text-base">📊</span>
+                        <span class="font-semibold">REKAP</span>
                     </button>
-                    <button onclick="switchView('analisis')" class="bg-zinc-100 dark:bg-zinc-900 hover:bg-zinc-200 dark:hover:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 text-zinc-800 dark:text-white font-medium py-2.5 px-2 rounded-xl text-xs transition flex flex-col items-center justify-center space-y-1">
-                        <span class="text-gold text-base">📈</span>
-                        <span>ANALISIS 30H</span>
+                    <button onclick="switchView('analisis')" class="bg-surface hover:bg-peach/30 border border-bordercolor text-charcoal font-medium py-2.5 px-2 rounded-2xl text-xs transition flex flex-col items-center justify-center space-y-1 shadow-[0_2px_8px_rgba(0,0,0,0.02)]">
+                        <span class="text-orange text-base">📈</span>
+                        <span class="font-semibold">ANALISIS 30H</span>
                     </button>
-                    <button onclick="switchView('data')" class="bg-zinc-100 dark:bg-zinc-900 hover:bg-zinc-200 dark:hover:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 text-zinc-800 dark:text-white font-medium py-2.5 px-2 rounded-xl text-xs transition flex flex-col items-center justify-center space-y-1">
-                        <span class="text-gold text-base">🗂️</span>
-                        <span>DATA</span>
+                    <button onclick="switchView('data')" class="bg-surface hover:bg-peach/30 border border-bordercolor text-charcoal font-medium py-2.5 px-2 rounded-2xl text-xs transition flex flex-col items-center justify-center space-y-1 shadow-[0_2px_8px_rgba(0,0,0,0.02)]">
+                        <span class="text-orange text-base">🗂️</span>
+                        <span class="font-semibold">DATA</span>
                     </button>
                 </div>
             </div>
 
             <!-- Quick Input Section -->
-            <div class="bg-zinc-100/60 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 p-3.5 rounded-xl mt-4 transition-colors">
-                <h4 class="text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider mb-2">⚡ Quick Input (Format Cepat)</h4>
+            <div class="bg-surface border border-bordercolor p-3.5 rounded-2xl shadow-[0_2px_10px_rgba(0,0,0,0.02)] mt-3">
+                <h4 class="text-xs font-bold text-charcoal uppercase tracking-wider mb-2">⚡ Quick Input (Format Cepat)</h4>
                 <div class="flex gap-2">
-                    <input type="text" id="quick-input-text" placeholder="Contoh: CV - 17000 - LinkedIn" class="flex-grow bg-white dark:bg-black border border-zinc-300 dark:border-zinc-700 text-xs text-zinc-900 dark:text-white rounded-lg px-3 py-2 focus:outline-none focus:border-gold">
-                    <button onclick="handleQuickInput()" class="bg-zinc-200 dark:bg-zinc-800 hover:bg-zinc-300 dark:hover:bg-zinc-700 border border-zinc-300 dark:border-zinc-600 text-xs text-gold px-3 py-2 rounded-lg font-medium transition">Kirim</button>
+                    <input type="text" id="quick-input-text" placeholder="Contoh: CV - 17000 - LinkedIn" class="flex-grow bg-cream border border-bordercolor text-xs text-charcoal rounded-xl px-3 py-2.5 focus:outline-none focus:border-orange">
+                    <button onclick="handleQuickInput()" class="bg-charcoal text-cream hover:bg-orange text-xs px-3 py-2.5 rounded-xl font-semibold transition">Kirim</button>
                 </div>
-                <p class="text-[10px] text-zinc-400 dark:text-zinc-500 mt-1.5">Format: [Layanan] - [Harga] - [Sumber]. Sumber bisa: Facebook, TikTok, Instagram, LinkedIn, Sribu, Referral, dll.</p>
+                <p class="text-[10px] text-muted mt-1.5">Format: [Layanan] - [Harga] - [Sumber]. Sumber: Facebook, TikTok, Instagram, LinkedIn, Sribu, dll.</p>
             </div>
 
             <!-- Recent Orders Preview -->
-            <div class="bg-zinc-100/60 dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800 p-3.5 rounded-xl transition-colors">
+            <div class="bg-surface border border-bordercolor p-3.5 rounded-2xl shadow-[0_2px_10px_rgba(0,0,0,0.02)]">
                 <div class="flex justify-between items-center mb-2">
-                    <h4 class="text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">Order Terbaru</h4>
-                    <button onclick="switchView('data')" class="text-[11px] text-gold hover:underline">Lihat Semua</button>
+                    <h4 class="text-xs font-bold text-charcoal uppercase tracking-wider">Order Terbaru</h4>
+                    <button onclick="switchView('data')" class="text-[11px] text-orange hover:underline font-semibold">Lihat Semua</button>
                 </div>
                 <div id="recent-orders-list" class="space-y-2">
                     <!-- Populated by JS -->
@@ -160,219 +163,207 @@
 
         <!-- REKAP VIEW -->
         <section id="view-rekap" class="hidden space-y-4">
-            <div class="flex items-center justify-between border-b border-zinc-200 dark:border-zinc-800 pb-2">
-                <h2 class="text-base font-bold text-gold flex items-center space-x-2">
+            <div class="flex items-center justify-between border-b border-bordercolor pb-2">
+                <h2 class="text-base font-bold text-charcoal flex items-center space-x-2">
                     <span>📊 Rekap Bisnis Rizky Jasa</span>
                 </h2>
-                <button onclick="switchView('dashboard')" class="text-xs bg-zinc-200 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 px-3 py-1.5 rounded-lg hover:bg-zinc-300 dark:hover:bg-zinc-700">Kembali</button>
+                <button onclick="switchView('dashboard')" class="text-xs bg-surface border border-bordercolor text-charcoal px-3 py-1.5 rounded-xl hover:bg-cream">Kembali</button>
             </div>
 
             <!-- Pilih Arsip Periode Rekap -->
-            <div class="bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 p-3 rounded-xl flex items-center justify-between transition-colors">
-                <span class="text-xs text-zinc-500 dark:text-zinc-400 font-medium">Pilih Periode Rekap:</span>
-                <select id="select-archive-cycle" onchange="changeArchiveCycle(this.value)" class="bg-white dark:bg-black border border-zinc-300 dark:border-zinc-700 text-xs text-gold font-medium rounded-lg px-3 py-1.5 focus:outline-none focus:border-gold">
+            <div class="bg-surface border border-bordercolor p-3 rounded-2xl flex items-center justify-between shadow-sm">
+                <span class="text-xs text-muted font-medium">Pilih Periode Rekap:</span>
+                <select id="select-archive-cycle" onchange="changeArchiveCycle(this.value)" class="bg-cream border border-bordercolor text-xs text-charcoal font-bold rounded-xl px-3 py-1.5 focus:outline-none focus:border-orange">
                     <!-- Populated by JS -->
                 </select>
             </div>
 
             <!-- Rekap Hari Ini -->
-            <div class="bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 p-4 rounded-xl space-y-2 transition-colors">
-                <h3 class="text-xs font-semibold text-gold uppercase tracking-wider">Rekap Hari Ini</h3>
+            <div class="bg-surface border border-bordercolor p-4 rounded-2xl space-y-2 shadow-sm">
+                <h3 class="text-xs font-bold text-orange uppercase tracking-wider">Rekap Hari Ini</h3>
                 <div class="grid grid-cols-3 gap-2 pt-1 text-center">
-                    <div class="bg-white/60 dark:bg-black/40 p-2.5 rounded-lg border border-zinc-200 dark:border-zinc-800">
-                        <p class="text-[10px] text-zinc-500 dark:text-zinc-400">Jumlah Order</p>
-                        <p id="rekap-today-count" class="text-base font-bold text-zinc-900 dark:text-white mt-0.5">0</p>
+                    <div class="bg-cream p-2.5 rounded-xl border border-bordercolor">
+                        <p class="text-[10px] text-muted">Jumlah Order</p>
+                        <p id="rekap-today-count" class="text-base font-bold text-charcoal mt-0.5">0</p>
                     </div>
-                    <div class="bg-white/60 dark:bg-black/40 p-2.5 rounded-lg border border-zinc-200 dark:border-zinc-800">
-                        <p class="text-[10px] text-zinc-500 dark:text-zinc-400">Omzet</p>
-                        <p id="rekap-today-omzet" class="text-sm font-bold text-gold mt-0.5 truncate">Rp 0</p>
+                    <div class="bg-cream p-2.5 rounded-xl border border-bordercolor">
+                        <p class="text-[10px] text-muted">Omzet</p>
+                        <p id="rekap-today-omzet" class="text-sm font-bold text-orange mt-0.5 truncate">Rp 0</p>
                     </div>
-                    <div class="bg-white/60 dark:bg-black/40 p-2.5 rounded-lg border border-zinc-200 dark:border-zinc-800">
-                        <p class="text-[10px] text-zinc-500 dark:text-zinc-400">Rata-rata</p>
-                        <p id="rekap-today-avg" class="text-sm font-bold text-zinc-900 dark:text-white mt-0.5 truncate">Rp 0</p>
+                    <div class="bg-cream p-2.5 rounded-xl border border-bordercolor">
+                        <p class="text-[10px] text-muted">Rata-rata</p>
+                        <p id="rekap-today-avg" class="text-sm font-bold text-charcoal mt-0.5 truncate">Rp 0</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Rekap Siklus Ini / Arsip Terpilih -->
-            <div class="bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 p-4 rounded-xl space-y-2 transition-colors">
-                <h3 id="rekap-cycle-title" class="text-xs font-semibold text-gold uppercase tracking-wider">Rekap Siklus Ini</h3>
+            <!-- Rekap Siklus Ini -->
+            <div class="bg-surface border border-bordercolor p-4 rounded-2xl space-y-2 shadow-sm">
+                <h3 id="rekap-cycle-title" class="text-xs font-bold text-orange uppercase tracking-wider">Rekap Siklus Ini</h3>
                 <div class="grid grid-cols-3 gap-2 pt-1 text-center">
-                    <div class="bg-white/60 dark:bg-black/40 p-2.5 rounded-lg border border-zinc-200 dark:border-zinc-800">
-                        <p class="text-[10px] text-zinc-500 dark:text-zinc-400">Jumlah Order</p>
-                        <p id="rekap-month-count" class="text-base font-bold text-zinc-900 dark:text-white mt-0.5">0</p>
+                    <div class="bg-cream p-2.5 rounded-xl border border-bordercolor">
+                        <p class="text-[10px] text-muted">Jumlah Order</p>
+                        <p id="rekap-month-count" class="text-base font-bold text-charcoal mt-0.5">0</p>
                     </div>
-                    <div class="bg-white/60 dark:bg-black/40 p-2.5 rounded-lg border border-zinc-200 dark:border-zinc-800">
-                        <p class="text-[10px] text-zinc-500 dark:text-zinc-400">Omzet</p>
-                        <p id="rekap-month-omzet" class="text-sm font-bold text-gold mt-0.5 truncate">Rp 0</p>
+                    <div class="bg-cream p-2.5 rounded-xl border border-bordercolor">
+                        <p class="text-[10px] text-muted">Omzet</p>
+                        <p id="rekap-month-omzet" class="text-sm font-bold text-orange mt-0.5 truncate">Rp 0</p>
                     </div>
-                    <div class="bg-white/60 dark:bg-black/40 p-2.5 rounded-lg border border-zinc-200 dark:border-zinc-800">
-                        <p class="text-[10px] text-zinc-500 dark:text-zinc-400">Rata-rata</p>
-                        <p id="rekap-month-avg" class="text-sm font-bold text-zinc-900 dark:text-white mt-0.5 truncate">Rp 0</p>
+                    <div class="bg-cream p-2.5 rounded-xl border border-bordercolor">
+                        <p class="text-[10px] text-muted">Rata-rata</p>
+                        <p id="rekap-month-avg" class="text-sm font-bold text-charcoal mt-0.5 truncate">Rp 0</p>
                     </div>
                 </div>
-                <div class="bg-white/80 dark:bg-black/50 p-3 rounded-lg border border-gold/30 flex justify-between items-center mt-2">
+                <div class="bg-orange-light p-3 rounded-xl border border-orange/20 flex justify-between items-center mt-2">
                     <div>
                         <div class="flex items-center space-x-2">
-                            <p class="text-[10px] text-zinc-500 dark:text-zinc-400">Total Tabungan (30% Mulai 31 Agt)</p>
-                            <button onclick="toggleSavingsVisibility()" id="btn-toggle-savings" class="text-xs text-gold hover:text-gold-light focus:outline-none" title="Sembunyikan/Tampilkan Nominal">👁️</button>
+                            <p class="text-[10px] text-orange font-bold">Total Tabungan (30% Mulai 31 Agt)</p>
+                            <button onclick="toggleSavingsVisibility()" id="btn-toggle-savings" class="text-xs text-orange hover:text-orange-dark focus:outline-none" title="Sembunyikan/Tampilkan Nominal">👁️</button>
                         </div>
-                        <p id="rekap-month-savings" class="text-sm font-bold text-gold mt-0.5">Rp 0</p>
+                        <p id="rekap-month-savings" class="text-sm font-bold text-charcoal mt-0.5">Rp 0</p>
                     </div>
-                    <span class="text-xs text-zinc-500 dark:text-zinc-400 font-mono">Operasional: <span id="rekap-month-operational" class="text-zinc-900 dark:text-white">Rp 0</span></span>
+                    <span class="text-xs text-muted font-mono">Operasional: <span id="rekap-month-operational" class="text-charcoal font-semibold">Rp 0</span></span>
                 </div>
             </div>
 
             <!-- Breakdown Layanan -->
-            <div class="bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 p-4 rounded-xl space-y-2 transition-colors">
-                <h3 class="text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">Breakdown Layanan (Periode Ini)</h3>
-                <div id="breakdown-layanan" class="space-y-1.5 text-xs">
-                    <!-- Populated by JS -->
-                </div>
+            <div class="bg-surface border border-bordercolor p-4 rounded-2xl space-y-2 shadow-sm">
+                <h3 class="text-xs font-bold text-muted uppercase tracking-wider">Breakdown Layanan (Periode Ini)</h3>
+                <div id="breakdown-layanan" class="space-y-1.5 text-xs"></div>
             </div>
 
             <!-- Breakdown Sumber Customer -->
-            <div class="bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 p-4 rounded-xl space-y-2 transition-colors">
-                <h3 class="text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">Breakdown Sumber Customer</h3>
-                <div id="breakdown-sumber" class="space-y-1.5 text-xs">
-                    <!-- Populated by JS -->
-                </div>
+            <div class="bg-surface border border-bordercolor p-4 rounded-2xl space-y-2 shadow-sm">
+                <h3 class="text-xs font-bold text-muted uppercase tracking-wider">Breakdown Sumber Customer</h3>
+                <div id="breakdown-sumber" class="space-y-1.5 text-xs"></div>
             </div>
 
             <!-- Breakdown Status & Referral -->
-            <div class="bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 p-4 rounded-xl space-y-2 transition-colors">
-                <h3 class="text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">Status & Referral</h3>
-                <div id="breakdown-status" class="grid grid-cols-2 gap-2 text-xs">
-                    <!-- Populated by JS -->
-                </div>
+            <div class="bg-surface border border-bordercolor p-4 rounded-2xl space-y-2 shadow-sm">
+                <h3 class="text-xs font-bold text-muted uppercase tracking-wider">Status & Referral</h3>
+                <div id="breakdown-status" class="grid grid-cols-2 gap-2 text-xs"></div>
             </div>
         </section>
 
         <!-- ANALISIS 30 HARI VIEW -->
         <section id="view-analisis" class="hidden space-y-4">
-            <div class="flex items-center justify-between border-b border-zinc-200 dark:border-zinc-800 pb-2">
-                <h2 class="text-base font-bold text-gold flex items-center space-x-2">
+            <div class="flex items-center justify-between border-b border-bordercolor pb-2">
+                <h2 class="text-base font-bold text-charcoal flex items-center space-x-2">
                     <span>📈 Analisis 30 Hari Terakhir</span>
                 </h2>
-                <button onclick="switchView('dashboard')" class="text-xs bg-zinc-200 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 px-3 py-1.5 rounded-lg hover:bg-zinc-300 dark:hover:bg-zinc-700">Kembali</button>
+                <button onclick="switchView('dashboard')" class="text-xs bg-surface border border-bordercolor text-charcoal px-3 py-1.5 rounded-xl hover:bg-cream">Kembali</button>
             </div>
 
             <!-- Key Metrics Grid -->
             <div class="grid grid-cols-2 gap-2.5">
-                <div class="bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 p-3 rounded-xl transition-colors">
-                    <p class="text-[11px] text-zinc-500 dark:text-zinc-400">Total Order (30H)</p>
-                    <p id="an-total-order" class="text-lg font-bold text-zinc-900 dark:text-white mt-0.5">0</p>
+                <div class="bg-surface border border-bordercolor p-3 rounded-2xl shadow-sm">
+                    <p class="text-[11px] text-muted">Total Order (30H)</p>
+                    <p id="an-total-order" class="text-lg font-bold text-charcoal mt-0.5">0</p>
                 </div>
-                <div class="bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 p-3 rounded-xl transition-colors">
-                    <p class="text-[11px] text-zinc-500 dark:text-zinc-400">Total Omzet (30H)</p>
-                    <p id="an-total-omzet" class="text-sm font-bold text-gold mt-0.5 truncate">Rp 0</p>
+                <div class="bg-surface border border-bordercolor p-3 rounded-2xl shadow-sm">
+                    <p class="text-[11px] text-muted">Total Omzet (30H)</p>
+                    <p id="an-total-omzet" class="text-sm font-bold text-orange mt-0.5 truncate">Rp 0</p>
                 </div>
-                <div class="bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 p-3 rounded-xl transition-colors">
-                    <p class="text-[11px] text-zinc-500 dark:text-zinc-400">Rata2 Omzet/Hari</p>
-                    <p id="an-avg-omzet-day" class="text-sm font-bold text-zinc-900 dark:text-white mt-0.5 truncate">Rp 0</p>
+                <div class="bg-surface border border-bordercolor p-3 rounded-2xl shadow-sm">
+                    <p class="text-[11px] text-muted">Rata2 Omzet/Hari</p>
+                    <p id="an-avg-omzet-day" class="text-sm font-bold text-charcoal mt-0.5 truncate">Rp 0</p>
                 </div>
-                <div class="bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 p-3 rounded-xl transition-colors">
-                    <p class="text-[11px] text-zinc-500 dark:text-zinc-400">Rata2 Order/Hari</p>
-                    <p id="an-avg-order-day" class="text-lg font-bold text-zinc-900 dark:text-white mt-0.5">0</p>
+                <div class="bg-surface border border-bordercolor p-3 rounded-2xl shadow-sm">
+                    <p class="text-[11px] text-muted">Rata2 Order/Hari</p>
+                    <p id="an-avg-order-day" class="text-lg font-bold text-charcoal mt-0.5">0</p>
                 </div>
-                <div class="bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 p-3 rounded-xl transition-colors">
-                    <p class="text-[11px] text-zinc-500 dark:text-zinc-400">Average Order Value</p>
-                    <p id="an-aov" class="text-sm font-bold text-gold mt-0.5 truncate">Rp 0</p>
+                <div class="bg-surface border border-bordercolor p-3 rounded-2xl shadow-sm">
+                    <p class="text-[11px] text-muted">Average Order Value</p>
+                    <p id="an-aov" class="text-sm font-bold text-orange mt-0.5 truncate">Rp 0</p>
                 </div>
-                <div class="bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 p-3 rounded-xl transition-colors">
-                    <p class="text-[11px] text-zinc-500 dark:text-zinc-400">Repeat Rate</p>
-                    <p id="an-repeat-rate" class="text-lg font-bold text-zinc-900 dark:text-white mt-0.5">0%</p>
+                <div class="bg-surface border border-bordercolor p-3 rounded-2xl shadow-sm">
+                    <p class="text-[11px] text-muted">Repeat Rate</p>
+                    <p id="an-repeat-rate" class="text-lg font-bold text-charcoal mt-0.5">0%</p>
                 </div>
-                <div class="bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 p-3 rounded-xl transition-colors">
-                    <p class="text-[11px] text-zinc-500 dark:text-zinc-400">Referral Rate</p>
-                    <p id="an-referral-rate" class="text-lg font-bold text-zinc-900 dark:text-white mt-0.5">0%</p>
+                <div class="bg-surface border border-bordercolor p-3 rounded-2xl shadow-sm">
+                    <p class="text-[11px] text-muted">Referral Rate</p>
+                    <p id="an-referral-rate" class="text-lg font-bold text-charcoal mt-0.5">0%</p>
                 </div>
-                <div class="bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 p-3 rounded-xl transition-colors">
-                    <p class="text-[11px] text-zinc-500 dark:text-zinc-400">Rata2 Durasi Kerja</p>
-                    <p id="an-avg-duration" class="text-sm font-bold text-zinc-900 dark:text-white mt-0.5">0 menit</p>
+                <div class="bg-surface border border-bordercolor p-3 rounded-2xl shadow-sm">
+                    <p class="text-[11px] text-muted">Rata2 Durasi Kerja</p>
+                    <p id="an-avg-duration" class="text-sm font-bold text-charcoal mt-0.5">0 menit</p>
                 </div>
             </div>
 
             <!-- Rekor Harian & Top Layanan -->
-            <div class="bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 p-3.5 rounded-xl space-y-2 text-xs transition-colors">
-                <h3 class="font-semibold text-gold uppercase tracking-wider">Performa & Rekor</h3>
-                <div class="space-y-2 text-zinc-700 dark:text-zinc-300" id="an-records-list">
-                    <!-- Populated by JS -->
-                </div>
+            <div class="bg-surface border border-bordercolor p-3.5 rounded-2xl space-y-2 text-xs shadow-sm">
+                <h3 class="font-bold text-orange uppercase tracking-wider">Performa & Rekor</h3>
+                <div class="space-y-2 text-muted" id="an-records-list"></div>
             </div>
 
             <!-- Grafik Ringan -->
-            <div class="bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 p-3.5 rounded-xl space-y-3 transition-colors">
-                <h3 class="text-xs font-semibold text-gold uppercase tracking-wider">Grafik Omzet Harian (7 Hari Terakhir)</h3>
-                <div class="bg-white/80 dark:bg-black/50 p-2 rounded-lg border border-zinc-200 dark:border-zinc-800">
+            <div class="bg-surface border border-bordercolor p-3.5 rounded-2xl space-y-3 shadow-sm">
+                <h3 class="text-xs font-bold text-orange uppercase tracking-wider">Grafik Omzet Harian (7 Hari Terakhir)</h3>
+                <div class="bg-cream p-2 rounded-xl border border-bordercolor">
                     <canvas id="chart-omzet" height="120" class="w-full"></canvas>
                 </div>
             </div>
 
             <!-- Insight Sederhana -->
-            <div class="bg-zinc-50 dark:bg-zinc-950 border border-gold/40 p-4 rounded-xl space-y-2 transition-colors">
-                <h3 class="text-xs font-semibold text-gold uppercase tracking-wider flex items-center space-x-1">
+            <div class="bg-orange-light border border-orange/20 p-4 rounded-2xl space-y-2 shadow-sm">
+                <h3 class="text-xs font-bold text-orange uppercase tracking-wider flex items-center space-x-1">
                     <span>💡 Insight Bisnis</span>
                 </h3>
-                <div id="insight-container" class="space-y-2 text-xs text-zinc-700 dark:text-zinc-300">
-                    <!-- Populated by JS -->
-                </div>
+                <div id="insight-container" class="space-y-2 text-xs text-charcoal"></div>
             </div>
         </section>
 
         <!-- DATA VIEW -->
         <section id="view-data" class="hidden space-y-4">
-            <div class="flex items-center justify-between border-b border-zinc-200 dark:border-zinc-800 pb-2">
-                <h2 class="text-base font-bold text-gold">🗂️ Data Seluruh Order</h2>
-                <button onclick="switchView('dashboard')" class="text-xs bg-zinc-200 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 px-3 py-1.5 rounded-lg hover:bg-zinc-300 dark:hover:bg-zinc-700">Kembali</button>
+            <div class="flex items-center justify-between border-b border-bordercolor pb-2">
+                <h2 class="text-base font-bold text-charcoal">🗂️ Data Seluruh Order</h2>
+                <button onclick="switchView('dashboard')" class="text-xs bg-surface border border-bordercolor text-charcoal px-3 py-1.5 rounded-xl hover:bg-cream">Kembali</button>
             </div>
 
             <!-- Action Tools: Export, Import, Reset All -->
             <div class="grid grid-cols-3 gap-2">
-                <button onclick="exportDataJSON()" class="bg-zinc-100 dark:bg-zinc-900 hover:bg-zinc-200 dark:hover:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 text-gold text-xs py-2 px-2 rounded-lg font-medium transition flex items-center justify-center space-x-1">
+                <button onclick="exportDataJSON()" class="bg-surface hover:bg-peach/30 border border-bordercolor text-orange text-xs py-2 px-2 rounded-xl font-semibold transition flex items-center justify-center space-x-1 shadow-sm">
                     <span>📥 Export</span>
                 </button>
-                <button onclick="document.getElementById('import-file-input').click()" class="bg-zinc-100 dark:bg-zinc-900 hover:bg-zinc-200 dark:hover:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 text-gold text-xs py-2 px-2 rounded-lg font-medium transition flex items-center justify-center space-x-1">
+                <button onclick="document.getElementById('import-file-input').click()" class="bg-surface hover:bg-peach/30 border border-bordercolor text-orange text-xs py-2 px-2 rounded-xl font-semibold transition flex items-center justify-center space-x-1 shadow-sm">
                     <span>📤 Import</span>
                 </button>
                 <input type="file" id="import-file-input" accept=".json" class="hidden" onchange="importDataJSON(event)">
-                <button onclick="confirmResetAll()" class="bg-red-100 dark:bg-red-950/60 hover:bg-red-200 dark:hover:bg-red-900/60 border border-red-300 dark:border-red-900 text-red-700 dark:text-red-300 text-xs py-2 px-2 rounded-lg font-medium transition flex items-center justify-center space-x-1">
+                <button onclick="confirmResetAll()" class="bg-red-50 hover:bg-red-100 border border-red-200 text-red-600 text-xs py-2 px-2 rounded-xl font-semibold transition flex items-center justify-center space-x-1 shadow-sm">
                     <span>🗑️ Reset</span>
                 </button>
             </div>
 
             <!-- Search Filter Bar -->
             <div>
-                <input type="text" id="search-data-input" oninput="renderDataTable()" placeholder="Cari layanan, sumber, dll..." class="w-full bg-zinc-100 dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-700 text-xs text-zinc-900 dark:text-white rounded-lg px-3 py-2 focus:outline-none focus:border-gold">
+                <input type="text" id="search-data-input" oninput="renderDataTable()" placeholder="Cari layanan, sumber, dll..." class="w-full bg-surface border border-bordercolor text-xs text-charcoal rounded-xl px-3 py-2.5 focus:outline-none focus:border-orange shadow-sm">
             </div>
 
             <!-- Data List Container -->
-            <div id="data-orders-container" class="space-y-2 max-h-[60vh] overflow-y-auto pr-1">
-                <!-- Populated by JS -->
-            </div>
+            <div id="data-orders-container" class="space-y-2 max-h-[60vh] overflow-y-auto pr-1"></div>
         </section>
 
     </main>
 
     <!-- FOOTER -->
-    <footer class="text-center py-4 text-xs text-zinc-500 border-t border-zinc-200 dark:border-zinc-900 transition-colors">
-        Rizky Jasa &bull; All Data Stored Locally
+    <footer class="text-center py-4 text-xs text-muted border-t border-bordercolor bg-surface mt-6">
+        Rizky Jasa &bull; Modern Career Partner &bull; All Data Stored Locally
     </footer>
 
     <!-- MODAL CATAT/EDIT ORDER -->
-    <div id="order-modal" class="hidden fixed inset-0 z-50 bg-black/60 dark:bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="bg-white dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-800 w-full max-w-sm rounded-2xl p-4 space-y-4 shadow-2xl relative max-h-[90vh] overflow-y-auto">
-            <div class="flex justify-between items-center border-b border-zinc-200 dark:border-zinc-800 pb-2">
-                <h3 id="modal-title" class="text-sm font-bold text-gold">Catat Order Baru</h3>
-                <button onclick="closeModalCatat()" class="text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white text-base font-bold">×</button>
+    <div id="order-modal" class="hidden fixed inset-0 z-50 bg-charcoal/40 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-surface border border-bordercolor w-full max-w-sm rounded-3xl p-5 space-y-4 shadow-xl relative max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center border-b border-bordercolor pb-2">
+                <h3 id="modal-title" class="text-sm font-bold text-charcoal">Catat Order Baru</h3>
+                <button onclick="closeModalCatat()" class="text-muted hover:text-charcoal text-base font-bold">×</button>
             </div>
             
             <form id="order-form" onsubmit="saveOrder(event)" class="space-y-3">
                 <input type="hidden" id="edit-order-id">
                 
                 <div>
-                    <label class="block text-xs font-medium text-zinc-700 dark:text-zinc-300 mb-1">Layanan *</label>
-                    <select id="form-layanan" required class="w-full bg-zinc-100 dark:bg-black border border-zinc-300 dark:border-zinc-700 text-xs text-zinc-900 dark:text-white rounded-lg p-2.5 focus:outline-none focus:border-gold">
+                    <label class="block text-xs font-semibold text-charcoal mb-1">Layanan *</label>
+                    <select id="form-layanan" required class="w-full bg-cream border border-bordercolor text-xs text-charcoal rounded-xl p-2.5 focus:outline-none focus:border-orange">
                         <option value="" disabled selected>Pilih Layanan</option>
                         <option value="CV">CV</option>
                         <option value="Paket CV + Surat Lamaran">Paket CV + Surat Lamaran</option>
@@ -386,13 +377,13 @@
                 </div>
 
                 <div>
-                    <label class="block text-xs font-medium text-zinc-700 dark:text-zinc-300 mb-1">Harga (Rupiah) *</label>
-                    <input type="text" id="form-harga" required placeholder="Contoh: 20.000" oninput="formatInputHarga(this)" class="w-full bg-zinc-100 dark:bg-black border border-zinc-300 dark:border-zinc-700 text-xs text-zinc-900 dark:text-white rounded-lg p-2.5 focus:outline-none focus:border-gold">
+                    <label class="block text-xs font-semibold text-charcoal mb-1">Harga (Rupiah) *</label>
+                    <input type="text" id="form-harga" required placeholder="Contoh: 20.000" oninput="formatInputHarga(this)" class="w-full bg-cream border border-bordercolor text-xs text-charcoal rounded-xl p-2.5 focus:outline-none focus:border-orange">
                 </div>
 
                 <div>
-                    <label class="block text-xs font-medium text-zinc-700 dark:text-zinc-300 mb-1">Sumber Customer *</label>
-                    <select id="form-sumber" required class="w-full bg-zinc-100 dark:bg-black border border-zinc-300 dark:border-zinc-700 text-xs text-zinc-900 dark:text-white rounded-lg p-2.5 focus:outline-none focus:border-gold">
+                    <label class="block text-xs font-semibold text-charcoal mb-1">Sumber Customer *</label>
+                    <select id="form-sumber" required class="w-full bg-cream border border-bordercolor text-xs text-charcoal rounded-xl p-2.5 focus:outline-none focus:border-orange">
                         <option value="" disabled selected>Pilih Sumber</option>
                         <option value="Facebook">Facebook</option>
                         <option value="TikTok">TikTok</option>
@@ -406,15 +397,15 @@
 
                 <div class="grid grid-cols-2 gap-2">
                     <div>
-                        <label class="block text-xs font-medium text-zinc-700 dark:text-zinc-300 mb-1">Status Customer</label>
-                        <select id="form-status" class="w-full bg-zinc-100 dark:bg-black border border-zinc-300 dark:border-zinc-700 text-xs text-zinc-900 dark:text-white rounded-lg p-2.5 focus:outline-none focus:border-gold">
+                        <label class="block text-xs font-semibold text-charcoal mb-1">Status Customer</label>
+                        <select id="form-status" class="w-full bg-cream border border-bordercolor text-xs text-charcoal rounded-xl p-2.5 focus:outline-none focus:border-orange">
                             <option value="Customer Baru">Customer Baru</option>
                             <option value="Repeat Customer">Repeat Customer</option>
                         </select>
                     </div>
                     <div>
-                        <label class="block text-xs font-medium text-zinc-700 dark:text-zinc-300 mb-1">Referral</label>
-                        <select id="form-referral" class="w-full bg-zinc-100 dark:bg-black border border-zinc-300 dark:border-zinc-700 text-xs text-zinc-900 dark:text-white rounded-lg p-2.5 focus:outline-none focus:border-gold">
+                        <label class="block text-xs font-semibold text-charcoal mb-1">Referral</label>
+                        <select id="form-referral" class="w-full bg-cream border border-bordercolor text-xs text-charcoal rounded-xl p-2.5 focus:outline-none focus:border-orange">
                             <option value="Bukan Referral">Bukan Referral</option>
                             <option value="Referral">Referral</option>
                         </select>
@@ -422,27 +413,26 @@
                 </div>
 
                 <div>
-                    <label class="block text-xs font-medium text-zinc-700 dark:text-zinc-300 mb-1">Waktu Pengerjaan (Menit)</label>
-                    <input type="number" id="form-durasi" min="0" placeholder="Kosongkan atau isi angka menit" class="w-full bg-zinc-100 dark:bg-black border border-zinc-300 dark:border-zinc-700 text-xs text-zinc-900 dark:text-white rounded-lg p-2.5 focus:outline-none focus:border-gold">
-                    <p class="text-[10px] text-zinc-500 mt-1">Isi 0 atau kosong jika tidak dicatat.</p>
+                    <label class="block text-xs font-semibold text-charcoal mb-1">Waktu Pengerjaan (Menit)</label>
+                    <input type="number" id="form-durasi" min="0" placeholder="Kosongkan atau isi angka menit" class="w-full bg-cream border border-bordercolor text-xs text-charcoal rounded-xl p-2.5 focus:outline-none focus:border-orange">
                 </div>
 
                 <div class="flex space-x-2 pt-2">
-                    <button type="button" onclick="closeModalCatat()" class="w-1/2 bg-zinc-200 dark:bg-zinc-800 hover:bg-zinc-300 dark:hover:bg-zinc-700 text-zinc-800 dark:text-white text-xs font-semibold py-2.5 rounded-lg transition">Batal</button>
-                    <button type="submit" class="w-1/2 bg-gold hover:bg-gold-dark text-black text-xs font-semibold py-2.5 rounded-lg transition">SIMPAN ORDER</button>
+                    <button type="button" onclick="closeModalCatat()" class="w-1/2 bg-cream hover:bg-bordercolor text-charcoal text-xs font-semibold py-2.5 rounded-xl transition">Batal</button>
+                    <button type="submit" class="w-1/2 bg-orange hover:bg-orange-dark text-white text-xs font-semibold py-2.5 rounded-xl transition shadow-sm">SIMPAN</button>
                 </div>
             </form>
         </div>
     </div>
 
     <!-- CUSTOM MODAL KONFIRMASI -->
-    <div id="confirm-modal" class="hidden fixed inset-0 z-50 bg-black/60 dark:bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="bg-white dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-800 w-full max-w-xs rounded-xl p-4 space-y-3 text-center shadow-2xl">
-            <h3 id="confirm-title" class="text-sm font-bold text-gold">Konfirmasi Aksi</h3>
-            <p id="confirm-message" class="text-xs text-zinc-700 dark:text-zinc-300">Apakah Anda yakin ingin melakukan tindakan ini?</p>
+    <div id="confirm-modal" class="hidden fixed inset-0 z-50 bg-charcoal/40 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-surface border border-bordercolor w-full max-w-xs rounded-3xl p-5 space-y-3 text-center shadow-xl">
+            <h3 id="confirm-title" class="text-sm font-bold text-charcoal">Konfirmasi Aksi</h3>
+            <p id="confirm-message" class="text-xs text-muted">Apakah Anda yakin ingin melakukan tindakan ini?</p>
             <div class="flex space-x-2 pt-2">
-                <button onclick="closeConfirmModal()" class="w-1/2 bg-zinc-200 dark:bg-zinc-800 hover:bg-zinc-300 dark:hover:bg-zinc-700 text-zinc-800 dark:text-white text-xs py-2 rounded-lg">Batal</button>
-                <button id="confirm-btn-yes" class="w-1/2 bg-red-600 hover:bg-red-700 text-white text-xs font-semibold py-2 rounded-lg">Ya, Lanjutkan</button>
+                <button onclick="closeConfirmModal()" class="w-1/2 bg-cream hover:bg-bordercolor text-charcoal text-xs py-2 rounded-xl">Batal</button>
+                <button id="confirm-btn-yes" class="w-1/2 bg-red-600 hover:bg-red-700 text-white text-xs font-semibold py-2 rounded-xl">Ya, Lanjutkan</button>
             </div>
         </div>
     </div>
@@ -451,7 +441,6 @@
     <script>
         const STORAGE_KEY = 'rizkyAssistantOrders';
         const SAVINGS_HIDDEN_KEY = 'rizkyAssistantSavingsHidden';
-        const THEME_MODE_KEY = 'rizkyAssistantThemeMode';
         const TRACKING_START_DATE = new Date(2026, 7, 22, 0, 0, 0); // 22 Agustus 2026
         const SAVINGS_START_DATE = new Date(2026, 7, 31, 0, 0, 0);   // 31 Agustus 2026
 
@@ -461,41 +450,10 @@
         let isSavingsHidden = localStorage.getItem(SAVINGS_HIDDEN_KEY) === 'true';
 
         window.addEventListener('DOMContentLoaded', () => {
-            initThemeMode();
             loadOrders();
             updateDashboard();
             setCurrentDateHeader();
         });
-
-        function initThemeMode() {
-            const currentTheme = localStorage.getItem(THEME_MODE_KEY) || 'dark';
-            const htmlRoot = document.getElementById('html-root');
-            const iconEl = document.getElementById('theme-icon');
-
-            if (currentTheme === 'light') {
-                htmlRoot.classList.remove('dark');
-                iconEl.innerText = '☀️';
-            } else {
-                htmlRoot.classList.add('dark');
-                iconEl.innerText = '🌙';
-            }
-        }
-
-        function toggleThemeMode() {
-            const htmlRoot = document.getElementById('html-root');
-            const iconEl = document.getElementById('theme-icon');
-            const isDark = htmlRoot.classList.contains('dark');
-
-            if (isDark) {
-                htmlRoot.classList.remove('dark');
-                localStorage.setItem(THEME_MODE_KEY, 'light');
-                iconEl.innerText = '☀️';
-            } else {
-                htmlRoot.classList.add('dark');
-                localStorage.setItem(THEME_MODE_KEY, 'dark');
-                iconEl.innerText = '🌙';
-            }
-        }
 
         function setCurrentDateHeader() {
             const now = new Date();
@@ -571,8 +529,7 @@
                 cyclesMap.set(cycle.cycleIndex, cycle);
             });
 
-            const sortedCycles = Array.from(cyclesMap.values()).sort((a, b) => b.cycleIndex - a.cycleIndex);
-            return sortedCycles;
+            return Array.from(cyclesMap.values()).sort((a, b) => b.cycleIndex - a.cycleIndex);
         }
 
         function loadOrders() {
@@ -580,11 +537,7 @@
                 const storedData = localStorage.getItem(STORAGE_KEY);
                 if (storedData !== null && storedData !== undefined) {
                     const parsed = JSON.parse(storedData);
-                    if (Array.isArray(parsed)) {
-                        orders = parsed;
-                    } else {
-                        orders = [];
-                    }
+                    orders = Array.isArray(parsed) ? parsed : [];
                 } else {
                     orders = [];
                 }
@@ -661,9 +614,9 @@
             
             msgEl.innerText = message;
             if (isError) {
-                contentEl.className = "bg-red-950 border border-red-600 text-white px-4 py-3 rounded-lg shadow-xl flex items-center justify-between";
+                contentEl.className = "bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-2xl shadow-xl flex items-center justify-between";
             } else {
-                contentEl.className = "bg-zinc-900 border border-gold text-white px-4 py-3 rounded-lg shadow-xl flex items-center justify-between";
+                contentEl.className = "bg-surface border border-bordercolor text-charcoal px-4 py-3 rounded-2xl shadow-xl flex items-center justify-between";
             }
             
             toast.classList.remove('hidden');
@@ -862,7 +815,7 @@
 
             const recentContainer = document.getElementById('recent-orders-list');
             if (orders.length === 0) {
-                recentContainer.innerHTML = `<p class="text-xs text-zinc-400 dark:text-zinc-500 italic">Belum ada data order.</p>`;
+                recentContainer.innerHTML = `<p class="text-xs text-muted italic">Belum ada data order.</p>`;
                 return;
             }
 
@@ -872,15 +825,15 @@
                 const timeStr = d.toLocaleDateString('id-ID', { day: '2-digit', month: 'short' }) + ' ' + d.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
                 const tabunganVal = o.tabungan !== undefined ? o.tabungan : (o.harga * 0.3);
                 html += `
-                    <div class="bg-white/60 dark:bg-black/40 border border-zinc-200 dark:border-zinc-800 p-2.5 rounded-lg flex justify-between items-center text-xs">
+                    <div class="bg-cream border border-bordercolor p-3 rounded-xl flex justify-between items-center text-xs">
                         <div>
-                            <p class="font-semibold text-zinc-900 dark:text-white">${o.layanan}</p>
-                            <p class="text-[10px] text-zinc-500 dark:text-zinc-400">${o.sumber} &bull; ${timeStr}</p>
-                            <p class="text-[9px] text-gold mt-0.5">Tabungan: ${formatRupiah(tabunganVal)}</p>
+                            <p class="font-bold text-charcoal">${o.layanan}</p>
+                            <p class="text-[10px] text-muted">${o.sumber} &bull; ${timeStr}</p>
+                            <p class="text-[9px] text-orange mt-0.5 font-medium">Tabungan: ${formatRupiah(tabunganVal)}</p>
                         </div>
                         <div class="text-right">
-                            <p class="font-bold text-gold">${formatRupiah(o.harga)}</p>
-                            <span class="text-[9px] px-1.5 py-0.5 rounded bg-zinc-200 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300">${o.status}</span>
+                            <p class="font-bold text-orange">${formatRupiah(o.harga)}</p>
+                            <span class="text-[9px] px-2 py-0.5 rounded-md bg-orange-light text-orange font-semibold">${o.status}</span>
                         </div>
                     </div>
                 `;
@@ -931,19 +884,10 @@
             };
 
             const sumberStats = {
-                "Facebook": 0,
-                "TikTok": 0,
-                "Instagram": 0,
-                "LinkedIn": 0,
-                "Sribu": 0,
-                "Referral": 0,
-                "Lainnya": 0
+                "Facebook": 0, "TikTok": 0, "Instagram": 0, "LinkedIn": 0, "Sribu": 0, "Referral": 0, "Lainnya": 0
             };
 
-            let statusBaru = 0;
-            let statusRepeat = 0;
-            let referralYa = 0;
-            let referralTidak = 0;
+            let statusBaru = 0, statusRepeat = 0, referralYa = 0, referralTidak = 0;
 
             orders.forEach(o => {
                 const oDate = new Date(o.timestamp);
@@ -957,9 +901,7 @@
                     cycleOmzet += o.harga;
 
                     const orderDayOnly = new Date(oDate.getFullYear(), oDate.getMonth(), oDate.getDate());
-
-                    let tabVal = 0;
-                    let opVal = 0; 
+                    let tabVal = 0, opVal = 0; 
 
                     if (orderDayOnly >= savingsStartOnly) {
                         tabVal = o.tabungan !== undefined ? o.tabungan : (o.harga * 0.3);
@@ -977,11 +919,8 @@
                         layananStats["Lainnya"].omzet += o.harga;
                     }
 
-                    if (sumberStats[o.sumber] !== undefined) {
-                        sumberStats[o.sumber]++;
-                    } else {
-                        sumberStats["Lainnya"]++;
-                    }
+                    if (sumberStats[o.sumber] !== undefined) sumberStats[o.sumber]++;
+                    else sumberStats["Lainnya"]++;
 
                     if (o.status === "Customer Baru") statusBaru++;
                     else statusRepeat++;
@@ -1004,22 +943,20 @@
             if (isSavingsHidden) {
                 savingsEl.innerText = "Rp •••••••";
                 toggleSavingsBtn.innerText = "🔒";
-                toggleSavingsBtn.title = "Tampilkan Nominal";
             } else {
                 savingsEl.innerText = formatRupiah(cycleSavings);
                 toggleSavingsBtn.innerText = "👁️";
-                toggleSavingsBtn.title = "Sembunyikan Nominal";
             }
 
             document.getElementById('rekap-month-operational').innerText = formatRupiah(cycleOperational);
 
             let layananHtml = '';
             for (let [key, val] of Object.entries(layananStats)) {
-                if (val.count > 0 || key === "CV" || key === "Paket CV + Surat Lamaran" || key === "Paket Komplit Kerja" || key === "Edit Dokumen" || key === "Edit Pas Foto" || key === "Landing Page" || key === "Website") {
+                if (val.count > 0 || key.includes("CV") || key.includes("Paket") || key.includes("Website")) {
                     layananHtml += `
-                        <div class="flex justify-between items-center bg-white/60 dark:bg-black/40 p-2 rounded border border-zinc-200 dark:border-zinc-800">
-                            <span>${key}</span>
-                            <span class="text-zinc-500 dark:text-zinc-400">${val.count} order (${formatRupiah(val.omzet)})</span>
+                        <div class="flex justify-between items-center bg-cream p-2.5 rounded-xl border border-bordercolor">
+                            <span class="font-medium text-charcoal">${key}</span>
+                            <span class="text-muted">${val.count} order (${formatRupiah(val.omzet)})</span>
                         </div>
                     `;
                 }
@@ -1029,30 +966,30 @@
             let sumberHtml = '';
             for (let [key, val] of Object.entries(sumberStats)) {
                 sumberHtml += `
-                    <div class="flex justify-between items-center bg-white/60 dark:bg-black/40 p-2 rounded border border-zinc-200 dark:border-zinc-800">
-                        <span>${key}</span>
-                        <span class="text-zinc-500 dark:text-zinc-400">${val} order</span>
+                    <div class="flex justify-between items-center bg-cream p-2.5 rounded-xl border border-bordercolor">
+                        <span class="font-medium text-charcoal">${key}</span>
+                        <span class="text-muted">${val} order</span>
                     </div>
                 `;
             }
             document.getElementById('breakdown-sumber').innerHTML = sumberHtml;
 
             document.getElementById('breakdown-status').innerHTML = `
-                <div class="bg-white/60 dark:bg-black/40 p-2.5 rounded border border-zinc-200 dark:border-zinc-800 text-center">
-                    <p class="text-[10px] text-zinc-500 dark:text-zinc-400">Customer Baru</p>
-                    <p class="text-sm font-bold text-zinc-900 dark:text-white mt-0.5">${statusBaru}</p>
+                <div class="bg-cream p-3 rounded-xl border border-bordercolor text-center">
+                    <p class="text-[10px] text-muted">Customer Baru</p>
+                    <p class="text-sm font-bold text-charcoal mt-0.5">${statusBaru}</p>
                 </div>
-                <div class="bg-white/60 dark:bg-black/40 p-2.5 rounded border border-zinc-200 dark:border-zinc-800 text-center">
-                    <p class="text-[10px] text-zinc-500 dark:text-zinc-400">Repeat Customer</p>
-                    <p class="text-sm font-bold text-zinc-900 dark:text-white mt-0.5">${statusRepeat}</p>
+                <div class="bg-cream p-3 rounded-xl border border-bordercolor text-center">
+                    <p class="text-[10px] text-muted">Repeat Customer</p>
+                    <p class="text-sm font-bold text-charcoal mt-0.5">${statusRepeat}</p>
                 </div>
-                <div class="bg-white/60 dark:bg-black/40 p-2.5 rounded border border-zinc-200 dark:border-zinc-800 text-center">
-                    <p class="text-[10px] text-zinc-500 dark:text-zinc-400">Referral</p>
-                    <p class="text-sm font-bold text-zinc-900 dark:text-white mt-0.5">${referralYa}</p>
+                <div class="bg-cream p-3 rounded-xl border border-bordercolor text-center">
+                    <p class="text-[10px] text-muted">Referral</p>
+                    <p class="text-sm font-bold text-charcoal mt-0.5">${referralYa}</p>
                 </div>
-                <div class="bg-white/60 dark:bg-black/40 p-2.5 rounded border border-zinc-200 dark:border-zinc-800 text-center">
-                    <p class="text-[10px] text-zinc-500 dark:text-zinc-400">Bukan Referral</p>
-                    <p class="text-sm font-bold text-zinc-900 dark:text-white mt-0.5">${referralTidak}</p>
+                <div class="bg-cream p-3 rounded-xl border border-bordercolor text-center">
+                    <p class="text-[10px] text-muted">Bukan Referral</p>
+                    <p class="text-sm font-bold text-charcoal mt-0.5">${referralTidak}</p>
                 </div>
             `;
         }
@@ -1062,20 +999,10 @@
             thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
             const filteredOrders = orders.filter(o => new Date(o.timestamp) >= thirtyDaysAgo);
-
             const totalOrder = filteredOrders.length;
-            let totalOmzet = 0;
-            let totalDuration = 0;
-            let durationCount = 0;
+            let totalOmzet = 0, totalDuration = 0, durationCount = 0, repeatCount = 0, referralCount = 0;
 
-            let repeatCount = 0;
-            let referralCount = 0;
-
-            const layananCount = {};
-            const layananOmzet = {};
-            const sumberCount = {};
-            const dailyOmzetMap = {};
-            const dailyOrderCountMap = {};
+            const layananCount = {}, layananOmzet = {}, sumberCount = {}, dailyOmzetMap = {}, dailyOrderCountMap = {};
 
             filteredOrders.forEach(o => {
                 totalOmzet += o.harga;
@@ -1106,26 +1033,22 @@
             const referralRate = totalOrder > 0 ? (referralCount / totalOrder) * 100 : 0;
             const avgDuration = durationCount > 0 ? Math.round(totalDuration / durationCount) : 0;
 
-            let topLayananCountName = "-";
-            let maxC = -1;
+            let topLayananCountName = "-", maxC = -1;
             for (let [k, v] of Object.entries(layananCount)) {
                 if (v > maxC) { maxC = v; topLayananCountName = k; }
             }
 
-            let topLayananOmzetName = "-";
-            let maxO = -1;
+            let topLayananOmzetName = "-", maxO = -1;
             for (let [k, v] of Object.entries(layananOmzet)) {
                 if (v > maxO) { maxO = v; topLayananOmzetName = k; }
             }
 
-            let topSumberName = "-";
-            let maxS = -1;
+            let topSumberName = "-", maxS = -1;
             for (let [k, v] of Object.entries(sumberCount)) {
                 if (v > maxS) { maxS = v; topSumberName = k; }
             }
 
-            let maxOrderInDay = 0;
-            let maxOmzetInDay = 0;
+            let maxOrderInDay = 0, maxOmzetInDay = 0;
             for (let dateKey in dailyOrderCountMap) {
                 if (dailyOrderCountMap[dateKey] > maxOrderInDay) maxOrderInDay = dailyOrderCountMap[dateKey];
                 if (dailyOmzetMap[dateKey] > maxOmzetInDay) maxOmzetInDay = dailyOmzetMap[dateKey];
@@ -1141,59 +1064,46 @@
             document.getElementById('an-avg-duration').innerText = avgDuration + ' menit';
 
             document.getElementById('an-records-list').innerHTML = `
-                <div class="flex justify-between items-center"><span>Layanan Terbanyak:</span> <span class="font-bold text-zinc-900 dark:text-white text-right">${topLayananCountName} (${maxC} order)</span></div>
-                <div class="flex justify-between items-start pt-1 border-t border-zinc-200 dark:border-zinc-800">
+                <div class="flex justify-between items-center"><span>Layanan Terbanyak:</span> <span class="font-bold text-charcoal text-right">${topLayananCountName} (${maxC} order)</span></div>
+                <div class="flex justify-between items-start pt-1.5 border-t border-bordercolor">
                     <span class="pt-0.5">Omzet Layanan Tertinggi:</span> 
-                    <span class="font-bold text-zinc-900 dark:text-white text-right leading-tight max-w-[160px]">${topLayananOmzetName}<br><span class="text-gold font-semibold">(${formatRupiah(maxO)})</span></span>
+                    <span class="font-bold text-charcoal text-right leading-tight max-w-[170px]">${topLayananOmzetName}<br><span class="text-orange font-semibold">(${formatRupiah(maxO)})</span></span>
                 </div>
-                <div class="flex justify-between items-center pt-1 border-t border-zinc-200 dark:border-zinc-800"><span>Sumber Terbesar:</span> <span class="font-bold text-zinc-900 dark:text-white text-right">${topSumberName} (${maxS} order)</span></div>
-                <div class="flex justify-between items-center pt-1 border-t border-zinc-200 dark:border-zinc-800"><span>Order Terbanyak (1 Hari):</span> <span class="font-bold text-zinc-900 dark:text-white text-right">${maxOrderInDay} order</span></div>
-                <div class="flex justify-between items-center pt-1 border-t border-zinc-200 dark:border-zinc-800"><span>Omzet Tertinggi (1 Hari):</span> <span class="font-bold text-zinc-900 dark:text-white text-right">${formatRupiah(maxOmzetInDay)}</span></div>
+                <div class="flex justify-between items-center pt-1.5 border-t border-bordercolor"><span>Sumber Terbesar:</span> <span class="font-bold text-charcoal text-right">${topSumberName} (${maxS} order)</span></div>
+                <div class="flex justify-between items-center pt-1.5 border-t border-bordercolor"><span>Order Terbanyak (1 Hari):</span> <span class="font-bold text-charcoal text-right">${maxOrderInDay} order</span></div>
+                <div class="flex justify-between items-center pt-1.5 border-t border-bordercolor"><span>Omzet Tertinggi (1 Hari):</span> <span class="font-bold text-charcoal text-right">${formatRupiah(maxOmzetInDay)}</span></div>
             `;
 
-            let insightHtml = '';
-            if (totalOrder < 5) {
-                insightHtml = `<p class="italic text-zinc-500 dark:text-zinc-400">Data belum cukup untuk kesimpulan 30 hari mendalam. Saat ini baru ada ${totalOrder} order tercatat.</p>`;
-            } else {
-                insightHtml = `
-                    <p>&bull; <b>${topLayananCountName}</b> masih menjadi layanan dengan order terbanyak.</p>
-                    <p>&bull; <b>${topSumberName}</b> menjadi sumber customer terbesar.</p>
-                    <p>&bull; Repeat customer menyumbang sekitar <b>${repeatRate.toFixed(0)}%</b> dari total order.</p>
-                    <p>&bull; Rata-rata nilai per order (AOV) Anda berada di angka <b>${formatRupiah(aov)}</b>.</p>
-                `;
-            }
+            let insightHtml = totalOrder < 5 ? `<p class="italic text-muted">Data belum cukup untuk kesimpulan mendalam.</p>` : `
+                <p>&bull; <b>${topLayananCountName}</b> menjadi layanan dengan order terbanyak.</p>
+                <p>&bull; <b>${topSumberName}</b> mendominasi sumber perolehan customer.</p>
+                <p>&bull; Repeat customer menyumbang sekitar <b>${repeatRate.toFixed(0)}%</b> dari total order.</p>
+                <p>&bull; Rata-rata nilai per order (AOV) berada di angka <b>${formatRupiah(aov)}</b>.</p>
+            `;
             document.getElementById('insight-container').innerHTML = insightHtml;
-
             renderSimpleChart(dailyOmzetMap);
         }
 
         function renderSimpleChart(dailyOmzetMap) {
             const canvas = document.getElementById('chart-omzet');
             const ctx = canvas.getContext('2d');
-            
             canvas.width = canvas.parentElement.clientWidth - 20;
             canvas.height = 110;
-
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            const labels = [];
-            const dataValues = [];
+            const labels = [], dataValues = [];
             for (let i = 6; i >= 0; i--) {
                 const d = new Date();
                 d.setDate(d.getDate() - i);
                 const key = d.toLocaleDateString('id-ID');
-                const shortKey = d.toLocaleDateString('id-ID', { day: '2-digit', month: 'short' });
-                labels.push(shortKey);
+                labels.push(d.toLocaleDateString('id-ID', { day: '2-digit', month: 'short' }));
                 dataValues.push(dailyOmzetMap[key] || 0);
             }
 
             const maxVal = Math.max(...dataValues, 10000);
-            const padding = 20;
-            const chartWidth = canvas.width - padding * 2;
-            const chartHeight = canvas.height - 35;
-            const stepX = chartWidth / (labels.length - 1 || 1);
+            const padding = 20, chartWidth = canvas.width - padding * 2, chartHeight = canvas.height - 35, stepX = chartWidth / (labels.length - 1 || 1);
 
-            ctx.strokeStyle = document.getElementById('html-root').classList.contains('dark') ? '#27272a' : '#e4e4e7';
+            ctx.strokeStyle = '#EFECE6';
             ctx.lineWidth = 1;
             ctx.beginPath();
             ctx.moveTo(padding, padding);
@@ -1201,7 +1111,7 @@
             ctx.lineTo(canvas.width - padding, chartHeight + padding);
             ctx.stroke();
 
-            ctx.strokeStyle = '#D4AF37';
+            ctx.strokeStyle = '#FF6B2B';
             ctx.lineWidth = 2;
             ctx.beginPath();
 
@@ -1210,19 +1120,18 @@
                 const x = padding + (idx * stepX);
                 const y = padding + chartHeight - ((val / maxVal) * chartHeight);
                 points.push({ x, y, val, label: labels[idx] });
-                
                 if (idx === 0) ctx.moveTo(x, y);
                 else ctx.lineTo(x, y);
             });
             ctx.stroke();
 
             points.forEach(pt => {
-                ctx.fillStyle = '#D4AF37';
+                ctx.fillStyle = '#FF6B2B';
                 ctx.beginPath();
-                ctx.arc(pt.x, pt.y, 3, 0, Math.PI * 2);
+                ctx.arc(pt.x, pt.y, 3.5, 0, Math.PI * 2);
                 ctx.fill();
 
-                ctx.fillStyle = document.getElementById('html-root').classList.contains('dark') ? '#a1a1aa' : '#71717a';
+                ctx.fillStyle = '#666666';
                 ctx.font = '9px sans-serif';
                 ctx.textAlign = 'center';
                 ctx.fillText(pt.label, pt.x, canvas.height - 5);
@@ -1232,17 +1141,15 @@
         function renderDataTable() {
             const container = document.getElementById('data-orders-container');
             const searchKeyword = document.getElementById('search-data-input').value.toLowerCase();
-
             const filtered = orders.filter(o => 
                 o.layanan.toLowerCase().includes(searchKeyword) ||
                 o.sumber.toLowerCase().includes(searchKeyword) ||
                 o.status.toLowerCase().includes(searchKeyword) ||
-                o.referral.toLowerCase().includes(searchKeyword) ||
                 o.harga.toString().includes(searchKeyword)
             );
 
             if (filtered.length === 0) {
-                container.innerHTML = `<p class="text-xs text-zinc-400 dark:text-zinc-500 text-center py-6">Belum ada data order yang cocok.</p>`;
+                container.innerHTML = `<p class="text-xs text-muted text-center py-6">Belum ada data order yang cocok.</p>`;
                 return;
             }
 
@@ -1253,26 +1160,25 @@
                 const tabunganVal = o.tabungan !== undefined ? o.tabungan : (o.harga * 0.3);
                 
                 html += `
-                    <div class="bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 p-3 rounded-xl space-y-2 text-xs transition-colors">
+                    <div class="bg-surface border border-bordercolor p-3.5 rounded-2xl space-y-2 text-xs shadow-sm">
                         <div class="flex justify-between items-start">
                             <div>
-                                <span class="font-bold text-zinc-900 dark:text-white text-sm">${o.layanan}</span>
-                                <p class="text-[10px] text-zinc-500 dark:text-zinc-400 mt-0.5">${dateStr}</p>
+                                <span class="font-bold text-charcoal text-sm">${o.layanan}</span>
+                                <p class="text-[10px] text-muted mt-0.5">${dateStr}</p>
                             </div>
                             <div class="text-right">
-                                <span class="font-bold text-gold text-sm">${formatRupiah(o.harga)}</span>
-                                <p class="text-[9px] text-zinc-500 dark:text-zinc-400">Tabungan: <span class="text-gold">${formatRupiah(tabunganVal)}</span></p>
+                                <span class="font-bold text-orange text-sm">${formatRupiah(o.harga)}</span>
+                                <p class="text-[9px] text-muted">Tabungan: <span class="text-orange font-semibold">${formatRupiah(tabunganVal)}</span></p>
                             </div>
                         </div>
                         <div class="flex flex-wrap gap-1 pt-1">
-                            <span class="bg-white/80 dark:bg-black/50 border border-zinc-200 dark:border-zinc-800 px-2 py-0.5 rounded text-[10px] text-zinc-700 dark:text-zinc-300">Sumber: ${o.sumber}</span>
-                            <span class="bg-white/80 dark:bg-black/50 border border-zinc-200 dark:border-zinc-800 px-2 py-0.5 rounded text-[10px] text-zinc-700 dark:text-zinc-300">${o.status}</span>
-                            <span class="bg-white/80 dark:bg-black/50 border border-zinc-200 dark:border-zinc-800 px-2 py-0.5 rounded text-[10px] text-zinc-700 dark:text-zinc-300">${o.referral}</span>
-                            ${o.durasi > 0 ? `<span class="bg-white/80 dark:bg-black/50 border border-zinc-200 dark:border-zinc-800 px-2 py-0.5 rounded text-[10px] text-zinc-700 dark:text-zinc-300">Durasi: ${o.durasi}m</span>` : ''}
+                            <span class="bg-cream border border-bordercolor px-2 py-0.5 rounded-md text-[10px] text-muted">Sumber: ${o.sumber}</span>
+                            <span class="bg-cream border border-bordercolor px-2 py-0.5 rounded-md text-[10px] text-muted">${o.status}</span>
+                            ${o.durasi > 0 ? `<span class="bg-cream border border-bordercolor px-2 py-0.5 rounded-md text-[10px] text-muted">Durasi: ${o.durasi}m</span>` : ''}
                         </div>
-                        <div class="flex justify-end space-x-2 pt-2 border-t border-zinc-200 dark:border-zinc-800/80">
-                            <button onclick="openModalCatat('${o.id}')" class="bg-zinc-200 dark:bg-zinc-800 hover:bg-zinc-300 dark:hover:bg-zinc-700 text-gold px-3 py-1 rounded text-[11px] font-medium transition">Edit</button>
-                            <button onclick="confirmDeleteOrder('${o.id}')" class="bg-red-100 dark:bg-red-950/60 hover:bg-red-200 dark:hover:bg-red-900/80 text-red-700 dark:text-red-300 px-3 py-1 rounded text-[11px] font-medium transition">Hapus</button>
+                        <div class="flex justify-end space-x-2 pt-2 border-t border-bordercolor">
+                            <button onclick="openModalCatat('${o.id}')" class="bg-cream hover:bg-bordercolor text-orange px-3 py-1 rounded-lg text-[11px] font-semibold transition">Edit</button>
+                            <button onclick="confirmDeleteOrder('${o.id}')" class="bg-red-50 hover:bg-red-100 text-red-600 px-3 py-1 rounded-lg text-[11px] font-semibold transition">Hapus</button>
                         </div>
                     </div>
                 `;
@@ -1281,37 +1187,25 @@
         }
 
         function confirmDeleteOrder(id) {
-            showConfirmModal(
-                "Hapus Order",
-                "Apakah Anda yakin ingin menghapus data order ini?",
-                () => {
-                    orders = orders.filter(o => o.id !== id);
-                    saveOrdersToStorage();
-                    renderDataTable();
-                    updateDashboard();
-                    showToast("Order berhasil dihapus.");
-                }
-            );
+            showConfirmModal("Hapus Order", "Apakah Anda yakin ingin menghapus data order ini?", () => {
+                orders = orders.filter(o => o.id !== id);
+                saveOrdersToStorage();
+                renderDataTable();
+                updateDashboard();
+                showToast("Order berhasil dihapus.");
+            });
         }
 
         function confirmResetAll() {
-            showConfirmModal(
-                "Reset / Hapus Semua Data",
-                "PERINGATAN: Tindakan ini akan menghapus seluruh riwayat data order secara permanen! Lanjutkan?",
-                () => {
-                    showConfirmModal(
-                        "Konfirmasi Kedua (Final)",
-                        "Anda benar-benar yakin ingin mengosongkan semua data Rizky Assistant?",
-                        () => {
-                            orders = [];
-                            saveOrdersToStorage();
-                            updateDashboard();
-                            switchView('dashboard');
-                            showToast("Semua data berhasil direset.", true);
-                        }
-                    );
-                }
-            );
+            showConfirmModal("Reset Semua Data", "PERINGATAN: Tindakan ini menghapus seluruh riwayat secara permanen!", () => {
+                showConfirmModal("Konfirmasi Final", "Anda benar-benar yakin ingin mengosongkan data?", () => {
+                    orders = [];
+                    saveOrdersToStorage();
+                    updateDashboard();
+                    switchView('dashboard');
+                    showToast("Semua data direset.", true);
+                });
+            });
         }
 
         function exportDataJSON() {
@@ -1326,18 +1220,16 @@
             document.body.appendChild(downloadAnchor);
             downloadAnchor.click();
             downloadAnchor.remove();
-            showToast("Data berhasil di-export ke file JSON.");
+            showToast("Data di-export ke JSON.");
         }
 
         function importDataJSON(event) {
             const file = event.target.files[0];
             if (!file) return;
-
             const reader = new FileReader();
             reader.onload = function(e) {
-                const targetResult = e.target.result;
                 try {
-                    const parsed = JSON.parse(targetResult);
+                    const parsed = JSON.parse(e.target.result);
                     if (Array.isArray(parsed)) {
                         orders = parsed;
                         saveOrdersToStorage();
@@ -1347,7 +1239,7 @@
                         showToast("Format file JSON tidak valid.", true);
                     }
                 } catch (err) {
-                    showToast("Gagal membaca file JSON rusak.", true);
+                    showToast("Gagal membaca file JSON.", true);
                 }
                 event.target.value = '';
             };
@@ -1367,9 +1259,7 @@
         }
 
         document.getElementById('confirm-btn-yes').addEventListener('click', () => {
-            if (currentConfirmCallback) {
-                currentConfirmCallback();
-            }
+            if (currentConfirmCallback) currentConfirmCallback();
             closeConfirmModal();
         });
     </script>
