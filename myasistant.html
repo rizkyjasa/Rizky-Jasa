@@ -285,7 +285,7 @@
                 <button onclick="switchView('dashboard')" class="text-xs custom-surface border text-charcoal dark:text-white px-3 py-1.5 rounded-xl hover:bg-peach/30">Kembali</button>
             </div>
 
-            <!-- Key Metrics Grid -->
+            <!-- Key Metrics Grid (8 Kartu Statistik) -->
             <div class="grid grid-cols-2 gap-2.5">
                 <div class="custom-surface border p-3 rounded-2xl shadow-sm">
                     <p class="text-[11px] text-muted dark:text-zinc-400">Total Order (30H)</p>
@@ -318,6 +318,17 @@
                 <div class="custom-surface border p-3 rounded-2xl shadow-sm">
                     <p class="text-[11px] text-muted dark:text-zinc-400">Rata2 Durasi Kerja</p>
                     <p id="an-avg-duration" class="text-sm font-bold text-charcoal dark:text-white mt-0.5">0 menit</p>
+                </div>
+            </div>
+
+            <!-- FITUR BARU: CONVERSION PER PAKET -->
+            <div class="custom-surface border p-4 rounded-2xl space-y-3 shadow-sm">
+                <div>
+                    <h3 class="text-xs font-bold text-orange uppercase tracking-wider">📊 CONVERSION PER PAKET</h3>
+                    <p class="text-[10px] text-muted dark:text-zinc-400 mt-0.5">Distribusi order berdasarkan paket (30 hari terakhir)</p>
+                </div>
+                <div id="conversion-paket-container" class="space-y-3 pt-1 text-xs">
+                    <!-- Populated by JS -->
                 </div>
             </div>
 
@@ -1125,6 +1136,9 @@
             document.getElementById('an-referral-rate').innerText = referralRate.toFixed(1) + '%';
             document.getElementById('an-avg-duration').innerText = avgDuration + ' menit';
 
+            // RENDER CONVERSION PER PAKET
+            renderConversionPerPaket(filteredOrders, totalOrder);
+
             document.getElementById('an-records-list').innerHTML = `
                 <div class="flex justify-between items-center"><span>Layanan Terbanyak:</span> <span class="font-bold text-charcoal dark:text-white text-right">${topLayananCountName} (${maxC} order)</span></div>
                 <div class="flex justify-between items-start pt-1.5 border-t border-bordercolor dark:border-zinc-800">
@@ -1144,6 +1158,54 @@
             `;
             document.getElementById('insight-container').innerHTML = insightHtml;
             renderSimpleChart(dailyOmzetMap);
+        }
+
+        function renderConversionPerPaket(filteredOrders, totalOrder) {
+            const container = document.getElementById('conversion-paket-container');
+            
+            // Hitung jumlah order untuk 3 target utama
+            let countCV = 0;
+            let countHemat = 0; // Mengacu pada "Paket CV + Surat Lamaran"
+            let countKomplit = 0; // Mengacu pada "Paket Komplit Kerja"
+
+            filteredOrders.forEach(o => {
+                if (o.layanan === "CV") {
+                    countCV++;
+                } else if (o.layanan === "Paket CV + Surat Lamaran") {
+                    countHemat++;
+                } else if (o.layanan === "Paket Komplit Kerja") {
+                    countKomplit++;
+                }
+            });
+
+            const targetList = [
+                { name: "CV ATS Friendly", count: countCV },
+                { name: "Paket Hemat", count: countHemat },
+                { name: "Paket Komplit Kerja", count: countKomplit }
+            ];
+
+            let html = '';
+            targetList.forEach(item => {
+                const percent = totalOrder > 0 ? Math.round((item.count / totalOrder) * 100) : 0;
+                // Buat visual progress bar balok seperti diminta
+                const filledBlocks = Math.round((percent / 100) * 12);
+                const emptyBlocks = 12 - filledBlocks;
+                const barVisual = '█'.repeat(Math.max(0, filledBlocks)) + '░'.repeat(Math.max(0, emptyBlocks));
+
+                html += `
+                    <div class="space-y-1">
+                        <div class="flex justify-between items-center text-charcoal dark:text-white font-medium">
+                            <span>${item.name}</span>
+                            <span class="text-muted dark:text-zinc-400">${item.count} order (${percent}%)</span>
+                        </div>
+                        <div class="font-mono text-orange text-[11px] tracking-wider">
+                            ${barVisual}
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
         }
 
         function renderSimpleChart(dailyOmzetMap) {
