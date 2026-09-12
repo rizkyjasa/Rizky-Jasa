@@ -26,7 +26,7 @@
                             mutedDark: '#9CA3AF',
                         },
                         accent: {
-                            DEFAULT: '#3B82F6', // Professional Blue
+                            DEFAULT: '#3B82F6',
                             hover: '#2563EB',
                             light: '#EFF6FF',
                             emerald: '#10B981'
@@ -93,16 +93,14 @@
 
         <!-- DASHBOARD VIEW -->
         <section id="view-dashboard" class="space-y-4">
-            <!-- Metric Cards (Executive Grid) -->
+            <!-- Metric Cards -->
             <div class="grid grid-cols-2 gap-3">
                 <div class="ex-surface border p-4 rounded-3xl transition-all relative overflow-hidden">
-                    <div class="absolute -right-4 -bottom-4 w-16 h-16 bg-accent/10 rounded-full blur-xl pointer-events-none"></div>
                     <p class="text-[10px] uppercase font-bold tracking-wider opacity-60">Order Hari Ini</p>
                     <h3 id="stat-today-orders" class="text-3xl font-black mt-1 tracking-tight">0</h3>
                     <p class="text-[10px] opacity-50 mt-1 font-mono">Real-time status</p>
                 </div>
                 <div class="ex-surface border p-4 rounded-3xl transition-all relative overflow-hidden">
-                    <div class="absolute -right-4 -bottom-4 w-16 h-16 bg-accent-emerald/10 rounded-full blur-xl pointer-events-none"></div>
                     <p class="text-[10px] uppercase font-bold tracking-wider opacity-60">Omzet Hari Ini</p>
                     <h3 id="stat-today-omzet" class="text-lg font-black text-accent mt-1 truncate tracking-tight">Rp 0</h3>
                     <p class="text-[10px] opacity-50 mt-1 font-mono">Pendapatan harian</p>
@@ -249,7 +247,7 @@
             </div>
         </section>
 
-        <!-- ANALISIS VIEW -->
+        <!-- ANALISIS VIEW (LOGIKA RATA-RATA HARIAN DIKEMBALIKAN PRESISI) -->
         <section id="view-analisis" class="hidden space-y-4">
             <div class="flex items-center justify-between border-b pb-3 ex-surface px-4 rounded-2xl">
                 <h2 class="text-sm font-bold flex items-center space-x-2"><span>📈 Pro Business Intelligence</span></h2>
@@ -435,7 +433,7 @@
         </div>
     </div>
 
-    <!-- JAVASCRIPT UTAMA -->
+    <!-- JAVASCRIPT UTAMA (LOGIKA RATA-RATA HARIAN DIBENERIN) -->
     <script>
         const STORAGE_KEY = 'rizkyAssistantOrders';
         const SAVINGS_HIDDEN_KEY = 'rizkyAssistantSavingsHidden';
@@ -660,14 +658,16 @@
             const todayStr = new Date().toDateString();
             const cycle = getActiveCycleInfo();
             let tCount = 0, tOmzet = 0, cCount = 0, cOmzet = 0, tSav = 0;
-            const savStart = new Date(SAVINGS_START_DATE.setHours(0,0,0,0));
+            const savStart = new Date(SAVINGS_START_DATE.getFullYear(), SAVINGS_START_DATE.getMonth(), SAVINGS_START_DATE.getDate());
 
             orders.forEach(o => {
                 const dt = new Date(o.timestamp);
+                const orderDayOnly = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate());
+
                 if (dt.toDateString() === todayStr) {
                     tCount++;
                     tOmzet += o.harga;
-                    if (new Date(dt.setHours(0,0,0,0)) >= savStart) tSav += (o.tabungan || o.harga * 0.3);
+                    if (orderDayOnly >= savStart) tSav += (o.tabungan || o.harga * 0.3);
                 }
                 if (dt >= cycle.startDate && dt < cycle.endDate) {
                     cCount++;
@@ -714,14 +714,15 @@
             document.getElementById('rekap-cycle-title').innerText = `Rekap ${cycle.label}`;
             
             let cCount = 0, cOmzet = 0, cSav = 0, cOp = 0;
-            const savStart = new Date(SAVINGS_START_DATE.setHours(0,0,0,0));
+            const savStart = new Date(SAVINGS_START_DATE.getFullYear(), SAVINGS_START_DATE.getMonth(), SAVINGS_START_DATE.getDate());
             let sMap = {}, srcMap = {}, sNew = 0, sRep = 0, rYes = 0, rNo = 0;
 
             orders.forEach(o => {
                 const dt = new Date(o.timestamp);
                 if (dt >= cycle.startDate && dt < cycle.endDate) {
                     cCount++; cOmzet += o.harga;
-                    const isSav = new Date(dt.setHours(0,0,0,0)) >= savStart;
+                    const orderDayOnly = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate());
+                    const isSav = orderDayOnly >= savStart;
                     const sav = isSav ? (o.tabungan || o.harga * 0.3) : 0;
                     cSav += sav; cOp += (o.harga - sav);
 
@@ -761,7 +762,9 @@
         }
 
         function updateAnalisisView() {
+            const today = new Date();
             const thirtyAgo = new Date(); thirtyAgo.setDate(thirtyAgo.getDate() - 30);
+            
             const filtered = orders.filter(o => new Date(o.timestamp) >= thirtyAgo);
             const total = filtered.length;
             let omzet = 0, dur = 0, durC = 0, rep = 0, ref = 0;
@@ -776,10 +779,14 @@
                 dMap[k] = (dMap[k] || 0) + o.harga;
             });
 
+            // HITUNG HARI AKTIF YANG PRESISI SESUAI DATA (MENCEGAH RATA-RATA MELOROT SALAH)
+            const daysSinceStart = Math.floor((today - TRACKING_START_DATE) / (1000 * 60 * 60 * 24)) + 1;
+            const activeEffectiveDays = Math.max(1, Math.min(30, daysSinceStart));
+
             document.getElementById('an-total-order').innerText = total;
             document.getElementById('an-total-omzet').innerText = formatRupiah(omzet);
-            document.getElementById('an-avg-omzet-day').innerText = formatRupiah(omzet / 30);
-            document.getElementById('an-avg-order-day').innerText = (total / 30).toFixed(1);
+            document.getElementById('an-avg-omzet-day').innerText = formatRupiah(omzet / activeEffectiveDays);
+            document.getElementById('an-avg-order-day').innerText = (total / activeEffectiveDays).toFixed(1);
             document.getElementById('an-aov').innerText = formatRupiah(total ? omzet / total : 0);
             document.getElementById('an-repeat-rate').innerText = (total ? (rep/total)*100 : 0).toFixed(0) + '%';
             document.getElementById('an-referral-rate').innerText = (total ? (ref/total)*100 : 0).toFixed(0) + '%';
