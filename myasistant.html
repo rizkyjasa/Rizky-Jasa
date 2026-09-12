@@ -108,7 +108,7 @@
                 </div>
             </div>
 
-            <!-- Tabungan & Keuangan Card Beranda -->
+            <!-- Tabungan Card Beranda -->
             <div class="bg-gradient-to-r from-orange-light to-peach/40 dark:from-zinc-900 dark:to-zinc-950 border border-orange/30 p-3.5 rounded-2xl shadow-sm space-y-2 transition-all">
                 <div class="flex justify-between items-center">
                     <div>
@@ -176,14 +176,12 @@
                 <button onclick="switchView('dashboard')" class="text-xs custom-surface border text-charcoal dark:text-white px-3 py-1.5 rounded-xl hover:bg-peach/30">Kembali</button>
             </div>
 
-            <!-- Pilih Arsip Periode Rekap -->
             <div class="custom-surface border p-3 rounded-2xl flex items-center justify-between shadow-sm">
                 <span class="text-xs text-muted dark:text-zinc-400 font-medium">Pilih Periode Rekap:</span>
                 <select id="select-archive-cycle" onchange="changeArchiveCycle(this.value)" class="custom-cream border text-xs text-charcoal dark:text-white font-bold rounded-xl px-3 py-1.5 focus:outline-none focus:border-orange">
                 </select>
             </div>
 
-            <!-- Rekap Hari Ini -->
             <div class="custom-surface border p-4 rounded-2xl space-y-2 shadow-sm">
                 <h3 class="text-xs font-bold text-orange uppercase tracking-wider">Rekap Hari Ini</h3>
                 <div class="grid grid-cols-3 gap-2 pt-1 text-center">
@@ -202,7 +200,6 @@
                 </div>
             </div>
 
-            <!-- Rekap Siklus Ini (3 Kategori Keuangan Baru) -->
             <div class="custom-surface border p-4 rounded-2xl space-y-3 shadow-sm">
                 <h3 id="rekap-cycle-title" class="text-xs font-bold text-orange uppercase tracking-wider">Rekap Siklus Ini</h3>
                 <div class="grid grid-cols-3 gap-2 pt-1 text-center">
@@ -220,9 +217,7 @@
                     </div>
                 </div>
 
-                <!-- 3 Komponen Keuangan Terpisah -->
                 <div class="space-y-2 pt-1">
-                    <!-- 1. Tabungan (30%) -->
                     <div class="custom-cream p-3 rounded-xl border border-bordercolor dark:border-zinc-800 flex justify-between items-center">
                         <div>
                             <div class="flex items-center space-x-2">
@@ -234,7 +229,6 @@
                         <span class="text-xs text-muted">Akumulasi 30%</span>
                     </div>
 
-                    <!-- 2. Biaya Operasional Riil -->
                     <div class="custom-cream p-3 rounded-xl border border-bordercolor dark:border-zinc-800 flex justify-between items-center">
                         <div>
                             <p class="text-[10px] text-blue-500 dark:text-blue-400 font-bold">2. Biaya Operasional Riil</p>
@@ -243,7 +237,6 @@
                         <button onclick="switchView('data')" class="text-[10px] bg-surface border px-2.5 py-1 rounded-lg text-orange font-semibold">Kelola Biaya</button>
                     </div>
 
-                    <!-- 3. Profit Bersih -->
                     <div class="bg-orange-light dark:bg-zinc-900 p-3.5 rounded-xl border border-orange/30 flex justify-between items-center">
                         <div>
                             <p class="text-[10px] text-orange font-bold uppercase tracking-wider">3. Profit Bersih (Omzet - Tabungan - Operasional)</p>
@@ -254,19 +247,16 @@
                 </div>
             </div>
 
-            <!-- Breakdown Layanan -->
             <div class="custom-surface border p-4 rounded-2xl space-y-2 shadow-sm">
                 <h3 class="text-xs font-bold text-muted dark:text-zinc-400 uppercase tracking-wider">Breakdown Layanan (Periode Ini)</h3>
                 <div id="breakdown-layanan" class="space-y-1.5 text-xs"></div>
             </div>
 
-            <!-- Breakdown Sumber Customer -->
             <div class="custom-surface border p-4 rounded-2xl space-y-2 shadow-sm">
                 <h3 class="text-xs font-bold text-muted dark:text-zinc-400 uppercase tracking-wider">Breakdown Sumber Customer</h3>
                 <div id="breakdown-sumber" class="space-y-1.5 text-xs"></div>
             </div>
 
-            <!-- Breakdown Status & Referral -->
             <div class="custom-surface border p-4 rounded-2xl space-y-2 shadow-sm">
                 <h3 class="text-xs font-bold text-muted dark:text-zinc-400 uppercase tracking-wider">Status & Referral</h3>
                 <div id="breakdown-status" class="grid grid-cols-2 gap-2 text-xs"></div>
@@ -282,7 +272,6 @@
                 <button onclick="switchView('dashboard')" class="text-xs custom-surface border text-charcoal dark:text-white px-3 py-1.5 rounded-xl hover:bg-peach/30">Kembali</button>
             </div>
 
-            <!-- Key Metrics Grid -->
             <div class="grid grid-cols-2 gap-2.5">
                 <div class="custom-surface border p-3 rounded-2xl shadow-sm">
                     <p class="text-[11px] text-muted dark:text-zinc-400">Total Order (30H)</p>
@@ -318,7 +307,6 @@
                 </div>
             </div>
 
-            <!-- Conversion per Paket -->
             <div class="custom-surface border p-4 rounded-2xl space-y-3 shadow-sm">
                 <div>
                     <h3 class="text-xs font-bold text-orange uppercase tracking-wider">📊 CONVERSION PER PAKET</h3>
@@ -327,13 +315,11 @@
                 <div id="conversion-paket-container" class="space-y-3 pt-1 text-xs"></div>
             </div>
 
-            <!-- Performa & Rekor -->
             <div class="custom-surface border p-3.5 rounded-2xl space-y-2 text-xs shadow-sm">
                 <h3 class="font-bold text-orange uppercase tracking-wider">Performa & Rekor</h3>
                 <div class="space-y-2 text-muted dark:text-zinc-400" id="an-records-list"></div>
             </div>
 
-            <!-- Grafik -->
             <div class="custom-surface border p-3.5 rounded-2xl space-y-3 shadow-sm">
                 <h3 class="text-xs font-bold text-orange uppercase tracking-wider">Grafik Omzet Harian (7 Hari Terakhir)</h3>
                 <div class="custom-cream p-2 rounded-xl border border-bordercolor dark:border-zinc-800">
@@ -341,7 +327,6 @@
                 </div>
             </div>
 
-            <!-- Insight -->
             <div class="bg-orange-light dark:bg-zinc-900 border border-orange/20 p-4 rounded-2xl space-y-2 shadow-sm">
                 <h3 class="text-xs font-bold text-orange uppercase tracking-wider flex items-center space-x-1">
                     <span>💡 Insight Bisnis</span>
@@ -350,14 +335,13 @@
             </div>
         </section>
 
-        <!-- DATA VIEW (Riwayat Order & Riwayat Biaya Operasional Riil) -->
+        <!-- DATA VIEW -->
         <section id="view-data" class="hidden space-y-4">
             <div class="flex items-center justify-between border-b border-bordercolor dark:border-zinc-800 pb-2">
                 <h2 class="text-base font-bold text-charcoal dark:text-white">🗂️ Data & Riwayat Bisnis</h2>
                 <button onclick="switchView('dashboard')" class="text-xs custom-surface border text-charcoal dark:text-white px-3 py-1.5 rounded-xl hover:bg-peach/30">Kembali</button>
             </div>
 
-            <!-- Action Tools -->
             <div class="grid grid-cols-3 gap-2">
                 <button onclick="exportDataJSON()" class="custom-surface hover:bg-peach/30 border text-orange text-xs py-2 px-2 rounded-xl font-semibold transition flex items-center justify-center space-x-1 shadow-sm">
                     <span>📥 Export</span>
@@ -371,18 +355,15 @@
                 </button>
             </div>
 
-            <!-- Toggle Tab Data (Order vs Biaya Operasional) -->
             <div class="grid grid-cols-2 gap-2 bg-cream dark:bg-zinc-900 p-1 rounded-xl border border-bordercolor dark:border-zinc-800">
                 <button onclick="switchDataTableTab('orders')" id="tab-btn-orders" class="py-2 text-xs font-bold rounded-lg bg-orange text-white transition">Data Order</button>
                 <button onclick="switchDataTableTab('operational')" id="tab-btn-operational" class="py-2 text-xs font-bold rounded-lg text-muted dark:text-zinc-400 transition">Biaya Operasional Riil</button>
             </div>
 
-            <!-- Search Filter Bar -->
             <div>
                 <input type="text" id="search-data-input" oninput="renderDataTable()" placeholder="Cari data..." class="w-full custom-surface border text-xs text-charcoal dark:text-white rounded-xl px-3 py-2.5 focus:outline-none focus:border-orange shadow-sm">
             </div>
 
-            <!-- Data List Container -->
             <div id="data-orders-container" class="space-y-2 max-h-[55vh] overflow-y-auto pr-1"></div>
         </section>
 
@@ -462,7 +443,7 @@
         </div>
     </div>
 
-    <!-- MODAL CATAT BIAYA OPERASIONAL RIIL -->
+    <!-- MODAL CATAT BIAYA OPERASIONAL RIIL (DENGAN TANGGAL ESTETIK) -->
     <div id="operational-modal" class="hidden fixed inset-0 z-50 bg-charcoal/40 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="custom-surface border w-full max-w-sm rounded-3xl p-5 space-y-4 shadow-xl relative max-h-[90vh] overflow-y-auto">
             <div class="flex justify-between items-center border-b border-bordercolor dark:border-zinc-800 pb-2">
@@ -476,10 +457,17 @@
                     <label class="block text-xs font-semibold text-charcoal dark:text-zinc-300 mb-1">Nominal (Rupiah) *</label>
                     <input type="text" id="form-op-nominal" required placeholder="Contoh: 15.000" oninput="formatInputHarga(this)" class="w-full custom-cream border text-xs text-charcoal dark:text-white rounded-xl p-2.5 focus:outline-none focus:border-orange">
                 </div>
+
+                <!-- INPUT TANGGAL YANG JAUH LEBIH RAPI & BERSIH -->
                 <div>
                     <label class="block text-xs font-semibold text-charcoal dark:text-zinc-300 mb-1">Tanggal *</label>
-                    <input type="date" id="form-op-tanggal" required class="w-full custom-cream border text-xs text-charcoal dark:text-white rounded-xl p-2.5 focus:outline-none focus:border-orange">
+                    <div class="grid grid-cols-2 gap-2 mb-1.5">
+                        <button type="button" onclick="setOpDatePreset('today')" id="btn-preset-today" class="py-1.5 px-2 text-[11px] font-semibold rounded-xl border bg-orange text-white border-orange transition">Hari Ini</button>
+                        <button type="button" onclick="setOpDatePreset('yesterday')" id="btn-preset-yesterday" class="py-1.5 px-2 text-[11px] font-semibold rounded-xl custom-cream border border-bordercolor dark:border-zinc-800 text-charcoal dark:text-white transition">Kemarin</button>
+                    </div>
+                    <input type="date" id="form-op-tanggal" required onchange="handleManualDateChange()" class="w-full custom-cream border text-xs text-charcoal dark:text-white rounded-xl p-2.5 focus:outline-none focus:border-orange">
                 </div>
+
                 <div>
                     <label class="block text-xs font-semibold text-charcoal dark:text-zinc-300 mb-1">Keterangan / Keperluan *</label>
                     <input type="text" id="form-op-keterangan" required placeholder="Contoh: Boost konten FB, Beli kredit AI" class="w-full custom-cream border text-xs text-charcoal dark:text-white rounded-xl p-2.5 focus:outline-none focus:border-orange">
@@ -515,7 +503,7 @@
 
         let orders = [];
         let operationalExpenses = [];
-        let currentDataTableTab = 'orders'; // 'orders' atau 'operational'
+        let currentDataTableTab = 'orders';
         let currentConfirmCallback = null;
         let selectedArchiveIndex = 0; 
         let isSavingsHidden = localStorage.getItem(SAVINGS_HIDDEN_KEY) === 'true';
@@ -643,7 +631,6 @@
                 }
                 orders.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
             } catch (e) {
-                console.error("Gagal membaca localStorage orders:", e);
                 orders = [];
             }
         }
@@ -653,7 +640,6 @@
                 localStorage.setItem(STORAGE_KEY, JSON.stringify(orders));
                 showToast("Data order berhasil disimpan");
             } catch (e) {
-                console.error("Gagal menyimpan orders:", e);
                 showToast("Gagal menyimpan data order!", true);
             }
         }
@@ -669,7 +655,6 @@
                 }
                 operationalExpenses.sort((a, b) => new Date(b.tanggal) - new Date(a.tanggal));
             } catch (e) {
-                console.error("Gagal membaca operational expenses:", e);
                 operationalExpenses = [];
             }
         }
@@ -679,7 +664,6 @@
                 localStorage.setItem(OPERATIONAL_STORAGE_KEY, JSON.stringify(operationalExpenses));
                 showToast("Biaya operasional berhasil disimpan");
             } catch (e) {
-                console.error("Gagal menyimpan operational expenses:", e);
                 showToast("Gagal menyimpan biaya operasional!", true);
             }
         }
@@ -795,7 +779,7 @@
             }
 
             const tabungan = harga * 0.3;
-            const operasional = harga - tabungan; // backward compatibility properti objek
+            const operasional = harga - tabungan;
 
             if (editId) {
                 const index = orders.findIndex(o => o.id === editId);
@@ -823,16 +807,12 @@
             updateDashboard();
         }
 
-        // Modal Biaya Operasional Riil
+        // Modal Biaya Operasional Riil & Preset Tanggal
         function openModalOperasional(editId = null) {
             const modal = document.getElementById('operational-modal');
             const title = document.getElementById('op-modal-title');
             document.getElementById('operational-form').reset();
             document.getElementById('edit-op-id').value = '';
-
-            // Set default date ke hari ini
-            const todayStr = new Date().toISOString().slice(0, 10);
-            document.getElementById('form-op-tanggal').value = todayStr;
 
             if (editId) {
                 title.innerText = 'Edit Biaya Operasional';
@@ -840,16 +820,63 @@
                 if (op) {
                     document.getElementById('edit-op-id').value = op.id;
                     document.getElementById('form-op-nominal').value = op.nominal ? op.nominal.toLocaleString('id-ID') : '';
-                    document.getElementById('form-op-tanggal').value = op.tanggal || todayStr;
+                    document.getElementById('form-op-tanggal').value = op.tanggal || getLocalDateString(new Date());
                     document.getElementById('form-op-keterangan').value = op.keterangan || '';
+                    updateDatePresetButtons(op.tanggal);
                 }
             } else {
                 title.innerText = 'Catat Biaya Operasional Riil';
+                setOpDatePreset('today');
             }
             modal.classList.remove('hidden');
         }
 
         function closeModalOperasional() { document.getElementById('operational-modal').classList.add('hidden'); }
+
+        function getLocalDateString(dateObj) {
+            const offset = dateObj.getTimezoneOffset();
+            const adjustedDate = new Date(dateObj.getTime() - (offset*60*1000));
+            return adjustedDate.toISOString().split('T')[0];
+        }
+
+        function setOpDatePreset(type) {
+            const d = new Date();
+            if (type === 'yesterday') {
+                d.setDate(d.getDate() - 1);
+            }
+            const dateStr = getLocalDateString(d);
+            document.getElementById('form-op-tanggal').value = dateStr;
+            updateDatePresetButtons(dateStr);
+        }
+
+        function handleManualDateChange() {
+            const val = document.getElementById('form-op-tanggal').value;
+            updateDatePresetButtons(val);
+        }
+
+        function updateDatePresetButtons(selectedDateStr) {
+            const todayStr = getLocalDateString(new Date());
+            const dYest = new Date();
+            dYest.setDate(dYest.getDate() - 1);
+            const yestStr = getLocalDateString(dYest);
+
+            const btnToday = document.getElementById('btn-preset-today');
+            const btnYest = document.getElementById('btn-preset-yesterday');
+
+            const activeClass = "py-1.5 px-2 text-[11px] font-semibold rounded-xl border bg-orange text-white border-orange transition";
+            const inactiveClass = "py-1.5 px-2 text-[11px] font-semibold rounded-xl custom-cream border border-bordercolor dark:border-zinc-800 text-charcoal dark:text-white transition";
+
+            if (selectedDateStr === todayStr) {
+                btnToday.className = activeClass;
+                btnYest.className = inactiveClass;
+            } else if (selectedDateStr === yestStr) {
+                btnToday.className = inactiveClass;
+                btnYest.className = activeClass;
+            } else {
+                btnToday.className = inactiveClass;
+                btnYest.className = inactiveClass;
+            }
+        }
 
         function saveOperationalExpense(event) {
             event.preventDefault();
@@ -874,9 +901,7 @@
             } else {
                 const newOp = {
                     id: 'OP-' + Date.now() + '-' + Math.floor(Math.random() * 1000),
-                    nominal,
-                    tanggal,
-                    keterangan
+                    nominal, tanggal, keterangan
                 };
                 operationalExpenses.unshift(newOp);
             }
@@ -1096,7 +1121,6 @@
                 }
             });
 
-            // Hitung Biaya Operasional Riil yang masuk pada siklus terpilih
             operationalExpenses.forEach(op => {
                 const opDate = new Date(op.tanggal);
                 opDate.setHours(0,0,0,0);
@@ -1105,7 +1129,6 @@
                 }
             });
 
-            // Hitung Profit Bersih otomatis: Omzet - Tabungan - Total Biaya Operasional Riil
             const cycleProfitBersih = cycleOmzet - cycleSavings - cycleRealOperational;
 
             document.getElementById('rekap-today-count').innerText = todayCount;
@@ -1355,7 +1378,6 @@
             });
         }
 
-        // Tab Management di View Data ('orders' vs 'operational')
         function switchDataTableTab(tab) {
             currentDataTableTab = tab;
             const btnOrders = document.getElementById('tab-btn-orders');
@@ -1420,7 +1442,6 @@
                 });
                 container.innerHTML = html;
             } else {
-                // Tab Biaya Operasional Riil
                 const filtered = operationalExpenses.filter(op => 
                     op.keterangan.toLowerCase().includes(searchKeyword) ||
                     op.nominal.toString().includes(searchKeyword) ||
@@ -1504,10 +1525,7 @@
                 showToast("Tidak ada data untuk diexport.", true);
                 return;
             }
-            const exportObj = {
-                orders: orders,
-                operationalExpenses: operationalExpenses
-            };
+            const exportObj = { orders: orders, operationalExpenses: operationalExpenses };
             const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportObj, null, 2));
             const downloadAnchor = document.createElement('a');
             downloadAnchor.setAttribute("href", dataStr);
@@ -1525,7 +1543,6 @@
             reader.onload = function(e) {
                 try {
                     const parsed = JSON.parse(e.target.result);
-                    // Support format baru (objek) atau format lama (array murni orders)
                     if (Array.isArray(parsed)) {
                         orders = parsed;
                     } else if (parsed && typeof parsed === 'object') {
