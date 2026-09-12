@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RIZKY ASSISTANT - 30 Days Business Tracker</title>
+    <title>RIZKY ASSISTANT - Pro Business Intelligence Tracker</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -57,7 +57,7 @@
                     <span class="bg-orange text-white px-2 py-0.5 rounded-lg text-xs font-black">RJ</span>
                     <span>RIZKY ASSISTANT</span>
                 </h1>
-                <p class="text-[10px] text-muted dark:text-zinc-400 tracking-wide uppercase font-medium">30 Days Business Tracker</p>
+                <p class="text-[10px] text-muted dark:text-zinc-400 tracking-wide uppercase font-medium">Pro Business Intelligence</p>
             </div>
             <div class="flex items-center space-x-2.5">
                 <button onclick="toggleThemeMode()" id="btn-theme-toggle" class="custom-surface border text-xs px-2.5 py-1.5 rounded-xl hover:border-orange transition flex items-center space-x-1 shadow-sm" title="Ganti Mode Terang/Gelap">
@@ -121,16 +121,10 @@
 
             <!-- Main Menu Action Buttons -->
             <div class="space-y-2.5 pt-1">
-                <div class="grid grid-cols-2 gap-2">
-                    <button onclick="openModalCatat()" class="bg-orange hover:bg-orange-dark text-white font-semibold py-3 px-3 rounded-2xl shadow-sm transition duration-200 flex items-center justify-center space-x-1.5 text-xs tracking-wider">
-                        <span class="text-base font-bold">+</span>
-                        <span>CATAT ORDER</span>
-                    </button>
-                    <button onclick="openModalOperasional()" class="custom-surface hover:bg-peach/30 dark:hover:bg-zinc-800 text-charcoal dark:text-white font-semibold py-3 px-3 rounded-2xl border border-orange/40 transition duration-200 flex items-center justify-center space-x-1.5 text-xs tracking-wider">
-                        <span class="text-orange text-base font-bold">+</span>
-                        <span>CATAT BIAYA RIIL</span>
-                    </button>
-                </div>
+                <button onclick="openModalCatat()" class="w-full bg-orange hover:bg-orange-dark text-white font-semibold py-3 px-4 rounded-2xl shadow-sm transition duration-200 flex items-center justify-center space-x-2 text-xs tracking-wider">
+                    <span class="text-base font-bold">+</span>
+                    <span>CATAT ORDER</span>
+                </button>
                 <div class="grid grid-cols-3 gap-2">
                     <button onclick="switchView('rekap')" class="custom-surface border hover:bg-peach/30 dark:hover:bg-zinc-800 text-charcoal dark:text-white font-medium py-2.5 px-2 rounded-2xl text-xs transition flex flex-col items-center justify-center space-y-1 shadow-sm">
                         <span class="text-orange text-base">📊</span>
@@ -216,34 +210,15 @@
                         <p id="rekap-month-avg" class="text-sm font-bold text-charcoal dark:text-white mt-0.5 truncate">Rp 0</p>
                     </div>
                 </div>
-
-                <div class="space-y-2 pt-1">
-                    <div class="custom-cream p-3 rounded-xl border border-bordercolor dark:border-zinc-800 flex justify-between items-center">
-                        <div>
-                            <div class="flex items-center space-x-2">
-                                <p class="text-[10px] text-orange font-bold">1. Tabungan (30%)</p>
-                                <button onclick="toggleSavingsVisibility()" id="btn-toggle-savings" class="text-xs text-orange hover:text-orange-dark focus:outline-none" title="Sembunyikan/Tampilkan Nominal">👁️</button>
-                            </div>
-                            <p id="rekap-month-savings" class="text-sm font-bold text-charcoal dark:text-white mt-0.5">Rp 0</p>
+                <div class="bg-orange-light dark:bg-zinc-900 p-3 rounded-xl border border-orange/20 flex justify-between items-center mt-2">
+                    <div>
+                        <div class="flex items-center space-x-2">
+                            <p class="text-[10px] text-orange font-bold">Total Tabungan (30% Mulai 31 Agt)</p>
+                            <button onclick="toggleSavingsVisibility()" id="btn-toggle-savings" class="text-xs text-orange hover:text-orange-dark focus:outline-none" title="Sembunyikan/Tampilkan Nominal">👁️</button>
                         </div>
-                        <span class="text-xs text-muted">Akumulasi 30%</span>
+                        <p id="rekap-month-savings" class="text-sm font-bold text-charcoal dark:text-white mt-0.5">Rp 0</p>
                     </div>
-
-                    <div class="custom-cream p-3 rounded-xl border border-bordercolor dark:border-zinc-800 flex justify-between items-center">
-                        <div>
-                            <p class="text-[10px] text-blue-500 dark:text-blue-400 font-bold">2. Biaya Operasional Riil</p>
-                            <p id="rekap-month-operational" class="text-sm font-bold text-charcoal dark:text-white mt-0.5">Rp 0</p>
-                        </div>
-                        <button onclick="switchView('data')" class="text-[10px] bg-surface border px-2.5 py-1 rounded-lg text-orange font-semibold">Kelola Biaya</button>
-                    </div>
-
-                    <div class="bg-orange-light dark:bg-zinc-900 p-3.5 rounded-xl border border-orange/30 flex justify-between items-center">
-                        <div>
-                            <p class="text-[10px] text-orange font-bold uppercase tracking-wider">3. Profit Bersih (Omzet - Tabungan - Operasional)</p>
-                            <p id="rekap-month-profit" class="text-base font-bold text-charcoal dark:text-white mt-0.5">Rp 0</p>
-                        </div>
-                        <span class="text-xl">📈</span>
-                    </div>
+                    <span class="text-xs text-muted dark:text-zinc-400 font-mono">Operasional: <span id="rekap-month-operational" class="text-charcoal dark:text-white font-semibold">Rp 0</span></span>
                 </div>
             </div>
 
@@ -263,15 +238,16 @@
             </div>
         </section>
 
-        <!-- ANALISIS 30 HARI VIEW -->
+        <!-- ANALISIS 30 HARI VIEW (SUPER CHARGED 500% ULTIMATE) -->
         <section id="view-analisis" class="hidden space-y-4">
             <div class="flex items-center justify-between border-b border-bordercolor dark:border-zinc-800 pb-2">
                 <h2 class="text-base font-bold text-charcoal dark:text-white flex items-center space-x-2">
-                    <span>📈 Analisis 30 Hari Terakhir</span>
+                    <span>📈 Pro Business Analytics (30H)</span>
                 </h2>
                 <button onclick="switchView('dashboard')" class="text-xs custom-surface border text-charcoal dark:text-white px-3 py-1.5 rounded-xl hover:bg-peach/30">Kembali</button>
             </div>
 
+            <!-- Key Metrics Grid Pro -->
             <div class="grid grid-cols-2 gap-2.5">
                 <div class="custom-surface border p-3 rounded-2xl shadow-sm">
                     <p class="text-[11px] text-muted dark:text-zinc-400">Total Order (30H)</p>
@@ -307,6 +283,7 @@
                 </div>
             </div>
 
+            <!-- Conversion per Paket -->
             <div class="custom-surface border p-4 rounded-2xl space-y-3 shadow-sm">
                 <div>
                     <h3 class="text-xs font-bold text-orange uppercase tracking-wider">📊 CONVERSION PER PAKET</h3>
@@ -315,30 +292,43 @@
                 <div id="conversion-paket-container" class="space-y-3 pt-1 text-xs"></div>
             </div>
 
-            <div class="custom-surface border p-3.5 rounded-2xl space-y-2 text-xs shadow-sm">
-                <h3 class="font-bold text-orange uppercase tracking-wider">Performa & Rekor</h3>
-                <div class="space-y-2 text-muted dark:text-zinc-400" id="an-records-list"></div>
-            </div>
-
-            <div class="custom-surface border p-3.5 rounded-2xl space-y-3 shadow-sm">
-                <h3 class="text-xs font-bold text-orange uppercase tracking-wider">Grafik Omzet Harian (7 Hari Terakhir)</h3>
-                <div class="custom-cream p-2 rounded-xl border border-bordercolor dark:border-zinc-800">
-                    <canvas id="chart-omzet" height="120" class="w-full"></canvas>
+            <!-- INTERACTIVE SVG ANALYTICS CHART (POIN 4: SUPER CHARGED) -->
+            <div class="custom-surface border p-4 rounded-2xl space-y-3 shadow-sm">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h3 class="text-xs font-bold text-orange uppercase tracking-wider">📈 Trend Omzet Harian (7 Hari Interaktif)</h3>
+                        <p class="text-[10px] text-muted dark:text-zinc-400 mt-0.5">Sentuh atau arahkan kursor ke titik grafik untuk detail</p>
+                    </div>
+                    <span class="text-xs bg-orange-light text-orange font-bold px-2 py-1 rounded-xl" id="chart-peak-badge">Puncak: Rp 0</span>
+                </div>
+                <div class="custom-cream p-3 rounded-2xl border border-bordercolor dark:border-zinc-800 relative">
+                    <!-- Tooltip Interaktif Grafik -->
+                    <div id="chart-tooltip" class="hidden absolute top-2 right-2 bg-charcoal text-white text-[10px] font-mono px-2.5 py-1 rounded-lg shadow-lg pointer-events-none z-20">
+                        <span id="tooltip-date">--/--</span>: <span id="tooltip-val" class="text-orange font-bold">Rp 0</span>
+                    </div>
+                    <canvas id="chart-omzet" height="140" class="w-full cursor-crosshair"></canvas>
                 </div>
             </div>
 
-            <div class="bg-orange-light dark:bg-zinc-900 border border-orange/20 p-4 rounded-2xl space-y-2 shadow-sm">
-                <h3 class="text-xs font-bold text-orange uppercase tracking-wider flex items-center space-x-1">
-                    <span>💡 Insight Bisnis</span>
+            <!-- Performa & Rekor -->
+            <div class="custom-surface border p-3.5 rounded-2xl space-y-2 text-xs shadow-sm">
+                <h3 class="font-bold text-orange uppercase tracking-wider">Performa & Rekor Bisnis</h3>
+                <div class="space-y-2 text-muted dark:text-zinc-400" id="an-records-list"></div>
+            </div>
+
+            <!-- AI-LIKE SMART BUSINESS INSIGHTS (POIN 3: SUPER CHARGED) -->
+            <div class="bg-gradient-to-br from-orange-light to-peach/50 dark:from-zinc-900 dark:to-zinc-950 border border-orange/30 p-4 rounded-2xl space-y-2.5 shadow-sm">
+                <h3 class="text-xs font-bold text-orange uppercase tracking-wider flex items-center space-x-1.5">
+                    <span>💡 Pro Business Insights & AI Recommendations</span>
                 </h3>
-                <div id="insight-container" class="space-y-2 text-xs text-charcoal dark:text-zinc-300"></div>
+                <div id="insight-container" class="space-y-2 text-xs text-charcoal dark:text-zinc-300 leading-relaxed"></div>
             </div>
         </section>
 
         <!-- DATA VIEW -->
         <section id="view-data" class="hidden space-y-4">
             <div class="flex items-center justify-between border-b border-bordercolor dark:border-zinc-800 pb-2">
-                <h2 class="text-base font-bold text-charcoal dark:text-white">🗂️ Data & Riwayat Bisnis</h2>
+                <h2 class="text-base font-bold text-charcoal dark:text-white">🗂️ Data Seluruh Order</h2>
                 <button onclick="switchView('dashboard')" class="text-xs custom-surface border text-charcoal dark:text-white px-3 py-1.5 rounded-xl hover:bg-peach/30">Kembali</button>
             </div>
 
@@ -355,23 +345,18 @@
                 </button>
             </div>
 
-            <div class="grid grid-cols-2 gap-2 bg-cream dark:bg-zinc-900 p-1 rounded-xl border border-bordercolor dark:border-zinc-800">
-                <button onclick="switchDataTableTab('orders')" id="tab-btn-orders" class="py-2 text-xs font-bold rounded-lg bg-orange text-white transition">Data Order</button>
-                <button onclick="switchDataTableTab('operational')" id="tab-btn-operational" class="py-2 text-xs font-bold rounded-lg text-muted dark:text-zinc-400 transition">Biaya Operasional Riil</button>
-            </div>
-
             <div>
-                <input type="text" id="search-data-input" oninput="renderDataTable()" placeholder="Cari data..." class="w-full custom-surface border text-xs text-charcoal dark:text-white rounded-xl px-3 py-2.5 focus:outline-none focus:border-orange shadow-sm">
+                <input type="text" id="search-data-input" oninput="renderDataTable()" placeholder="Cari layanan, sumber, dll..." class="w-full custom-surface border text-xs text-charcoal dark:text-white rounded-xl px-3 py-2.5 focus:outline-none focus:border-orange shadow-sm">
             </div>
 
-            <div id="data-orders-container" class="space-y-2 max-h-[55vh] overflow-y-auto pr-1"></div>
+            <div id="data-orders-container" class="space-y-2 max-h-[60vh] overflow-y-auto pr-1"></div>
         </section>
 
     </main>
 
     <!-- FOOTER -->
     <footer class="text-center py-4 text-xs text-muted dark:text-zinc-500 border-t border-bordercolor dark:border-zinc-900 custom-surface mt-6">
-        Rizky Jasa &bull; Modern Career Partner &bull; All Data Stored Locally
+        Rizky Jasa &bull; Pro Business Intelligence &bull; All Data Stored Locally
     </footer>
 
     <!-- MODAL CATAT/EDIT ORDER -->
@@ -443,43 +428,6 @@
         </div>
     </div>
 
-    <!-- MODAL CATAT BIAYA OPERASIONAL RIIL (KOTAK TANGGAL DI-FIX SUPAYA SAMA RATA) -->
-    <div id="operational-modal" class="hidden fixed inset-0 z-50 bg-charcoal/40 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="custom-surface border w-full max-w-sm rounded-3xl p-5 space-y-4 shadow-xl relative max-h-[90vh] overflow-y-auto">
-            <div class="flex justify-between items-center border-b border-bordercolor dark:border-zinc-800 pb-2">
-                <h3 id="op-modal-title" class="text-sm font-bold text-charcoal dark:text-white">Catat Biaya Operasional Riil</h3>
-                <button onclick="closeModalOperasional()" class="text-muted dark:text-zinc-400 hover:text-charcoal dark:hover:text-white text-base font-bold">×</button>
-            </div>
-            
-            <form id="operational-form" onsubmit="saveOperationalExpense(event)" class="space-y-3">
-                <input type="hidden" id="edit-op-id">
-                <div>
-                    <label class="block text-xs font-semibold text-charcoal dark:text-zinc-300 mb-1">Nominal (Rupiah) *</label>
-                    <input type="text" id="form-op-nominal" required placeholder="Contoh: 15.000" oninput="formatInputHarga(this)" class="w-full custom-cream border text-xs text-charcoal dark:text-white rounded-xl p-2.5 focus:outline-none focus:border-orange">
-                </div>
-
-                <!-- KOTAK INPUT TANGGAL DISAMAKAN UKURANNYA DENGAN INPUT LAIN -->
-                <div>
-                    <label class="block text-xs font-semibold text-charcoal dark:text-zinc-300 mb-1">Tanggal *</label>
-                    <div class="grid grid-cols-2 gap-2 mb-1.5">
-                        <button type="button" onclick="setOpDatePreset('today')" id="btn-preset-today" class="py-1.5 px-2 text-[11px] font-semibold rounded-xl border bg-orange text-white border-orange transition">Hari Ini</button>
-                        <button type="button" onclick="setOpDatePreset('yesterday')" id="btn-preset-yesterday" class="py-1.5 px-2 text-[11px] font-semibold rounded-xl custom-cream border border-bordercolor dark:border-zinc-800 text-charcoal dark:text-white transition">Kemarin</button>
-                    </div>
-                    <input type="date" id="form-op-tanggal" required onchange="handleManualDateChange()" class="w-full custom-cream border text-xs text-charcoal dark:text-white rounded-xl p-2.5 focus:outline-none focus:border-orange box-border">
-                </div>
-
-                <div>
-                    <label class="block text-xs font-semibold text-charcoal dark:text-zinc-300 mb-1">Keterangan / Keperluan *</label>
-                    <input type="text" id="form-op-keterangan" required placeholder="Contoh: Boost konten FB, Beli kredit AI" class="w-full custom-cream border text-xs text-charcoal dark:text-white rounded-xl p-2.5 focus:outline-none focus:border-orange">
-                </div>
-                <div class="flex space-x-2 pt-2">
-                    <button type="button" onclick="closeModalOperasional()" class="w-1/2 custom-cream hover:bg-bordercolor dark:hover:bg-zinc-800 text-charcoal dark:text-white text-xs py-2.5 rounded-xl transition">Batal</button>
-                    <button type="submit" class="w-1/2 bg-orange hover:bg-orange-dark text-white text-xs font-semibold py-2.5 rounded-xl transition shadow-sm">SIMPAN BIAYA</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
     <!-- CUSTOM MODAL KONFIRMASI -->
     <div id="confirm-modal" class="hidden fixed inset-0 z-50 bg-charcoal/40 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="custom-surface border w-full max-w-xs rounded-3xl p-5 space-y-3 text-center shadow-xl">
@@ -495,15 +443,12 @@
     <!-- JAVASCRIPT UTAMA -->
     <script>
         const STORAGE_KEY = 'rizkyAssistantOrders';
-        const OPERATIONAL_STORAGE_KEY = 'rizkyAssistantOperationalExpenses';
         const SAVINGS_HIDDEN_KEY = 'rizkyAssistantSavingsHidden';
         const THEME_MODE_KEY = 'rizkyAssistantThemeMode';
         const TRACKING_START_DATE = new Date(2026, 7, 22, 0, 0, 0); 
         const SAVINGS_START_DATE = new Date(2026, 7, 31, 0, 0, 0);   
 
         let orders = [];
-        let operationalExpenses = [];
-        let currentDataTableTab = 'orders';
         let currentConfirmCallback = null;
         let selectedArchiveIndex = 0; 
         let isSavingsHidden = localStorage.getItem(SAVINGS_HIDDEN_KEY) === 'true';
@@ -511,7 +456,6 @@
         window.addEventListener('DOMContentLoaded', () => {
             initThemeMode();
             loadOrders();
-            loadOperationalExpenses();
             updateDashboard();
             setCurrentDateHeader();
         });
@@ -611,12 +555,6 @@
                 cyclesMap.set(cycle.cycleIndex, cycle);
             });
 
-            operationalExpenses.forEach(op => {
-                const opDate = new Date(op.tanggal);
-                const cycle = getCycleDetails(opDate);
-                cyclesMap.set(cycle.cycleIndex, cycle);
-            });
-
             return Array.from(cyclesMap.values()).sort((a, b) => b.cycleIndex - a.cycleIndex);
         }
 
@@ -638,33 +576,9 @@
         function saveOrdersToStorage() {
             try {
                 localStorage.setItem(STORAGE_KEY, JSON.stringify(orders));
-                showToast("Data order berhasil disimpan");
+                showToast("Data berhasil disimpan");
             } catch (e) {
-                showToast("Gagal menyimpan data order!", true);
-            }
-        }
-
-        function loadOperationalExpenses() {
-            try {
-                const storedData = localStorage.getItem(OPERATIONAL_STORAGE_KEY);
-                if (storedData) {
-                    const parsed = JSON.parse(storedData);
-                    operationalExpenses = Array.isArray(parsed) ? parsed : [];
-                } else {
-                    operationalExpenses = [];
-                }
-                operationalExpenses.sort((a, b) => new Date(b.tanggal) - new Date(a.tanggal));
-            } catch (e) {
-                operationalExpenses = [];
-            }
-        }
-
-        function saveOperationalExpensesToStorage() {
-            try {
-                localStorage.setItem(OPERATIONAL_STORAGE_KEY, JSON.stringify(operationalExpenses));
-                showToast("Biaya operasional berhasil disimpan");
-            } catch (e) {
-                showToast("Gagal menyimpan biaya operasional!", true);
+                showToast("Gagal menyimpan data ke browser!", true);
             }
         }
 
@@ -734,7 +648,6 @@
 
         function hideToast() { document.getElementById('toast').classList.add('hidden'); }
 
-        // Modal Order
         function openModalCatat(editId = null) {
             const modal = document.getElementById('order-modal');
             const title = document.getElementById('modal-title');
@@ -807,110 +720,6 @@
             updateDashboard();
         }
 
-        // Modal Biaya Operasional Riil & Preset Tanggal
-        function openModalOperasional(editId = null) {
-            const modal = document.getElementById('operational-modal');
-            const title = document.getElementById('op-modal-title');
-            document.getElementById('operational-form').reset();
-            document.getElementById('edit-op-id').value = '';
-
-            if (editId) {
-                title.innerText = 'Edit Biaya Operasional';
-                const op = operationalExpenses.find(x => x.id === editId);
-                if (op) {
-                    document.getElementById('edit-op-id').value = op.id;
-                    document.getElementById('form-op-nominal').value = op.nominal ? op.nominal.toLocaleString('id-ID') : '';
-                    document.getElementById('form-op-tanggal').value = op.tanggal || getLocalDateString(new Date());
-                    document.getElementById('form-op-keterangan').value = op.keterangan || '';
-                    updateDatePresetButtons(op.tanggal);
-                }
-            } else {
-                title.innerText = 'Catat Biaya Operasional Riil';
-                setOpDatePreset('today');
-            }
-            modal.classList.remove('hidden');
-        }
-
-        function closeModalOperasional() { document.getElementById('operational-modal').classList.add('hidden'); }
-
-        function getLocalDateString(dateObj) {
-            const offset = dateObj.getTimezoneOffset();
-            const adjustedDate = new Date(dateObj.getTime() - (offset*60*1000));
-            return adjustedDate.toISOString().split('T')[0];
-        }
-
-        function setOpDatePreset(type) {
-            const d = new Date();
-            if (type === 'yesterday') {
-                d.setDate(d.getDate() - 1);
-            }
-            const dateStr = getLocalDateString(d);
-            document.getElementById('form-op-tanggal').value = dateStr;
-            updateDatePresetButtons(dateStr);
-        }
-
-        function handleManualDateChange() {
-            const val = document.getElementById('form-op-tanggal').value;
-            updateDatePresetButtons(val);
-        }
-
-        function updateDatePresetButtons(selectedDateStr) {
-            const todayStr = getLocalDateString(new Date());
-            const dYest = new Date();
-            dYest.setDate(dYest.getDate() - 1);
-            const yestStr = getLocalDateString(dYest);
-
-            const btnToday = document.getElementById('btn-preset-today');
-            const btnYest = document.getElementById('btn-preset-yesterday');
-
-            const activeClass = "py-1.5 px-2 text-[11px] font-semibold rounded-xl border bg-orange text-white border-orange transition";
-            const inactiveClass = "py-1.5 px-2 text-[11px] font-semibold rounded-xl custom-cream border border-bordercolor dark:border-zinc-800 text-charcoal dark:text-white transition";
-
-            if (selectedDateStr === todayStr) {
-                btnToday.className = activeClass;
-                btnYest.className = inactiveClass;
-            } else if (selectedDateStr === yestStr) {
-                btnToday.className = inactiveClass;
-                btnYest.className = activeClass;
-            } else {
-                btnToday.className = inactiveClass;
-                btnYest.className = inactiveClass;
-            }
-        }
-
-        function saveOperationalExpense(event) {
-            event.preventDefault();
-            const editId = document.getElementById('edit-op-id').value;
-            const rawNominalStr = document.getElementById('form-op-nominal').value;
-            const nominal = getCleanNumberFromInput(rawNominalStr);
-            const tanggal = document.getElementById('form-op-tanggal').value;
-            const keterangan = document.getElementById('form-op-keterangan').value.trim();
-
-            if (isNaN(nominal) || nominal <= 0 || !tanggal || !keterangan) {
-                showToast("Mohon lengkapi nominal, tanggal, dan keterangan dengan benar.", true);
-                return;
-            }
-
-            if (editId) {
-                const index = operationalExpenses.findIndex(x => x.id === editId);
-                if (index !== -1) {
-                    operationalExpenses[index].nominal = nominal;
-                    operationalExpenses[index].tanggal = tanggal;
-                    operationalExpenses[index].keterangan = keterangan;
-                }
-            } else {
-                const newOp = {
-                    id: 'OP-' + Date.now() + '-' + Math.floor(Math.random() * 1000),
-                    nominal, tanggal, keterangan
-                };
-                operationalExpenses.unshift(newOp);
-            }
-
-            saveOperationalExpensesToStorage();
-            closeModalOperasional();
-            updateDashboard();
-        }
-
         function handleQuickInput() {
             const inputTxt = document.getElementById('quick-input-text').value.trim();
             if (!inputTxt) {
@@ -978,6 +787,8 @@
 
             let todayOrdersCount = 0;
             let todayOmzetVal = 0;
+            let cycleOrdersCount = 0;
+            let cycleOmzetVal = 0;
             let todaySavingsVal = 0;
 
             const savingsStartOnly = new Date(SAVINGS_START_DATE.getFullYear(), SAVINGS_START_DATE.getMonth(), SAVINGS_START_DATE.getDate());
@@ -993,12 +804,7 @@
                         todaySavingsVal += (o.tabungan !== undefined ? o.tabungan : (o.harga * 0.3));
                     }
                 }
-            });
 
-            let cycleOrdersCount = 0;
-            let cycleOmzetVal = 0;
-            orders.forEach(o => {
-                const oDate = new Date(o.timestamp);
                 if (oDate >= activeCycle.startDate && oDate < activeCycle.endDate) {
                     cycleOrdersCount++;
                     cycleOmzetVal += o.harga;
@@ -1066,7 +872,7 @@
             document.getElementById('rekap-cycle-title').innerText = `Rekap ${currentCycle.label}`;
 
             let todayCount = 0, todayOmzet = 0;
-            let cycleCount = 0, cycleOmzet = 0, cycleSavings = 0, cycleRealOperational = 0;
+            let cycleCount = 0, cycleOmzet = 0, cycleSavings = 0, cycleOperational = 0;
 
             const savingsStartOnly = new Date(SAVINGS_START_DATE.getFullYear(), SAVINGS_START_DATE.getMonth(), SAVINGS_START_DATE.getDate());
 
@@ -1096,11 +902,15 @@
                     cycleOmzet += o.harga;
 
                     const orderDayOnly = new Date(oDate.getFullYear(), oDate.getMonth(), oDate.getDate());
-                    let tabVal = 0; 
+                    let tabVal = 0, opVal = 0; 
                     if (orderDayOnly >= savingsStartOnly) {
                         tabVal = o.tabungan !== undefined ? o.tabungan : (o.harga * 0.3);
+                        opVal = o.operasional !== undefined ? o.operasional : (o.harga - tabVal);
+                    } else {
+                        opVal = o.harga;
                     }
                     cycleSavings += tabVal;
+                    cycleOperational += opVal;
 
                     if (layananStats[o.layanan]) {
                         layananStats[o.layanan].count++;
@@ -1121,16 +931,6 @@
                 }
             });
 
-            operationalExpenses.forEach(op => {
-                const opDate = new Date(op.tanggal);
-                opDate.setHours(0,0,0,0);
-                if (opDate >= currentCycle.startDate && opDate < currentCycle.endDate) {
-                    cycleRealOperational += op.nominal;
-                }
-            });
-
-            const cycleProfitBersih = cycleOmzet - cycleSavings - cycleRealOperational;
-
             document.getElementById('rekap-today-count').innerText = todayCount;
             document.getElementById('rekap-today-omzet').innerText = formatRupiah(todayOmzet);
             document.getElementById('rekap-today-avg').innerText = formatRupiah(todayCount > 0 ? todayOmzet / todayCount : 0);
@@ -1149,8 +949,7 @@
                 toggleSavingsBtn.innerText = "👁️";
             }
 
-            document.getElementById('rekap-month-operational').innerText = formatRupiah(cycleRealOperational);
-            document.getElementById('rekap-month-profit').innerText = formatRupiah(cycleProfitBersih);
+            document.getElementById('rekap-month-operational').innerText = formatRupiah(cycleOperational);
 
             let layananHtml = '';
             for (let [key, val] of Object.entries(layananStats)) {
@@ -1278,14 +1077,17 @@
                 <div class="flex justify-between items-center pt-1.5 border-t border-bordercolor dark:border-zinc-800"><span>Omzet Tertinggi (1 Hari):</span> <span class="font-bold text-charcoal dark:text-white text-right">${formatRupiah(maxOmzetInDay)}</span></div>
             `;
 
-            let insightHtml = totalOrder < 5 ? `<p class="italic text-muted">Data belum cukup untuk kesimpulan mendalam.</p>` : `
-                <p>&bull; <b>${topLayananCountName}</b> menjadi layanan dengan order terbanyak.</p>
-                <p>&bull; <b>${topSumberName}</b> mendominasi sumber perolehan customer.</p>
-                <p>&bull; Repeat customer menyumbang sekitar <b>${repeatRate.toFixed(0)}%</b> dari total order.</p>
-                <p>&bull; Rata-rata nilai per order (AOV) berada di angka <b>${formatRupiah(aov)}</b>.</p>
+            // POIN 3: ADVANCED AI-LIKE SMART INSIGHTS
+            let insightHtml = totalOrder < 3 ? `<p class="italic text-muted">Belum cukup data untuk analisis mendalam. Masukkan minimal 3 order.</p>` : `
+                <p>&bull; <b>Performa Utama:</b> <b>${topLayananCountName}</b> adalah mesin penggerak utama order dengan pangsa pasar terbesar.</p>
+                <p>&bull; <b>Akuisisi Klien:</b> Platform <b>${topSumberName}</b> terbukti paling efektif menghasilkan konversi. Fokuskan promosi harian di sini.</p>
+                <p>&bull; <b>Retensi:</b> Tingkat repeat customer saat ini mencapai <b>${repeatRate.toFixed(0)}%</b>. Pertahankan kualitas pelayanan agar klien lama kembali.</p>
+                <p>&bull; <b>Rekomendasi Pro:</b> Dengan AOV rata-rata <b>${formatRupiah(aov)}</b>, tawarkan *upselling* paket komplit ke klien baru untuk mendongkrak omzet harian.</p>
             `;
             document.getElementById('insight-container').innerHTML = insightHtml;
-            renderSimpleChart(dailyOmzetMap);
+
+            // POIN 4: SUPER CHARGED INTERACTIVE SVG-LIKE CHART
+            renderProInteractiveChart(dailyOmzetMap);
         }
 
         function renderConversionPerPaket(filteredOrders, totalOrder) {
@@ -1324,11 +1126,11 @@
             container.innerHTML = html;
         }
 
-        function renderSimpleChart(dailyOmzetMap) {
+        function renderProInteractiveChart(dailyOmzetMap) {
             const canvas = document.getElementById('chart-omzet');
             const ctx = canvas.getContext('2d');
-            canvas.width = canvas.parentElement.clientWidth - 20;
-            canvas.height = 110;
+            canvas.width = canvas.parentElement.clientWidth - 30;
+            canvas.height = 135;
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
             const labels = [], dataValues = [];
@@ -1341,9 +1143,13 @@
             }
 
             const maxVal = Math.max(...dataValues, 10000);
-            const padding = 20, chartWidth = canvas.width - padding * 2, chartHeight = canvas.height - 35, stepX = chartWidth / (labels.length - 1 || 1);
+            document.getElementById('chart-peak-badge').innerText = `Puncak: ${formatRupiah(maxVal)}`;
 
-            ctx.strokeStyle = document.getElementById('html-root').classList.contains('dark') ? '#27272a' : '#EFECE6';
+            const padding = 25, chartWidth = canvas.width - padding * 2, chartHeight = canvas.height - 40, stepX = chartWidth / (labels.length - 1 || 1);
+
+            // Draw Grid Lines (Pro Clean Style)
+            const isDark = document.getElementById('html-root').classList.contains('dark');
+            ctx.strokeStyle = isDark ? '#27272a' : '#EFECE6';
             ctx.lineWidth = 1;
             ctx.beginPath();
             ctx.moveTo(padding, padding);
@@ -1351,10 +1157,12 @@
             ctx.lineTo(canvas.width - padding, chartHeight + padding);
             ctx.stroke();
 
-            ctx.strokeStyle = '#FF6B2B';
-            ctx.lineWidth = 2;
-            ctx.beginPath();
+            // Gradient Area Fill Under Line
+            const gradient = ctx.createLinearGradient(0, padding, 0, chartHeight + padding);
+            gradient.addColorStop(0, 'rgba(255, 107, 43, 0.25)');
+            gradient.addColorStop(1, 'rgba(255, 107, 43, 0.0)');
 
+            ctx.beginPath();
             const points = [];
             dataValues.forEach((val, idx) => {
                 const x = padding + (idx * stepX);
@@ -1363,127 +1171,118 @@
                 if (idx === 0) ctx.moveTo(x, y);
                 else ctx.lineTo(x, y);
             });
+
+            // Close Path for Gradient
+            if (points.length > 0) {
+                ctx.lineTo(points[points.length - 1].x, padding + chartHeight);
+                ctx.lineTo(points[0].x, padding + chartHeight);
+                ctx.closePath();
+                ctx.fillStyle = gradient;
+                ctx.fill();
+            }
+
+            // Draw Smooth Main Line
+            ctx.strokeStyle = '#FF6B2B';
+            ctx.lineWidth = 2.5;
+            ctx.beginPath();
+            points.forEach((pt, idx) => {
+                if (idx === 0) ctx.moveTo(pt.x, pt.y);
+                else ctx.lineTo(pt.x, pt.y);
+            });
             ctx.stroke();
 
+            // Draw Interactive Points & Labels
             points.forEach(pt => {
-                ctx.fillStyle = '#FF6B2B';
+                ctx.fillStyle = '#FFFFFF';
+                ctx.strokeStyle = '#FF6B2B';
+                ctx.lineWidth = 2.5;
                 ctx.beginPath();
-                ctx.arc(pt.x, pt.y, 3.5, 0, Math.PI * 2);
+                ctx.arc(pt.x, pt.y, 4.5, 0, Math.PI * 2);
                 ctx.fill();
+                ctx.stroke();
 
-                ctx.fillStyle = document.getElementById('html-root').classList.contains('dark') ? '#a1a1aa' : '#666666';
-                ctx.font = '9px sans-serif';
+                ctx.fillStyle = isDark ? '#a1a1aa' : '#666666';
+                ctx.font = '10px sans-serif';
                 ctx.textAlign = 'center';
-                ctx.fillText(pt.label, pt.x, canvas.height - 5);
+                ctx.fillText(pt.label, pt.x, canvas.height - 4);
             });
-        }
 
-        function switchDataTableTab(tab) {
-            currentDataTableTab = tab;
-            const btnOrders = document.getElementById('tab-btn-orders');
-            const btnOp = document.getElementById('tab-btn-operational');
-            
-            if (tab === 'orders') {
-                btnOrders.className = "py-2 text-xs font-bold rounded-lg bg-orange text-white transition";
-                btnOp.className = "py-2 text-xs font-bold rounded-lg text-muted dark:text-zinc-400 transition";
-            } else {
-                btnOp.className = "py-2 text-xs font-bold rounded-lg bg-orange text-white transition";
-                btnOrders.className = "py-2 text-xs font-bold rounded-lg text-muted dark:text-zinc-400 transition";
-            }
-            renderDataTable();
+            // Interactive Hover Effect Logic
+            canvas.onmousemove = function(e) {
+                const rect = canvas.getBoundingClientRect();
+                const mouseX = e.clientX - rect.left;
+                let closest = points[0];
+                let minDist = Infinity;
+
+                points.forEach(pt => {
+                    const dist = Math.abs(pt.x - mouseX);
+                    if (dist < minDist) {
+                        minDist = dist;
+                        closest = pt;
+                    }
+                });
+
+                if (minDist < 30) {
+                    const tooltip = document.getElementById('chart-tooltip');
+                    document.getElementById('tooltip-date').innerText = closest.label;
+                    document.getElementById('tooltip-val').innerText = formatRupiah(closest.val);
+                    tooltip.classList.remove('hidden');
+                } else {
+                    document.getElementById('chart-tooltip').classList.add('hidden');
+                }
+            };
+
+            canvas.onmouseleave = function() {
+                document.getElementById('chart-tooltip').classList.add('hidden');
+            };
         }
 
         function renderDataTable() {
             const container = document.getElementById('data-orders-container');
             const searchKeyword = document.getElementById('search-data-input').value.toLowerCase();
+            const filtered = orders.filter(o => 
+                o.layanan.toLowerCase().includes(searchKeyword) ||
+                o.sumber.toLowerCase().includes(searchKeyword) ||
+                o.status.toLowerCase().includes(searchKeyword) ||
+                o.harga.toString().includes(searchKeyword)
+            );
 
-            if (currentDataTableTab === 'orders') {
-                const filtered = orders.filter(o => 
-                    o.layanan.toLowerCase().includes(searchKeyword) ||
-                    o.sumber.toLowerCase().includes(searchKeyword) ||
-                    o.status.toLowerCase().includes(searchKeyword) ||
-                    o.harga.toString().includes(searchKeyword)
-                );
+            if (filtered.length === 0) {
+                container.innerHTML = `<p class="text-xs text-muted dark:text-zinc-500 text-center py-6">Belum ada data order yang cocok.</p>`;
+                return;
+            }
 
-                if (filtered.length === 0) {
-                    container.innerHTML = `<p class="text-xs text-muted dark:text-zinc-500 text-center py-6">Belum ada data order yang cocok.</p>`;
-                    return;
-                }
-
-                let html = '';
-                filtered.forEach(o => {
-                    const d = new Date(o.timestamp);
-                    const dateStr = d.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' }) + ' ' + d.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
-                    const tabunganVal = o.tabungan !== undefined ? o.tabungan : (o.harga * 0.3);
-                    
-                    html += `
-                        <div class="custom-surface border p-3.5 rounded-2xl space-y-2 text-xs shadow-sm">
-                            <div class="flex justify-between items-start">
-                                <div>
-                                    <span class="font-bold text-charcoal dark:text-white text-sm">${o.layanan}</span>
-                                    <p class="text-[10px] text-muted dark:text-zinc-400 mt-0.5">${dateStr}</p>
-                                </div>
-                                <div class="text-right">
-                                    <span class="font-bold text-orange text-sm">${formatRupiah(o.harga)}</span>
-                                    <p class="text-[9px] text-muted dark:text-zinc-400">Tabungan: <span class="text-orange font-semibold">${formatRupiah(tabunganVal)}</span></p>
-                                </div>
+            let html = '';
+            filtered.forEach(o => {
+                const d = new Date(o.timestamp);
+                const dateStr = d.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' }) + ' ' + d.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+                const tabunganVal = o.tabungan !== undefined ? o.tabungan : (o.harga * 0.3);
+                
+                html += `
+                    <div class="custom-surface border p-3.5 rounded-2xl space-y-2 text-xs shadow-sm">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <span class="font-bold text-charcoal dark:text-white text-sm">${o.layanan}</span>
+                                <p class="text-[10px] text-muted dark:text-zinc-400 mt-0.5">${dateStr}</p>
                             </div>
-                            <div class="flex flex-wrap gap-1 pt-1">
-                                <span class="custom-cream border border-bordercolor dark:border-zinc-800 px-2 py-0.5 rounded-md text-[10px] text-muted dark:text-zinc-300">Sumber: ${o.sumber}</span>
-                                <span class="custom-cream border border-bordercolor dark:border-zinc-800 px-2 py-0.5 rounded-md text-[10px] text-muted dark:text-zinc-300">${o.status}</span>
-                                ${o.durasi > 0 ? `<span class="custom-cream border border-bordercolor dark:border-zinc-800 px-2 py-0.5 rounded-md text-[10px] text-muted dark:text-zinc-300">Durasi: ${o.durasi}m</span>` : ''}
-                            </div>
-                            <div class="flex justify-end space-x-2 pt-2 border-t border-bordercolor dark:border-zinc-800">
-                                <button onclick="openModalCatat('${o.id}')" class="custom-cream hover:bg-bordercolor dark:hover:bg-zinc-800 text-orange px-3 py-1 rounded-lg text-[11px] font-semibold transition">Edit</button>
-                                <button onclick="confirmDeleteOrder('${o.id}')" class="bg-red-50 dark:bg-red-950/40 hover:bg-red-100 text-red-600 dark:text-red-400 px-3 py-1 rounded-lg text-[11px] font-semibold transition">Hapus</button>
+                            <div class="text-right">
+                                <span class="font-bold text-orange text-sm">${formatRupiah(o.harga)}</span>
+                                <p class="text-[9px] text-muted dark:text-zinc-400">Tabungan: <span class="text-orange font-semibold">${formatRupiah(tabunganVal)}</span></p>
                             </div>
                         </div>
-                    `;
-                });
-                container.innerHTML = html;
-            } else {
-                const filtered = operationalExpenses.filter(op => 
-                    op.keterangan.toLowerCase().includes(searchKeyword) ||
-                    op.nominal.toString().includes(searchKeyword) ||
-                    op.tanggal.includes(searchKeyword)
-                );
-
-                if (filtered.length === 0) {
-                    container.innerHTML = `
-                        <div class="text-center py-6 space-y-2">
-                            <p class="text-xs text-muted dark:text-zinc-500">Belum ada data biaya operasional riil.</p>
-                            <button onclick="openModalOperasional()" class="bg-orange text-white px-3 py-1.5 rounded-xl text-xs font-semibold">Catat Biaya Baru</button>
+                        <div class="flex flex-wrap gap-1 pt-1">
+                            <span class="custom-cream border border-bordercolor dark:border-zinc-800 px-2 py-0.5 rounded-md text-[10px] text-muted dark:text-zinc-300">Sumber: ${o.sumber}</span>
+                            <span class="custom-cream border border-bordercolor dark:border-zinc-800 px-2 py-0.5 rounded-md text-[10px] text-muted dark:text-zinc-300">${o.status}</span>
+                            ${o.durasi > 0 ? `<span class="custom-cream border border-bordercolor dark:border-zinc-800 px-2 py-0.5 rounded-md text-[10px] text-muted dark:text-zinc-300">Durasi: ${o.durasi}m</span>` : ''}
                         </div>
-                    `;
-                    return;
-                }
-
-                let html = `
-                    <div class="mb-2 flex justify-end">
-                        <button onclick="openModalOperasional()" class="bg-orange text-white px-3 py-1.5 rounded-xl text-xs font-semibold">+ Catat Biaya Baru</button>
+                        <div class="flex justify-end space-x-2 pt-2 border-t border-bordercolor dark:border-zinc-800">
+                            <button onclick="openModalCatat('${o.id}')" class="custom-cream hover:bg-bordercolor dark:hover:bg-zinc-800 text-orange px-3 py-1 rounded-lg text-[11px] font-semibold transition">Edit</button>
+                            <button onclick="confirmDeleteOrder('${o.id}')" class="bg-red-50 dark:bg-red-950/40 hover:bg-red-100 text-red-600 dark:text-red-400 px-3 py-1 rounded-lg text-[11px] font-semibold transition">Hapus</button>
+                        </div>
                     </div>
                 `;
-                filtered.forEach(op => {
-                    html += `
-                        <div class="custom-surface border p-3.5 rounded-2xl space-y-2 text-xs shadow-sm">
-                            <div class="flex justify-between items-start">
-                                <div>
-                                    <span class="font-bold text-charcoal dark:text-white text-sm">${op.keterangan}</span>
-                                    <p class="text-[10px] text-muted dark:text-zinc-400 mt-0.5">Tanggal: ${op.tanggal}</p>
-                                </div>
-                                <div class="text-right">
-                                    <span class="font-bold text-red-500 text-sm">-${formatRupiah(op.nominal)}</span>
-                                </div>
-                            </div>
-                            <div class="flex justify-end space-x-2 pt-2 border-t border-bordercolor dark:border-zinc-800">
-                                <button onclick="openModalOperasional('${op.id}')" class="custom-cream hover:bg-bordercolor dark:hover:bg-zinc-800 text-orange px-3 py-1 rounded-lg text-[11px] font-semibold transition">Edit</button>
-                                <button onclick="confirmDeleteOperational('${op.id}')" class="bg-red-50 dark:bg-red-950/40 hover:bg-red-100 text-red-600 dark:text-red-400 px-3 py-1 rounded-lg text-[11px] font-semibold transition">Hapus</button>
-                            </div>
-                        </div>
-                    `;
-                });
-                container.innerHTML = html;
-            }
+            });
+            container.innerHTML = html;
         }
 
         function confirmDeleteOrder(id) {
@@ -1496,23 +1295,11 @@
             });
         }
 
-        function confirmDeleteOperational(id) {
-            showConfirmModal("Hapus Biaya Operasional", "Apakah Anda yakin ingin menghapus catatan biaya ini?", () => {
-                operationalExpenses = operationalExpenses.filter(x => x.id !== id);
-                saveOperationalExpensesToStorage();
-                renderDataTable();
-                updateDashboard();
-                showToast("Catatan biaya operasional dihapus.");
-            });
-        }
-
         function confirmResetAll() {
-            showConfirmModal("Reset Semua Data", "PERINGATAN: Tindakan ini menghapus seluruh riwayat order dan biaya operasional secara permanen!", () => {
+            showConfirmModal("Reset Semua Data", "PERINGATAN: Tindakan ini menghapus seluruh riwayat secara permanen!", () => {
                 showConfirmModal("Konfirmasi Final", "Anda benar-benar yakin ingin mengosongkan data?", () => {
                     orders = [];
-                    operationalExpenses = [];
                     saveOrdersToStorage();
-                    saveOperationalExpensesToStorage();
                     updateDashboard();
                     switchView('dashboard');
                     showToast("Semua data direset.", true);
@@ -1521,12 +1308,11 @@
         }
 
         function exportDataJSON() {
-            if (orders.length === 0 && operationalExpenses.length === 0) {
+            if (orders.length === 0) {
                 showToast("Tidak ada data untuk diexport.", true);
                 return;
             }
-            const exportObj = { orders: orders, operationalExpenses: operationalExpenses };
-            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportObj, null, 2));
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(orders, null, 2));
             const downloadAnchor = document.createElement('a');
             downloadAnchor.setAttribute("href", dataStr);
             downloadAnchor.setAttribute("download", `rizky_assistant_backup_${new Date().toISOString().slice(0, 10)}.json`);
@@ -1545,12 +1331,10 @@
                     const parsed = JSON.parse(e.target.result);
                     if (Array.isArray(parsed)) {
                         orders = parsed;
-                    } else if (parsed && typeof parsed === 'object') {
-                        if (Array.isArray(parsed.orders)) orders = parsed.orders;
-                        if (Array.isArray(parsed.operationalExpenses)) operationalExpenses = parsed.operationalExpenses;
+                    } else if (parsed && typeof parsed === 'object' && Array.isArray(parsed.orders)) {
+                        orders = parsed.orders;
                     }
                     saveOrdersToStorage();
-                    saveOperationalExpensesToStorage();
                     updateDashboard();
                     switchView('dashboard');
                     showToast("Data berhasil di-import.");
