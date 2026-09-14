@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pecel Lele & Ayam Goreng "Mabes" - Nikmat, Gurih, Sambal Mantap</title>
+    <style>
+        :root {
+            --bg-color: #0f0f11;
+            --card-bg: #18181b;
+            --accent: #f97316;
+            --accent-hover: #ea580c;
+            --text-main: #f4f4f5;
+            --text-muted: #a1a1aa;
+            --border: #27272a;
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            width: 100%;
+            max-width: 500px;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 24px;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        h1 {
+            font-size: 1.75rem;
+            color: var(--accent);
+            margin-bottom: 6px;
+        }
+        p.tagline {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+        .section-title {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+        .menu-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+        .menu-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            gap: 14px;
+        }
+        .menu-img {
+            width: 70px;
+            height: 70px;
+            border-radius: 8px;
+            object-fit: cover;
+            background: #27272a;
+        }
+        .menu-info {
+            flex: 1;
+        }
+        .menu-name {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        .menu-desc {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+        }
+        .menu-price {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--accent);
+        }
+        .order-section {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+        .order-section p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+        .btn-whatsapp {
+            display: block;
+            width: 100%;
+            background-color: #22c55e;
+            color: white;
+            text-align: center;
+            padding: 14px;
+            border-radius: 8px;
+            font-weight: 700;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: background 0.2s;
+        }
+        .btn-whatsapp:hover {
+            background-color: #16a34a;
+            color: white;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 24px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Pecel Lele & Ayam "Mabes"</h1>
+        <p class="tagline">Goreng garing, sambal dadakan pedas mantap siap bikin nagih!</p>
+    </header>
+
+    <div class="section-title">Menu Pilihan Utama</div>
+    <div class="menu-list">
+        <!-- Menu 1 -->
+        <div class="menu-card">
+            <img class="menu-img" src="https://images.unsplash.com/photo-1626500155167-56ac1778d1c9?w=300&auto=format&fit=crop&q=80" alt="Pecel Lele">
+            <div class="menu-info">
+                <div class="menu-name">Paket Pecel Lele</div>
+                <div class="menu-desc">Lele goreng gurih + sambal terasi + lalapan segar</div>
+                <div class="menu-price">Rp 18.000</div>
+            </div>
+        </div>
+
+        <!-- Menu 2 -->
+        <div class="menu-card">
+            <img class="menu-img" src="https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?w=300&auto=format&fit=crop&q=80" alt="Ayam Goreng">
+            <div class="menu-info">
+                <div class="menu-name">Paket Ayam Goreng</div>
+                <div class="menu-desc">Ayam potong empuk bumbu meresap + sambal ulek</div>
+                <div class="menu-price">Rp 22.000</div>
+            </div>
+        </div>
+
+        <!-- Menu 3 -->
+        <div class="menu-card">
+            <img class="menu-img" src="https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=300&auto=format&fit=crop&q=80" alt="Bebek Goreng">
+            <div class="menu-info">
+                <div class="menu-name">Paket Bebek Goreng</div>
+                <div class="menu-desc">Bebek empuk tidak amis + kremesan gurih</div>
+                <div class="menu-price">Rp 30.000</div>
+            </div>
+        </div>
+
+        <!-- Menu 4 -->
+        <div class="menu-card">
+            <img class="menu-img" src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=300&auto=format&fit=crop&q=80" alt="Es Teh Manis">
+            <div class="menu-info">
+                <div class="menu-name">Es Teh Manis / Hangat</div>
+                <div class="menu-desc">Teh melati pilihan segar pelepas dahaga</div>
+                <div class="menu-price">Rp 5.000</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="order-section">
+        <p>Mau pesen buat makan di tempat, bungkus, atau acara? Langsung klik tombol di bawah buat chat WhatsApp.</p>
+        <a href="https://wa.me/6281234567890?text=Halo%2C%20saya%20mau%20pesan%20menu%20Pecel%20Lele%20Mabes..." class="btn-whatsapp" target="_blank">Pesan via WhatsApp</a>
+    </div>
+
+    <div class="footer">
+        Buka setiap hari jam 17.00 - 23.00 WIB • Siap Antar Area Sekitar
+    </div>
+</div>
+
+</body>
+</html>
