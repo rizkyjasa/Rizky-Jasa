@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Efisiensi Operasional & Biaya Tenaga Kerja</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --accent: #38bdf8;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: #334155;
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            width: 100%;
+            max-width: 600px;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+        h1 {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+            color: var(--text-main);
+        }
+        p.subtitle {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+        }
+        .form-group {
+            margin-bottom: 16px;
+        }
+        label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        input {
+            width: 100%;
+            padding: 12px 14px;
+            background: #0f172a;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-main);
+            font-size: 1rem;
+        }
+        input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+        .result-box {
+            margin-top: 24px;
+            background: #090d16;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+        }
+        .result-item {
+            margin-bottom: 12px;
+        }
+        .result-item:last-child {
+            margin-bottom: 0;
+        }
+        .result-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+        .result-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+        .footer-note {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Kalkulator Kerugian Proses Manual</h1>
+    <p class="subtitle">Hitung estimasi uang dan waktu operasional yang terbuang karena alur kerja manual harian.</p>
+    
+    <div class="form-group">
+        <label for="employees">Jumlah Karyawan yang Mengerjakan Tugas Manual</label>
+        <input type="number" id="employees" value="5" min="1" oninput="calculate()">
+    </div>
+
+    <div class="form-group">
+        <label for="hours">Jam Terbuang Per Orang / Hari (Manual Task)</label>
+        <input type="number" id="hours" value="2" min="0.1" step="0.5" oninput="calculate()">
+    </div>
+
+    <div class="form-group">
+        <label for="salary">Estimasi Upah per Jam (Rupiah)</label>
+        <input type="number" id="salary" value="20000" step="1000" oninput="calculate()">
+    </div>
+
+    <div class="result-box">
+        <div class="result-item">
+            <div class="result-label">Total Jam Terbuang Per Bulan (22 Hari Kerja)</div>
+            <div class="result-value" id="resHours">0 Jam</div>
+        </div>
+        <hr style="border: 0; border-top: 1px solid var(--border); margin: 12px 0;">
+        <div class="result-item">
+            <div class="result-label">Estimasi Biaya / Kerugian Operasional Per Bulan</div>
+            <div class="result-value" id="resCost">Rp 0</div>
+        </div>
+    </div>
+
+    <div class="footer-note">
+        Dibangun untuk audit efisiensi operasional bisnis.
+    </div>
+</div>
+
+<script>
+function calculate() {
+    const employees = parseFloat(document.getElementById('employees').value) || 0;
+    const hours = parseFloat(document.getElementById('hours').value) || 0;
+    const salary = parseFloat(document.getElementById('salary').value) || 0;
+    
+    // Asumsi 22 hari kerja dalam sebulan
+    const totalHoursMonth = employees * hours * 22;
+    const totalCostMonth = totalHoursMonth * salary;
+
+    document.getElementById('resHours').innerText = totalHoursMonth.toLocaleString('id-ID') + " Jam";
+    document.getElementById('resCost').innerText = "Rp " + totalCostMonth.toLocaleString('id-ID');
+}
+
+// Jalankan kalkulasi pertama kali saat halaman dimuat
+calculate();
+</script>
+
+</body>
+</html>
