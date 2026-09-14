@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pecel Lele Mabes — Modern Dining Experience</title>
+    <title>Pecel Lele Mabes — Premium Street Food</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #09090b;
-            --surface: #18181b;
-            --surface-card: #27272a;
-            --accent: #f97316;
-            --accent-glow: rgba(249, 115, 22, 0.15);
-            --text-main: #f4f4f5;
-            --text-muted: #a1a1aa;
-            --border: #3f3f46;
+            --bg: #121214;
+            --surface: #1e1e24;
+            --surface-hover: #27272f;
+            --accent: #f59e0b;
+            --accent-glow: rgba(245, 158, 11, 0.15);
+            --text-main: #f9fafb;
+            --text-muted: #9ca3af;
+            --border: #2e2e38;
         }
         * {
             box-sizing: border-box;
@@ -25,149 +25,138 @@
         body {
             background-color: var(--bg);
             color: var(--text-main);
-            padding: 16px 16px 120px 16px;
+            padding: 20px 16px 130px 16px;
             display: flex;
             justify-content: center;
         }
-        .app-container {
+        .wrapper {
             width: 100%;
             max-width: 440px;
         }
 
-        /* Top Brand Header */
-        .app-header {
+        /* Header Style */
+        .header-box {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 18px 20px;
+            border-radius: 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            padding: 16px 20px;
-            border-radius: 20px;
             margin-bottom: 20px;
         }
-        .brand-info h1 {
-            font-size: 1.15rem;
+        .header-title h1 {
+            font-size: 1.1rem;
             font-weight: 800;
-            letter-spacing: -0.02em;
             color: #fff;
+            letter-spacing: -0.01em;
         }
-        .brand-info p {
+        .header-title p {
             font-size: 0.75rem;
             color: var(--text-muted);
+            margin-top: 2px;
         }
-        .live-badge {
-            background: rgba(34, 197, 94, 0.15);
-            color: #4ade80;
-            border: 1px solid rgba(34, 197, 94, 0.3);
+        .status-pill {
+            background: rgba(16, 185, 129, 0.1);
+            color: #34d399;
+            border: 1px solid rgba(16, 185, 129, 0.2);
             font-size: 0.65rem;
             font-weight: 700;
             padding: 6px 12px;
-            border-radius: 30px;
+            border-radius: 20px;
             text-transform: uppercase;
         }
 
-        /* Highlight Banner */
-        .promo-banner {
-            background: linear-gradient(135deg, #27272a 0%, #18181b 100%);
+        /* Banner */
+        .highlight-card {
+            background: linear-gradient(135deg, #24242d 0%, #18181f 100%);
             border: 1px solid var(--border);
             border-radius: 20px;
             padding: 20px;
             margin-bottom: 24px;
-            position: relative;
-            overflow: hidden;
         }
-        .promo-banner::after {
-            content: '';
-            position: absolute;
-            top: 0; right: 0;
-            width: 120px; height: 100%;
-            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
-            pointer-events: none;
-        }
-        .promo-tag {
+        .highlight-card span {
             font-size: 0.65rem;
             text-transform: uppercase;
             letter-spacing: 0.1em;
             color: var(--accent);
             font-weight: 800;
-            margin-bottom: 6px;
             display: block;
+            margin-bottom: 6px;
         }
-        .promo-banner h2 {
-            font-size: 1.25rem;
+        .highlight-card h2 {
+            font-size: 1.15rem;
             font-weight: 700;
             margin-bottom: 6px;
-            line-height: 1.3;
         }
-        .promo-banner p {
+        .highlight-card p {
             font-size: 0.8rem;
             color: var(--text-muted);
             line-height: 1.4;
         }
 
-        /* Section Title */
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 16px;
-        }
-        .section-header h3 {
-            font-size: 0.95rem;
-            font-weight: 700;
-            letter-spacing: 0.05em;
+        /* Section Label */
+        .section-heading {
+            font-size: 0.8rem;
             text-transform: uppercase;
+            letter-spacing: 0.08em;
             color: var(--text-muted);
+            font-weight: 700;
+            margin-bottom: 14px;
         }
 
-        /* Modern Horizontal Menu List (Beda dari Kopi Senja) */
-        .menu-list {
+        /* Menu Container */
+        .menu-container {
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 14px;
             margin-bottom: 24px;
         }
-        .menu-item-row {
+        .menu-row {
             background: var(--surface);
             border: 1px solid var(--border);
             border-radius: 16px;
             padding: 14px;
             display: flex;
-            gap: 16px;
             align-items: center;
-            transition: border-color 0.2s;
+            gap: 14px;
+            transition: all 0.2s ease;
         }
-        .menu-item-row:hover {
+        .menu-row:hover {
             border-color: var(--accent);
+            background: var(--surface-hover);
         }
-        .menu-thumb {
-            width: 90px;
-            height: 90px;
+        
+        /* Icon / Visual Box sebagai pengganti foto agar tidak pernah broken/salah */
+        .menu-icon-box {
+            width: 64px;
+            height: 64px;
+            background: #2a2a35;
+            border: 1px solid var(--border);
             border-radius: 12px;
-            object-fit: cover;
-            background: var(--surface-card);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
             flex-shrink: 0;
         }
-        .menu-details {
+
+        .menu-info {
             flex: 1;
         }
         .menu-name {
             font-size: 0.95rem;
             font-weight: 700;
-            margin-bottom: 4px;
             color: #fff;
+            margin-bottom: 2px;
         }
         .menu-desc {
             font-size: 0.75rem;
             color: var(--text-muted);
-            line-height: 1.35;
-            margin-bottom: 10px;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
+            line-height: 1.3;
+            margin-bottom: 8px;
         }
-        .menu-bottom-row {
+        .menu-action-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -177,31 +166,32 @@
             font-weight: 800;
             color: var(--accent);
         }
-        .btn-fast-order {
-            background: var(--surface-card);
+        .btn-order {
+            background: #2e2e38;
             color: #fff;
-            border: 1px solid var(--border);
+            border: 1px solid #3f3f4a;
             padding: 6px 14px;
             border-radius: 8px;
             font-size: 0.75rem;
             font-weight: 700;
             text-decoration: none;
-            transition: all 0.2s;
+            transition: background 0.2s;
         }
-        .btn-fast-order:hover {
+        .btn-order:hover {
             background: var(--accent);
+            color: #121214;
             border-color: var(--accent);
         }
 
-        /* Bottom Floating Bar Modern */
-        .floating-action-bar {
+        /* Floating Bar Footer */
+        .floating-footer {
             position: fixed;
             bottom: 16px;
             left: 50%;
             transform: translateX(-50%);
             width: calc(100% - 32px);
             max-width: 408px;
-            background: rgba(24, 24, 27, 0.9);
+            background: rgba(30, 30, 36, 0.95);
             backdrop-filter: blur(12px);
             border: 1px solid var(--border);
             padding: 12px 16px;
@@ -209,24 +199,24 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
             z-index: 100;
         }
-        .bar-info span {
+        .footer-info span {
             display: block;
             font-size: 0.65rem;
             text-transform: uppercase;
             color: var(--text-muted);
             letter-spacing: 0.05em;
         }
-        .bar-info strong {
+        .footer-info strong {
             font-size: 0.85rem;
             color: #fff;
         }
-        .btn-wa-action {
-            background: #22c55e;
+        .btn-whatsapp-main {
+            background: #10b981;
             color: #fff;
-            padding: 10px 18px;
+            padding: 10px 16px;
             border-radius: 10px;
             font-size: 0.8rem;
             font-weight: 700;
@@ -236,11 +226,11 @@
             gap: 6px;
             transition: background 0.2s;
         }
-        .btn-wa-action:hover {
-            background: #16a34a;
+        .btn-whatsapp-main:hover {
+            background: #059669;
         }
 
-        .footer-credit {
+        .credit {
             text-align: center;
             font-size: 0.7rem;
             color: var(--text-muted);
@@ -250,95 +240,92 @@
 </head>
 <body>
 
-<div class="app-container">
+<div class="wrapper">
     <!-- Header -->
-    <div class="app-header">
-        <div class="brand-info">
+    <div class="header-box">
+        <div class="header-title">
             <h1>Pecel Lele Mabes</h1>
             <p>Authentic Street Grill & Sambal</p>
         </div>
-        <div class="live-badge">Buka</div>
+        <div class="status-pill">Buka</div>
     </div>
 
-    <!-- Promo Banner -->
-    <div class="promo-banner">
-        <span class="promo-tag">Special Today</span>
+    <!-- Highlight Banner -->
+    <div class="highlight-card">
+        <span>Signature Dish</span>
         <h2>Sambal Dadakan Ulek Segar</h2>
-        <p>Diracik langsung saat pesanan masuk dengan tingkat kepedasan yang bisa kamu sesuaikan sendiri.</p>
+        <p>Diracik langsung menggunakan cabai segar pilihan saat pesanan masuk dengan tingkat kepedasan sesuai selera.</p>
     </div>
 
-    <!-- Section Header -->
-    <div class="section-header">
-        <h3>Daftar Menu Utama</h3>
-    </div>
+    <div class="section-heading">Menu Pilihan Utama</div>
 
-    <!-- Menu List (Horizontal Compact Card Style) -->
-    <div class="menu-list">
+    <!-- Menu List (Clean Icon-Grid Format, No Broken Images) -->
+    <div class="menu-container">
         <!-- Item 1 -->
-        <div class="menu-item-row">
-            <img class="menu-thumb" src="https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?w=400&auto=format&fit=crop&q=80" alt="Pecel Lele">
-            <div class="menu-details">
+        <div class="menu-row">
+            <div class="menu-icon-box">🐟</div>
+            <div class="menu-info">
                 <div class="menu-name">Paket Pecel Lele</div>
                 <div class="menu-desc">Lele goreng garing, sambal terasi ulek segar, lalapan komplit.</div>
-                <div class="menu-bottom-row">
+                <div class="menu-action-row">
                     <span class="menu-price">Rp 18.000</span>
-                    <a href="https://wa.me/6281234567890?text=Halo%2C%20saya%20mau%20pesan%20Paket%20Pecel%20Lele" class="btn-fast-order" target="_blank">Pesan</a>
+                    <a href="https://wa.me/6281234567890?text=Halo%2C%20saya%20mau%20pesan%20Paket%20Pecel%20Lele" class="btn-order" target="_blank">Pesan</a>
                 </div>
             </div>
         </div>
 
         <!-- Item 2 -->
-        <div class="menu-item-row">
-            <img class="menu-thumb" src="https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?w=400&auto=format&fit=crop&q=80" alt="Ayam Goreng">
-            <div class="menu-details">
+        <div class="menu-row">
+            <div class="menu-icon-box">🍗</div>
+            <div class="menu-info">
                 <div class="menu-name">Paket Ayam Goreng</div>
                 <div class="menu-desc">Ayam empuk meresap, serundeng gurih, sambal tomat spesial.</div>
-                <div class="menu-bottom-row">
+                <div class="menu-action-row">
                     <span class="menu-price">Rp 22.000</span>
-                    <a href="https://wa.me/6281234567890?text=Halo%2C%20saya%20mau%20pesan%20Paket%20Ayam%20Goreng" class="btn-fast-order" target="_blank">Pesan</a>
+                    <a href="https://wa.me/6281234567890?text=Halo%2C%20saya%20mau%20pesan%20Paket%20Ayam%20Goreng" class="btn-order" target="_blank">Pesan</a>
                 </div>
             </div>
         </div>
 
         <!-- Item 3 -->
-        <div class="menu-item-row">
-            <img class="menu-thumb" src="https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=400&auto=format&fit=crop&q=80" alt="Bebek Goreng">
-            <div class="menu-details">
+        <div class="menu-row">
+            <div class="menu-icon-box">🦆</div>
+            <div class="menu-info">
                 <div class="menu-name">Paket Bebek Goreng</div>
                 <div class="menu-desc">Bebek empuk tanpa amis, kremesan renyah, sambal hijau.</div>
-                <div class="menu-bottom-row">
+                <div class="menu-action-row">
                     <span class="menu-price">Rp 30.000</span>
-                    <a href="https://wa.me/6281234567890?text=Halo%2C%20saya%20mau%20pesan%20Paket%20Bebek%20Goreng" class="btn-fast-order" target="_blank">Pesan</a>
+                    <a href="https://wa.me/6281234567890?text=Halo%2C%20saya%20mau%20pesan%20Paket%20Bebek%20Goreng" class="btn-order" target="_blank">Pesan</a>
                 </div>
             </div>
         </div>
 
         <!-- Item 4 -->
-        <div class="menu-item-row">
-            <img class="menu-thumb" src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=400&auto=format&fit=crop&q=80" alt="Es Teh Manis">
-            <div class="menu-details">
+        <div class="menu-row">
+            <div class="menu-icon-box">🧋</div>
+            <div class="menu-info">
                 <div class="menu-name">Es Teh Manis / Hangat</div>
                 <div class="menu-desc">Teh melati pilihan segar pelepas dahaga setelah makan pedas.</div>
-                <div class="menu-bottom-row">
+                <div class="menu-action-row">
                     <span class="menu-price">Rp 5.000</span>
-                    <a href="https://wa.me/6281234567890?text=Halo%2C%20saya%20mau%20pesan%20Es%20Teh%20Manis" class="btn-fast-order" target="_blank">Pesan</a>
+                    <a href="https://wa.me/6281234567890?text=Halo%2C%20saya%20mau%20pesan%20Es%20Teh%20Manis" class="btn-order" target="_blank">Pesan</a>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="footer-credit">
-        © 2026 Pecel Lele Mabes. Built for Professional Portfolio.
+    <div class="credit">
+        © 2026 Pecel Lele Mabes. Professional Web Portfolio.
     </div>
 </div>
 
-<!-- Floating Action Bar -->
-<div class="floating-action-bar">
-    <div class="bar-info">
+<!-- Floating Footer -->
+<div class="floating-footer">
+    <div class="footer-info">
         <span>Jam Operasional</span>
         <strong>17.00 - 23.00 WIB</strong>
     </div>
-    <a href="https://wa.me/6281234567890?text=Halo%2C%20saya%20mau%20pesan%20menu%20Mabes" class="btn-wa-action" target="_blank">
+    <a href="https://wa.me/6281234567890?text=Halo%2C%20saya%20mau%20pesan%20menu%20Mabes" class="btn-whatsapp-main" target="_blank">
         WhatsApp Order
     </a>
 </div>
