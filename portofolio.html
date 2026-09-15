@@ -15,6 +15,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
@@ -25,7 +26,15 @@
                         charcoal: '#29251F',     /* Deep Earth primary text */
                         muted: '#71695D',        /* Warm Taupe secondary text */
                         accent: '#A9785C',       /* Muted Terracotta / Clay accent */
-                        accentlight: '#EADBC8'
+                        accentlight: '#EADBC8',
+                        
+                        /* Dark Mode Palette Extensions */
+                        darkCanvas: '#1C1917',   /* Deep Charcoal Canvas */
+                        darkSurface: '#26221E',  /* Muted Dark Surface */
+                        darkCard: '#2E2925',     /* Elevated Dark Card */
+                        darkBorder: '#443D35',   /* Dark Border */
+                        darkText: '#F5ECE1',     /* Warm Light Text */
+                        darkMuted: '#A3998E'     /* Muted Light Text */
                     },
                     fontFamily: {
                         sans: ['"Plus Jakarta Sans"', 'sans-serif'],
@@ -40,13 +49,23 @@
     
     <style>
         body {
-            background-color: #E8DDCA;
-            color: #29251F;
             font-family: 'Plus Jakarta Sans', sans-serif;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
+        
+        /* Light / Dark Mode Global Styling */
+        body {
+            background-color: #E8DDCA;
+            color: #29251F;
+        }
+        .dark body, body.dark {
+            background-color: #1C1917;
+            color: #F5ECE1;
+        }
+
         ::selection {
             background-color: #A9785C;
             color: #FAF5ED;
@@ -57,9 +76,15 @@
         ::-webkit-scrollbar-track {
             background: #E8DDCA;
         }
+        .dark ::-webkit-scrollbar-track {
+            background: #1C1917;
+        }
         ::-webkit-scrollbar-thumb {
             background: #C8B79B;
             border-radius: 3px;
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background: #443D35;
         }
         ::-webkit-scrollbar-thumb:hover {
             background: #A9785C;
@@ -89,6 +114,9 @@
             pointer-events: none;
             z-index: 0;
             animation: sunDrift 30s ease-in-out infinite alternate;
+        }
+        .dark .ambient-sun-1 {
+            background: radial-gradient(circle, rgba(169, 120, 92, 0.05) 0%, rgba(28, 25, 23, 0) 70%);
         }
         @keyframes sunDrift {
             0% { transform: translate(0px, 0px) scale(1); }
@@ -134,8 +162,6 @@
         }
 
         /* CHAPTER WORLDS — LIVING ANIMATED OBJECTS */
-
-        /* Chapter 01 — Home: Flying Bird SVG */
         @keyframes birdFlightPath {
             0% { transform: translate(-60px, 60px) scale(0.75) rotate(-6deg); opacity: 0; }
             20% { opacity: 0.9; }
@@ -161,7 +187,6 @@
             transform-origin: center;
         }
 
-        /* Chapter 02 — About: Moving Leaf & Branch */
         @keyframes leafSway {
             0%, 100% { transform: rotate(0deg) translateY(0) scale(1); }
             50% { transform: rotate(7deg) translateY(-6px) scale(1.03); }
@@ -171,7 +196,6 @@
             animation: leafSway 6s ease-in-out infinite;
         }
 
-        /* Chapter 04 — Projects: Floating Pointer */
         @keyframes pointerSlide {
             0%, 100% { transform: translateX(0) translateY(0); opacity: 0.7; }
             50% { transform: translateX(10px) translateY(-4px); opacity: 1; }
@@ -180,7 +204,6 @@
             animation: pointerSlide 2.4s ease-in-out infinite;
         }
 
-        /* Chapter 05 — How I Work: Process Path */
         @keyframes drawProcessPath {
             0% { stroke-dashoffset: 350; }
             100% { stroke-dashoffset: 0; }
@@ -190,7 +213,6 @@
             animation: drawProcessPath 3s ease-out forwards;
         }
 
-        /* Chapter 06 — Skills: Orbiting System */
         @keyframes orbitRotate {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
@@ -208,7 +230,6 @@
             transform-origin: center;
         }
 
-        /* Chapter 07 — Career Direction: Path */
         @keyframes drawCareerPath {
             0% { stroke-dashoffset: 240; }
             100% { stroke-dashoffset: 0; }
@@ -226,7 +247,6 @@
             transform-origin: center;
         }
 
-        /* Chapter 08 — Contact: Arrival */
         @keyframes drawArrivalLine {
             0% { stroke-dashoffset: 160; }
             100% { stroke-dashoffset: 0; }
@@ -255,7 +275,7 @@
         }
     </style>
 </head>
-<body class="bg-canvas text-charcoal min-h-screen flex flex-col selection:bg-accent selection:text-card relative">
+<body class="bg-canvas dark:bg-darkCanvas text-charcoal dark:text-darkText min-h-screen flex flex-col selection:bg-accent selection:text-card relative transition-colors duration-300">
 
     <!-- Subtle Desert Grain Overlay -->
     <div class="desert-grain"></div>
@@ -267,87 +287,97 @@
     <div class="ambient-sun-1"></div>
 
     <!-- Sticky Editorial Section Indicator (Desktop) -->
-    <div id="sticky-section-indicator" class="hidden lg:flex fixed left-8 top-1/2 -translate-y-1/2 z-40 flex-col items-center gap-3 text-[10px] tracking-widest text-muted font-semibold uppercase opacity-70 pointer-events-none">
+    <div id="sticky-section-indicator" class="hidden lg:flex fixed left-8 top-1/2 -translate-y-1/2 z-40 flex-col items-center gap-3 text-[10px] tracking-widest text-muted dark:text-darkMuted font-semibold uppercase opacity-70 pointer-events-none">
         <span id="indicator-num">01</span>
-        <div class="w-[1px] h-12 bg-bordercolor relative overflow-hidden">
+        <div class="w-[1px] h-12 bg-bordercolor dark:bg-darkBorder relative overflow-hidden">
             <div id="indicator-fill" class="absolute top-0 left-0 w-full bg-accent h-0 transition-all duration-300"></div>
         </div>
         <span id="indicator-name" style="writing-mode: vertical-rl; text-orientation: mixed;">HOME</span>
     </div>
 
     <!-- Navigation -->
-    <header id="site-header" class="sticky top-0 z-50 bg-canvas/90 backdrop-blur-md border-b border-bordercolor transition-all duration-300">
+    <header id="site-header" class="sticky top-0 z-50 bg-canvas/90 dark:bg-darkCanvas/90 backdrop-blur-md border-b border-bordercolor dark:border-darkBorder transition-all duration-300">
         <div class="max-w-5xl mx-auto px-6 h-20 flex items-center justify-between">
             <a href="#hero" class="group flex items-center gap-3 transition-opacity duration-200 hover:opacity-85">
-                <div class="w-8 h-8 rounded-md bg-surface border border-bordercolor flex items-center justify-center font-semibold text-xs tracking-tight text-charcoal group-hover:border-accent transition-colors">
+                <div class="w-8 h-8 rounded-md bg-surface dark:bg-darkSurface border border-bordercolor dark:border-darkBorder flex items-center justify-center font-semibold text-xs tracking-tight text-charcoal dark:text-darkText group-hover:border-accent transition-colors">
                     RHM
                 </div>
                 <div class="flex flex-col">
-                    <span class="font-semibold text-xs tracking-tight text-charcoal">Rizky Hari Mukti</span>
-                    <span class="text-[10px] text-muted tracking-wide">Cibinong, Bogor</span>
+                    <span class="font-semibold text-xs tracking-tight text-charcoal dark:text-darkText">Rizky Hari Mukti</span>
+                    <span class="text-[10px] text-muted dark:text-darkMuted tracking-wide">Cibinong, Bogor</span>
                 </div>
             </a>
 
             <!-- Desktop Nav Links -->
-            <nav class="hidden md:flex items-center gap-8 text-xs font-medium text-muted">
-                <a href="#about" class="nav-link transition-colors relative py-1 hover:text-charcoal" data-target="about">
-                    Tentang <span class="text-[9px] text-muted/60 uppercase ml-0.5 font-normal">About</span>
+            <nav class="hidden md:flex items-center gap-8 text-xs font-medium text-muted dark:text-darkMuted">
+                <a href="#about" class="nav-link transition-colors relative py-1 hover:text-charcoal dark:hover:text-darkText" data-target="about">
+                    Tentang <span class="text-[9px] text-muted/60 dark:text-darkMuted/60 uppercase ml-0.5 font-normal">About</span>
                 </a>
-                <a href="#experience" class="nav-link transition-colors relative py-1 hover:text-charcoal" data-target="experience">
-                    Pengalaman <span class="text-[9px] text-muted/60 uppercase ml-0.5 font-normal">Exp</span>
+                <a href="#experience" class="nav-link transition-colors relative py-1 hover:text-charcoal dark:hover:text-darkText" data-target="experience">
+                    Pengalaman <span class="text-[9px] text-muted/60 dark:text-darkMuted/60 uppercase ml-0.5 font-normal">Exp</span>
                 </a>
-                <a href="#projects" class="nav-link transition-colors relative py-1 hover:text-charcoal" data-target="projects">
-                    Karya <span class="text-[9px] text-muted/60 uppercase ml-0.5 font-normal">Work</span>
+                <a href="#projects" class="nav-link transition-colors relative py-1 hover:text-charcoal dark:hover:text-darkText" data-target="projects">
+                    Karya <span class="text-[9px] text-muted/60 dark:text-darkMuted/60 uppercase ml-0.5 font-normal">Work</span>
                 </a>
-                <a href="#skills" class="nav-link transition-colors relative py-1 hover:text-charcoal" data-target="skills">
-                    Kemampuan <span class="text-[9px] text-muted/60 uppercase ml-0.5 font-normal">Skills</span>
+                <a href="#skills" class="nav-link transition-colors relative py-1 hover:text-charcoal dark:hover:text-darkText" data-target="skills">
+                    Kemampuan <span class="text-[9px] text-muted/60 dark:text-darkMuted/60 uppercase ml-0.5 font-normal">Skills</span>
                 </a>
-                <a href="#career" class="nav-link transition-colors relative py-1 hover:text-charcoal" data-target="career">
-                    Arah Karier <span class="text-[9px] text-muted/60 uppercase ml-0.5 font-normal">Direction</span>
+                <a href="#career" class="nav-link transition-colors relative py-1 hover:text-charcoal dark:hover:text-darkText" data-target="career">
+                    Arah Karier <span class="text-[9px] text-muted/60 dark:text-darkMuted/60 uppercase ml-0.5 font-normal">Direction</span>
                 </a>
-                <a href="#contact" class="nav-link transition-colors relative py-1 hover:text-charcoal" data-target="contact">
-                    Kontak <span class="text-[9px] text-muted/60 uppercase ml-0.5 font-normal">Contact</span>
+                <a href="#contact" class="nav-link transition-colors relative py-1 hover:text-charcoal dark:hover:text-darkText" data-target="contact">
+                    Kontak <span class="text-[9px] text-muted/60 dark:text-darkMuted/60 uppercase ml-0.5 font-normal">Contact</span>
                 </a>
             </nav>
 
-            <!-- Right Actions -->
-            <div class="hidden md:flex items-center gap-4">
-                <a href="#contact" class="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-wider px-4 py-2 rounded-md border border-bordercolor bg-card hover:border-charcoal transition-all active:scale-[0.98]">
+            <!-- Right Actions (Theme Toggle & Contact CTA) -->
+            <div class="hidden md:flex items-center gap-3">
+                <!-- Theme Toggle Button Desktop -->
+                <button id="theme-toggle" aria-label="Toggle Dark/Light Mode" class="w-9 h-9 rounded-md border border-bordercolor dark:border-darkBorder bg-card dark:bg-darkCard text-charcoal dark:text-darkText flex items-center justify-center hover:border-charcoal dark:hover:border-darkText transition-all cursor-pointer">
+                    <i id="theme-icon" class="fa-solid fa-moon text-xs"></i>
+                </button>
+                <a href="#contact" class="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-wider px-4 py-2 rounded-md border border-bordercolor dark:border-darkBorder bg-card dark:bg-darkCard text-charcoal dark:text-darkText hover:border-charcoal dark:hover:border-darkText transition-all active:scale-[0.98]">
                     <span>Hubungi Saya</span>
                 </a>
             </div>
 
-            <!-- Mobile Menu Toggle Button -->
-            <button id="mobile-menu-btn" aria-label="Toggle menu" class="md:hidden p-2 text-charcoal focus:outline-none cursor-pointer">
-                <i class="fa-solid fa-bars text-base"></i>
-            </button>
+            <!-- Mobile Action & Menu Toggle Button -->
+            <div class="flex items-center gap-2 md:hidden">
+                <!-- Theme Toggle Button Mobile -->
+                <button id="theme-toggle-mobile" aria-label="Toggle Dark/Light Mode" class="w-8 h-8 rounded-md border border-bordercolor dark:border-darkBorder bg-card dark:bg-darkCard text-charcoal dark:text-darkText flex items-center justify-center cursor-pointer">
+                    <i id="theme-icon-mobile" class="fa-solid fa-moon text-xs"></i>
+                </button>
+                <button id="mobile-menu-btn" aria-label="Toggle menu" class="p-2 text-charcoal dark:text-darkText focus:outline-none cursor-pointer">
+                    <i class="fa-solid fa-bars text-base"></i>
+                </button>
+            </div>
         </div>
 
         <!-- Mobile Menu Drawer -->
-        <div id="mobile-menu" class="hidden md:hidden absolute top-20 left-0 w-full bg-card border-b border-bordercolor p-6 shadow-md flex flex-col gap-4 z-50">
-            <a href="#about" class="text-xs font-medium text-muted py-2.5 mobile-link hover:text-charcoal transition-colors border-b border-bordercolor/50 flex items-center justify-between">
-                <span>Tentang Saya <span class="text-[9px] text-muted/60 font-normal">/ About</span></span>
-                <i class="fa-solid fa-arrow-right text-[10px] text-muted"></i>
+        <div id="mobile-menu" class="hidden md:hidden absolute top-20 left-0 w-full bg-card dark:bg-darkCard border-b border-bordercolor dark:border-darkBorder p-6 shadow-md flex flex-col gap-4 z-50">
+            <a href="#about" class="text-xs font-medium text-muted dark:text-darkMuted py-2.5 mobile-link hover:text-charcoal dark:hover:text-darkText transition-colors border-b border-bordercolor/50 dark:border-darkBorder/50 flex items-center justify-between">
+                <span>Tentang Saya <span class="text-[9px] text-muted/60 dark:text-darkMuted/60 font-normal">/ About</span></span>
+                <i class="fa-solid fa-arrow-right text-[10px] text-muted dark:text-darkMuted"></i>
             </a>
-            <a href="#experience" class="text-xs font-medium text-muted py-2.5 mobile-link hover:text-charcoal transition-colors border-b border-bordercolor/50 flex items-center justify-between">
-                <span>Pengalaman <span class="text-[9px] text-muted/60 font-normal">/ Experience</span></span>
-                <i class="fa-solid fa-arrow-right text-[10px] text-muted"></i>
+            <a href="#experience" class="text-xs font-medium text-muted dark:text-darkMuted py-2.5 mobile-link hover:text-charcoal dark:hover:text-darkText transition-colors border-b border-bordercolor/50 dark:border-darkBorder/50 flex items-center justify-between">
+                <span>Pengalaman <span class="text-[9px] text-muted/60 dark:text-darkMuted/60 font-normal">/ Experience</span></span>
+                <i class="fa-solid fa-arrow-right text-[10px] text-muted dark:text-darkMuted"></i>
             </a>
-            <a href="#projects" class="text-xs font-medium text-muted py-2.5 mobile-link hover:text-charcoal transition-colors border-b border-bordercolor/50 flex items-center justify-between">
-                <span>Karya Terpilih <span class="text-[9px] text-muted/60 font-normal">/ Selected Work</span></span>
-                <i class="fa-solid fa-arrow-right text-[10px] text-muted"></i>
+            <a href="#projects" class="text-xs font-medium text-muted dark:text-darkMuted py-2.5 mobile-link hover:text-charcoal dark:hover:text-darkText transition-colors border-b border-bordercolor/50 dark:border-darkBorder/50 flex items-center justify-between">
+                <span>Karya Terpilih <span class="text-[9px] text-muted/60 dark:text-darkMuted/60 font-normal">/ Selected Work</span></span>
+                <i class="fa-solid fa-arrow-right text-[10px] text-muted dark:text-darkMuted"></i>
             </a>
-            <a href="#skills" class="text-xs font-medium text-muted py-2.5 mobile-link hover:text-charcoal transition-colors border-b border-bordercolor/50 flex items-center justify-between">
-                <span>Kemampuan <span class="text-[9px] text-muted/60 font-normal">/ Skills</span></span>
-                <i class="fa-solid fa-arrow-right text-[10px] text-muted"></i>
+            <a href="#skills" class="text-xs font-medium text-muted dark:text-darkMuted py-2.5 mobile-link hover:text-charcoal dark:hover:text-darkText transition-colors border-b border-bordercolor/50 dark:border-darkBorder/50 flex items-center justify-between">
+                <span>Kemampuan <span class="text-[9px] text-muted/60 dark:text-darkMuted/60 font-normal">/ Skills</span></span>
+                <i class="fa-solid fa-arrow-right text-[10px] text-muted dark:text-darkMuted"></i>
             </a>
-            <a href="#career" class="text-xs font-medium text-muted py-2.5 mobile-link hover:text-charcoal transition-colors border-b border-bordercolor/50 flex items-center justify-between">
-                <span>Arah Karier <span class="text-[9px] text-muted/60 font-normal">/ Career Direction</span></span>
-                <i class="fa-solid fa-arrow-right text-[10px] text-muted"></i>
+            <a href="#career" class="text-xs font-medium text-muted dark:text-darkMuted py-2.5 mobile-link hover:text-charcoal dark:hover:text-darkText transition-colors border-b border-bordercolor/50 dark:border-darkBorder/50 flex items-center justify-between">
+                <span>Arah Karier <span class="text-[9px] text-muted/60 dark:text-darkMuted/60 font-normal">/ Career Direction</span></span>
+                <i class="fa-solid fa-arrow-right text-[10px] text-muted dark:text-darkMuted"></i>
             </a>
-            <a href="#contact" class="text-xs font-medium text-muted py-2.5 mobile-link hover:text-charcoal transition-colors flex items-center justify-between">
-                <span>Kontak <span class="text-[9px] text-muted/60 font-normal">/ Contact</span></span>
-                <i class="fa-solid fa-arrow-right text-[10px] text-muted"></i>
+            <a href="#contact" class="text-xs font-medium text-muted dark:text-darkMuted py-2.5 mobile-link hover:text-charcoal dark:hover:text-darkText transition-colors flex items-center justify-between">
+                <span>Kontak <span class="text-[9px] text-muted/60 dark:text-darkMuted/60 font-normal">/ Contact</span></span>
+                <i class="fa-solid fa-arrow-right text-[10px] text-muted dark:text-darkMuted"></i>
             </a>
         </div>
     </header>
@@ -356,7 +386,6 @@
 
         <!-- CHAPTER 01 — HERO (BEGINNING) / FLYING BIRD -->
         <section id="hero" class="relative pt-24 pb-20 md:pt-36 md:pb-32 px-6 max-w-5xl mx-auto overflow-hidden" data-section-name="HOME" data-section-num="01">
-            <!-- Chapter World 01: Flying Bird SVG -->
             <div class="chapter-bird-container" aria-hidden="true">
                 <svg width="48" height="28" viewBox="0 0 44 26" fill="none" xmlns="http://www.w3.org/2000/svg" class="text-accent">
                     <g class="chapter-bird-wings">
@@ -366,42 +395,42 @@
             </div>
 
             <div class="max-w-3xl relative z-10">
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded bg-surface border border-bordercolor text-[10px] font-semibold uppercase tracking-widest text-muted mb-8 cinematic-reveal">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded bg-surface dark:bg-darkSurface border border-bordercolor dark:border-darkBorder text-[10px] font-semibold uppercase tracking-widest text-muted dark:text-darkMuted mb-8 cinematic-reveal">
                     <span class="w-1.5 h-1.5 rounded-full bg-accent animate-pulse"></span>
                     PORTFOLIO — 2026 · CUSTOMER SERVICE & COPYWRITING
                 </div>
 
-                <h1 class="text-4xl sm:text-6xl font-bold tracking-tight text-charcoal leading-[1.08] mb-6 cinematic-reveal">
+                <h1 class="text-4xl sm:text-6xl font-bold tracking-tight text-charcoal dark:text-darkText leading-[1.08] mb-6 cinematic-reveal">
                     Rizky Hari Mukti
                 </h1>
 
-                <p class="text-xl sm:text-2xl font-normal text-muted tracking-tight mb-6 leading-snug cinematic-reveal">
+                <p class="text-xl sm:text-2xl font-normal text-muted dark:text-darkMuted tracking-tight mb-6 leading-snug cinematic-reveal">
                     Berfokus pada pelanggan, peka terhadap data, dan terus belajar melalui proyek digital nyata.
                 </p>
 
-                <p class="text-sm sm:text-base text-muted font-normal leading-relaxed mb-10 max-w-2xl cinematic-reveal">
+                <p class="text-sm sm:text-base text-muted dark:text-darkMuted font-normal leading-relaxed mb-10 max-w-2xl cinematic-reveal">
                     Menggabungkan penanganan pelanggan praktis, komunikasi, copywriting, pembuatan konten, alur kerja berbantuan AI, dan pembelajaran berbasis data dari Cibinong, Bogor, Indonesia.
                 </p>
 
                 <div class="flex flex-wrap items-center gap-3 mb-16 cinematic-reveal">
-                    <button type="button" onclick="document.getElementById('projects').scrollIntoView({ behavior: 'smooth', block: 'start' });" class="inline-flex items-center gap-2 px-5 py-3 rounded-md bg-charcoal text-card text-xs font-medium hover:bg-zinc-800 transition-all duration-200 shadow-sm cursor-pointer active:scale-[0.98] hover:-translate-y-0.5">
+                    <button type="button" onclick="document.getElementById('projects').scrollIntoView({ behavior: 'smooth', block: 'start' });" class="inline-flex items-center gap-2 px-5 py-3 rounded-md bg-charcoal dark:bg-darkText text-card dark:text-darkCanvas text-xs font-medium hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-all duration-200 shadow-sm cursor-pointer active:scale-[0.98] hover:-translate-y-0.5">
                         <span>Lihat Karya Saya <span class="text-[10px] opacity-70 ml-1 font-normal">/ View My Work</span></span>
                         <i class="fa-solid fa-arrow-down text-[10px]"></i>
                     </button>
-                    <a href="#contact" class="inline-flex items-center gap-2 px-5 py-3 rounded-md border border-bordercolor bg-card text-charcoal text-xs font-medium hover:border-charcoal transition-all duration-200 active:scale-[0.98] hover:-translate-y-0.5 cursor-pointer">
+                    <a href="#contact" class="inline-flex items-center gap-2 px-5 py-3 rounded-md border border-bordercolor dark:border-darkBorder bg-card dark:bg-darkCard text-charcoal dark:text-darkText hover:border-charcoal dark:hover:border-darkText transition-all duration-200 active:scale-[0.98] hover:-translate-y-0.5 cursor-pointer">
                         <i class="fa-regular fa-envelope text-[10px]"></i>
-                        <span>Hubungi Saya <span class="text-[10px] text-muted ml-1 font-normal">/ Contact Me</span></span>
+                        <span>Hubungi Saya <span class="text-[10px] text-muted dark:text-darkMuted ml-1 font-normal">/ Contact Me</span></span>
                     </a>
                 </div>
 
-                <div class="pt-8 border-t border-bordercolor flex flex-wrap items-center gap-6 text-[11px] text-muted tracking-wide cinematic-reveal">
+                <div class="pt-8 border-t border-bordercolor dark:border-darkBorder flex flex-wrap items-center gap-6 text-[11px] text-muted dark:text-darkMuted tracking-wide cinematic-reveal">
                     <div class="flex items-center gap-2">
                         <i class="fa-solid fa-location-dot text-accent"></i>
                         <span>Cibinong, Bogor, Indonesia</span>
                     </div>
                     <div class="flex items-center gap-2">
-                        <i class="fa-solid fa-circle-check text-emerald-700"></i>
-                        <span>Terbuka untuk Peluang <span class="text-[10px] text-muted/70 font-normal">/ Open to Opportunities</span></span>
+                        <i class="fa-solid fa-circle-check text-emerald-600 dark:text-emerald-400"></i>
+                        <span>Terbuka untuk Peluang <span class="text-[10px] text-muted/70 dark:text-darkMuted/70 font-normal">/ Open to Opportunities</span></span>
                     </div>
                     <div class="flex items-center gap-2">
                         <i class="fa-regular fa-clock text-accent"></i>
@@ -412,46 +441,46 @@
         </section>
 
         <!-- Metric Band / Statistics Strip -->
-        <section id="metrics-section" class="py-16 bg-surface border-y border-bordercolor cinematic-reveal">
+        <section id="metrics-section" class="py-16 bg-surface dark:bg-darkSurface border-y border-bordercolor dark:border-darkBorder cinematic-reveal">
             <div class="max-w-5xl mx-auto px-6">
-                <div class="text-[10px] uppercase font-semibold text-muted tracking-widest mb-8 flex items-center justify-between">
-                    <span>Bukti Kinerja Terverifikasi <span class="text-muted/60 font-normal">/ Verified Performance Evidence</span></span>
+                <div class="text-[10px] uppercase font-semibold text-muted dark:text-darkMuted tracking-widest mb-8 flex items-center justify-between">
+                    <span>Bukti Kinerja Terverifikasi <span class="text-muted/60 dark:text-darkMuted/60 font-normal">/ Verified Performance Evidence</span></span>
                     <span>Proyek Rizky Jasa</span>
                 </div>
 
-                <div class="grid grid-cols-2 md:grid-cols-5 gap-8 divide-y md:divide-y-0 md:divide-x divide-bordercolor">
+                <div class="grid grid-cols-2 md:grid-cols-5 gap-8 divide-y md:divide-y-0 md:divide-x divide-bordercolor dark:divide-darkBorder">
                     <div class="pt-4 md:pt-0 md:px-4 first:pl-0">
-                        <div class="text-3xl md:text-4xl font-bold tracking-tight text-charcoal mb-1"><span class="counter" data-target="160" data-suffix="+">0+</span></div>
-                        <div class="text-xs text-muted font-medium mb-1">Pelanggan <span class="text-[9px] text-muted/60 font-normal">/ Customers</span></div>
-                        <div class="text-[10px] text-muted/80">1 Feb – 14 Sep 2026</div>
+                        <div class="text-3xl md:text-4xl font-bold tracking-tight text-charcoal dark:text-darkText mb-1"><span class="counter" data-target="160" data-suffix="+">0+</span></div>
+                        <div class="text-xs text-muted dark:text-darkMuted font-medium mb-1">Pelanggan <span class="text-[9px] text-muted/60 dark:text-darkMuted/60 font-normal">/ Customers</span></div>
+                        <div class="text-[10px] text-muted/80 dark:text-darkMuted/80">1 Feb – 14 Sep 2026</div>
                     </div>
                     <div class="pt-4 md:pt-0 md:px-4">
-                        <div class="text-3xl md:text-4xl font-bold tracking-tight text-charcoal mb-1"><span class="counter" data-target="52">0</span></div>
-                        <div class="text-xs text-muted font-medium mb-1">Pesanan / 24 Hari <span class="text-[9px] text-muted/60 font-normal">/ Orders</span></div>
-                        <div class="text-[10px] text-muted/80">22 Agu – 14 Sep 2026</div>
+                        <div class="text-3xl md:text-4xl font-bold tracking-tight text-charcoal dark:text-darkText mb-1"><span class="counter" data-target="52">0</span></div>
+                        <div class="text-xs text-muted dark:text-darkMuted font-medium mb-1">Pesanan / 24 Hari <span class="text-[9px] text-muted/60 dark:text-darkMuted/60 font-normal">/ Orders</span></div>
+                        <div class="text-[10px] text-muted/80 dark:text-darkMuted/80">22 Agu – 14 Sep 2026</div>
                     </div>
                     <div class="pt-4 md:pt-0 md:px-4">
-                        <div class="text-3xl md:text-4xl font-bold tracking-tight text-charcoal mb-1"><span class="counter" data-target="35" data-suffix="%">0%</span></div>
-                        <div class="text-xs text-muted font-medium mb-1">Pesanan Berulang <span class="text-[9px] text-muted/60 font-normal">/ Repeat</span></div>
-                        <div class="text-[10px] text-muted/80">22 Agu – 14 Sep 2026</div>
+                        <div class="text-3xl md:text-4xl font-bold tracking-tight text-charcoal dark:text-darkText mb-1"><span class="counter" data-target="35" data-suffix="%">0%</span></div>
+                        <div class="text-xs text-muted dark:text-darkMuted font-medium mb-1">Pesanan Berulang <span class="text-[9px] text-muted/60 dark:text-darkMuted/60 font-normal">/ Repeat</span></div>
+                        <div class="text-[10px] text-muted/80 dark:text-darkMuted/80">22 Agu – 14 Sep 2026</div>
                     </div>
                     <div class="pt-4 md:pt-0 md:px-4">
-                        <div class="text-3xl md:text-4xl font-bold tracking-tight text-charcoal mb-1"><span class="counter" data-target="422">0</span></div>
-                        <div class="text-xs text-muted font-medium mb-1">Konten Dibuat <span class="text-[9px] text-muted/60 font-normal">/ Created</span></div>
-                        <div class="text-[10px] text-muted/80">FB (240) · IG (102) · TikTok (80)</div>
+                        <div class="text-3xl md:text-4xl font-bold tracking-tight text-charcoal dark:text-darkText mb-1"><span class="counter" data-target="422">0</span></div>
+                        <div class="text-xs text-muted dark:text-darkMuted font-medium mb-1">Konten Dibuat <span class="text-[9px] text-muted/60 dark:text-darkMuted/60 font-normal">/ Created</span></div>
+                        <div class="text-[10px] text-muted/80 dark:text-darkMuted/80">FB (240) · IG (102) · TikTok (80)</div>
                     </div>
                     <div class="col-span-2 md:col-span-1 pt-4 md:pt-0 md:px-4 last:pr-0">
-                        <div class="text-3xl md:text-4xl font-bold tracking-tight text-charcoal mb-1"><span class="counter" data-target="100" data-suffix="K+">0K+</span></div>
-                        <div class="text-xs text-muted font-medium mb-1">Tayangan Konten <span class="text-[9px] text-muted/60 font-normal">/ Views</span></div>
-                        <div class="text-[10px] text-muted/80">Gabungan (termasuk promo berbayar)</div>
+                        <div class="text-3xl md:text-4xl font-bold tracking-tight text-charcoal dark:text-darkText mb-1"><span class="counter" data-target="100" data-suffix="K+">0K+</span></div>
+                        <div class="text-xs text-muted dark:text-darkMuted font-medium mb-1">Tayangan Konten <span class="text-[9px] text-muted/60 dark:text-darkMuted/60 font-normal">/ Views</span></div>
+                        <div class="text-[10px] text-muted/80 dark:text-darkMuted/80">Gabungan (termasuk promo berbayar)</div>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Tools Marquee Strip -->
-        <div class="py-4 bg-canvas border-b border-bordercolor overflow-hidden whitespace-nowrap">
-            <div class="animate-marquee inline-flex items-center gap-12 text-xs font-medium text-muted uppercase tracking-widest">
+        <div class="py-4 bg-canvas dark:bg-darkCanvas border-b border-bordercolor dark:border-darkBorder overflow-hidden whitespace-nowrap transition-colors">
+            <div class="animate-marquee inline-flex items-center gap-12 text-xs font-medium text-muted dark:text-darkMuted uppercase tracking-widest">
                 <span>ChatGPT</span><span>·</span>
                 <span>Gemini</span><span>·</span>
                 <span>Claude</span><span>·</span>
@@ -477,8 +506,7 @@
         </div>
 
         <!-- CHAPTER 02 — ABOUT (GROWTH) / MOVING LEAF & BRANCH -->
-        <section id="about" class="py-28 max-w-5xl mx-auto px-6 cinematic-reveal relative bg-surface/40 rounded-xl my-6 border border-bordercolor" data-section-name="ABOUT" data-section-num="02">
-            <!-- Chapter World 02: Moving Botanical Leaf & Branch SVG -->
+        <section id="about" class="py-28 max-w-5xl mx-auto px-6 cinematic-reveal relative bg-surface/40 dark:bg-darkSurface/40 rounded-xl my-6 border border-bordercolor dark:border-darkBorder" data-section-name="ABOUT" data-section-num="02">
             <div class="absolute right-8 top-16 pointer-events-none chapter-leaf-wrap hidden sm:block" aria-hidden="true">
                 <svg width="68" height="68" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" class="text-accent">
                     <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.4 19 2c2.4 2 3 3.5 2 9.2a7 7 0 0 1-10 8.8z"></path>
@@ -488,62 +516,62 @@
 
             <div class="grid grid-cols-1 md:grid-cols-12 gap-12 items-start">
                 <div class="md:col-span-4">
-                    <span class="text-[10px] font-semibold uppercase tracking-widest text-muted block mb-3">01 — TENTANG SAYA <span class="text-[10px] text-muted/60 font-normal">/ ABOUT</span></span>
-                    <h2 class="text-2xl font-bold tracking-tight text-charcoal leading-snug">
+                    <span class="text-[10px] font-semibold uppercase tracking-widest text-muted dark:text-darkMuted block mb-3">01 — TENTANG SAYA <span class="text-[10px] text-muted/60 dark:text-darkMuted/60 font-normal">/ ABOUT</span></span>
+                    <h2 class="text-2xl font-bold tracking-tight text-charcoal dark:text-darkText leading-snug">
                         Berfokus pada pelanggan, peka terhadap data, dan langsung terjun.
                     </h2>
                 </div>
-                <div class="md:col-span-8 space-y-6 text-muted text-sm leading-relaxed">
-                    <p class="text-base text-charcoal font-normal">
+                <div class="md:col-span-8 space-y-6 text-muted dark:text-darkMuted text-sm leading-relaxed">
+                    <p class="text-base text-charcoal dark:text-darkText font-normal">
                         Rizky memulai dari lingkungan produksi dan kemudian mengembangkan pengalaman digital praktis melalui Rizky Jasa.
                     </p>
                     <p>
                         Ia menikmati mempelajari hal-hal baru, memahami situasi melalui data, menangani pelanggan, membuat konten, mengeksplorasi perangkat AI, dan membangun alat digital yang fungsional.
                     </p>
                     
-                    <div class="pt-6 border-t border-bordercolor grid grid-cols-2 sm:grid-cols-3 gap-3">
-                        <div class="p-3 rounded bg-card border border-bordercolor text-[11px] font-semibold text-charcoal">Customer Handling</div>
-                        <div class="p-3 rounded bg-card border border-bordercolor text-[11px] font-semibold text-charcoal">Copywriting</div>
-                        <div class="p-3 rounded bg-card border border-bordercolor text-[11px] font-semibold text-charcoal">Content Creation</div>
-                        <div class="p-3 rounded bg-card border border-bordercolor text-[11px] font-semibold text-charcoal">AI-Assisted Workflow</div>
-                        <div class="p-3 rounded bg-card border border-bordercolor text-[11px] font-semibold text-charcoal">Data-Driven Learning</div>
-                        <div class="p-3 rounded bg-card border border-bordercolor text-[11px] font-semibold text-charcoal">Problem Solving</div>
+                    <div class="pt-6 border-t border-bordercolor dark:border-darkBorder grid grid-cols-2 sm:grid-cols-3 gap-3">
+                        <div class="p-3 rounded bg-card dark:bg-darkCard border border-bordercolor dark:border-darkBorder text-[11px] font-semibold text-charcoal dark:text-darkText">Customer Handling</div>
+                        <div class="p-3 rounded bg-card dark:bg-darkCard border border-bordercolor dark:border-darkBorder text-[11px] font-semibold text-charcoal dark:text-darkText">Copywriting</div>
+                        <div class="p-3 rounded bg-card dark:bg-darkCard border border-bordercolor dark:border-darkBorder text-[11px] font-semibold text-charcoal dark:text-darkText">Content Creation</div>
+                        <div class="p-3 rounded bg-card dark:bg-darkCard border border-bordercolor dark:border-darkBorder text-[11px] font-semibold text-charcoal dark:text-darkText">AI-Assisted Workflow</div>
+                        <div class="p-3 rounded bg-card dark:bg-darkCard border border-bordercolor dark:border-darkBorder text-[11px] font-semibold text-charcoal dark:text-darkText">Data-Driven Learning</div>
+                        <div class="p-3 rounded bg-card dark:bg-darkCard border border-bordercolor dark:border-darkBorder text-[11px] font-semibold text-charcoal dark:text-darkText">Problem Solving</div>
                     </div>
                 </div>
             </div>
 
-            <div class="mt-20 pt-16 border-t border-bordercolor">
-                <div class="text-[10px] font-semibold uppercase tracking-widest text-muted mb-8">Fondasi Karier & Keterampilan Transferable <span class="text-[10px] text-muted/60 font-normal">/ Transferable Skills</span></div>
+            <div class="mt-20 pt-16 border-t border-bordercolor dark:border-darkBorder">
+                <div class="text-[10px] font-semibold uppercase tracking-widest text-muted dark:text-darkMuted mb-8">Fondasi Karier & Keterampilan Transferable <span class="text-[10px] text-muted/60 dark:text-darkMuted/60 font-normal">/ Transferable Skills</span></div>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="p-6 rounded-lg bg-card border border-bordercolor transition-all duration-300 hover:border-charcoal/40 hover:-translate-y-0.5 shadow-sm">
-                        <div class="text-xs font-bold text-charcoal mb-3 flex items-center gap-2">
+                    <div class="p-6 rounded-lg bg-card dark:bg-darkCard border border-bordercolor dark:border-darkBorder transition-all duration-300 hover:border-charcoal/40 dark:hover:border-darkText/40 hover:-translate-y-0.5 shadow-sm">
+                        <div class="text-xs font-bold text-charcoal dark:text-darkText mb-3 flex items-center gap-2">
                             <i class="fa-solid fa-industry text-accent"></i>
-                            <span>Pengalaman Produksi <span class="text-[10px] text-muted/60 font-normal">/ Production Experience</span></span>
+                            <span>Pengalaman Produksi <span class="text-[10px] text-muted/60 dark:text-darkMuted/60 font-normal">/ Production Experience</span></span>
                         </div>
-                        <p class="text-xs text-muted mb-5">Mempelajari kebiasaan operasional yang disiplin dalam peran manufaktur bertempo tinggi.</p>
+                        <p class="text-xs text-muted dark:text-darkMuted mb-5">Mempelajari kebiasaan operasional yang disiplin dalam peran manufaktur bertempo tinggi.</p>
                         <div class="flex flex-wrap gap-1.5">
-                            <span class="px-2.5 py-1 rounded bg-surface border border-bordercolor text-[11px] text-charcoal font-medium">Discipline</span>
-                            <span class="px-2.5 py-1 rounded bg-surface border border-bordercolor text-[11px] text-charcoal font-medium">Consistency</span>
-                            <span class="px-2.5 py-1 rounded bg-surface border border-bordercolor text-[11px] text-charcoal font-medium">Attention to Detail</span>
-                            <span class="px-2.5 py-1 rounded bg-surface border border-bordercolor text-[11px] text-charcoal font-medium">Quality Awareness</span>
-                            <span class="px-2.5 py-1 rounded bg-surface border border-bordercolor text-[11px] text-charcoal font-medium">Responsibility</span>
+                            <span class="px-2.5 py-1 rounded bg-surface dark:bg-darkSurface border border-bordercolor dark:border-darkBorder text-[11px] text-charcoal dark:text-darkText font-medium">Discipline</span>
+                            <span class="px-2.5 py-1 rounded bg-surface dark:bg-darkSurface border border-bordercolor dark:border-darkBorder text-[11px] text-charcoal dark:text-darkText font-medium">Consistency</span>
+                            <span class="px-2.5 py-1 rounded bg-surface dark:bg-darkSurface border border-bordercolor dark:border-darkBorder text-[11px] text-charcoal dark:text-darkText font-medium">Attention to Detail</span>
+                            <span class="px-2.5 py-1 rounded bg-surface dark:bg-darkSurface border border-bordercolor dark:border-darkBorder text-[11px] text-charcoal dark:text-darkText font-medium">Quality Awareness</span>
+                            <span class="px-2.5 py-1 rounded bg-surface dark:bg-darkSurface border border-bordercolor dark:border-darkBorder text-[11px] text-charcoal dark:text-darkText font-medium">Responsibility</span>
                         </div>
                     </div>
 
-                    <div class="p-6 rounded-lg bg-card border border-bordercolor shadow-sm transition-all duration-300 hover:border-charcoal/40 hover:-translate-y-0.5">
-                        <div class="text-xs font-bold text-charcoal mb-3 flex items-center gap-2">
+                    <div class="p-6 rounded-lg bg-card dark:bg-darkCard border border-bordercolor dark:border-darkBorder shadow-sm transition-all duration-300 hover:border-charcoal/40 dark:hover:border-darkText/40 hover:-translate-y-0.5">
+                        <div class="text-xs font-bold text-charcoal dark:text-darkText mb-3 flex items-center gap-2">
                             <i class="fa-solid fa-laptop-code text-accent"></i>
-                            <span>Pengalaman Digital <span class="text-[10px] text-muted/60 font-normal">/ Digital Experience</span></span>
+                            <span>Pengalaman Digital <span class="text-[10px] text-muted/60 dark:text-darkMuted/60 font-normal">/ Digital Experience</span></span>
                         </div>
-                        <p class="text-xs text-muted mb-5">Diterapkan secara langsung melalui interaksi pelanggan, copywriting, dan perangkat digital.</p>
+                        <p class="text-xs text-muted dark:text-darkMuted mb-5">Diterapkan secara langsung melalui interaksi pelanggan, copywriting, dan perangkat digital.</p>
                         <div class="flex flex-wrap gap-1.5">
-                            <span class="px-2.5 py-1 rounded bg-surface border border-bordercolor text-[11px] text-charcoal font-medium">Communication</span>
-                            <span class="px-2.5 py-1 rounded bg-surface border border-bordercolor text-[11px] text-charcoal font-medium">Customer Handling</span>
-                            <span class="px-2.5 py-1 rounded bg-surface border border-bordercolor text-[11px] text-charcoal font-medium">Copywriting</span>
-                            <span class="px-2.5 py-1 rounded bg-surface border border-bordercolor text-[11px] text-charcoal font-medium">Content Creation</span>
-                            <span class="px-2.5 py-1 rounded bg-surface border border-bordercolor text-[11px] text-charcoal font-medium">Data Awareness</span>
-                            <span class="px-2.5 py-1 rounded bg-surface border border-bordercolor text-[11px] text-charcoal font-medium">AI-assisted Workflow</span>
+                            <span class="px-2.5 py-1 rounded bg-surface dark:bg-darkSurface border border-bordercolor dark:border-darkBorder text-[11px] text-charcoal dark:text-darkText font-medium">Communication</span>
+                            <span class="px-2.5 py-1 rounded bg-surface dark:bg-darkSurface border border-bordercolor dark:border-darkBorder text-[11px] text-charcoal dark:text-darkText font-medium">Customer Handling</span>
+                            <span class="px-2.5 py-1 rounded bg-surface dark:bg-darkSurface border border-bordercolor dark:border-darkBorder text-[11px] text-charcoal dark:text-darkText font-medium">Copywriting</span>
+                            <span class="px-2.5 py-1 rounded bg-surface dark:bg-darkSurface border border-bordercolor dark:border-darkBorder text-[11px] text-charcoal dark:text-darkText font-medium">Content Creation</span>
+                            <span class="px-2.5 py-1 rounded bg-surface dark:bg-darkSurface border border-bordercolor dark:border-darkBorder text-[11px] text-charcoal dark:text-darkText font-medium">Data Awareness</span>
+                            <span class="px-2.5 py-1 rounded bg-surface dark:bg-darkSurface border border-bordercolor dark:border-darkBorder text-[11px] text-charcoal dark:text-darkText font-medium">AI-assisted Workflow</span>
                         </div>
                     </div>
                 </div>
@@ -551,36 +579,35 @@
         </section>
 
         <!-- Large Editorial Statement -->
-        <section class="py-16 bg-surface border-y border-bordercolor px-6 text-center cinematic-reveal">
+        <section class="py-16 bg-surface dark:bg-darkSurface border-y border-bordercolor dark:border-darkBorder px-6 text-center cinematic-reveal">
             <div class="max-w-3xl mx-auto">
-                <blockquote class="text-xl sm:text-2xl font-semibold text-charcoal tracking-tight italic">
+                <blockquote class="text-xl sm:text-2xl font-semibold text-charcoal dark:text-darkText tracking-tight italic">
                     “Dibangun melalui pekerjaan nyata, diuji melalui interaksi pelanggan aktual, dan disempurnakan melalui pembelajaran berkelanjutan.”
                 </blockquote>
             </div>
         </section>
 
-        <!-- CHAPTER 03 — EXPERIENCE (JOURNEY) / EDITORIAL YEAR-BASED LAYOUT (NO TIMELINE) -->
+        <!-- CHAPTER 03 — EXPERIENCE (JOURNEY) -->
         <section id="experience" class="py-28 px-6 cinematic-reveal relative max-w-4xl mx-auto" data-section-name="EXPERIENCE" data-section-num="03">
             <div class="text-center md:text-left mb-16">
-                <span class="text-[10px] font-semibold uppercase tracking-widest text-muted block mb-3">02 — PENGALAMAN <span class="text-[10px] text-muted/60 font-normal">/ EXPERIENCE</span></span>
-                <h2 class="text-3xl font-bold tracking-tight text-charcoal">
+                <span class="text-[10px] font-semibold uppercase tracking-widest text-muted dark:text-darkMuted block mb-3">02 — PENGALAMAN <span class="text-[10px] text-muted/60 dark:text-darkMuted/60 font-normal">/ EXPERIENCE</span></span>
+                <h2 class="text-3xl font-bold tracking-tight text-charcoal dark:text-darkText">
                     Riwayat kerja dan eksekusi mandiri
                 </h2>
-                <p class="text-xs text-muted mt-2">Disusun berdasarkan kronologi real-world operator produksi hingga layanan digital.</p>
+                <p class="text-xs text-muted dark:text-darkMuted mt-2">Disusun berdasarkan kronologi real-world operator produksi hingga layanan digital.</p>
             </div>
 
-            <!-- New Editorial Year-Based Experience Layout (No vertical timeline rail) -->
             <div class="space-y-16">
                 <!-- Experience 1 -->
-                <div class="relative group grid grid-cols-1 md:grid-cols-12 gap-6 items-start pb-12 border-b border-bordercolor">
+                <div class="relative group grid grid-cols-1 md:grid-cols-12 gap-6 items-start pb-12 border-b border-bordercolor dark:border-darkBorder">
                     <div class="md:col-span-3">
                         <span class="text-3xl md:text-4xl font-bold text-accent tracking-tighter block">2026</span>
-                        <span class="text-[11px] text-muted font-semibold uppercase">Maret – Juli 2026</span>
+                        <span class="text-[11px] text-muted dark:text-darkMuted font-semibold uppercase">Maret – Juli 2026</span>
                     </div>
-                    <div class="md:col-span-9 p-6 rounded-lg bg-card border border-bordercolor space-y-3 shadow-sm transition-all duration-300 hover:border-charcoal/40 hover:-translate-y-0.5">
-                        <h3 class="text-base font-bold text-charcoal">Operator Produksi</h3>
+                    <div class="md:col-span-9 p-6 rounded-lg bg-card dark:bg-darkCard border border-bordercolor dark:border-darkBorder space-y-3 shadow-sm transition-all duration-300 hover:border-charcoal/40 dark:hover:border-darkText/40 hover:-translate-y-0.5">
+                        <h3 class="text-base font-bold text-charcoal dark:text-darkText">Operator Produksi</h3>
                         <div class="text-xs text-accent font-medium">PT Tenar Inti Mandiri 2</div>
-                        <ul class="space-y-1.5 text-xs text-muted list-disc list-inside pt-2">
+                        <ul class="space-y-1.5 text-xs text-muted dark:text-darkMuted list-disc list-inside pt-2">
                             <li>Melakukan finishing setiap produk yang keluar dari mesin.</li>
                             <li>Produk tiba setiap kurang lebih 50 detik.</li>
                             <li>Melakukan finishing dan pengecekan hasil produk secara bersamaan.</li>
@@ -590,15 +617,15 @@
                 </div>
 
                 <!-- Experience 2 -->
-                <div class="relative group grid grid-cols-1 md:grid-cols-12 gap-6 items-start pb-12 border-b border-bordercolor">
+                <div class="relative group grid grid-cols-1 md:grid-cols-12 gap-6 items-start pb-12 border-b border-bordercolor dark:border-darkBorder">
                     <div class="md:col-span-3">
                         <span class="text-3xl md:text-4xl font-bold text-accent tracking-tighter block">2025</span>
-                        <span class="text-[11px] text-muted font-semibold uppercase">Jun 25 – Feb 26</span>
+                        <span class="text-[11px] text-muted dark:text-darkMuted font-semibold uppercase">Jun 25 – Feb 26</span>
                     </div>
-                    <div class="md:col-span-9 p-6 rounded-lg bg-card border border-bordercolor space-y-3 shadow-sm transition-all duration-300 hover:border-charcoal/40 hover:-translate-y-0.5">
-                        <h3 class="text-base font-bold text-charcoal">Operator Produksi</h3>
+                    <div class="md:col-span-9 p-6 rounded-lg bg-card dark:bg-darkCard border border-bordercolor dark:border-darkBorder space-y-3 shadow-sm transition-all duration-300 hover:border-charcoal/40 dark:hover:border-darkText/40 hover:-translate-y-0.5">
+                        <h3 class="text-base font-bold text-charcoal dark:text-darkText">Operator Produksi</h3>
                         <div class="text-xs text-accent font-medium">PT Sinarlimas Kontindo</div>
-                        <ul class="space-y-1.5 text-xs text-muted list-disc list-inside pt-2">
+                        <ul class="space-y-1.5 text-xs text-muted dark:text-darkMuted list-disc list-inside pt-2">
                             <li>Memotong bahan material.</li>
                             <li>Menimbang bahan material.</li>
                             <li>Menekan bahan ke dalam cetakan (press).</li>
@@ -612,12 +639,12 @@
                 <div class="relative group grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
                     <div class="md:col-span-3">
                         <span class="text-3xl md:text-4xl font-bold text-accent tracking-tighter block">2026+</span>
-                        <span class="text-[11px] text-muted font-semibold uppercase">Feb 2026 – Sekarang</span>
+                        <span class="text-[11px] text-muted dark:text-darkMuted font-semibold uppercase">Feb 2026 – Sekarang</span>
                     </div>
-                    <div class="md:col-span-9 p-6 rounded-lg bg-card border border-bordercolor space-y-3 shadow-sm transition-all duration-300 hover:border-charcoal/40 hover:-translate-y-0.5">
-                        <h3 class="text-base font-bold text-charcoal">Proyek Layanan Digital Independen</h3>
+                    <div class="md:col-span-9 p-6 rounded-lg bg-card dark:bg-darkCard border border-bordercolor dark:border-darkBorder space-y-3 shadow-sm transition-all duration-300 hover:border-charcoal/40 dark:hover:border-darkText/40 hover:-translate-y-0.5">
+                        <h3 class="text-base font-bold text-charcoal dark:text-darkText">Proyek Layanan Digital Independen</h3>
                         <div class="text-xs text-accent font-medium">Rizky Jasa</div>
-                        <p class="text-xs text-muted leading-relaxed pt-2">
+                        <p class="text-xs text-muted dark:text-darkMuted leading-relaxed pt-2">
                             Proyek independen yang beroperasi sebagai penyedia layanan digital yang menggabungkan komunikasi pelanggan, penanganan pesanan, copywriting, dan pembuatan konten.
                         </p>
                     </div>
@@ -625,17 +652,16 @@
             </div>
 
             <!-- Career Transition Narrative -->
-            <div class="mt-16 p-6 rounded-lg bg-surface border border-bordercolor shadow-sm">
-                <h3 class="text-[10px] font-bold uppercase tracking-wider text-muted mb-2">Transisi Karier <span class="text-[10px] text-muted/60 font-normal">/ Career Transition</span></h3>
-                <p class="text-xs text-charcoal leading-relaxed">
+            <div class="mt-16 p-6 rounded-lg bg-surface dark:bg-darkSurface border border-bordercolor dark:border-darkBorder shadow-sm">
+                <h3 class="text-[10px] font-bold uppercase tracking-wider text-muted dark:text-darkMuted mb-2">Transisi Karier <span class="text-[10px] text-muted/60 dark:text-darkMuted/60 font-normal">/ Career Transition</span></h3>
+                <p class="text-xs text-charcoal dark:text-darkText leading-relaxed">
                     Produksi mengajarkan disiplin, konsistensi, perhatian terhadap detail, dan tanggung jawab. Rizky Jasa mengembangkan komunikasi, penanganan pelanggan, copywriting, konten, pemasaran, alur kerja berbantuan AI, dan kesadaran data. Bersama-sama, ini membentuk fondasi praktis untuk peran target.
                 </p>
             </div>
         </section>
 
-        <!-- CHAPTER 04 — PROJECTS / CREATION / FLOATING POINTER -->
-        <section id="projects" class="py-28 bg-surface border-y border-bordercolor cinematic-reveal relative" data-section-name="WORK" data-section-num="04">
-            <!-- Chapter World 04: Floating Creative Pointer SVG -->
+        <!-- CHAPTER 04 — PROJECTS / CREATION -->
+        <section id="projects" class="py-28 bg-surface dark:bg-darkSurface border-y border-bordercolor dark:border-darkBorder cinematic-reveal relative" data-section-name="WORK" data-section-num="04">
             <div class="absolute right-12 top-16 text-accent hidden md:flex items-center gap-2 text-[10px] uppercase tracking-widest chapter-pointer-arrow" aria-hidden="true">
                 <span>Explore Work</span>
                 <svg width="22" height="12" viewBox="0 0 22 12" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -645,110 +671,109 @@
 
             <div class="max-w-5xl mx-auto px-6">
                 <div class="max-w-2xl mb-12">
-                    <span class="text-[10px] font-semibold uppercase tracking-widest text-muted block mb-3">03 — KARYA TERPILIH <span class="text-[10px] text-muted/60 font-normal">/ SELECTED WORK</span></span>
-                    <h2 class="text-3xl font-bold tracking-tight text-charcoal mb-3">
+                    <span class="text-[10px] font-semibold uppercase tracking-widest text-muted dark:text-darkMuted block mb-3">03 — KARYA TERPILIH <span class="text-[10px] text-muted/60 dark:text-darkMuted/60 font-normal">/ SELECTED WORK</span></span>
+                    <h2 class="text-3xl font-bold tracking-tight text-charcoal dark:text-darkText mb-3">
                         Perangkat praktis dan konsep desain
                     </h2>
-                    <p class="text-muted text-xs">
+                    <p class="text-muted dark:text-darkMuted text-xs">
                         Dibangun melalui praktik dan eksekusi dunia nyata. Tanpa tangkapan layar palsu.
                     </p>
                 </div>
 
-                <!-- Editorial Project Grid -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Project 01 (Featured Primary) -->
-                    <div class="p-8 rounded-lg bg-card border border-bordercolor flex flex-col justify-between transition-all duration-300 hover:border-charcoal hover:-translate-y-1.5 shadow-sm md:col-span-2 group">
+                    <!-- Project 01 -->
+                    <div class="p-8 rounded-lg bg-card dark:bg-darkCard border border-bordercolor dark:border-darkBorder flex flex-col justify-between transition-all duration-300 hover:border-charcoal dark:hover:border-darkText hover:-translate-y-1.5 shadow-sm md:col-span-2 group">
                         <div>
                             <div class="flex justify-between items-center mb-4">
                                 <span class="text-[10px] font-semibold text-accent uppercase tracking-wider">01 / Web Design / UI</span>
-                                <span class="text-[10px] text-muted">Platform Layanan Utama</span>
+                                <span class="text-[10px] text-muted dark:text-darkMuted">Platform Layanan Utama</span>
                             </div>
-                            <h3 class="text-xl font-bold text-charcoal mb-3 group-hover:text-accent transition-colors">Website Layanan Rizky Jasa</h3>
-                            <p class="text-xs sm:text-sm text-muted mb-6 leading-relaxed max-w-2xl">
+                            <h3 class="text-xl font-bold text-charcoal dark:text-darkText mb-3 group-hover:text-accent transition-colors">Website Layanan Rizky Jasa</h3>
+                            <p class="text-xs sm:text-sm text-muted dark:text-darkMuted mb-6 leading-relaxed max-w-2xl">
                                 Platform layanan komprehensif yang dibuat untuk menyajikan penawaran digital Rizky Jasa. Berfokus pada arsitektur informasi, presentasi layanan yang jelas, dan struktur CTA yang efektif.
                             </p>
                             <div class="flex flex-wrap gap-2 mb-6">
-                                <span class="px-2.5 py-1 rounded bg-surface border border-bordercolor text-[11px] text-charcoal">Information Architecture</span>
-                                <span class="px-2.5 py-1 rounded bg-surface border border-bordercolor text-[11px] text-charcoal">Service Presentation</span>
-                                <span class="px-2.5 py-1 rounded bg-surface border border-bordercolor text-[11px] text-charcoal">CTA Structure</span>
-                                <span class="px-2.5 py-1 rounded bg-surface border border-bordercolor text-[11px] text-charcoal">Responsive Layout</span>
+                                <span class="px-2.5 py-1 rounded bg-surface dark:bg-darkSurface border border-bordercolor dark:border-darkBorder text-[11px] text-charcoal dark:text-darkText">Information Architecture</span>
+                                <span class="px-2.5 py-1 rounded bg-surface dark:bg-darkSurface border border-bordercolor dark:border-darkBorder text-[11px] text-charcoal dark:text-darkText">Service Presentation</span>
+                                <span class="px-2.5 py-1 rounded bg-surface dark:bg-darkSurface border border-bordercolor dark:border-darkBorder text-[11px] text-charcoal dark:text-darkText">CTA Structure</span>
+                                <span class="px-2.5 py-1 rounded bg-surface dark:bg-darkSurface border border-bordercolor dark:border-darkBorder text-[11px] text-charcoal dark:text-darkText">Responsive Layout</span>
                             </div>
                         </div>
-                        <div class="pt-5 border-t border-bordercolor flex items-center justify-between text-xs font-medium text-charcoal">
-                            <span>Peran: Kreator Independen <span class="text-muted/60 font-normal">/ Independent Creator</span></span>
-                            <span class="text-muted flex items-center gap-1.5 group-hover:translate-x-1.5 transition-transform">HTML / CSS <i class="fa-solid fa-arrow-right text-[10px]"></i></span>
+                        <div class="pt-5 border-t border-bordercolor dark:border-darkBorder flex items-center justify-between text-xs font-medium text-charcoal dark:text-darkText">
+                            <span>Peran: Kreator Independen <span class="text-muted/60 dark:text-darkMuted/60 font-normal">/ Independent Creator</span></span>
+                            <span class="text-muted dark:text-darkMuted flex items-center gap-1.5 group-hover:translate-x-1.5 transition-transform">HTML / CSS <i class="fa-solid fa-arrow-right text-[10px]"></i></span>
                         </div>
                     </div>
 
                     <!-- Project 02 -->
-                    <div class="p-6 rounded-lg bg-card border border-bordercolor flex flex-col justify-between transition-all duration-300 hover:border-charcoal hover:-translate-y-1.5 shadow-sm group">
+                    <div class="p-6 rounded-lg bg-card dark:bg-darkCard border border-bordercolor dark:border-darkBorder flex flex-col justify-between transition-all duration-300 hover:border-charcoal dark:hover:border-darkText hover:-translate-y-1.5 shadow-sm group">
                         <div>
                             <div class="flex justify-between items-center mb-3">
                                 <span class="text-[10px] font-semibold text-accent uppercase tracking-wider">02 / Web Tool</span>
-                                <span class="text-[10px] text-muted">Kalkulator</span>
+                                <span class="text-[10px] text-muted dark:text-darkMuted">Kalkulator</span>
                             </div>
-                            <h3 class="text-base font-bold text-charcoal mb-2 group-hover:text-accent transition-colors">HPP Produk / Eceran Calculator</h3>
-                            <p class="text-xs text-muted mb-5 leading-relaxed">
+                            <h3 class="text-base font-bold text-charcoal dark:text-darkText mb-2 group-hover:text-accent transition-colors">HPP Produk / Eceran Calculator</h3>
+                            <p class="text-xs text-muted dark:text-darkMuted mb-5 leading-relaxed">
                                 Kalkulator web praktis yang dibangun untuk membantu UMKM dan penjual memperkirakan HPP, biaya produk, dan harga jual secara akurat.
                             </p>
                         </div>
-                        <div class="pt-4 border-t border-bordercolor flex items-center justify-between text-[11px] font-medium text-charcoal">
-                            <span>Peran: Pengembang <span class="text-muted/60 font-normal">/ Developer</span></span>
-                            <span class="text-muted flex items-center gap-1 group-hover:translate-x-1 transition-transform">JavaScript <i class="fa-solid fa-arrow-right text-[9px]"></i></span>
+                        <div class="pt-4 border-t border-bordercolor dark:border-darkBorder flex items-center justify-between text-[11px] font-medium text-charcoal dark:text-darkText">
+                            <span>Peran: Pengembang <span class="text-muted/60 dark:text-darkMuted/60 font-normal">/ Developer</span></span>
+                            <span class="text-muted dark:text-darkMuted flex items-center gap-1 group-hover:translate-x-1 transition-transform">JavaScript <i class="fa-solid fa-arrow-right text-[9px]"></i></span>
                         </div>
                     </div>
 
                     <!-- Project 03 -->
-                    <div class="p-6 rounded-lg bg-card border border-bordercolor flex flex-col justify-between transition-all duration-300 hover:border-charcoal hover:-translate-y-1.5 shadow-sm group">
+                    <div class="p-6 rounded-lg bg-card dark:bg-darkCard border border-bordercolor dark:border-darkBorder flex flex-col justify-between transition-all duration-300 hover:border-charcoal dark:hover:border-darkText hover:-translate-y-1.5 shadow-sm group">
                         <div>
                             <div class="flex justify-between items-center mb-3">
                                 <span class="text-[10px] font-semibold text-accent uppercase tracking-wider">03 / Web Tool</span>
-                                <span class="text-[10px] text-muted">Alat Analisis</span>
+                                <span class="text-[10px] text-muted dark:text-darkMuted">Alat Analisis</span>
                             </div>
-                            <h3 class="text-base font-bold text-charcoal mb-2 group-hover:text-accent transition-colors">Omzet Calculator</h3>
-                            <p class="text-xs text-muted mb-5 leading-relaxed">
+                            <h3 class="text-base font-bold text-charcoal dark:text-darkText mb-2 group-hover:text-accent transition-colors">Omzet Calculator</h3>
+                            <p class="text-xs text-muted dark:text-darkMuted mb-5 leading-relaxed">
                                 Alat interaktif yang membantu pengguna memahami bagaimana alokasi pendapatan bisnis dan memberikan saran berbasis data berdasarkan masukan.
                             </p>
                         </div>
-                        <div class="pt-4 border-t border-bordercolor flex items-center justify-between text-[11px] font-medium text-charcoal">
-                            <span>Peran: Pengembang <span class="text-muted/60 font-normal">/ Developer</span></span>
-                            <span class="text-muted flex items-center gap-1 group-hover:translate-x-1 transition-transform">JavaScript <i class="fa-solid fa-arrow-right text-[9px]"></i></span>
+                        <div class="pt-4 border-t border-bordercolor dark:border-darkBorder flex items-center justify-between text-[11px] font-medium text-charcoal dark:text-darkText">
+                            <span>Peran: Pengembang <span class="text-muted/60 dark:text-darkMuted/60 font-normal">/ Developer</span></span>
+                            <span class="text-muted dark:text-darkMuted flex items-center gap-1 group-hover:translate-x-1 transition-transform">JavaScript <i class="fa-solid fa-arrow-right text-[9px]"></i></span>
                         </div>
                     </div>
 
                     <!-- Project 04 -->
-                    <div class="p-6 rounded-lg bg-card border border-bordercolor flex flex-col justify-between transition-all duration-300 hover:border-charcoal hover:-translate-y-1.5 shadow-sm group">
+                    <div class="p-6 rounded-lg bg-card dark:bg-darkCard border border-bordercolor dark:border-darkBorder flex flex-col justify-between transition-all duration-300 hover:border-charcoal dark:hover:border-darkText hover:-translate-y-1.5 shadow-sm group">
                         <div>
                             <div class="flex justify-between items-center mb-3">
                                 <span class="text-[10px] font-semibold text-accent uppercase tracking-wider">04 / Landing Page Concept</span>
-                                <span class="text-[10px] text-muted">Praktik</span>
+                                <span class="text-[10px] text-muted dark:text-darkMuted">Praktik</span>
                             </div>
-                            <h3 class="text-base font-bold text-charcoal mb-2 group-hover:text-accent transition-colors">Kopi Senja Landing Page</h3>
-                            <p class="text-xs text-muted mb-5 leading-relaxed">
+                            <h3 class="text-base font-bold text-charcoal dark:text-darkText mb-2 group-hover:text-accent transition-colors">Kopi Senja Landing Page</h3>
+                            <p class="text-xs text-muted dark:text-darkMuted mb-5 leading-relaxed">
                                 Konsep praktik yang berfokus pada struktur halaman landas, hierarki konten, penempatan CTA, dan eksekusi desain responsif.
                             </p>
                         </div>
-                        <div class="pt-4 border-t border-bordercolor flex items-center justify-between text-[11px] font-medium text-charcoal">
-                            <span>Peran: Desainer <span class="text-muted/60 font-normal">/ Designer</span></span>
-                            <span class="text-muted flex items-center gap-1 group-hover:translate-x-1 transition-transform">HTML / CSS <i class="fa-solid fa-arrow-right text-[9px]"></i></span>
+                        <div class="pt-4 border-t border-bordercolor dark:border-darkBorder flex items-center justify-between text-[11px] font-medium text-charcoal dark:text-darkText">
+                            <span>Peran: Desainer <span class="text-muted/60 dark:text-darkMuted/60 font-normal">/ Designer</span></span>
+                            <span class="text-muted dark:text-darkMuted flex items-center gap-1 group-hover:translate-x-1 transition-transform">HTML / CSS <i class="fa-solid fa-arrow-right text-[9px]"></i></span>
                         </div>
                     </div>
 
                     <!-- Project 05 -->
-                    <div class="p-6 rounded-lg bg-card border border-bordercolor flex flex-col justify-between transition-all duration-300 hover:border-charcoal hover:-translate-y-1.5 shadow-sm group">
+                    <div class="p-6 rounded-lg bg-card dark:bg-darkCard border border-bordercolor dark:border-darkBorder flex flex-col justify-between transition-all duration-300 hover:border-charcoal dark:hover:border-darkText hover:-translate-y-1.5 shadow-sm group">
                         <div>
                             <div class="flex justify-between items-center mb-3">
                                 <span class="text-[10px] font-semibold text-accent uppercase tracking-wider">05 / Personal Business Tool</span>
-                                <span class="text-[10px] text-muted">Pelacak</span>
+                                <span class="text-[10px] text-muted dark:text-darkMuted">Pelacak</span>
                             </div>
-                            <h3 class="text-base font-bold text-charcoal mb-2 group-hover:text-accent transition-colors">Rizky Assistant</h3>
-                            <p class="text-xs text-muted mb-5 leading-relaxed">
+                            <h3 class="text-base font-bold text-charcoal dark:text-darkText mb-2 group-hover:text-accent transition-colors">Rizky Assistant</h3>
+                            <p class="text-xs text-muted dark:text-darkMuted mb-5 leading-relaxed">
                                 Pelacak bisnis berbasis web yang dibuat untuk memantau data bisnis, pelacakan pesanan, rekap data, dan analisis periode. Ide inti: membuat keputusan menggunakan data, bukan hanya intuisi.
                             </p>
                         </div>
-                        <div class="pt-4 border-t border-bordercolor flex items-center justify-between text-[11px] font-medium text-charcoal">
-                            <span>Peran: Pembuat & Pengembang <span class="text-muted/60 font-normal">/ Creator & Developer</span></span>
-                            <span class="text-muted flex items-center gap-1 group-hover:translate-x-1 transition-transform">HTML / CSS / JS <i class="fa-solid fa-arrow-right text-[9px]"></i></span>
+                        <div class="pt-4 border-t border-bordercolor dark:border-darkBorder flex items-center justify-between text-[11px] font-medium text-charcoal dark:text-darkText">
+                            <span>Peran: Pembuat & Pengembang <span class="text-muted/60 dark:text-darkMuted/60 font-normal">/ Creator & Developer</span></span>
+                            <span class="text-muted dark:text-darkMuted flex items-center gap-1 group-hover:translate-x-1 transition-transform">HTML / CSS / JS <i class="fa-solid fa-arrow-right text-[9px]"></i></span>
                         </div>
                     </div>
                 </div>
@@ -759,106 +784,105 @@
         <section class="py-28 max-w-5xl mx-auto px-6 cinematic-reveal">
             <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
                 <div>
-                    <span class="text-[10px] font-semibold uppercase tracking-widest text-muted block mb-3">Studi Kasus Utama <span class="text-[10px] text-muted/60 font-normal">/ Case Study</span></span>
-                    <h2 class="text-3xl font-bold tracking-tight text-charcoal">Rizky Jasa</h2>
+                    <span class="text-[10px] font-semibold uppercase tracking-widest text-muted dark:text-darkMuted block mb-3">Studi Kasus Utama <span class="text-[10px] text-muted/60 dark:text-darkMuted/60 font-normal">/ Case Study</span></span>
+                    <h2 class="text-3xl font-bold tracking-tight text-charcoal dark:text-darkText">Rizky Jasa</h2>
                 </div>
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface border border-bordercolor text-[11px] text-muted font-medium">
-                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-700 animate-pulse"></span>
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface dark:bg-darkSurface border border-bordercolor dark:border-darkBorder text-[11px] text-muted dark:text-darkMuted font-medium">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-600 dark:bg-emerald-400 animate-pulse"></span>
                     Proyek Layanan Digital Independen · Mulai 1 Feb 2026 (Berjalan)
                 </div>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div class="bg-card p-6 rounded-lg border border-bordercolor space-y-5 transition-all duration-300 hover:border-charcoal/40 hover:-translate-y-0.5 shadow-sm">
+                <div class="bg-card dark:bg-darkCard p-6 rounded-lg border border-bordercolor dark:border-darkBorder space-y-5 transition-all duration-300 hover:border-charcoal/40 dark:hover:border-darkText/40 hover:-translate-y-0.5 shadow-sm">
                     <div>
-                        <h3 class="text-[11px] font-semibold uppercase tracking-wider text-muted mb-2">Tantangan <span class="text-[10px] text-muted/60 font-normal">/ The Challenge</span></h3>
-                        <p class="text-xs text-charcoal leading-relaxed">
+                        <h3 class="text-[11px] font-semibold uppercase tracking-wider text-muted dark:text-darkMuted mb-2">Tantangan <span class="text-[10px] text-muted/60 dark:text-darkMuted/60 font-normal">/ The Challenge</span></h3>
+                        <p class="text-xs text-charcoal dark:text-darkText leading-relaxed">
                             Membangun dan mengoperasikan layanan digital sambil mempelajari cara menarik pelanggan, berkomunikasi dengan pelanggan, membuat konten, dan memperbaiki proses.
                         </p>
                     </div>
-                    <div class="pt-5 border-t border-bordercolor">
-                        <h3 class="text-[11px] font-semibold uppercase tracking-wider text-muted mb-2">Peran Saya <span class="text-[10px] text-muted/60 font-normal">/ My Role</span></h3>
-                        <p class="text-xs text-charcoal leading-relaxed">
+                    <div class="pt-5 border-t border-bordercolor dark:border-darkBorder">
+                        <h3 class="text-[11px] font-semibold uppercase tracking-wider text-muted dark:text-darkMuted mb-2">Peran Saya <span class="text-[10px] text-muted/60 dark:text-darkMuted/60 font-normal">/ My Role</span></h3>
+                        <p class="text-xs text-charcoal dark:text-darkText leading-relaxed">
                             Dikelola secara mandiri: komunikasi pelanggan, penanganan pesanan, pembuatan konten, copywriting, aktivitas media sosial, presentasi layanan, pekerjaan kreatif berbantuan AI, pengembangan web dasar, dan observasi kinerja.
                         </p>
                     </div>
                 </div>
 
-                <!-- Chapter World 05: Process Path SVG -->
-                <div class="bg-card p-6 rounded-lg border border-bordercolor space-y-5 transition-all duration-300 hover:border-charcoal/40 hover:-translate-y-0.5 shadow-sm relative overflow-hidden">
+                <div class="bg-card dark:bg-darkCard p-6 rounded-lg border border-bordercolor dark:border-darkBorder space-y-5 transition-all duration-300 hover:border-charcoal/40 dark:hover:border-darkText/40 hover:-translate-y-0.5 shadow-sm relative overflow-hidden">
                     <div class="absolute right-4 top-4 pointer-events-none opacity-30" aria-hidden="true">
                         <svg width="60" height="60" viewBox="0 0 60 60" fill="none" class="text-accent">
                             <path d="M10 50 Q 30 10, 50 50" stroke="currentColor" stroke-width="1.2" fill="none" class="chapter-process-path"></path>
                         </svg>
                     </div>
                     <div>
-                        <h3 class="text-[11px] font-semibold uppercase tracking-wider text-muted mb-2">Proses Kerja <span class="text-[10px] text-muted/60 font-normal">/ The Process</span></h3>
-                        <div class="space-y-2.5 mt-3 text-xs font-medium text-charcoal">
-                            <div class="flex items-center gap-3 p-2 rounded bg-surface border border-bordercolor">
+                        <h3 class="text-[11px] font-semibold uppercase tracking-wider text-muted dark:text-darkMuted mb-2">Proses Kerja <span class="text-[10px] text-muted/60 dark:text-darkMuted/60 font-normal">/ The Process</span></h3>
+                        <div class="space-y-2.5 mt-3 text-xs font-medium text-charcoal dark:text-darkText">
+                            <div class="flex items-center gap-3 p-2 rounded bg-surface dark:bg-darkSurface border border-bordercolor dark:border-darkBorder">
                                 <span class="w-4 h-4 rounded bg-accent/20 text-accent flex items-center justify-center font-bold text-[10px]">1</span>
-                                <span>Create <span class="text-[10px] text-muted font-normal ml-1">(Membuat)</span></span>
+                                <span>Create <span class="text-[10px] text-muted dark:text-darkMuted font-normal ml-1">(Membuat)</span></span>
                             </div>
-                            <div class="flex items-center gap-3 p-2 rounded bg-surface border border-bordercolor">
+                            <div class="flex items-center gap-3 p-2 rounded bg-surface dark:bg-darkSurface border border-bordercolor dark:border-darkBorder">
                                 <span class="w-4 h-4 rounded bg-accent/20 text-accent flex items-center justify-center font-bold text-[10px]">2</span>
-                                <span>Publish <span class="text-[10px] text-muted font-normal ml-1">(Mempublikasikan)</span></span>
+                                <span>Publish <span class="text-[10px] text-muted dark:text-darkMuted font-normal ml-1">(Mempublikasikan)</span></span>
                             </div>
-                            <div class="flex items-center gap-3 p-2 rounded bg-surface border border-bordercolor">
+                            <div class="flex items-center gap-3 p-2 rounded bg-surface dark:bg-darkSurface border border-bordercolor dark:border-darkBorder">
                                 <span class="w-4 h-4 rounded bg-accent/20 text-accent flex items-center justify-center font-bold text-[10px]">3</span>
-                                <span>Observe <span class="text-[10px] text-muted font-normal ml-1">(Mengamati)</span></span>
+                                <span>Observe <span class="text-[10px] text-muted dark:text-darkMuted font-normal ml-1">(Mengamati)</span></span>
                             </div>
-                            <div class="flex items-center gap-3 p-2 rounded bg-surface border border-bordercolor">
+                            <div class="flex items-center gap-3 p-2 rounded bg-surface dark:bg-darkSurface border border-bordercolor dark:border-darkBorder">
                                 <span class="w-4 h-4 rounded bg-accent/20 text-accent flex items-center justify-center font-bold text-[10px]">4</span>
-                                <span>Analyze <span class="text-[10px] text-muted font-normal ml-1">(Menganalisis)</span></span>
+                                <span>Analyze <span class="text-[10px] text-muted dark:text-darkMuted font-normal ml-1">(Menganalisis)</span></span>
                             </div>
-                            <div class="flex items-center gap-3 p-2 rounded bg-surface border border-bordercolor">
+                            <div class="flex items-center gap-3 p-2 rounded bg-surface dark:bg-darkSurface border border-bordercolor dark:border-darkBorder">
                                 <span class="w-4 h-4 rounded bg-accent/20 text-accent flex items-center justify-center font-bold text-[10px]">5</span>
-                                <span>Improve <span class="text-[10px] text-muted font-normal ml-1">(Memperbaiki)</span></span>
+                                <span>Improve <span class="text-[10px] text-muted dark:text-darkMuted font-normal ml-1">(Memperbaiki)</span></span>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="bg-card p-6 rounded-lg border border-bordercolor space-y-5 flex flex-col justify-between transition-all duration-300 hover:border-charcoal/40 hover:-translate-y-0.5 shadow-sm">
+                <div class="bg-card dark:bg-darkCard p-6 rounded-lg border border-bordercolor dark:border-darkBorder space-y-5 flex flex-col justify-between transition-all duration-300 hover:border-charcoal/40 dark:hover:border-darkText/40 hover:-translate-y-0.5 shadow-sm">
                     <div>
-                        <h3 class="text-[11px] font-semibold uppercase tracking-wider text-muted mb-2">Yang Saya Pelajari <span class="text-[10px] text-muted/60 font-normal">/ What I Learned</span></h3>
-                        <p class="text-xs text-charcoal leading-relaxed">
+                        <h3 class="text-[11px] font-semibold uppercase tracking-wider text-muted dark:text-darkMuted mb-2">Yang Saya Pelajari <span class="text-[10px] text-muted/60 dark:text-darkMuted/60 font-normal">/ What I Learned</span></h3>
+                        <p class="text-xs text-charcoal dark:text-darkText leading-relaxed">
                             Bagaimana perilaku pelanggan nyata, kinerja konten, dan pengalaman operasional dapat digunakan untuk membuat keputusan yang lebih baik.
                         </p>
                     </div>
-                    <div class="pt-5 border-t border-bordercolor text-[11px] text-muted">
-                        <i class="fa-solid fa-arrow-trend-up text-emerald-700 mr-1.5"></i> 160+ pelanggan & 35% pesanan berulang tercapai.
+                    <div class="pt-5 border-t border-bordercolor dark:border-darkBorder text-[11px] text-muted dark:text-darkMuted">
+                        <i class="fa-solid fa-arrow-trend-up text-emerald-600 dark:text-emerald-400 mr-1.5"></i> 160+ pelanggan & 35% pesanan berulang tercapai.
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Customer Service Case Study -->
-        <section class="py-24 bg-surface border-y border-bordercolor cinematic-reveal">
+        <section class="py-24 bg-surface dark:bg-darkSurface border-y border-bordercolor dark:border-darkBorder cinematic-reveal">
             <div class="max-w-5xl mx-auto px-6">
                 <div class="max-w-2xl">
-                    <span class="text-[10px] font-semibold uppercase tracking-widest text-muted block mb-3">Pendekatan Customer Service</span>
-                    <h2 class="text-2xl font-bold tracking-tight text-charcoal mb-6">
+                    <span class="text-[10px] font-semibold uppercase tracking-widest text-muted dark:text-darkMuted block mb-3">Pendekatan Customer Service</span>
+                    <h2 class="text-2xl font-bold tracking-tight text-charcoal dark:text-darkText mb-6">
                         Bagaimana saya menangani situasi sulit
                     </h2>
 
-                    <div class="p-6 rounded-lg bg-card border border-bordercolor space-y-5 shadow-sm transition-all duration-300 hover:border-charcoal/40 hover:-translate-y-0.5">
-                        <div class="text-[10px] font-bold uppercase tracking-wider text-accent">Skenario Nyata & Respon <span class="text-[10px] text-muted/60 font-normal">/ Real Scenario & Response</span></div>
-                        <div class="space-y-3 text-xs text-charcoal leading-relaxed">
+                    <div class="p-6 rounded-lg bg-card dark:bg-darkCard border border-bordercolor dark:border-darkBorder space-y-5 shadow-sm transition-all duration-300 hover:border-charcoal/40 dark:hover:border-darkText/40 hover:-translate-y-0.5">
+                        <div class="text-[10px] font-bold uppercase tracking-wider text-accent">Skenario Nyata & Respon <span class="text-[10px] text-muted/60 dark:text-darkMuted/60 font-normal">/ Real Scenario & Response</span></div>
+                        <div class="space-y-3 text-xs text-charcoal dark:text-darkText leading-relaxed">
                             <p>
-                                <span class="font-semibold text-muted">Situasi:</span> Seorang pelanggan memberikan instruksi penyuntingan dokumen secara bertahap. Karena persyaratan datang selangkah demi selangkah, pekerjaan memakan waktu lebih lama, membuat pelanggan frustrasi dengan durasi proses.
+                                <span class="font-semibold text-muted dark:text-darkMuted">Situasi:</span> Seorang pelanggan memberikan instruksi penyuntingan dokumen secara bertahap. Karena persyaratan datang selangkah demi selangkah, pekerjaan memakan waktu lebih lama, membuat pelanggan frustrasi dengan durasi proses.
                             </p>
                             <p>
-                                <span class="font-semibold text-muted">Respon Saya:</span> Rizky tetap profesional dan menjelaskan bahwa memberikan persyaratan secara lengkap sejak awal akan membuat proses menjadi lebih efisien.
+                                <span class="font-semibold text-muted dark:text-darkMuted">Respon Saya:</span> Rizky tetap profesional dan menjelaskan bahwa memberikan persyaratan secara lengkap sejak awal akan membuat proses menjadi lebih efisien.
                             </p>
                         </div>
 
-                        <div class="pt-5 border-t border-bordercolor flex flex-wrap gap-1.5">
-                            <span class="px-2.5 py-1 rounded bg-surface border border-bordercolor text-[11px] text-charcoal font-medium">Communication</span>
-                            <span class="px-2.5 py-1 rounded bg-surface border border-bordercolor text-[11px] text-charcoal font-medium">Patience</span>
-                            <span class="px-2.5 py-1 rounded bg-surface border border-bordercolor text-[11px] text-charcoal font-medium">Problem Solving</span>
-                            <span class="px-2.5 py-1 rounded bg-surface border border-bordercolor text-[11px] text-charcoal font-medium">Customer Handling</span>
-                            <span class="px-2.5 py-1 rounded bg-surface border border-bordercolor text-[11px] text-charcoal font-medium">Expectation Management</span>
-                            <span class="px-2.5 py-1 rounded bg-surface border border-bordercolor text-[11px] text-charcoal font-medium">Process Improvement</span>
+                        <div class="pt-5 border-t border-bordercolor dark:border-darkBorder flex flex-wrap gap-1.5">
+                            <span class="px-2.5 py-1 rounded bg-surface dark:bg-darkSurface border border-bordercolor dark:border-darkBorder text-[11px] text-charcoal dark:text-darkText font-medium">Communication</span>
+                            <span class="px-2.5 py-1 rounded bg-surface dark:bg-darkSurface border border-bordercolor dark:border-darkBorder text-[11px] text-charcoal dark:text-darkText font-medium">Patience</span>
+                            <span class="px-2.5 py-1 rounded bg-surface dark:bg-darkSurface border border-bordercolor dark:border-darkBorder text-[11px] text-charcoal dark:text-darkText font-medium">Problem Solving</span>
+                            <span class="px-2.5 py-1 rounded bg-surface dark:bg-darkSurface border border-bordercolor dark:border-darkBorder text-[11px] text-charcoal dark:text-darkText font-medium">Customer Handling</span>
+                            <span class="px-2.5 py-1 rounded bg-surface dark:bg-darkSurface border border-bordercolor dark:border-darkBorder text-[11px] text-charcoal dark:text-darkText font-medium">Expectation Management</span>
+                            <span class="px-2.5 py-1 rounded bg-surface dark:bg-darkSurface border border-bordercolor dark:border-darkBorder text-[11px] text-charcoal dark:text-darkText font-medium">Process Improvement</span>
                         </div>
                     </div>
                 </div>
@@ -868,68 +892,67 @@
         <!-- Copywriting & Content Strategy -->
         <section class="py-28 max-w-5xl mx-auto px-6 cinematic-reveal">
             <div class="max-w-2xl mb-12">
-                <span class="text-[10px] font-semibold uppercase tracking-widest text-muted block mb-3">Copywriting & Strategi Konten</span>
-                <h2 class="text-2xl font-bold tracking-tight text-charcoal mb-3">
-                    Kata-kata yang terhubung <span class="text-sm font-normal text-muted">/ Words that connect</span>
+                <span class="text-[10px] font-semibold uppercase tracking-widest text-muted dark:text-darkMuted block mb-3">Copywriting & Strategi Konten</span>
+                <h2 class="text-2xl font-bold tracking-tight text-charcoal dark:text-darkText mb-3">
+                    Kata-kata yang terhubung <span class="text-sm font-normal text-muted dark:text-darkMuted">/ Words that connect</span>
                 </h2>
-                <p class="text-muted text-xs">
+                <p class="text-muted dark:text-darkMuted text-xs">
                     Rizky membuat konten promosi dan berfokus pada audiens untuk para pencari kerja.
                 </p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
-                <div class="bg-card p-6 rounded-lg border border-bordercolor space-y-5 transition-all duration-300 hover:border-charcoal/40 hover:-translate-y-0.5 shadow-sm">
-                    <div class="text-[10px] font-bold uppercase tracking-wider text-muted">Contoh Kutipan Copywriting <span class="text-[10px] text-muted/60 font-normal">/ Sample Copywriting Excerpt</span></div>
-                    <div class="p-5 rounded bg-surface border border-bordercolor text-charcoal font-medium text-xs tracking-tight leading-relaxed italic">
+                <div class="bg-card dark:bg-darkCard p-6 rounded-lg border border-bordercolor dark:border-darkBorder space-y-5 transition-all duration-300 hover:border-charcoal/40 dark:hover:border-darkText/40 hover:-translate-y-0.5 shadow-sm">
+                    <div class="text-[10px] font-bold uppercase tracking-wider text-muted dark:text-darkMuted">Contoh Kutipan Copywriting <span class="text-[10px] text-muted/60 dark:text-darkMuted/60 font-normal">/ Sample Copywriting Excerpt</span></div>
+                    <div class="p-5 rounded bg-surface dark:bg-darkSurface border border-bordercolor dark:border-darkBorder text-charcoal dark:text-darkText font-medium text-xs tracking-tight leading-relaxed italic">
                         “CV KAMU SERING DITOLAK? 😔<br>Bisa jadi CV-nya yang perlu dibenerin, bukan pengalaman kamu.”
                     </div>
-                    <div class="space-y-1.5 text-[11px] text-muted">
-                        <div class="font-semibold text-charcoal mb-1">Struktur Breakdown:</div>
-                        <div><strong class="text-charcoal">Problem:</strong> Mengakui titik nyeri pembaca.</div>
-                        <div><strong class="text-charcoal">Reframe:</strong> Mengubah sudut pandang.</div>
-                        <div><strong class="text-charcoal">Solution:</strong> Menawarkan perbaikan konstruktif.</div>
-                        <div><strong class="text-charcoal">CTA:</strong> Langkah selanjutnya yang jelas.</div>
+                    <div class="space-y-1.5 text-[11px] text-muted dark:text-darkMuted">
+                        <div class="font-semibold text-charcoal dark:text-darkText mb-1">Struktur Breakdown:</div>
+                        <div><strong class="text-charcoal dark:text-darkText">Problem:</strong> Mengakui titik nyeri pembaca.</div>
+                        <div><strong class="text-charcoal dark:text-darkText">Reframe:</strong> Mengubah sudut pandang.</div>
+                        <div><strong class="text-charcoal dark:text-darkText">Solution:</strong> Menawarkan perbaikan konstruktif.</div>
+                        <div><strong class="text-charcoal dark:text-darkText">CTA:</strong> Langkah selanjutnya yang jelas.</div>
                     </div>
                 </div>
 
-                <div class="bg-card p-6 rounded-lg border border-bordercolor space-y-5 transition-all duration-300 hover:border-charcoal/40 hover:-translate-y-0.5 shadow-sm">
-                    <div class="text-[10px] font-bold uppercase tracking-wider text-muted">Alur Kerja Copywriting Berbantuan AI <span class="text-[10px] text-muted/60 font-normal">/ AI-Assisted Workflow</span></div>
+                <div class="bg-card dark:bg-darkCard p-6 rounded-lg border border-bordercolor dark:border-darkBorder space-y-5 transition-all duration-300 hover:border-charcoal/40 dark:hover:border-darkText/40 hover:-translate-y-0.5 shadow-sm">
+                    <div class="text-[10px] font-bold uppercase tracking-wider text-muted dark:text-darkMuted">Alur Kerja Copywriting Berbantuan AI <span class="text-[10px] text-muted/60 dark:text-darkMuted/60 font-normal">/ AI-Assisted Workflow</span></div>
                     <div class="space-y-2 text-[11px]">
-                        <div class="flex items-start gap-2.5 p-2.5 rounded bg-surface border border-bordercolor">
+                        <div class="flex items-start gap-2.5 p-2.5 rounded bg-surface dark:bg-darkSurface border border-bordercolor dark:border-darkBorder">
                             <span class="font-bold text-accent">01</span>
-                            <div><strong class="text-charcoal">Draft:</strong> AI membantu menghasilkan ide awal.</div>
+                            <div><strong class="text-charcoal dark:text-darkText">Draft:</strong> AI membantu menghasilkan ide awal.</div>
                         </div>
-                        <div class="flex items-start gap-2.5 p-2.5 rounded bg-surface border border-bordercolor">
+                        <div class="flex items-start gap-2.5 p-2.5 rounded bg-surface dark:bg-darkSurface border border-bordercolor dark:border-darkBorder">
                             <span class="font-bold text-accent">02</span>
-                            <div><strong class="text-charcoal">Review:</strong> Rizky mengevaluasi hasil keluaran.</div>
+                            <div><strong class="text-charcoal dark:text-darkText">Review:</strong> Rizky mengevaluasi hasil keluaran.</div>
                         </div>
-                        <div class="flex items-start gap-2.5 p-2.5 rounded bg-surface border border-bordercolor">
+                        <div class="flex items-start gap-2.5 p-2.5 rounded bg-surface dark:bg-darkSurface border border-bordercolor dark:border-darkBorder">
                             <span class="font-bold text-accent">03</span>
-                            <div><strong class="text-charcoal">Identify Weak Points:</strong> Menemukan bagian yang umum, lemah, berulang, atau tidak natural.</div>
+                            <div><strong class="text-charcoal dark:text-darkText">Identify Weak Points:</strong> Menemukan bagian yang umum, lemah, berulang, atau tidak natural.</div>
                         </div>
-                        <div class="flex items-start gap-2.5 p-2.5 rounded bg-surface border border-bordercolor">
+                        <div class="flex items-start gap-2.5 p-2.5 rounded bg-surface dark:bg-darkSurface border border-bordercolor dark:border-darkBorder">
                             <span class="font-bold text-accent">04</span>
-                            <div><strong class="text-charcoal">Rewrite:</strong> Menyesuaikan pilihan kata dan struktur.</div>
+                            <div><strong class="text-charcoal dark:text-darkText">Rewrite:</strong> Menyesuaikan pilihan kata dan struktur.</div>
                         </div>
-                        <div class="flex items-start gap-2.5 p-2.5 rounded bg-surface border border-bordercolor">
+                        <div class="flex items-start gap-2.5 p-2.5 rounded bg-surface dark:bg-darkSurface border border-bordercolor dark:border-darkBorder">
                             <span class="font-bold text-accent">05</span>
-                            <div><strong class="text-charcoal">Refine:</strong> Membuat salinan akhir terasa natural dan sesuai audiens.</div>
+                            <div><strong class="text-charcoal dark:text-darkText">Refine:</strong> Membuat salinan akhir terasa natural dan sesuai audiens.</div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="mt-8 bg-card p-6 rounded-lg border border-bordercolor transition-all duration-300 hover:border-charcoal/40 hover:-translate-y-0.5 shadow-sm">
-                <div class="text-[10px] font-bold uppercase tracking-wider text-muted mb-2">Catatan Strategi & Eksperimen Konten <span class="text-[10px] text-muted/60 font-normal">/ Content Strategy Note</span></div>
-                <p class="text-xs text-charcoal leading-relaxed">
+            <div class="mt-8 bg-card dark:bg-darkCard p-6 rounded-lg border border-bordercolor dark:border-darkBorder transition-all duration-300 hover:border-charcoal/40 dark:hover:border-darkText/40 hover:-translate-y-0.5 shadow-sm">
+                <div class="text-[10px] font-bold uppercase tracking-wider text-muted dark:text-darkMuted mb-2">Catatan Strategi & Eksperimen Konten <span class="text-[10px] text-muted/60 dark:text-darkMuted/60 font-normal">/ Content Strategy Note</span></div>
+                <p class="text-xs text-charcoal dark:text-darkText leading-relaxed">
                     Selama eksperimen, konten teks/karosel berkinerja lebih baik daripada video presenter AI. Ini mencerminkan pendekatan Rizky: uji, amati, pelajari, dan sesuaikan.
                 </p>
             </div>
         </section>
 
-        <!-- CHAPTER 06 — SKILLS / SYSTEM / ORBITING SYSTEM -->
-        <section id="skills" class="py-28 bg-surface border-y border-bordercolor px-6 cinematic-reveal relative overflow-hidden" data-section-name="SKILLS" data-section-num="06">
-            <!-- Chapter World 06: Orbiting System SVG -->
+        <!-- CHAPTER 06 — SKILLS / SYSTEM -->
+        <section id="skills" class="py-28 bg-surface dark:bg-darkSurface border-y border-bordercolor dark:border-darkBorder px-6 cinematic-reveal relative overflow-hidden" data-section-name="SKILLS" data-section-num="06">
             <div class="absolute right-12 top-1/2 -translate-y-1/2 w-80 h-80 pointer-events-none hidden md:block" aria-hidden="true">
                 <svg width="320" height="320" viewBox="0 0 320 320" fill="none" class="text-accent/30">
                     <circle cx="160" cy="160" r="140" stroke="currentColor" stroke-width="1" stroke-dasharray="4 8"></circle>
@@ -947,81 +970,81 @@
 
             <div class="max-w-5xl mx-auto relative z-10">
                 <div class="max-w-2xl mb-12">
-                    <span class="text-[10px] font-semibold uppercase tracking-widest text-muted block mb-3">05 — KEMAMPUAN <span class="text-[10px] text-muted/60 font-normal">/ SKILLS & CAPABILITIES</span></span>
-                    <h2 class="text-3xl font-bold tracking-tight text-charcoal mb-3">
+                    <span class="text-[10px] font-semibold uppercase tracking-widest text-muted dark:text-darkMuted block mb-3">05 — KEMAMPUAN <span class="text-[10px] text-muted/60 dark:text-darkMuted/60 font-normal">/ SKILLS & CAPABILITIES</span></span>
+                    <h2 class="text-3xl font-bold tracking-tight text-charcoal dark:text-darkText mb-3">
                         Kemampuan yang dikembangkan melalui praktik
                     </h2>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-                    <div class="p-6 rounded-lg bg-card border border-bordercolor space-y-3 transition-all duration-300 hover:border-charcoal/40 hover:-translate-y-0.5 shadow-sm">
-                        <h3 class="text-xs font-bold uppercase tracking-wider text-charcoal">Customer Service</h3>
+                    <div class="p-6 rounded-lg bg-card dark:bg-darkCard border border-bordercolor dark:border-darkBorder space-y-3 transition-all duration-300 hover:border-charcoal/40 dark:hover:border-darkText/40 hover:-translate-y-0.5 shadow-sm">
+                        <h3 class="text-xs font-bold uppercase tracking-wider text-charcoal dark:text-darkText">Customer Service</h3>
                         <div class="flex flex-wrap gap-1.5 pt-1">
-                            <span class="px-2.5 py-1 rounded bg-surface border border-bordercolor text-[11px] text-charcoal font-medium">Customer Communication</span>
-                            <span class="px-2.5 py-1 rounded bg-surface border border-bordercolor text-[11px] text-charcoal font-medium">Customer Handling</span>
-                            <span class="px-2.5 py-1 rounded bg-surface border border-bordercolor text-[11px] text-charcoal font-medium">Problem Solving</span>
-                            <span class="px-2.5 py-1 rounded bg-surface border border-bordercolor text-[11px] text-charcoal font-medium">Expectation Management</span>
+                            <span class="px-2.5 py-1 rounded bg-surface dark:bg-darkSurface border border-bordercolor dark:border-darkBorder text-[11px] text-charcoal dark:text-darkText font-medium">Customer Communication</span>
+                            <span class="px-2.5 py-1 rounded bg-surface dark:bg-darkSurface border border-bordercolor dark:border-darkBorder text-[11px] text-charcoal dark:text-darkText font-medium">Customer Handling</span>
+                            <span class="px-2.5 py-1 rounded bg-surface dark:bg-darkSurface border border-bordercolor dark:border-darkBorder text-[11px] text-charcoal dark:text-darkText font-medium">Problem Solving</span>
+                            <span class="px-2.5 py-1 rounded bg-surface dark:bg-darkSurface border border-bordercolor dark:border-darkBorder text-[11px] text-charcoal dark:text-darkText font-medium">Expectation Management</span>
                         </div>
                     </div>
 
-                    <div class="p-6 rounded-lg bg-card border border-bordercolor space-y-3 transition-all duration-300 hover:border-charcoal/40 hover:-translate-y-0.5 shadow-sm">
-                        <h3 class="text-xs font-bold uppercase tracking-wider text-charcoal">Content & Copywriting</h3>
+                    <div class="p-6 rounded-lg bg-card dark:bg-darkCard border border-bordercolor dark:border-darkBorder space-y-3 transition-all duration-300 hover:border-charcoal/40 dark:hover:border-darkText/40 hover:-translate-y-0.5 shadow-sm">
+                        <h3 class="text-xs font-bold uppercase tracking-wider text-charcoal dark:text-darkText">Content & Copywriting</h3>
                         <div class="flex flex-wrap gap-1.5 pt-1">
-                            <span class="px-2.5 py-1 rounded bg-surface border border-bordercolor text-[11px] text-charcoal font-medium">Copywriting</span>
-                            <span class="px-2.5 py-1 rounded bg-surface border border-bordercolor text-[11px] text-charcoal font-medium">Content Creation</span>
-                            <span class="px-2.5 py-1 rounded bg-surface border border-bordercolor text-[11px] text-charcoal font-medium">CTA Writing</span>
-                            <span class="px-2.5 py-1 rounded bg-surface border border-bordercolor text-[11px] text-charcoal font-medium">Audience-focused Communication</span>
+                            <span class="px-2.5 py-1 rounded bg-surface dark:bg-darkSurface border border-bordercolor dark:border-darkBorder text-[11px] text-charcoal dark:text-darkText font-medium">Copywriting</span>
+                            <span class="px-2.5 py-1 rounded bg-surface dark:bg-darkSurface border border-bordercolor dark:border-darkBorder text-[11px] text-charcoal dark:text-darkText font-medium">Content Creation</span>
+                            <span class="px-2.5 py-1 rounded bg-surface dark:bg-darkSurface border border-bordercolor dark:border-darkBorder text-[11px] text-charcoal dark:text-darkText font-medium">CTA Writing</span>
+                            <span class="px-2.5 py-1 rounded bg-surface dark:bg-darkSurface border border-bordercolor dark:border-darkBorder text-[11px] text-charcoal dark:text-darkText font-medium">Audience-focused Communication</span>
                         </div>
                     </div>
 
-                    <div class="p-6 rounded-lg bg-card border border-bordercolor space-y-3 transition-all duration-300 hover:border-charcoal/40 hover:-translate-y-0.5 shadow-sm">
-                        <h3 class="text-xs font-bold uppercase tracking-wider text-charcoal">Digital</h3>
+                    <div class="p-6 rounded-lg bg-card dark:bg-darkCard border border-bordercolor dark:border-darkBorder space-y-3 transition-all duration-300 hover:border-charcoal/40 dark:hover:border-darkText/40 hover:-translate-y-0.5 shadow-sm">
+                        <h3 class="text-xs font-bold uppercase tracking-wider text-charcoal dark:text-darkText">Digital</h3>
                         <div class="flex flex-wrap gap-1.5 pt-1">
-                            <span class="px-2.5 py-1 rounded bg-surface border border-bordercolor text-[11px] text-charcoal font-medium">Basic Web Development</span>
-                            <span class="px-2.5 py-1 rounded bg-surface border border-bordercolor text-[11px] text-charcoal font-medium">HTML</span>
-                            <span class="px-2.5 py-1 rounded bg-surface border border-bordercolor text-[11px] text-charcoal font-medium">CSS</span>
-                            <span class="px-2.5 py-1 rounded bg-surface border border-bordercolor text-[11px] text-charcoal font-medium">JavaScript</span>
-                            <span class="px-2.5 py-1 rounded bg-surface border border-bordercolor text-[11px] text-charcoal font-medium">GitHub</span>
+                            <span class="px-2.5 py-1 rounded bg-surface dark:bg-darkSurface border border-bordercolor dark:border-darkBorder text-[11px] text-charcoal dark:text-darkText font-medium">Basic Web Development</span>
+                            <span class="px-2.5 py-1 rounded bg-surface dark:bg-darkSurface border border-bordercolor dark:border-darkBorder text-[11px] text-charcoal dark:text-darkText font-medium">HTML</span>
+                            <span class="px-2.5 py-1 rounded bg-surface dark:bg-darkSurface border border-bordercolor dark:border-darkBorder text-[11px] text-charcoal dark:text-darkText font-medium">CSS</span>
+                            <span class="px-2.5 py-1 rounded bg-surface dark:bg-darkSurface border border-bordercolor dark:border-darkBorder text-[11px] text-charcoal dark:text-darkText font-medium">JavaScript</span>
+                            <span class="px-2.5 py-1 rounded bg-surface dark:bg-darkSurface border border-bordercolor dark:border-darkBorder text-[11px] text-charcoal dark:text-darkText font-medium">GitHub</span>
                         </div>
                     </div>
 
-                    <div class="p-6 rounded-lg bg-card border border-bordercolor space-y-3 transition-all duration-300 hover:border-charcoal/40 hover:-translate-y-0.5 shadow-sm">
-                        <h3 class="text-xs font-bold uppercase tracking-wider text-charcoal">AI-assisted Workflow & Tools</h3>
+                    <div class="p-6 rounded-lg bg-card dark:bg-darkCard border border-bordercolor dark:border-darkBorder space-y-3 transition-all duration-300 hover:border-charcoal/40 dark:hover:border-darkText/40 hover:-translate-y-0.5 shadow-sm">
+                        <h3 class="text-xs font-bold uppercase tracking-wider text-charcoal dark:text-darkText">AI-assisted Workflow & Tools</h3>
                         <div class="flex flex-wrap gap-1.5 pt-1">
-                            <span class="px-2.5 py-1 rounded bg-surface border border-bordercolor text-[11px] text-charcoal font-medium">ChatGPT</span>
-                            <span class="px-2.5 py-1 rounded bg-surface border border-bordercolor text-[11px] text-charcoal font-medium">Gemini</span>
-                            <span class="px-2.5 py-1 rounded bg-surface border border-bordercolor text-[11px] text-charcoal font-medium">Claude</span>
-                            <span class="px-2.5 py-1 rounded bg-surface border border-bordercolor text-[11px] text-charcoal font-medium">Canva</span>
-                            <span class="px-2.5 py-1 rounded bg-surface border border-bordercolor text-[11px] text-charcoal font-medium">CapCut</span>
+                            <span class="px-2.5 py-1 rounded bg-surface dark:bg-darkSurface border border-bordercolor dark:border-darkBorder text-[11px] text-charcoal dark:text-darkText font-medium">ChatGPT</span>
+                            <span class="px-2.5 py-1 rounded bg-surface dark:bg-darkSurface border border-bordercolor dark:border-darkBorder text-[11px] text-charcoal dark:text-darkText font-medium">Gemini</span>
+                            <span class="px-2.5 py-1 rounded bg-surface dark:bg-darkSurface border border-bordercolor dark:border-darkBorder text-[11px] text-charcoal dark:text-darkText font-medium">Claude</span>
+                            <span class="px-2.5 py-1 rounded bg-surface dark:bg-darkSurface border border-bordercolor dark:border-darkBorder text-[11px] text-charcoal dark:text-darkText font-medium">Canva</span>
+                            <span class="px-2.5 py-1 rounded bg-surface dark:bg-darkSurface border border-bordercolor dark:border-darkBorder text-[11px] text-charcoal dark:text-darkText font-medium">CapCut</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="p-6 rounded-lg bg-card border border-bordercolor mb-12 shadow-sm transition-all duration-300 hover:border-charcoal/40">
-                    <div class="text-[10px] font-bold uppercase tracking-wider text-muted mb-3">Perangkat & Teknologi <span class="text-[10px] text-muted/60 font-normal">/ Tools & Technologies</span></div>
-                    <div class="text-xs text-charcoal font-medium leading-relaxed">
+                <div class="p-6 rounded-lg bg-card dark:bg-darkCard border border-bordercolor dark:border-darkBorder mb-12 shadow-sm transition-all duration-300 hover:border-charcoal/40 dark:hover:border-darkText/40">
+                    <div class="text-[10px] font-bold uppercase tracking-wider text-muted dark:text-darkMuted mb-3">Perangkat & Teknologi <span class="text-[10px] text-muted/60 dark:text-darkMuted/60 font-normal">/ Tools & Technologies</span></div>
+                    <div class="text-xs text-charcoal dark:text-darkText font-medium leading-relaxed">
                         ChatGPT · Gemini · Claude · Canva · CapCut · HTML · CSS · JavaScript · GitHub
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6 border-t border-bordercolor">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6 border-t border-bordercolor dark:border-darkBorder">
                     <div class="space-y-3">
-                        <h4 class="text-[10px] font-bold uppercase tracking-widest text-muted">Kekuatan Personal <span class="text-[10px] text-muted/60 font-normal">/ Personal Strengths</span></h4>
-                        <ul class="space-y-2 text-xs text-muted">
-                            <li><strong class="text-charcoal">Komunikasi:</strong> Mampu berkomunikasi dengan pelanggan secara profesional.</li>
-                            <li><strong class="text-charcoal">Adaptabilitas:</strong> Nyaman mempelajari perangkat dan alur kerja baru.</li>
-                            <li><strong class="text-charcoal">Perhatian pada Detail:</strong> Dikembangkan melalui pekerjaan produksi dan penyuntingan dokumen.</li>
-                            <li><strong class="text-charcoal">Kesadaran Data:</strong> Menggunakan data kinerja sebagai pertimbangan pengambilan keputusan.</li>
-                            <li><strong class="text-charcoal">Pemecahan Masalah:</strong> Berfokus pada penemuan solusi praktis.</li>
-                            <li><strong class="text-charcoal">Pembelajaran Berkelanjutan:</strong> Terus mengembangkan keterampilan melalui proyek nyata.</li>
+                        <h4 class="text-[10px] font-bold uppercase tracking-widest text-muted dark:text-darkMuted">Kekuatan Personal <span class="text-[10px] text-muted/60 dark:text-darkMuted/60 font-normal">/ Personal Strengths</span></h4>
+                        <ul class="space-y-2 text-xs text-muted dark:text-darkMuted">
+                            <li><strong class="text-charcoal dark:text-darkText">Komunikasi:</strong> Mampu berkomunikasi dengan pelanggan secara profesional.</li>
+                            <li><strong class="text-charcoal dark:text-darkText">Adaptabilitas:</strong> Nyaman mempelajari perangkat dan alur kerja baru.</li>
+                            <li><strong class="text-charcoal dark:text-darkText">Perhatian pada Detail:</strong> Dikembangkan melalui pekerjaan produksi dan penyuntingan dokumen.</li>
+                            <li><strong class="text-charcoal dark:text-darkText">Kesadaran Data:</strong> Menggunakan data kinerja sebagai pertimbangan pengambilan keputusan.</li>
+                            <li><strong class="text-charcoal dark:text-darkText">Pemecahan Masalah:</strong> Berfokus pada penemuan solusi praktis.</li>
+                            <li><strong class="text-charcoal dark:text-darkText">Pembelajaran Berkelanjutan:</strong> Terus mengembangkan keterampilan melalui proyek nyata.</li>
                         </ul>
                     </div>
                     <div class="space-y-3">
-                        <h4 class="text-[10px] font-bold uppercase tracking-widest text-muted">Fokus Pengembangan <span class="text-[10px] text-muted/60 font-normal">/ Development Focus</span></h4>
-                        <p class="text-xs text-muted leading-relaxed mb-3">
+                        <h4 class="text-[10px] font-bold uppercase tracking-widest text-muted dark:text-darkMuted">Fokus Pengembangan <span class="text-[10px] text-muted/60 dark:text-darkMuted/60 font-normal">/ Development Focus</span></h4>
+                        <p class="text-xs text-muted dark:text-darkMuted leading-relaxed mb-3">
                             Rizky terkadang lupa detail. Solusi saat ini: membuat catatan dan merekam informasi penting.
                         </p>
-                        <p class="text-xs text-muted leading-relaxed">
+                        <p class="text-xs text-muted dark:text-darkMuted leading-relaxed">
                             Saat ini terus mengembangkan spesialisasi yang lebih mendalam sambil memperluas keterampilan praktis melalui proyek nyata dan pembelajaran mandiri.
                         </p>
                     </div>
@@ -1029,9 +1052,8 @@
             </div>
         </section>
 
-        <!-- CHAPTER 07 — CAREER DIRECTION (DIRECTION) / ANIMATED DIRECTIONAL PATH -->
+        <!-- CHAPTER 07 — CAREER DIRECTION -->
         <section id="career" class="py-24 max-w-5xl mx-auto px-6 cinematic-reveal relative" data-section-name="DIRECTION" data-section-num="07">
-            <!-- Chapter World 07: Directional Path SVG -->
             <div class="absolute right-12 top-16 pointer-events-none hidden sm:block" aria-hidden="true">
                 <svg width="140" height="70" viewBox="0 0 140 70" fill="none" class="text-accent">
                     <path d="M10 60 C 45 60, 65 10, 130 15" stroke="currentColor" stroke-width="1.5" fill="none" class="chapter-career-path"></path>
@@ -1040,14 +1062,14 @@
             </div>
 
             <div class="max-w-2xl">
-                <span class="text-[10px] font-semibold uppercase tracking-widest text-muted block mb-3">06 — ARAH KARIER <span class="text-[10px] text-muted/60 font-normal">/ CAREER DIRECTION</span></span>
-                <h2 class="text-2xl font-bold tracking-tight text-charcoal mb-4">
+                <span class="text-[10px] font-semibold uppercase tracking-widest text-muted dark:text-darkMuted block mb-3">06 — ARAH KARIER <span class="text-[10px] text-muted/60 dark:text-darkMuted/60 font-normal">/ CAREER DIRECTION</span></span>
+                <h2 class="text-2xl font-bold tracking-tight text-charcoal dark:text-darkText mb-4">
                     Apa yang sedang saya cari
                 </h2>
-                <p class="text-muted text-xs leading-relaxed mb-5">
+                <p class="text-muted dark:text-darkMuted text-xs leading-relaxed mb-5">
                     Saya terbuka terhadap peluang baru yang sesuai dengan kemampuan, pengalaman, dan ruang untuk terus berkembang.
                 </p>
-                <div class="space-y-3 text-xs text-charcoal">
+                <div class="space-y-3 text-xs text-charcoal dark:text-darkText">
                     <div class="flex items-start gap-2.5">
                         <span class="text-accent mt-0.5">•</span>
                         <span>Terbuka terhadap berbagai peluang yang relevan dengan kemampuan saya.</span>
@@ -1068,9 +1090,8 @@
             </div>
         </section>
 
-        <!-- CHAPTER 08 — CONTACT (ARRIVAL) / FINAL ARRIVAL ANIMATION -->
+        <!-- CHAPTER 08 — CONTACT -->
         <section id="contact" class="py-28 max-w-5xl mx-auto px-6 text-center cinematic-reveal relative" data-section-name="CONTACT" data-section-num="08">
-            <!-- Chapter World 08: Final Arrival Line & Point SVG -->
             <div class="absolute left-1/2 -top-4 -translate-x-1/2 pointer-events-none" aria-hidden="true">
                 <svg width="160" height="20" viewBox="0 0 160 20" fill="none" class="text-accent">
                     <line x1="10" y1="10" x2="150" y2="10" stroke="currentColor" stroke-width="1.25" stroke-dasharray="3 3" class="chapter-arrival-line"></line>
@@ -1079,20 +1100,20 @@
             </div>
 
             <div class="max-w-xl mx-auto space-y-5">
-                <span class="text-[10px] font-semibold uppercase tracking-widest text-muted block">07 — HUBUNGI SAYA <span class="text-[10px] text-muted/60 font-normal">/ GET IN TOUCH</span></span>
-                <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-charcoal">
-                    Mari terhubung. <span class="text-xl font-normal text-muted">/ Let’s connect.</span>
+                <span class="text-[10px] font-semibold uppercase tracking-widest text-muted dark:text-darkMuted block">07 — HUBUNGI SAYA <span class="text-[10px] text-muted/60 dark:text-darkMuted/60 font-normal">/ GET IN TOUCH</span></span>
+                <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-charcoal dark:text-darkText">
+                    Mari terhubung. <span class="text-xl font-normal text-muted dark:text-darkMuted">/ Let’s connect.</span>
                 </h2>
-                <p class="text-muted text-xs">
+                <p class="text-muted dark:text-darkMuted text-xs">
                     Saya terbuka untuk peluang di mana saya dapat berkontribusi, belajar, dan berkembang melalui pekerjaan nyata.
                 </p>
 
                 <div class="pt-2 flex flex-wrap items-center justify-center gap-3">
-                    <a href="mailto:rizkyharimukti10@gmail.com" class="inline-flex items-center gap-2 px-5 py-3 rounded-md bg-charcoal text-card text-xs font-medium hover:bg-zinc-800 transition-all duration-200 shadow-sm active:scale-[0.98] hover:-translate-y-0.5">
+                    <a href="mailto:rizkyharimukti10@gmail.com" class="inline-flex items-center gap-2 px-5 py-3 rounded-md bg-charcoal dark:bg-darkText text-card dark:text-darkCanvas text-xs font-medium hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-all duration-200 shadow-sm active:scale-[0.98] hover:-translate-y-0.5">
                         <i class="fa-regular fa-envelope text-[10px]"></i>
                         <span>rizkyharimukti10@gmail.com</span>
                     </a>
-                    <a href="https://wa.me/6282125424346" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-5 py-3 rounded-md border border-bordercolor bg-card text-charcoal text-xs font-medium hover:border-charcoal transition-all duration-200 active:scale-[0.98] hover:-translate-y-0.5">
+                    <a href="https://wa.me/6282125424346" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-5 py-3 rounded-md border border-bordercolor dark:border-darkBorder bg-card dark:bg-darkCard text-charcoal dark:text-darkText hover:border-charcoal dark:hover:border-darkText transition-all duration-200 active:scale-[0.98] hover:-translate-y-0.5">
                         <i class="fa-brands fa-whatsapp text-[10px]"></i>
                         <span>082125424346</span>
                     </a>
@@ -1103,10 +1124,10 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-surface border-t border-bordercolor py-10 relative z-10">
-        <div class="max-w-5xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-muted">
+    <footer class="bg-surface dark:bg-darkSurface border-t border-bordercolor dark:border-darkBorder py-10 relative z-10 transition-colors">
+        <div class="max-w-5xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-muted dark:text-darkMuted">
             <div class="flex flex-col sm:flex-row items-center gap-1 sm:gap-4">
-                <span class="font-semibold text-charcoal">Rizky Hari Mukti</span>
+                <span class="font-semibold text-charcoal dark:text-darkText">Rizky Hari Mukti</span>
                 <span>Customer Service · Copywriting</span>
                 <span>Cibinong, Bogor, Indonesia</span>
             </div>
@@ -1116,8 +1137,53 @@
         </div>
     </footer>
 
-    <!-- JavaScript for Interactions, Scrollspy, Mobile Menu & Chapter Worlds -->
+    <!-- JavaScript for Interactions, Scrollspy, Mobile Menu & Theme Switcher -->
     <script>
+        // Theme Switcher Logic
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeToggleMobileBtn = document.getElementById('theme-toggle-mobile');
+        const themeIcon = document.getElementById('theme-icon');
+        const themeIconMobile = document.getElementById('theme-icon-mobile');
+        const htmlElement = document.documentElement;
+
+        function updateThemeIcons(isDark) {
+            if (isDark) {
+                if (themeIcon) { themeIcon.className = 'fa-solid fa-sun text-xs text-accent'; }
+                if (themeIconMobile) { themeIconMobile.className = 'fa-solid fa-sun text-xs text-accent'; }
+            } else {
+                if (themeIcon) { themeIcon.className = 'fa-solid fa-moon text-xs'; }
+                if (themeIconMobile) { themeIconMobile.className = 'fa-solid fa-moon text-xs'; }
+            }
+        }
+
+        // Initialize Theme from localStorage or system preference
+        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            htmlElement.classList.add('dark');
+            document.body.classList.add('dark');
+            updateThemeIcons(true);
+        } else {
+            htmlElement.classList.remove('dark');
+            document.body.classList.remove('dark');
+            updateThemeIcons(false);
+        }
+
+        function toggleTheme() {
+            if (htmlElement.classList.contains('dark')) {
+                htmlElement.classList.remove('dark');
+                document.body.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+                updateThemeIcons(false);
+            } else {
+                htmlElement.classList.add('dark');
+                document.body.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+                updateThemeIcons(true);
+            }
+        }
+
+        if (themeToggleBtn) { themeToggleBtn.addEventListener('click', toggleTheme); }
+        if (themeToggleMobileBtn) { themeToggleMobileBtn.addEventListener('click', toggleTheme); }
+
         // Scroll Progress Bar Logic
         window.addEventListener('scroll', () => {
             const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
@@ -1159,7 +1225,6 @@
             }
         });
 
-        // Mobile Navigation Links Handler
         mobileLinks.forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
@@ -1219,11 +1284,11 @@
                 });
 
                 navLinks.forEach(link => {
-                    link.classList.remove('text-charcoal', 'font-bold');
-                    link.classList.add('text-muted');
+                    link.classList.remove('text-charcoal', 'dark:text-darkText', 'font-bold');
+                    link.classList.add('text-muted', 'dark:text-darkMuted');
                     if (link.getAttribute('data-target') === current) {
-                        link.classList.remove('text-muted');
-                        link.classList.add('text-charcoal', 'font-bold');
+                        link.classList.remove('text-muted', 'dark:text-darkMuted');
+                        link.classList.add('text-charcoal', 'dark:text-darkText', 'font-bold');
                     }
                 });
 
