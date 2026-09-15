@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rizky Hari Mukti — Customer Service & Copywriter</title>
+    <!-- Meta Description for SEO -->
+    <meta name="description" content="Portfolio profesional Rizky Hari Mukti. Fokus pada Customer Service, Copywriting, AI-assisted workflow, dan data-driven digital operations.">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        portfolio: {
+                            bg: '#F9FAFB',        /* Off-white warm background */
+                            card: '#FFFFFF',      /* Pure white card surface */
+                            border: '#E5E7EB',    /* Soft neutral border */
+                            textMain: '#1F2937',  /* Charcoal main text */
+                            textMuted: '#6B7280', /* Muted gray text */
+                            accent: '#4F46E5',    /* Muted Indigo / Soft Blue accent */
+                            accentLight: '#EEF2FF',/* Light accent tint */
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #F9FAFB;
+            color: #1F2937;
+        }
+    </style>
+</head>
+<body class="selection:bg-portfolio-accent/20 selection:text-portfolio-accent antialiased">
+
+    <!-- Navigation Bar -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-portfolio-bg/90 backdrop-blur-md border-b border-portfolio-border">
+        <div class="max-w-5xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="#" class="font-bold text-base text-portfolio-textMain tracking-tight flex items-center gap-2">
+                <span class="w-7 h-7 rounded-md bg-portfolio-accent text-white flex items-center justify-center font-bold text-xs">R</span>
+                <span>Rizky Hari Mukti</span>
+            </a>
+
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-portfolio-textMuted">
+                <a href="#about" class="hover:text-portfolio-accent transition-colors">About</a>
+                <a href="#featured" class="hover:text-portfolio-accent transition-colors">Featured Project</a>
+                <a href="#projects" class="hover:text-portfolio-accent transition-colors">Digital Tools</a>
+                <a href="#experience" class="hover:text-portfolio-accent transition-colors">Experience</a>
+                <a href="#contact" class="hover:text-portfolio-accent transition-colors">Contact</a>
+            </nav>
+
+            <div class="flex items-center gap-3">
+                <button onclick="openCvModal()" class="px-4 py-2 rounded-full bg-portfolio-card border border-portfolio-border hover:border-portfolio-accent text-portfolio-textMain text-xs font-semibold transition-all shadow-sm">
+                    View CV
+                </button>
+                <a href="#contact" class="px-4 py-2 rounded-full bg-portfolio-accent hover:bg-indigo-700 text-white text-xs font-semibold transition-all shadow-sm">
+                    Contact Me
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative pt-36 pb-20 md:pt-48 md:pb-32 overflow-hidden">
+        <div class="max-w-5xl mx-auto px-6 relative z-10">
+            <div class="space-y-6 max-w-3xl">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-portfolio-accentLight text-portfolio-accent text-xs font-semibold tracking-wide">
+                    <span class="w-2 h-2 rounded-full bg-portfolio-accent animate-pulse"></span>
+                    <span>Open to Opportunities • Customer Service & Copywriter</span>
+                </div>
+                
+                <h1 class="text-4xl sm:text-6xl font-bold text-portfolio-textMain tracking-tight leading-[1.1]">
+                    Rizky Hari Mukti
+                </h1>
+
+                <p class="text-xl sm:text-2xl font-semibold text-portfolio-accent">
+                    Customer Service & Copywriting
+                </p>
+
+                <p class="text-base sm:text-lg text-portfolio-textMuted font-normal leading-relaxed max-w-2xl">
+                    Customer-focused, data-aware, and continuously learning through real-world digital projects. Combining industrial discipline with empathetic customer handling and AI-assisted copywriting workflows.
+                </p>
+
+                <div class="flex flex-wrap items-center gap-4 pt-2">
+                    <a href="#featured" class="px-6 py-3 rounded-full bg-portfolio-accent hover:bg-indigo-700 text-white font-semibold text-center transition-all shadow-md shadow-portfolio-accent/10 text-sm flex items-center gap-2">
+                        <span>View My Work</span>
+                        <i data-lucide="arrow-down" class="w-4 h-4"></i>
+                    </a>
+                    <button onclick="openCvModal()" class="px-6 py-3 rounded-full bg-portfolio-card hover:bg-gray-100 text-portfolio-textMain font-semibold text-center transition-all border border-portfolio-border text-sm flex items-center gap-2">
+                        <i data-lucide="file-text" class="w-4 h-4 text-portfolio-accent"></i>
+                        <span>Download / View CV</span>
+                    </button>
+                </div>
+
+                <div class="pt-6 flex flex-wrap items-center gap-6 text-xs text-portfolio-textMuted font-medium">
+                    <span class="flex items-center gap-1.5"><i data-lucide="map-pin" class="w-3.5 h-3.5 text-portfolio-accent"></i> Cibinong, Bogor, Jawa Barat</span>
+                    <span class="flex items-center gap-1.5"><i data-lucide="mail" class="w-3.5 h-3.5 text-portfolio-accent"></i> rizkyharimukti10@gmail.com</span>
+                    <span class="flex items-center gap-1.5"><i data-lucide="phone" class="w-3.5 h-3.5 text-portfolio-accent"></i> 082125424346</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Highlights / Statistics -->
+    <section class="py-12 bg-white border-y border-portfolio-border">
+        <div class="max-w-5xl mx-auto px-6">
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-6 text-center">
+                <div class="p-4 rounded-xl bg-portfolio-bg border border-portfolio-border">
+                    <span class="text-2xl sm:text-3xl font-bold text-portfolio-accent">160+</span>
+                    <p class="text-xs text-portfolio-textMuted mt-1 font-medium">Customers</p>
+                    <span class="text-[10px] text-gray-400 block mt-0.5">Feb – Sep 2026</span>
+                </div>
+                <div class="p-4 rounded-xl bg-portfolio-bg border border-portfolio-border">
+                    <span class="text-2xl sm:text-3xl font-bold text-portfolio-textMain">52</span>
+                    <p class="text-xs text-portfolio-textMuted mt-1 font-medium">Orders</p>
+                    <span class="text-[10px] text-gray-400 block mt-0.5">22 Aug – 14 Sep 2026</span>
+                </div>
+                <div class="p-4 rounded-xl bg-portfolio-bg border border-portfolio-border">
+                    <span class="text-2xl sm:text-3xl font-bold text-portfolio-accent">35%</span>
+                    <p class="text-xs text-portfolio-textMuted mt-1 font-medium">Repeat Orders</p>
+                    <span class="text-[10px] text-gray-400 block mt-0.5">22 Aug – 14 Sep 2026</span>
+                </div>
+                <div class="p-4 rounded-xl bg-portfolio-bg border border-portfolio-border">
+                    <span class="text-2xl sm:text-3xl font-bold text-portfolio-textMain">100K+</span>
+                    <p class="text-xs text-portfolio-textMuted mt-1 font-medium">Content Views</p>
+                    <span class="text-[10px] text-gray-400 block mt-0.5">Multi-platform</span>
+                </div>
+                <div class="col-span-2 md:col-span-1 p-4 rounded-xl bg-portfolio-bg border border-portfolio-border">
+                    <span class="text-2xl sm:text-3xl font-bold text-portfolio-accent">422</span>
+                    <p class="text-xs text-portfolio-textMuted mt-1 font-medium">Content Created</p>
+                    <span class="text-[10px] text-gray-400 block mt-0.5">FB, IG, TikTok</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section & Career Story -->
+    <section id="about" class="py-24 bg-portfolio-bg">
+        <div class="max-w-5xl mx-auto px-6 space-y-16">
+            <div class="max-w-2xl space-y-4">
+                <span class="text-xs uppercase tracking-widest text-portfolio-accent font-bold">About Me</span>
+                <h2 class="text-3xl font-bold text-portfolio-textMain tracking-tight">A little about me</h2>
+                <p class="text-portfolio-textMuted text-base leading-relaxed">
+                    My professional journey spans from structured production environments to independent digital service operations. This unique combination has shaped my core work ethics: strict attention to detail, rigorous accountability, empathetic customer communication, and continuous self-directed learning.
+                </p>
+            </div>
+
+            <!-- Timeline Career Story -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="p-8 rounded-2xl bg-portfolio-card border border-portfolio-border space-y-4 shadow-sm">
+                    <div class="inline-block px-3 py-1 rounded bg-portfolio-accentLight text-portfolio-accent text-xs font-semibold">Phase 1: Industrial Discipline</div>
+                    <h3 class="text-xl font-bold text-portfolio-textMain">Production & Quality Control</h3>
+                    <p class="text-portfolio-textMuted text-sm leading-relaxed">
+                        Working in structured manufacturing environments (PT Sinarlimas Kontindo & PT Tenar Inti Mandiri 2) taught me discipline, consistency, rigorous adherence to SOPs, quality checking under repetitive pressure, and high operational responsibility.
+                    </p>
+                    <div class="pt-2 flex flex-wrap gap-2 text-xs">
+                        <span class="px-2.5 py-1 rounded bg-portfolio-bg border border-portfolio-border text-portfolio-textMuted">Attention to Detail</span>
+                        <span class="px-2.5 py-1 rounded bg-portfolio-bg border border-portfolio-border text-portfolio-textMuted">Consistency</span>
+                        <span class="px-2.5 py-1 rounded bg-portfolio-bg border border-portfolio-border text-portfolio-textMuted">Responsibility</span>
+                    </div>
+                </div>
+
+                <div class="p-8 rounded-2xl bg-portfolio-card border border-portfolio-border space-y-4 shadow-sm">
+                    <div class="inline-block px-3 py-1 rounded bg-portfolio-accentLight text-portfolio-accent text-xs font-semibold">Phase 2: Digital Operations</div>
+                    <h3 class="text-xl font-bold text-portfolio-textMain">Digital Service & Growth</h3>
+                    <p class="text-portfolio-textMuted text-sm leading-relaxed">
+                        Launching and managing Rizky Jasa allowed me to hone my customer handling, cross-platform content creation, copywriting, AI-assisted workflows, and data-driven evaluation to improve service delivery continually.
+                    </p>
+                    <div class="pt-2 flex flex-wrap gap-2 text-xs">
+                        <span class="px-2.5 py-1 rounded bg-portfolio-bg border border-portfolio-border text-portfolio-textMuted">Customer Communication</span>
+                        <span class="px-2.5 py-1 rounded bg-portfolio-bg border border-portfolio-border text-portfolio-textMuted">Copywriting</span>
+                        <span class="px-2.5 py-1 rounded bg-portfolio-bg border border-portfolio-border text-portfolio-textMuted">Data Awareness</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Project: Rizky Jasa -->
+    <section id="featured" class="py-24 bg-white border-y border-portfolio-border">
+        <div class="max-w-5xl mx-auto px-6 space-y-16">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+                <div>
+                    <span class="text-xs uppercase tracking-widest text-portfolio-accent font-bold">Featured Project (01)</span>
+                    <h2 class="text-3xl font-bold text-portfolio-textMain mt-2">Rizky Jasa — Independent Digital Service</h2>
+                </div>
+                <span class="px-3 py-1 rounded-full bg-portfolio-accentLight text-portfolio-accent text-xs font-semibold w-fit">
+                    Started Feb 1, 2026 • Ongoing
+                </span>
+            </div>
+
+            <!-- Overview Card -->
+            <div class="p-8 rounded-2xl bg-portfolio-bg border border-portfolio-border space-y-6 shadow-sm">
+                <div class="space-y-3">
+                    <h3 class="text-xl font-bold text-portfolio-textMain">Overview & Real-World Operations</h3>
+                    <p class="text-portfolio-textMuted text-sm leading-relaxed">
+                        Rizky Jasa is my primary proving ground for client communication, digital service operations, content creation, and data evaluation. Starting on Facebook (Feb 1, 2026), I expanded operations across TikTok (focused Aug 6, 2026) and Instagram (launched Aug 21, 2026).
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-2">
+                    <div class="p-4 rounded-xl bg-portfolio-card border border-portfolio-border">
+                        <span class="text-portfolio-accent font-bold text-xl block">160+</span>
+                        <span class="text-portfolio-textMuted text-xs">Total Customers</span>
+                    </div>
+                    <div class="p-4 rounded-xl bg-portfolio-card border border-portfolio-border">
+                        <span class="text-portfolio-textMain font-bold text-xl block">52</span>
+                        <span class="text-portfolio-textMuted text-xs">Orders (24 Days)</span>
+                    </div>
+                    <div class="p-4 rounded-xl bg-portfolio-card border border-portfolio-border">
+                        <span class="text-portfolio-accent font-bold text-xl block">35%</span>
+                        <span class="text-portfolio-textMuted text-xs">Repeat Orders</span>
+                    </div>
+                    <div class="p-4 rounded-xl bg-portfolio-card border border-portfolio-border">
+                        <span class="text-portfolio-textMain font-bold text-xl block">422</span>
+                        <span class="text-portfolio-textMuted text-xs">Contents Created</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Customer Service & Case Study Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Customer Service Practice -->
+                <div class="p-8 rounded-2xl bg-portfolio-bg border border-portfolio-border space-y-4">
+                    <div class="flex items-center gap-2 text-portfolio-accent font-semibold text-xs uppercase tracking-wide">
+                        <i data-lucide="headphones" class="w-4 h-4"></i>
+                        <span>Customer Service & Handling</span>
+                    </div>
+                    <h4 class="text-lg font-bold text-portfolio-textMain">End-to-End Client Management</h4>
+                    <p class="text-portfolio-textMuted text-sm leading-relaxed">
+                        I manage all client inquiries from initial questions (pricing, packages, process, document requirements) to final delivery. Typically responds to customer inquiries within under an hour.
+                    </p>
+                    
+                    <div class="pt-4 border-t border-portfolio-border space-y-2">
+                        <span class="text-xs font-bold text-portfolio-textMain block">Case Study: Incremental Instructions</span>
+                        <p class="text-portfolio-textMuted text-xs leading-relaxed">
+                            <strong class="text-portfolio-textMain">Situation:</strong> A customer sent edit instructions in small pieces over an extended period, lengthening the workflow and causing mild frustration.<br>
+                            <strong class="text-portfolio-textMain">Approach:</strong> Maintaining a calm, professional tone, I explained clearly how gathering all requirements upfront streamlines future revisions.<br>
+                            <strong class="text-portfolio-textMain">Skills Demonstrated:</strong> Patience, problem solving, professional communication, and process improvement.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Copywriting & Content Workflow -->
+                <div class="p-8 rounded-2xl bg-portfolio-bg border border-portfolio-border space-y-4">
+                    <div class="flex items-center gap-2 text-portfolio-accent font-semibold text-xs uppercase tracking-wide">
+                        <i data-lucide="pen-tool" class="w-4 h-4"></i>
+                        <span>Copywriting & Content Strategy</span>
+                    </div>
+                    <h4 class="text-lg font-bold text-portfolio-textMain">Data-Aware Content Workflow</h4>
+                    <p class="text-portfolio-textMuted text-sm leading-relaxed">
+                        I develop hooks, promotional copy, and jobseeker-focused content. Rather than relying solely on intuition, my workflow follows: <strong class="text-portfolio-textMain">Create → Publish → Observe → Analyze → Learn → Improve</strong>.
+                    </p>
+                    
+                    <div class="pt-4 border-t border-portfolio-border space-y-2">
+                        <span class="text-xs font-bold text-portfolio-textMain block">AI-Assisted Copywriting</span>
+                        <p class="text-portfolio-textMuted text-xs leading-relaxed">
+                            I use AI tools (ChatGPT, Gemini, Claude) as working tools for initial drafts and brainstorming. I then review, identify weak points, rewrite, and refine the tone to match our target audience authentically.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Copywriting Sample Box -->
+            <div class="p-8 rounded-2xl bg-portfolio-bg border border-portfolio-border space-y-4">
+                <span class="text-xs font-semibold uppercase tracking-wider text-portfolio-accent">Copywriting Sample</span>
+                <div class="p-6 rounded-xl bg-portfolio-card border border-portfolio-border text-xs sm:text-sm font-mono text-portfolio-textMain space-y-3">
+                    <p class="font-bold">"CV KAMU SERING DITOLAK? 😔</p>
+                    <p>Bisa jadi CV-nya yang perlu dibenerin, bukan pengalaman kamu.</p>
+                    <p class="text-portfolio-accent font-semibold">✅ 100% custom sesuai pengalaman<br>✅ Revisi 3x sampai puas<br>✅ Bayar di akhir setelah jadi</p>
+                    <p>CV bukan cuma soal kelihatan bagus. Tapi gimana caranya bikin kamu terlihat lebih profesional dan lebih siap dilirik HRD."</p>
+                </div>
+                <p class="text-xs text-portfolio-textMuted">
+                    <strong class="text-portfolio-textMain">Data Insight:</strong> Content performance testing showed that text/carousel formats outperformed AI-presenter videos in generating genuine engagement.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Digital Projects Section -->
+    <section id="projects" class="py-24 bg-portfolio-bg">
+        <div class="max-w-5xl mx-auto px-6 space-y-16">
+            <div class="max-w-2xl space-y-3">
+                <span class="text-xs uppercase tracking-widest text-portfolio-accent font-bold">Digital Projects</span>
+                <h2 class="text-3xl font-bold text-portfolio-textMain tracking-tight">Practical web tools & design practice</h2>
+                <p class="text-portfolio-textMuted text-sm leading-relaxed">
+                    Built using HTML, CSS, JavaScript, and AI-assisted development to solve operational needs and demonstrate web design execution.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Project 01 -->
+                <div class="p-8 rounded-2xl bg-portfolio-card border border-portfolio-border space-y-4 shadow-sm flex flex-col justify-between">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold text-portfolio-accent">01 / Service Platform</span>
+                            <span class="text-[10px] text-gray-400">HTML, CSS, JS</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-portfolio-textMain">Website Layanan Rizky Jasa</h3>
+                        <p class="text-portfolio-textMuted text-sm leading-relaxed">
+                            Information architecture, service presentation, clear CTA placement, and responsive layout for digital services.
+                        </p>
+                    </div>
+                    <div class="pt-4 border-t border-portfolio-border flex items-center justify-between text-xs text-portfolio-textMuted">
+                        <span>Role: UI / Web Builder</span>
+                        <span class="font-medium text-portfolio-textMain">Operational Tool</span>
+                    </div>
+                </div>
+
+                <!-- Project 02 -->
+                <div class="p-8 rounded-2xl bg-portfolio-card border border-portfolio-border space-y-4 shadow-sm flex flex-col justify-between">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold text-portfolio-accent">02 / Web Calculator</span>
+                            <span class="text-[10px] text-gray-400">Interactive UI</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-portfolio-textMain">HPP Produk / Eceran Calculator</h3>
+                        <p class="text-portfolio-textMuted text-sm leading-relaxed">
+                            Web calculator to help MSMEs and sellers calculate modal per piece, target selling price, and profit margins easily.
+                        </p>
+                    </div>
+                    <div class="pt-4 border-t border-portfolio-border flex items-center justify-between text-xs text-portfolio-textMuted">
+                        <span>Role: Frontend & UX</span>
+                        <span class="font-medium text-portfolio-textMain">MSME Utility</span>
+                    </div>
+                </div>
+
+                <!-- Project 03 -->
+                <div class="p-8 rounded-2xl bg-portfolio-card border border-portfolio-border space-y-4 shadow-sm flex flex-col justify-between">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold text-portfolio-accent">03 / Analytics Tool</span>
+                            <span class="text-[10px] text-gray-400">Data Tool</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-portfolio-textMain">Omzet Calculator</h3>
+                        <p class="text-portfolio-textMuted text-sm leading-relaxed">
+                            Web tool to assist in evaluating turnover distribution and offering actionable suggestions based on input numbers.
+                        </p>
+                    </div>
+                    <div class="pt-4 border-t border-portfolio-border flex items-center justify-between text-xs text-portfolio-textMuted">
+                        <span>Role: Logic & Interface</span>
+                        <span class="font-medium text-portfolio-textMain">Financial Tool</span>
+                    </div>
+                </div>
+
+                <!-- Project 04 -->
+                <div class="p-8 rounded-2xl bg-portfolio-card border border-portfolio-border space-y-4 shadow-sm flex flex-col justify-between">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold text-portfolio-accent">04 / UI Practice</span>
+                            <span class="text-[10px] text-gray-400">Concept Project</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-portfolio-textMain">Kopi Senja Landing Page</h3>
+                        <p class="text-portfolio-textMuted text-sm leading-relaxed">
+                            Landing page concept showcasing structure, visual hierarchy, content organization, and responsive web design.
+                        </p>
+                    </div>
+                    <div class="pt-4 border-t border-portfolio-border flex items-center justify-between text-xs text-portfolio-textMuted">
+                        <span>Role: UI Designer</span>
+                        <span class="font-medium text-portfolio-textMain">Web Design Practice</span>
+                    </div>
+                </div>
+
+                <!-- Project 05 -->
+                <div class="md:col-span-2 p-8 rounded-2xl bg-portfolio-card border border-portfolio-border space-y-4 shadow-sm flex flex-col justify-between">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold text-portfolio-accent">05 / Internal Tracker</span>
+                            <span class="text-[10px] text-gray-400">Dashboard UI</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-portfolio-textMain">Rizky Assistant / Business Tracker</h3>
+                        <p class="text-portfolio-textMuted text-sm leading-relaxed">
+                            Web-based business tracker for recording orders, periodic analysis, and business metrics to ensure decisions are guided by data rather than intuition.
+                        </p>
+                    </div>
+                    <div class="pt-4 border-t border-portfolio-border flex items-center justify-between text-xs text-portfolio-textMuted">
+                        <span>Role: Creator & Developer</span>
+                        <span class="font-medium text-portfolio-textMain">Internal Business Tool</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Work Experience & Education -->
+    <section id="experience" class="py-24 bg-white border-y border-portfolio-border">
+        <div class="max-w-5xl mx-auto px-6 space-y-16">
+            <div class="max-w-2xl space-y-3">
+                <span class="text-xs uppercase tracking-widest text-portfolio-accent font-bold">Career & Background</span>
+                <h2 class="text-3xl font-bold text-portfolio-textMain tracking-tight">Work Experience & Education</h2>
+            </div>
+
+            <div class="space-y-6">
+                <!-- Exp 1 -->
+                <div class="p-8 rounded-2xl bg-portfolio-bg border border-portfolio-border space-y-4">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                        <div>
+                            <h3 class="text-xl font-bold text-portfolio-textMain">Operator Produksi</h3>
+                            <p class="text-portfolio-accent text-sm font-semibold">PT Tenar Inti Mandiri 2</p>
+                        </div>
+                        <span class="px-3 py-1 rounded-full bg-portfolio-card border border-portfolio-border text-xs text-portfolio-textMuted font-medium w-fit">
+                            March 2026 – July 2026
+                        </span>
+                    </div>
+                    <ul class="space-y-2 text-sm text-portfolio-textMuted">
+                        <li class="flex items-start gap-2"><span class="text-portfolio-accent font-bold">•</span><span>Melakukan finishing pada setiap produk yang keluar dari mesin (kurang lebih setiap 50 detik).</span></li>
+                        <li class="flex items-start gap-2"><span class="text-portfolio-accent font-bold">•</span><span>Memeriksa hasil produk sekaligus melakukan finishing secara bersamaan dengan konsistensi tinggi.</span></li>
+                        <li class="flex items-start gap-2"><span class="text-portfolio-accent font-bold">•</span><span>Menjaga perhatian terhadap detail (attention to detail), kecepatan, dan kualitas dalam proses produksi berulang.</span></li>
+                    </ul>
+                </div>
+
+                <!-- Exp 2 -->
+                <div class="p-8 rounded-2xl bg-portfolio-bg border border-portfolio-border space-y-4">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                        <div>
+                            <h3 class="text-xl font-bold text-portfolio-textMain">Operator Produksi</h3>
+                            <p class="text-portfolio-accent text-sm font-semibold">PT Sinarlimas Kontindo</p>
+                        </div>
+                        <span class="px-3 py-1 rounded-full bg-portfolio-card border border-portfolio-border text-xs text-portfolio-textMuted font-medium w-fit">
+                            June 2025 – February 2026
+                        </span>
+                    </div>
+                    <ul class="space-y-2 text-sm text-portfolio-textMuted">
+                        <li class="flex items-start gap-2"><span class="text-portfolio-accent font-bold">•</span><span>Memotong material, menimbang material, dan melakukan proses press menggunakan mold.</span></li>
+                        <li class="flex items-start gap-2"><span class="text-portfolio-accent font-bold">•</span><span>Menyesuaikan panas dan temperatur agar hasil produksi sesuai spesifikasi dan tidak NG.</span></li>
+                        <li class="flex items-start gap-2"><span class="text-portfolio-accent font-bold">•</span><span>Memastikan proses produksi berjalan lancar sesuai kebutuhan operasional.</span></li>
+                    </ul>
+                </div>
+
+                <!-- Education -->
+                <div class="p-8 rounded-2xl bg-portfolio-bg border border-portfolio-border space-y-2">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                        <div>
+                            <h3 class="text-xl font-bold text-portfolio-textMain">SMK Al-Asiyah</h3>
+                            <p class="text-portfolio-accent text-sm font-semibold">Teknik Komputer dan Jaringan (TKJ)</p>
+                        </div>
+                        <span class="px-3 py-1 rounded-full bg-portfolio-card border border-portfolio-border text-xs text-portfolio-textMuted font-medium w-fit">
+                            2022 – 2025
+                        </span>
+                    </div>
+                    <p class="text-xs text-portfolio-textMuted pt-1">Menguasai dasar komputer, pemecahan masalah, dan komunikasi tim melalui kegiatan sekolah.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tools & Skills -->
+    <section class="py-24 bg-portfolio-bg">
+        <div class="max-w-5xl mx-auto px-6 space-y-16">
+            <div class="max-w-2xl space-y-3">
+                <span class="text-xs uppercase tracking-widest text-portfolio-accent font-bold">Capabilities & Tools</span>
+                <h2 class="text-3xl font-bold text-portfolio-textMain tracking-tight">Core Skills & Tools</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="p-8 rounded-2xl bg-portfolio-card border border-portfolio-border space-y-4">
+                    <h3 class="font-bold text-portfolio-textMain text-lg">Customer Service</h3>
+                    <div class="flex flex-wrap gap-2 text-xs">
+                        <span class="px-3 py-1.5 rounded-lg bg-portfolio-bg border border-portfolio-border text-portfolio-textMuted">Customer Communication</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-portfolio-bg border border-portfolio-border text-portfolio-textMuted">Problem Solving</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-portfolio-bg border border-portfolio-border text-portfolio-textMuted">Client Handling</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-portfolio-bg border border-portfolio-border text-portfolio-textMuted">Professional Response</span>
+                    </div>
+                </div>
+
+                <div class="p-8 rounded-2xl bg-portfolio-card border border-portfolio-border space-y-4">
+                    <h3 class="font-bold text-portfolio-textMain text-lg">Copywriting & Content</h3>
+                    <div class="flex flex-wrap gap-2 text-xs">
+                        <span class="px-3 py-1.5 rounded-lg bg-portfolio-bg border border-portfolio-border text-portfolio-textMuted">Social Media Copywriting</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-portfolio-bg border border-portfolio-border text-portfolio-textMuted">Hook Development</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-portfolio-bg border border-portfolio-border text-portfolio-textMuted">Content Strategy</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-portfolio-bg border border-portfolio-border text-portfolio-textMuted">Data Awareness</span>
+                    </div>
+                </div>
+
+                <div class="p-8 rounded-2xl bg-portfolio-card border border-portfolio-border space-y-4">
+                    <h3 class="font-bold text-portfolio-textMain text-lg">Tech & AI Tools</h3>
+                    <div class="flex flex-wrap gap-2 text-xs">
+                        <span class="px-3 py-1.5 rounded-lg bg-portfolio-bg border border-portfolio-border text-portfolio-textMuted">ChatGPT, Gemini, Claude</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-portfolio-bg border border-portfolio-border text-portfolio-textMuted">Canva, CapCut</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-portfolio-bg border border-portfolio-border text-portfolio-textMuted">HTML, CSS, JS</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-portfolio-bg border border-portfolio-border text-portfolio-textMuted">AI-Assisted Dev</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact CTA Section -->
+    <section id="contact" class="py-24 bg-white border-t border-portfolio-border text-center">
+        <div class="max-w-2xl mx-auto px-6 space-y-6">
+            <span class="text-xs uppercase tracking-widest text-portfolio-accent font-bold">Let's Connect</span>
+            <h2 class="text-3xl sm:text-4xl font-bold text-portfolio-textMain tracking-tight">
+                Interested in working together?
+            </h2>
+            <p class="text-portfolio-textMuted text-base">
+                I am currently open to full-time opportunities as a <strong class="text-portfolio-textMain">Customer Service</strong> or <strong class="text-portfolio-textMain">Copywriter</strong>. Let's discuss how my skills and experience can contribute to your team.
+            </p>
+            <div class="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="https://wa.me/6282125424346" target="_blank" class="w-full sm:w-auto px-8 py-3.5 rounded-full bg-portfolio-accent hover:bg-indigo-700 text-white font-semibold text-center transition-all shadow-md text-sm flex items-center justify-center gap-2">
+                    <i data-lucide="message-circle" class="w-4 h-4"></i>
+                    <span>WhatsApp: 0821-2542-4346</span>
+                </a>
+                <a href="mailto:rizkyharimukti10@gmail.com" class="w-full sm:w-auto px-8 py-3.5 rounded-full bg-portfolio-card hover:bg-gray-100 text-portfolio-textMain font-semibold text-center transition-all border border-portfolio-border text-sm flex items-center justify-center gap-2">
+                    <i data-lucide="mail" class="w-4 h-4 text-portfolio-accent"></i>
+                    <span>rizkyharimukti10@gmail.com</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-portfolio-bg text-portfolio-textMuted py-8 border-t border-portfolio-border text-xs">
+        <div class="max-w-5xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p>&copy; 2026 Rizky Hari Mukti. All rights reserved.</p>
+            <div class="flex items-center gap-6">
+                <a href="mailto:rizkyharimukti10@gmail.com" class="hover:text-portfolio-accent transition-colors">Email</a>
+                <a href="https://wa.me/6282125424346" target="_blank" class="hover:text-portfolio-accent transition-colors">WhatsApp</a>
+                <span class="text-gray-300">|</span>
+                <span>Cibinong, Bogor, Jawa Barat</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- CV Modal View -->
+    <div id="cvModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="bg-white border border-portfolio-border rounded-2xl max-w-2xl w-full p-6 sm:p-8 relative max-h-[90vh] overflow-y-auto space-y-6">
+            <button onclick="closeCvModal()" class="absolute top-6 right-6 w-8 h-8 rounded-full bg-gray-100 border border-portfolio-border flex items-center justify-center text-portfolio-textMuted hover:text-portfolio-textMain transition-colors">
+                <i data-lucide="x" class="w-4 h-4"></i>
+            </button>
+            <div class="space-y-4 border-b border-portfolio-border pb-4">
+                <h3 class="text-xl font-bold text-portfolio-textMain">Curriculum Vitae</h3>
+                <p class="text-portfolio-accent text-xs font-semibold">Rizky Hari Mukti — Customer Service & Copywriter</p>
+            </div>
+            
+            <div class="space-y-4 text-xs sm:text-sm text-portfolio-textMuted leading-relaxed">
+                <div>
+                    <strong class="text-portfolio-textMain block mb-1">PROFIL SINGKAT</strong>
+                    <p>Profesional muda yang berorientasi pada pelayanan pelanggan, penanganan komplain, serta pengelolaan komunikasi digital secara responsif dan solutif. Memiliki rekam jejak dalam melayani ratusan klien secara mandiri, dipadukan dengan pemahaman strategi pemasaran digital untuk menjaga kepuasan serta loyalitas pengguna.</p>
+                </div>
+                <div>
+                    <strong class="text-portfolio-textMain block mb-1">PENGALAMAN KERJA</strong>
+                    <ul class="list-disc pl-4 space-y-1">
+                        <li><strong>Pengelola Jasa Digital & Layanan Klien | Rizky Jasa (Feb 2026 – Sekarang):</strong> Menangani komunikasi interaktif, membangun relasi profesional, serta memberikan pelayanan responsif untuk klien.</li>
+                        <li><strong>Operator Produksi | PT Tenar Inti Mandiri 2 (Mar 2026 – Jul 2026):</strong> Quality control, finishing produk setiap 50 detik, menjaga konsistensi dan ketelitian tinggi.</li>
+                        <li><strong>Operator Produksi | PT Sinarlimas Kontindo (Jun 2025 – Feb 2026):</strong> Pengoperasian mesin produksi, penimbangan material, kontrol suhu mold, dan kepatuhan SOP.</li>
+                    </ul>
+                </div>
+                <div>
+                    <strong class="text-portfolio-textMain block mb-1">PENDIDIKAN</strong>
+                    <p><strong>SMK Al-Asiyah</strong> — Teknik Komputer dan Jaringan (TKJ) (2022 – 2025)</p>
+                </div>
+            </div>
+
+            <div class="flex justify-end pt-4 border-t border-portfolio-border">
+                <button onclick="closeCvModal()" class="px-6 py-2.5 rounded-full bg-portfolio-card border border-portfolio-border text-portfolio-textMain font-semibold text-xs hover:bg-gray-100 transition-colors">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        function openCvModal() {
+            document.getElementById('cvModal').classList.remove('hidden');
+            document.getElementById('cvModal').classList.add('flex');
+        }
+
+        function closeCvModal() {
+            document.getElementById('cvModal').classList.remove('flex');
+            document.getElementById('cvModal').classList.add('hidden');
+        }
+
+        // Close modal on outside click
+        window.addEventListener('click', (e) => {
+            const modal = document.getElementById('cvModal');
+            if (e.target === modal) {
+                closeCvModal();
+            }
+        });
+    </script>
+</body>
+</html>
