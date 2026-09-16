@@ -122,7 +122,7 @@
                 </a>
             </div>
 
-            <!-- Mobile Hamburger Button (Only 1 unified button, z-index above fullscreen overlay) -->
+            <!-- Mobile Hamburger Button -->
             <button id="mobileMenuBtn" aria-label="Buka Menu" class="md:hidden p-3 text-ink bg-surface rounded-xl border border-lineborder focus:outline-none z-[100] relative cursor-pointer shadow-xs">
                 <svg id="hamburgerIcon" class="w-5 h-5 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
@@ -134,9 +134,8 @@
         </div>
     </header>
 
-    <!-- REFACTORED FULLSCREEN FIXED MOBILE MENU (Strictly independent solid layer, non-pushing, safe-area aware) -->
+    <!-- FULLSCREEN FIXED MOBILE MENU -->
     <div id="mobileMenu" class="fixed inset-0 w-full h-full bg-[#FBF9F5] z-[90] hidden flex flex-col pt-[env(safe-area-inset-top,20px)] pb-[env(safe-area-inset-bottom,20px)] px-6 overflow-y-auto transition-opacity duration-300 opacity-0">
-        <!-- Top bar inside menu mirroring header height & branding with close X button -->
         <div class="h-20 flex items-center justify-between border-b border-lineborder flex-shrink-0 mb-8">
             <a href="#" class="flex items-center gap-3 mobile-brand-link">
                 <div class="w-10 h-10 rounded-xl bg-brandaccent flex items-center justify-center text-white font-serif font-bold text-lg shadow-md">
@@ -147,7 +146,6 @@
                     <span class="text-[10px] font-mono tracking-widest text-mutedtext uppercase mt-1">Digital Studio</span>
                 </div>
             </a>
-            <!-- Close X Button inside mobile menu header -->
             <button id="mobileMenuCloseBtn" aria-label="Tutup Menu" class="p-3 text-ink bg-surface rounded-xl border border-lineborder focus:outline-none cursor-pointer shadow-xs">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
@@ -155,7 +153,6 @@
             </button>
         </div>
 
-        <!-- Menu Navigation Links -->
         <nav class="flex flex-col space-y-6 text-2xl font-serif text-ink py-4">
             <a href="#layanan" class="mobile-nav-link hover:text-[#C29B38] transition-colors pb-4 border-b border-lineborder/60 flex items-center justify-between">
                 <span>Layanan</span>
@@ -175,7 +172,6 @@
             </a>
         </nav>
 
-        <!-- Menu Footer CTA -->
         <div class="mt-auto pt-8 pb-12 space-y-4">
             <a href="https://wa.me/6282125424346?text=Halo%20Rizky%20Jasa,%20Saya%20ingin%20diskusi%20lebih%20lanjut%20mengenai%20layanan%20yang%20tersedia." target="_blank" rel="noopener noreferrer" class="w-full inline-flex justify-center items-center gap-2 text-xs font-semibold uppercase tracking-wider bg-brandaccent text-white px-6 py-4 rounded-full shadow-md">
                 <span>Chat WhatsApp</span>
@@ -228,7 +224,7 @@
                     </div>
                 </div>
 
-                <!-- HERO VISUAL COMPOSITION: INTERVIEW PRACTICE FEATURE CARD -->
+                <!-- HERO VISUAL COMPOSITION -->
                 <div class="lg:col-span-5 relative" id="interview-practice">
                     <div class="relative mx-auto max-w-md lg:max-w-none">
                         <div class="absolute inset-0 bg-gradient-to-br from-[#C29B38]/10 to-[#A8822B]/10 rounded-[32px] blur-2xl transform rotate-3 scale-105 -z-10"></div>
@@ -288,7 +284,7 @@
         </div>
     </section>
 
-    <!-- SERVICES SECTION (6 Official Services) -->
+    <!-- SERVICES SECTION -->
     <section id="layanan" class="py-32 max-w-7xl mx-auto px-6 lg:px-12 relative">
         <div class="max-w-2xl mb-20 space-y-4">
             <span class="text-xs uppercase tracking-[0.25em] text-[#C29B38] font-mono font-semibold">Pilihan Layanan</span>
@@ -829,7 +825,6 @@
 
     <!-- RIZKY JASA ASSISTANT (AI CUSTOMER SERVICE WIDGET) -->
     <div class="fixed bottom-6 right-6 z-50 font-sans">
-        <!-- Floating Chat Toggle Button -->
         <div class="relative group">
             <div class="absolute -top-10 right-0 bg-surface text-ink px-3 py-1.5 rounded-full text-xs font-semibold shadow-md border border-lineborder opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
                 Butuh bantuan?
@@ -843,7 +838,6 @@
 
         <!-- Chat Window -->
         <div id="chatWindow" class="hidden absolute bottom-20 right-0 w-[90vw] sm:w-[380px] h-[540px] bg-surface rounded-[28px] border border-lineborder shadow-2xl flex flex-col overflow-hidden transition-all duration-300 transform scale-95 opacity-0">
-            <!-- Header -->
             <div class="bg-surfacealt px-6 py-4 border-b border-lineborder flex items-center justify-between">
                 <div class="flex items-center gap-3">
                     <div class="w-9 h-9 rounded-xl bg-brandaccent text-white flex items-center justify-center font-serif font-bold text-sm shadow-xs">RJ</div>
@@ -860,15 +854,12 @@
                 </button>
             </div>
 
-            <!-- Messages Container -->
             <div id="chatMessages" class="flex-1 overflow-y-auto p-4 space-y-4 bg-canvas text-sm">
-                <!-- Initial Bot Greeting -->
                 <div class="flex items-start gap-2.5">
                     <div class="w-7 h-7 rounded-lg bg-brandaccent text-white flex-shrink-0 flex items-center justify-center text-xs font-bold">RJ</div>
                     <div class="bg-surface border border-lineborder p-3.5 rounded-2xl rounded-tl-sm max-w-[85%] text-ink space-y-3 shadow-xs">
                         <p>Haii! 👋✨ Selamat datang di Rizky Jasa! Aku Rizky Jasa Assistant 🙌<br>Lagi cari jasa CV, edit dokumen, atau landing page? Tenang, aku siap bantu! 😄<br>Yuk, pilih yang mau kamu tanyakan di bawah 👇</p>
                         
-                        <!-- Quick Actions (Strictly 6 official items) -->
                         <div class="flex flex-wrap gap-1.5 pt-1">
                             <button type="button" class="quick-action-btn text-xs bg-surfacealt hover:bg-slate-200 text-ink px-3 py-1.5 rounded-full border border-lineborder transition-colors font-medium cursor-pointer" data-query="Tanya Harga">1. Tanya Harga</button>
                             <button type="button" class="quick-action-btn text-xs bg-surfacealt hover:bg-slate-200 text-ink px-3 py-1.5 rounded-full border border-lineborder transition-colors font-medium cursor-pointer" data-query="Layanan Tersedia">2. Layanan Tersedia</button>
@@ -881,7 +872,6 @@
                 </div>
             </div>
 
-            <!-- Typing Indicator (Hidden by default) -->
             <div id="chatTyping" class="hidden px-4 py-2 bg-canvas flex items-center gap-2 text-xs text-mutedtext italic">
                 <div class="w-6 h-6 rounded-lg bg-brandaccent text-white flex-shrink-0 flex items-center justify-center text-[10px] font-bold">RJ</div>
                 <div class="bg-surface border border-lineborder px-3 py-2 rounded-2xl rounded-tl-sm flex items-center gap-1.5 shadow-xs">
@@ -892,7 +882,6 @@
                 </div>
             </div>
 
-            <!-- Input Form -->
             <div class="p-3 bg-surface border-t border-lineborder">
                 <form id="chatForm" class="flex items-center gap-2">
                     <input type="text" id="chatInput" placeholder="Tulis pertanyaanmu di sini..." autocomplete="off" class="flex-1 bg-canvas border border-lineborder px-4 py-2.5 rounded-full text-[16px] text-ink focus:outline-none focus:border-brandaccent transition-colors">
@@ -907,7 +896,7 @@
     <!-- SCRIPT -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Refactored Mobile Menu State & Elements
+            // Mobile Menu
             const mobileMenuBtn = document.getElementById('mobileMenuBtn');
             const mobileMenuCloseBtn = document.getElementById('mobileMenuCloseBtn');
             const mobileMenu = document.getElementById('mobileMenu');
@@ -922,7 +911,6 @@
                 if (!mobileMenu || !hamburgerIcon || !closeIcon) return;
                 
                 if (mobileMenuOpen) {
-                    // Open state: show solid fullscreen menu, lock body scroll, switch hamburger to X
                     mobileMenu.classList.remove('hidden');
                     requestAnimationFrame(() => {
                         mobileMenu.classList.remove('opacity-0');
@@ -931,7 +919,6 @@
                     closeIcon.classList.remove('hidden');
                     document.body.style.overflow = 'hidden';
                 } else {
-                    // Close state: hide menu, restore body scroll, switch X to hamburger
                     mobileMenu.classList.add('opacity-0');
                     hamburgerIcon.classList.remove('hidden');
                     closeIcon.classList.add('hidden');
@@ -975,7 +962,6 @@
                     const targetId = link.getAttribute('href');
                     const targetElement = document.querySelector(targetId);
 
-                    // Close menu and unlock scroll immediately
                     mobileMenuOpen = false;
                     updateMobileMenuState();
 
@@ -992,7 +978,6 @@
                 });
             });
 
-            // Hero "Lihat Layanan" Smooth Scroll
             const heroLihatLayananBtn = document.getElementById('heroLihatLayananBtn');
             if (heroLihatLayananBtn) {
                 heroLihatLayananBtn.addEventListener('click', (e) => {
@@ -1007,7 +992,6 @@
                 });
             }
 
-            // Language Toggles
             const langToggles = document.querySelectorAll('.lang-toggle');
             langToggles.forEach(toggle => {
                 toggle.addEventListener('click', (e) => {
@@ -1016,7 +1000,6 @@
                 });
             });
 
-            // FAQ Accordion
             const faqItems = document.querySelectorAll('.faq-item');
             faqItems.forEach(item => {
                 const btn = item.querySelector('.faq-btn');
@@ -1046,14 +1029,14 @@
                 });
             });
 
-            // Services Data Modal Definition (Strictly 6 Official Services)
+            // Services Modal
             const servicesData = {
                 'cv-ats': {
                     title: 'CV ATS Friendly',
                     badge: 'ATS FRIENDLY',
                     badgeColor: 'bg-brandaccent text-white',
                     description: 'CV dengan struktur bersih tanpa ornamen rumit, dirancang agar mudah dibaca sistem pemindai ATS perusahaan.',
-                    details: 'Dibuat khusus agar lolos pemindaian ATS perusahaan. Format bersih, tanpa kolom atau tabel rumit, siap dikirim dalam format PDF dan Word. Harga mulai Rp17.000.',
+                    details: 'Dibuat khusus agar lolos pemindaian ATS perusahaan. Format bersih, tanpa kolom atau tabel rumit, siap dikirim dalam format PDF dan Word.',
                     waMessage: 'Halo Rizky Jasa, saya tertarik dengan layanan CV ATS Friendly.'
                 },
                 'cv-kreatif': {
@@ -1069,7 +1052,7 @@
                     badge: 'PAKET HEMAT',
                     badgeColor: 'bg-[#A8822B] text-white',
                     description: 'Kombinasi praktis untuk mendapatkan CV profesional sekaligus Surat Lamaran Kerja (Cover Letter) dalam sekali proses.',
-                    details: 'Menghemat waktu dan memastikan keselarasan isi antara CV profesional dan Surat Lamaran Kerja (Cover Letter) yang siap dikirim. Harga spesial Rp35.000 sudah termasuk bonus penyesuaian pass foto.',
+                    details: 'Menghemat waktu dan memastikan keselarasan isi antara CV profesional dan Surat Lamaran Kerja (Cover Letter) yang siap dikirim.',
                     waMessage: 'Halo Rizky Jasa, saya tertarik dengan Paket Hemat.'
                 },
                 'paket-komplit': {
@@ -1183,9 +1166,7 @@
                 if (e.key === 'Escape') closeModal();
             });
 
-            // -------------------------------------------------------------
-            // INTERVIEW PRACTICE SIMULATOR LOGIC
-            // -------------------------------------------------------------
+            // Interview Practice Simulator Logic
             const interviewModal = document.getElementById('interviewModal');
             const interviewModalContainer = document.getElementById('interviewModalContainer');
             const interviewCloseBtn = document.getElementById('interviewCloseBtn');
@@ -1193,14 +1174,14 @@
             const startInterviewBtn = document.getElementById('startInterviewBtn');
 
             let interviewState = {
-                step: 1, // 1: role, 2: experience, 3: mode, 4: chat, 5: result
+                step: 1,
                 role: '',
                 customRole: '',
                 experience: '',
-                mode: '', // basic, hrd, lengkap
+                mode: '',
                 currentQuestionIndex: 0,
                 questions: [],
-                messages: [], // Append-only chat history: array of { role: 'hrd'|'user', content: string }
+                messages: [],
                 isSubmitting: false
             };
 
@@ -1422,7 +1403,6 @@
                             interviewState.questions = selected.slice(0, count);
                             interviewState.currentQuestionIndex = 0;
                             
-                            // Initialize first question in messages array (Append-only history)
                             interviewState.messages = [
                                 { role: 'hrd', content: interviewState.questions[0] }
                             ];
@@ -1502,10 +1482,8 @@
                             submitBtn.disabled = true;
                             submitBtn.textContent = 'Memproses...';
 
-                            // 1. Append user answer to history
                             interviewState.messages.push({ role: 'user', content: val });
 
-                            // 2. Evaluate answer length/content for realistic interview flow
                             setTimeout(() => {
                                 interviewState.isSubmitting = false;
 
@@ -1513,14 +1491,13 @@
                                 const wordCount = val.split(/\s+/).length;
                                 const shortTriggers = ['melakukan support', 'support', 'ya', 'pernah', 'bisa', 'biasa aja', 'kerja tim', 'melakukan pengecekan', 'mengoperasikan mesin', 'membantu', 'administrasi', 'customer service', 'iya', 'karena saya tertarik', 'karena sesuai', 'ingin berkembang', 'siap bekerja', 'teamwork', 'komunikasi', 'produksi', 'leadership', 'teliti', 'disiplin'];
                                 
-                                const isTooShort = wordCount <= 3 || shortTriggers.includes(lowerVal) || (lowerVal.length < 15 && !lowerVal.includes('saya') && !lowerVal.includes('karena') && !lowerVal.includes('sebagai'));
+                                const isTooShort = wordCount <= 3 || shortTriggers.includes(lowerVal) || (lowerVal.length < 15 && !lowerVal.includes('saya') && !lowerVal.includes('karena') && !lowerVal.includes('sebagai') && !lowerVal.includes('bekerja'));
 
                                 if (isTooShort) {
-                                    // HRD provides constructive warning feedback + improvement tip + pattern example
                                     let warningMsg = `⚠️ Jawaban kamu masih terlalu singkat.\n\n💡 Di interview sungguhan, HRD perlu tahu apa yang kamu lakukan atau alasan spesifik, bukan hanya kata kunci atau jawaban umum.\n\n👉 Coba jelaskan tanggung jawab utama + cara melakukannya + contoh atau alasan yang lebih spesifik.\n\n📝 Contoh pola jawaban:\n"Saya sebelumnya bekerja sebagai [posisi]. Tanggung jawab utama saya adalah [tanggung jawab]."\n\nSesuaikan dengan pengalaman kamu sendiri ya. Coba jawab lagi.`;
                                     
-                                    if (lowerVal.includes('tertarik') || lowerVal.includes('alasan')) {
-                                        warningMsg = `⚠️ Jawaban kamu masih terlalu umum.\n\n💡 Di interview sungguhan, HRD ingin tahu alasan yang lebih spesifik dan terhubung dengan kemampuan atau tujuan kariermu.\n\n👉 Coba jelaskan apa yang membuat kamu tertarik dan hubungkan dengan pengalaman atau hal yang ingin kamu kembangkan.\n\n📝 Contoh pola:\n"Saya tertarik dengan posisi ini karena [alasan spesifik]. Saya juga ingin mengembangkannya melalui posisi ini."\n\nCoba jawab lagi dengan alasan kamu sendiri.`;
+                                    if (lowerVal.includes('tertarik') || lowerVal.includes('alasan') || lowerVal.includes('karena')) {
+                                        warningMsg = `⚠️ Jawaban kamu masih terlalu umum.\n\n💡 Di interview sungguhan, HRD biasanya ingin tahu alasan yang lebih spesifik.\n\n👉 Coba jelaskan apa yang membuat kamu tertarik dan hubungkan dengan pengalaman atau hal yang ingin kamu kembangkan.\n\n📝 Contoh pola:\n"Saya tertarik dengan posisi ini karena [alasan spesifik]. Saya juga memiliki pengalaman di bidang yang relevan, sehingga ingin mengembangkannya di sini."\n\nCoba jawab lagi dengan alasan kamu sendiri.`;
                                     }
 
                                     interviewState.messages.push({
@@ -1528,7 +1505,6 @@
                                         content: warningMsg
                                     });
                                 } else {
-                                    // Sufficient answer: HRD acknowledges and asks next question (or finishes)
                                     interviewState.messages.push({
                                         role: 'hrd',
                                         content: "Baik, jawaban kamu sudah cukup jelas. Kamu sudah menjelaskan poin dengan baik."
@@ -1541,7 +1517,6 @@
                                             content: interviewState.questions[interviewState.currentQuestionIndex]
                                         });
                                     } else {
-                                        // All questions completed -> move to result step
                                         interviewState.step = 5;
                                     }
                                 }
@@ -1638,9 +1613,7 @@
                 });
             }
 
-            // -------------------------------------------------------------
-            // RIZKY JASA ASSISTANT (AI CUSTOMER SERVICE LOGIC)
-            // -------------------------------------------------------------
+            // Rizky Jasa Assistant (AI Customer Service Logic with Robust Pricing Intent Detection)
             const chatToggleBtn = document.getElementById('chatToggleBtn');
             const chatWindow = document.getElementById('chatWindow');
             const chatCloseBtn = document.getElementById('chatCloseBtn');
@@ -1681,11 +1654,29 @@
             function getBotResponse(userMsg) {
                 const query = userMsg.toLowerCase().trim();
 
+                // 1. Check for Pricing / Cost Intent across any service or general query
+                const priceKeywords = [
+                    'harga', 'harganya', 'berapa', 'kena berapa', 'biaya', 'biayanya', 
+                    'tarif', 'tarifnya', 'budget', 'budgetnya', 'mulai dari', 'ada harga', 
+                    'kalau yang ini', 'habis berapa', 'bayar', 'bayarnya', 'per layanan', 
+                    'rupiah', 'kisaran', 'segini', 'yang ini berapa', 'ambil yang ini', 
+                    'paketnya', 'cv-nya', 'landing page', 'edit dokumen'
+                ];
+
+                const isAskingPrice = priceKeywords.some(keyword => query.includes(keyword)) || query === 'berapa' || query === '1. tanya harga';
+
+                if (isAskingPrice) {
+                    const waText = encodeURIComponent(`Halo Rizky Jasa, saya ingin menanyakan info harga dan detail layanan.`);
+                    return `Untuk info harga dan detail layanan, langsung tanya admin Rizky Jasa ya 😊 Admin akan bantu kasih informasi yang sesuai dengan kebutuhan kamu.<br><br><div class="pt-1"><a href="https://wa.me/6282125424346?text=${waText}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 bg-brandaccent text-white px-3.5 py-2 rounded-full text-xs font-semibold uppercase tracking-wider shadow-sm">💬 Tanya Admin via WhatsApp</a></div>`;
+                }
+
+                // 2. Recovery triggers
                 const recoveryTriggers = ['kok ga nyambung', 'gak nyambung', 'kok nggak nyambung', 'bukan itu', 'maksudku bukan itu', 'salah', 'bukan maksud saya', 'lu salah paham', 'bukan begitu'];
                 if (recoveryTriggers.some(t => query.includes(t))) {
                     return "Maaf ya, kayaknya aku salah memahami maksud kamu. 😊 Coba jelaskan sedikit lagi, nanti aku bantu sesuai maksudnya.";
                 }
 
+                // 3. Greeting triggers
                 const greetingTriggers = ['halo', 'hai', 'hi', 'hey', 'halo min', 'hai min', 'hi kak', 'pagi', 'siang', 'sore', 'malam', 'permisi', 'min'];
                 if (greetingTriggers.some(t => query === t || query.startsWith(t + ' ') || query.endsWith(' ' + t))) {
                     if (query.includes('malam')) return "Malam 😊 Ada yang mau kamu tanyakan?";
@@ -1695,48 +1686,48 @@
                     return "Halo! 👋😊 Ada yang bisa aku bantu seputar Rizky Jasa?";
                 }
 
+                // 4. Thank you triggers
                 const thankTriggers = ['makasih', 'terima kasih', 'thank', 'thx', 'tysm'];
                 if (thankTriggers.some(t => query.includes(t))) {
                     return "Sama-sama 😊 Senang bisa membantu. Kalau masih ada yang mau ditanyakan, tinggal chat aku lagi ya.";
                 }
 
+                // 5. Confirm triggers
                 const confirmTriggers = ['oke', 'ok', 'okay', 'sip', 'siap', 'baik', 'noted', 'mengerti', 'paham', 'iya', 'ya', 'yup', 'betul', 'mantap', 'alright'];
                 if (confirmTriggers.some(t => query === t || query === t + ' kak' || query === 'oke deh')) {
                     return "Siap 😊 Kalau ada yang mau kamu tanyakan lagi, langsung aja ya.";
                 }
 
+                // 6. Closing triggers
                 const closingTriggers = ['bye', 'dadah', 'sampai jumpa', 'sampai nanti', 'pergi dulu', 'pamit dulu', 'nanti lagi', 'udah dulu', 'cukup', 'selesai'];
                 if (closingTriggers.some(t => query.includes(t))) {
                     return "Siap 😊 Sampai ketemu lagi. Semoga semuanya lancar ya!";
                 }
 
+                // 7. Time / duration triggers
                 const timeTriggers = ['berapa lama', 'lama', 'pengerjaannya', 'jadinya', 'kapan selesai', 'hari ini', 'berapa jam', 'prosesnya', 'pesan sekarang', 'estimasi', 'butuh waktu', 'ngerjainnya', 'cepet', 'cepat'];
                 if (timeTriggers.some(trigger => query.includes(trigger))) {
                     return "Umumnya pengerjaan dihitung dalam hitungan jam ya 😊 Waktunya bisa menyesuaikan antrean dan kelengkapan data yang kamu berikan. Jadi, semakin lengkap datanya, prosesnya bisa lebih cepat.";
                 }
 
+                // 8. Operational hours triggers
                 const hoursTriggers = ['tutup', 'buka', 'jam', 'online', 'admin', 'malam', 'operasional', 'close', 'open', 'available', 'aktif', 'dilayani'];
                 if (hoursTriggers.some(trigger => query.includes(trigger))) {
                     return "Rizky Jasa buka setiap hari mulai pukul 08.00 sampai 23.00 😊 Tapi kalau kamu masih mendapatkan balasan dari kami di luar jam tersebut, berarti masih ada admin yang sedang bersedia membantu kamu ya.";
                 }
 
+                // 9. Contact admin triggers
                 if (query.includes('hubungi admin') || query === '6. hubungi admin' || query.includes('admin') || query.includes('chat admin') || query.includes('pesan') || query.includes('order')) {
-                    return `Siap 😊 Kalau kamu ingin tanya langsung atau punya kebutuhan khusus, kamu bisa langsung hubungi admin Rizky Jasa melalui WhatsApp.\n\n<div class="pt-2"><a href="https://wa.me/6282125424346?text=${encodeURIComponent('Halo Rizky Jasa, saya ingin terhubung dengan admin.')}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-brandaccent text-white px-4 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider shadow-sm">💬 Hubungi Admin via WhatsApp</a></div>`;
+                    return `Siap 😊 Kalau kamu ingin tanya langsung atau punya kebutuhan khusus, kamu bisa langsung hubungi admin Rizky Jasa melalui WhatsApp.<br><br><div class="pt-1"><a href="https://wa.me/6282125424346?text=${encodeURIComponent('Halo Rizky Jasa, saya ingin terhubung dengan admin.')}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 bg-brandaccent text-white px-3.5 py-2 rounded-full text-xs font-semibold uppercase tracking-wider shadow-sm">💬 Hubungi Admin via WhatsApp</a></div>`;
                 }
 
-                if (query.includes('tanya harga') || query === '1. tanya harga' || query.includes('harga') || query.includes('biaya') || query.includes('tarif')) {
-                    if (query.includes('ats')) return "Untuk CV ATS Friendly, harganya mulai dari Rp17.000 (tersedia Bahasa Indonesia / Inggris).";
-                    if (query.includes('kreatif')) return "Untuk CV Kreatif, harganya disesuaikan dengan tingkat kesulitan dan detail visual yang kamu inginkan.";
-                    if (query.includes('hemat')) return "Paket Hemat harganya Rp35.000 sudah termasuk CV dan Surat Lamaran.";
-                    return "Siap! Untuk harga, tergantung layanan yang kamu butuhkan 😊 Kamu mau tanya harga layanan yang mana? Ada CV ATS Friendly, CV Kreatif, Paket Hemat, Paket Komplit Kerja, Edit Dokumen Ringan, dan Landing Page Sederhana.";
-                }
-
-                if (query.includes('layanan tersedia') || query === '2. layanan tersedia' || query.includes('layanan') || query.includes('cv') || query.includes('fresh graduate') || query.includes('pengalaman') || query.includes('ats itu apa')) {
+                // 10. Service availability and general definitions
+                if (query.includes('layanan tersedia') || query === '2. layanan tersedia' || query.includes('layanan') || query.includes('cv') || query.includes('fresh graduate') || query.includes('pengalaman')) {
                     if (query.includes('fresh graduate') || query.includes('pengalaman') || query.includes('belum pernah')) {
                         return "Bisa 😊 Rizky Jasa menyediakan CV ATS Friendly dan CV Kreatif yang bisa disesuaikan dengan kebutuhan, termasuk untuk fresh graduate. Belum punya pengalaman kerja bukan berarti CV-nya nggak bisa dibuat — kita bisa tonjolkan pendidikan, skill, organisasi, atau magang.";
                     }
                     if (query.includes('ats')) {
-                        return "CV ATS Friendly adalah CV yang disusun agar lebih mudah dibaca oleh sistem ATS perusahaan. Format bersih tanpa ornamen rumit.";
+                        return "CV ATS Friendly adalah CV yang disusun dengan format yang lebih mudah dibaca oleh sistem ATS dalam proses rekrutmen. 😊";
                     }
                     return "Rizky Jasa menyediakan 6 layanan resmi:\n• CV ATS Friendly\n• CV Kreatif\n• Paket Hemat\n• Paket Komplit Kerja\n• Edit Dokumen Ringan\n• Landing Page Sederhana";
                 }
