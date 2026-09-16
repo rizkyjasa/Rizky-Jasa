@@ -2,1017 +2,1817 @@
 <html lang="id" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rizky Jasa | Layanan Digital & Profesional Premium</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Rizky Jasa — Professional Digital & Document Studio</title>
+    
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        canvas: '#FBF9F5',
+                        surface: '#FFFFFF',
+                        surfacealt: '#F3F0E6',
+                        lineborder: '#E4DFD2',
+                        ink: '#1F1E1C',
+                        mutedtext: '#6B665E',
+                        brandaccent: '#1F1E1C',
+                        brandgold: '#C29B38',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+                        serif: ['Playfair Display', 'Georgia', 'serif'],
+                        mono: ['JetBrains Mono', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
     <style>
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: #050505;
-            color: #f3f4f6;
+        html, body {
+            background-color: #FBF9F5;
+            color: #1F1E1C;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden !important;
+            width: 100%;
+            max-width: 100vw;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        /* Custom Gold Palette & Glows */
-        .text-gold { color: #d4af37; }
-        .bg-gold { background-color: #d4af37; }
-        .border-gold { border-color: rgba(212, 175, 55, 0.3); }
-        .border-gold-strong { border-color: #d4af37; }
-        
-        .gold-glow {
-            box-shadow: 0 0 35px -5px rgba(212, 175, 55, 0.15);
+        *, *:before, *:after {
+            box-sizing: inherit;
         }
-        .gold-glow-hover:hover {
-            box-shadow: 0 0 45px 0px rgba(212, 175, 55, 0.3);
+        ::selection {
+            background-color: #C29B38;
+            color: #FFFFFF;
         }
-
-        /* Subtle Background Grid */
-        .bg-grid {
-            background-size: 40px 40px;
-            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-                              linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+        .editorial-card {
+            background: #FFFFFF;
+            border: 1px solid #E4DFD2;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.04);
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
         }
-
-        /* Floating Animation */
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-6px); }
+        .editorial-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.07);
+            border-color: rgba(194, 155, 56, 0.3);
         }
-        .animate-float {
-            animation: float 6s ease-in-out infinite;
+        .glass-nav {
+            background: rgba(251, 249, 245, 0.95);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid #E4DFD2;
         }
-
-        /* Fade in on viewport */
-        .fade-in {
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
             opacity: 0;
-            transform: translateY(15px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
         }
-        .fade-in.appear {
+        .accordion-content.open {
+            max-height: 500px;
             opacity: 1;
-            transform: translateY(0);
+        }
+        /* Prevent mobile input zoom by maintaining 16px font size */
+        input[type="text"], textarea, select {
+            font-size: 16px !important;
         }
     </style>
 </head>
-<body class="bg-black text-gray-100 min-h-screen relative selection:bg-yellow-500 selection:text-black bg-grid">
+<body class="bg-canvas text-ink antialiased selection:bg-[#C29B38] selection:text-white relative">
 
-    <!-- Ambient Background Glows -->
-    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[500px] bg-gradient-to-b from-yellow-600/10 via-transparent to-transparent blur-3xl pointer-events-none"></div>
+    <!-- Ambient background wash -->
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[600px] bg-gradient-to-b from-[#C29B38]/5 to-transparent rounded-full blur-3xl pointer-events-none -z-10"></div>
 
-    <!-- HEADER / NAVIGATION -->
-    <header class="sticky top-0 z-50 backdrop-blur-xl bg-black/80 border-b border-white/10">
-        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-            <!-- Brand Logo -->
+    <!-- NAVBAR: Static normal header -->
+    <header class="w-full static z-40 glass-nav">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 h-20 flex items-center justify-between">
             <a href="#" class="flex items-center gap-3 group">
-                <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-neutral-900 to-black border border-gold flex items-center justify-center gold-glow transition duration-300 group-hover:border-gold-strong">
-                    <span class="text-gold font-bold tracking-widest text-sm">RJ</span>
+                <div class="w-10 h-10 rounded-xl bg-brandaccent flex items-center justify-center text-white font-serif font-bold text-lg shadow-md group-hover:scale-105 transition-transform">
+                    RJ
                 </div>
                 <div class="flex flex-col">
-                    <span class="font-bold tracking-wider text-white text-lg">RIZKY JASA</span>
-                    <span class="text-[10px] uppercase tracking-widest text-gold">Professional Services</span>
+                    <span class="font-serif text-2xl tracking-tight font-bold text-ink leading-none">Rizky Jasa</span>
+                    <span class="text-[10px] font-mono tracking-widest text-mutedtext uppercase mt-1">Digital Studio</span>
                 </div>
             </a>
 
-            <!-- Desktop Nav -->
-            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
-                <a href="#quick-check" class="hover:text-gold transition">Cek CV</a>
-                <a href="#layanan" class="hover:text-gold transition">Layanan</a>
-                <a href="#testimoni" class="hover:text-gold transition">Testimoni</a>
-                <a href="#kenapa" class="hover:text-gold transition">Kenapa Kami</a>
+            <!-- Desktop Nav Links -->
+            <nav class="hidden md:flex items-center gap-10 text-sm font-medium text-mutedtext">
+                <a href="#layanan" class="hover:text-ink transition-colors">Layanan</a>
+                <a href="#interview-practice" class="hover:text-ink transition-colors">Interview Practice</a>
+                <a href="#cara-kerja" class="hover:text-ink transition-colors">Cara Kerja</a>
+                <a href="#faq" class="hover:text-ink transition-colors">FAQ</a>
             </nav>
 
-            <!-- CTA Header -->
-            <a id="generalWhatsapp" target="_blank" rel="noopener noreferrer" 
-               class="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-yellow-600 to-yellow-500 text-black font-semibold text-xs tracking-wider uppercase gold-glow hover:opacity-95 transition">
-                <span>Hubungi Kami</span>
-            </a>
+            <!-- Desktop CTA -->
+            <div class="hidden md:flex items-center">
+                <a href="https://wa.me/6282125424346?text=Halo%20Rizky%20Jasa,%20Saya%20ingin%20diskusi%20lebih%20lanjut%20mengenai%20layanan%20yang%20tersedia." target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider bg-brandaccent hover:bg-brandaccent/90 text-white px-6 py-3 rounded-full transition-all shadow-md hover:-translate-y-0.5">
+                    <span>Chat WhatsApp</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                </a>
+            </div>
+
+            <!-- Mobile Hamburger Button (Only 1 unified button, z-index above fullscreen overlay) -->
+            <button id="mobileMenuBtn" aria-label="Buka Menu" class="md:hidden p-3 text-ink bg-surface rounded-xl border border-lineborder focus:outline-none z-[100] relative cursor-pointer shadow-xs">
+                <svg id="hamburgerIcon" class="w-5 h-5 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+                <svg id="closeIcon" class="w-5 h-5 hidden transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>
         </div>
     </header>
 
-    <!-- HERO SECTION -->
-    <section class="relative pt-16 pb-20 px-6 overflow-hidden">
-        <div class="max-w-5xl mx-auto text-center relative z-10">
-            <!-- Badge -->
-            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-gold bg-neutral-900/80 mb-6 fade-in">
-                <div class="w-1.5 h-1.5 rounded-full bg-gold animate-ping"></div>
-                <span class="text-xs uppercase tracking-widest text-gold font-medium">Solusi Profesional & Keuangan Usaha</span>
-            </div>
-
-            <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white mb-6 leading-tight fade-in">
-                Elevasikan Karier & Bisnis Anda Bersama <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-yellow-200 to-yellow-600">Rizky Jasa</span>
-            </h1>
-
-            <p class="text-gray-400 text-base sm:text-lg max-w-2xl mx-auto mb-10 font-light fade-in">
-                Penyedia layanan profesional mulai dari optimasi CV, pengeditan dokumen, perbaikan foto, perhitungan HPP & modal, hingga pengecekan omset dan keuangan usaha.
-            </p>
-
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 fade-in">
-                <button type="button" id="lihatLayananBtn" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-yellow-500 to-yellow-600 text-black font-bold text-sm tracking-wide gold-glow hover:scale-105 transition duration-300 cursor-pointer">
-                    LIHAT LAYANAN
-                </button>
-                <a id="generalWhatsappBtn" target="_blank" rel="noopener noreferrer" 
-                   class="w-full sm:w-auto px-8 py-4 rounded-xl border border-gold/40 hover:border-gold bg-neutral-900/50 text-white font-semibold text-sm tracking-wide transition duration-300 text-center">
-                    Konsultasi Gratis
-                </a>
-            </div>
-
-            <!-- Hero Visual Divider / Floating Element -->
-            <div class="mt-14 relative max-w-3xl mx-auto animate-float">
-                <div class="absolute inset-0 bg-yellow-500/10 blur-2xl rounded-full"></div>
-                <div class="relative rounded-2xl border border-gold/30 bg-neutral-950/80 p-6 shadow-2xl flex flex-col sm:flex-row items-center justify-between gap-6">
-                    <div class="flex items-center gap-4 text-left">
-                        <div class="w-12 h-12 rounded-xl bg-gold/10 border border-gold/40 flex items-center justify-center text-gold font-bold">
-                            RJ
-                        </div>
-                        <div>
-                            <h4 class="text-white font-semibold text-sm">Standar Kualitas Premium</h4>
-                            <p class="text-xs text-gray-400">Cepat, rapi, profesional, dan bergaransi revisi.</p>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-6 text-xs text-gold border-t sm:border-t-0 sm:border-l border-white/10 pt-4 sm:pt-0 sm:pl-6 w-full sm:w-auto justify-around">
-                        <div class="text-center">
-                            <span class="block font-bold text-lg text-white">100%</span>
-                            <span class="text-[10px] uppercase tracking-wider text-gray-400">Tepat Waktu</span>
-                        </div>
-                        <div class="text-center">
-                            <span class="block font-bold text-lg text-white">5★</span>
-                            <span class="text-[10px] uppercase tracking-wider text-gray-400">Kepuasan Klien</span>
-                        </div>
-                    </div>
+    <!-- REFACTORED FULLSCREEN FIXED MOBILE MENU (Strictly independent solid layer, non-pushing, safe-area aware) -->
+    <div id="mobileMenu" class="fixed inset-0 w-full h-full bg-[#FBF9F5] z-[90] hidden flex flex-col pt-[env(safe-area-inset-top,20px)] pb-[env(safe-area-inset-bottom,20px)] px-6 overflow-y-auto transition-opacity duration-300 opacity-0">
+        <!-- Top bar inside menu mirroring header height & branding with close X button -->
+        <div class="h-20 flex items-center justify-between border-b border-lineborder flex-shrink-0 mb-8">
+            <a href="#" class="flex items-center gap-3 mobile-brand-link">
+                <div class="w-10 h-10 rounded-xl bg-brandaccent flex items-center justify-center text-white font-serif font-bold text-lg shadow-md">
+                    RJ
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- PREMIUM VISUAL SEPARATOR -->
-    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-center gap-4">
-        <div class="h-px bg-gradient-to-r from-transparent via-gold/40 to-transparent flex-1"></div>
-        <div class="w-2 h-2 rounded-full bg-gold/60"></div>
-        <div class="h-px bg-gradient-to-r from-transparent via-gold/40 to-transparent flex-1"></div>
-    </div>
-
-    <!-- 15-POINT CV QUICK CHECK FEATURE SECTION -->
-    <section id="quick-check" class="py-20 px-6 relative">
-        <div class="max-w-3xl mx-auto">
-            <!-- Section Header -->
-            <div class="text-center mb-12 fade-in">
-                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-gold/10 border border-gold/30 text-gold text-xs font-medium uppercase tracking-widest mb-4">
-                    <span>📄 CV Quick Check 15 Poin</span>
+                <div class="flex flex-col">
+                    <span class="font-serif text-2xl tracking-tight font-bold text-ink leading-none">Rizky Jasa</span>
+                    <span class="text-[10px] font-mono tracking-widest text-mutedtext uppercase mt-1">Digital Studio</span>
                 </div>
-                <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight mb-3">
-                    CEK CV KAMU DULU
-                </h2>
-                <p class="text-gold font-medium text-base sm:text-lg mb-2">
-                    "Kira-kira CV kamu sudah siap buat dilirik HR?"
-                </p>
-                <p class="text-gray-400 text-sm max-w-lg mx-auto font-light">
-                    "Jawab 15 pertanyaan cepat berikut untuk mengevaluasi kelayakan CV profesional kamu."
-                </p>
-            </div>
-
-            <!-- Checker Container -->
-            <div class="rounded-3xl border border-gold/30 bg-neutral-950 p-6 sm:p-10 gold-glow relative overflow-hidden fade-in">
-                <div class="absolute -top-24 -right-24 w-48 h-48 bg-gold/10 rounded-full blur-3xl pointer-events-none"></div>
-
-                <!-- Questions View -->
-                <div id="cvCheckerForm">
-                    <!-- Progress Bar & Step Indicator -->
-                    <div class="mb-8">
-                        <div class="flex justify-between items-center text-xs text-gray-400 mb-2 font-mono">
-                            <span id="stepIndicator" class="text-gold font-bold">01 / 15</span>
-                            <span id="stepPercent">7%</span>
-                        </div>
-                        <div class="w-full h-1.5 bg-neutral-900 rounded-full overflow-hidden border border-white/5">
-                            <div id="progressBar" class="h-full bg-gradient-to-r from-yellow-600 to-yellow-400 transition-all duration-300 w-[6.66%]"></div>
-                        </div>
-                    </div>
-
-                    <!-- Question Cards Container -->
-                    <div id="questionContainer" class="min-h-[180px] flex flex-col justify-center mb-8">
-                        <!-- Dynamically injected via JS -->
-                    </div>
-                </div>
-
-                <!-- Result View (Hidden initially) -->
-                <div id="cvCheckerResult" class="hidden text-center">
-                    <div class="mb-6">
-                        <span class="text-xs uppercase tracking-widest text-gold font-semibold block mb-2">HASIL ANALISIS PROFESIONAL</span>
-                        <h3 class="text-xl font-extrabold text-white mb-6 tracking-wide">HASIL CV KAMU</h3>
-                        
-                        <!-- Score Circle Display -->
-                        <div class="w-36 h-36 rounded-full border-2 border-gold bg-neutral-900/80 mx-auto flex flex-col items-center justify-center gold-glow mb-6 relative">
-                            <span id="scoreNumber" class="text-5xl font-extrabold text-white">0</span>
-                            <span class="text-xs text-gold font-mono tracking-widest mt-1">/ 100</span>
-                        </div>
-
-                        <!-- Result Message -->
-                        <p id="resultMessage" class="text-base sm:text-lg font-medium text-gold mb-8 max-w-md mx-auto leading-relaxed">
-                            <!-- Injected message -->
-                        </p>
-                    </div>
-
-                    <!-- Improvements Needed -->
-                    <div id="improvementsBox" class="bg-neutral-900/60 border border-white/10 rounded-2xl p-6 text-left mb-6 max-w-lg mx-auto">
-                        <h4 class="text-xs uppercase tracking-widest text-red-400 font-semibold mb-4 flex items-center gap-2">
-                            <span>⚠</span> Yang Masih Bisa Diperbaiki:
-                        </h4>
-                        <ul id="improvementsList" class="space-y-3 text-sm text-gray-200">
-                            <!-- Injected list items -->
-                        </ul>
-                    </div>
-
-                    <!-- Good Points Box -->
-                    <div id="goodPointsBox" class="bg-neutral-900/60 border border-white/10 rounded-2xl p-6 text-left mb-8 max-w-lg mx-auto">
-                        <h4 class="text-xs uppercase tracking-widest text-emerald-400 font-semibold mb-4 flex items-center gap-2">
-                            <span>✓</span> Yang Sudah Bagus:
-                        </h4>
-                        <ul id="goodPointsList" class="space-y-3 text-sm text-gray-200">
-                            <!-- Injected good points -->
-                        </ul>
-                    </div>
-
-                    <!-- Final CTA & Try Again -->
-                    <div class="space-y-6 max-w-md mx-auto pt-6 border-t border-white/10">
-                        <div>
-                            <h4 class="text-white font-bold text-base mb-1">"Mau CV kamu dibenerin sekalian?"</h4>
-                            <p class="text-gray-400 text-xs font-light mb-4">"Kalau mau lebih rapi, profesional, dan siap dipakai melamar, Rizky Jasa bisa bantu."</p>
-                            
-                            <a id="cvCheckWhatsappBtn" target="_blank" rel="noopener noreferrer" 
-                               class="inline-flex items-center justify-center w-full py-4 rounded-xl bg-gradient-to-r from-yellow-500 to-yellow-600 text-black font-bold text-xs tracking-wider uppercase gold-glow hover:scale-105 transition">
-                                CHAT RIZKY JASA
-                            </a>
-                        </div>
-
-                        <div>
-                            <button type="button" id="resetBtn" class="text-xs text-gray-400 hover:text-gold transition underline underline-offset-4">
-                                CEK LAGI
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- PREMIUM VISUAL SEPARATOR -->
-    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-center gap-4">
-        <div class="h-px bg-gradient-to-r from-transparent via-gold/40 to-transparent flex-1"></div>
-        <div class="w-2 h-2 rounded-full bg-gold/60"></div>
-        <div class="h-px bg-gradient-to-r from-transparent via-gold/40 to-transparent flex-1"></div>
-    </div>
-
-    <!-- SERVICES SECTION -->
-    <section id="layanan" class="py-20 px-6 relative">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center max-w-2xl mx-auto mb-16 fade-in">
-                <span class="text-xs uppercase tracking-widest text-gold font-semibold mb-3 block">MAU DIBANTU APA?</span>
-                <h2 class="text-3xl sm:text-4xl font-bold text-white tracking-tight">Solusi Profesional untuk Kebutuhan Anda</h2>
-                <div class="w-16 h-0.5 bg-gold mx-auto mt-4"></div>
-            </div>
-
-            <!-- Service Cards Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-
-                <!-- 1. EDIT CV (WITH BADGE) -->
-                <div class="rounded-2xl border border-white/10 bg-neutral-900/40 p-6 flex flex-col justify-between hover:border-gold/50 transition duration-500 gold-glow-hover fade-in group relative">
-                    <!-- Badge -->
-                    <div class="absolute top-4 right-4 bg-gold/10 border border-gold/40 px-2.5 py-0.5 rounded-full text-[9px] font-bold text-gold tracking-widest uppercase">
-                        PALING DICARI
-                    </div>
-
-                    <div>
-                        <!-- CV Preview Visual -->
-                        <div class="w-full h-44 rounded-xl bg-neutral-950 border border-gold/20 p-4 mb-6 relative overflow-hidden flex flex-col justify-between group-hover:border-gold/40 transition">
-                            <div class="absolute -top-10 -right-10 w-24 h-24 bg-gold/10 rounded-full blur-xl"></div>
-                            
-                            <div class="flex items-center gap-3">
-                                <div class="w-8 h-8 rounded-full bg-gold/20 border border-gold/40 flex items-center justify-center text-gold text-xs font-bold">CV</div>
-                                <div class="space-y-1 flex-1">
-                                    <div class="h-2 w-24 bg-white/40 rounded"></div>
-                                    <div class="h-1.5 w-16 bg-gold/60 rounded"></div>
-                                </div>
-                            </div>
-
-                            <div class="space-y-2 text-[9px] text-gray-400 font-mono">
-                                <div class="bg-white/5 p-2 rounded border border-white/5 flex justify-between">
-                                    <span class="text-gray-300 font-semibold">EXPERIENCE</span>
-                                    <span class="text-gold">Senior Role</span>
-                                </div>
-                                <div class="bg-white/5 p-2 rounded border border-white/5 flex justify-between">
-                                    <span class="text-gray-300 font-semibold">SKILLS</span>
-                                    <span class="text-gray-400">ATS Optimized</span>
-                                </div>
-                            </div>
-
-                            <div class="flex justify-between items-center text-[8px] text-gray-500 pt-1 border-t border-white/5">
-                                <span>PROFILE • EDUCATION</span>
-                                <span class="text-gold">Rizky Jasa</span>
-                            </div>
-                        </div>
-
-                        <span class="text-[10px] uppercase tracking-widest text-gold font-semibold">Karier Profesional</span>
-                        <h3 class="text-xl font-bold text-white mt-1 mb-3">EDIT CV</h3>
-                        <p class="text-gray-400 text-sm leading-relaxed mb-6 font-light">
-                            CV lebih rapi, profesional, dan siap dipakai buat melamar kerja.
-                        </p>
-                    </div>
-                    <a id="cvWhatsapp" target="_blank" rel="noopener noreferrer" 
-                       class="w-full py-3 rounded-xl bg-neutral-800/80 hover:bg-gold hover:text-black text-white font-semibold text-xs tracking-wider uppercase text-center transition duration-300">
-                        Tanya Sekarang
-                    </a>
-                </div>
-
-                <!-- 2. EDIT DOKUMEN -->
-                <div class="rounded-2xl border border-white/10 bg-neutral-900/40 p-6 flex flex-col justify-between hover:border-gold/50 transition duration-500 gold-glow-hover fade-in group">
-                    <div>
-                        <!-- Document Preview Visual -->
-                        <div class="w-full h-44 rounded-xl bg-neutral-950 border border-gold/20 p-4 mb-6 relative overflow-hidden flex flex-col justify-between group-hover:border-gold/40 transition">
-                            <div class="absolute -bottom-10 -left-10 w-24 h-24 bg-yellow-600/10 rounded-full blur-xl"></div>
-                            
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center gap-2">
-                                    <div class="w-6 h-6 rounded bg-gold/10 border border-gold/40 flex items-center justify-center text-gold text-xs">📄</div>
-                                    <span class="text-xs font-semibold text-white">DOC_EDIT.PDF</span>
-                                </div>
-                                <span class="text-[9px] px-2 py-0.5 rounded bg-gold/10 text-gold border border-gold/30">Verified</span>
-                            </div>
-
-                            <div class="space-y-2 py-2">
-                                <div class="h-2 w-full bg-white/10 rounded"></div>
-                                <div class="h-2 w-4/5 bg-white/10 rounded"></div>
-                                <div class="h-2 w-3/5 bg-gold/30 rounded"></div>
-                            </div>
-
-                            <div class="flex justify-between items-center text-[9px] text-gray-400">
-                                <span>Format: Word / PDF / Excel</span>
-                                <span class="text-gold font-medium">Rapi & Presisi</span>
-                            </div>
-                        </div>
-
-                        <span class="text-[10px] uppercase tracking-widest text-gold font-semibold">Administrasi</span>
-                        <h3 class="text-xl font-bold text-white mt-1 mb-3">EDIT DOKUMEN</h3>
-                        <p class="text-gray-400 text-sm leading-relaxed mb-6 font-light">
-                            Bantu rapihin dan edit dokumen sesuai kebutuhan.
-                        </p>
-                    </div>
-                    <a id="dokumenWhatsapp" target="_blank" rel="noopener noreferrer" 
-                       class="w-full py-3 rounded-xl bg-neutral-800/80 hover:bg-gold hover:text-black text-white font-semibold text-xs tracking-wider uppercase text-center transition duration-300">
-                        Tanya Sekarang
-                    </a>
-                </div>
-
-                <!-- 3. EDIT FOTO -->
-                <div class="rounded-2xl border border-white/10 bg-neutral-900/40 p-6 flex flex-col justify-between hover:border-gold/50 transition duration-500 gold-glow-hover fade-in group">
-                    <div>
-                        <!-- Photo Preview Visual -->
-                        <div class="w-full h-44 rounded-xl bg-neutral-950 border border-gold/20 p-4 mb-6 relative overflow-hidden flex flex-col justify-between group-hover:border-gold/40 transition">
-                            <div class="absolute inset-0 bg-gradient-to-tr from-gold/5 via-transparent to-transparent"></div>
-                            
-                            <div class="flex justify-between items-center">
-                                <div class="w-7 h-7 rounded-lg bg-gold/10 border border-gold/40 flex items-center justify-center text-gold text-xs">📷</div>
-                                <div class="flex gap-1">
-                                    <div class="w-1.5 h-1.5 rounded-full bg-gold"></div>
-                                    <div class="w-1.5 h-1.5 rounded-full bg-white/20"></div>
-                                </div>
-                            </div>
-
-                            <div class="border border-dashed border-gold/30 rounded-lg p-3 text-center my-auto bg-black/40">
-                                <span class="text-xs text-gray-300 font-medium block">Retouch • Background • Lighting</span>
-                                <span class="text-[9px] text-gold tracking-widest uppercase mt-0.5 block">Studio Quality Result</span>
-                            </div>
-
-                            <div class="text-[9px] text-gray-500 text-center">
-                                Pas Foto / Dokumen / Keperluan Lain
-                            </div>
-                        </div>
-
-                        <span class="text-[10px] uppercase tracking-widest text-gold font-semibold">Visual Multimedia</span>
-                        <h3 class="text-xl font-bold text-white mt-1 mb-3">EDIT FOTO</h3>
-                        <p class="text-gray-400 text-sm leading-relaxed mb-6 font-light">
-                            Edit foto untuk kebutuhan kerja, dokumen, dan keperluan lainnya.
-                        </p>
-                    </div>
-                    <a id="fotoWhatsapp" target="_blank" rel="noopener noreferrer" 
-                       class="w-full py-3 rounded-xl bg-neutral-800/80 hover:bg-gold hover:text-black text-white font-semibold text-xs tracking-wider uppercase text-center transition duration-300">
-                        Tanya Sekarang
-                    </a>
-                </div>
-
-                <!-- 4. HITUNG HPP, MODAL & HARGA JUAL (WITH BADGE) -->
-                <div class="rounded-2xl border border-white/10 bg-neutral-900/40 p-6 flex flex-col justify-between hover:border-gold/50 transition duration-500 gold-glow-hover fade-in group relative">
-                    <!-- Badge -->
-                    <div class="absolute top-4 right-4 bg-gold/10 border border-gold/40 px-2.5 py-0.5 rounded-full text-[9px] font-bold text-gold tracking-widest uppercase">
-                        BUAT USAHA
-                    </div>
-
-                    <div>
-                        <!-- Business Calculator Visual Mockup -->
-                        <div class="w-full h-44 rounded-xl bg-neutral-950 border border-gold/20 p-3 mb-6 relative overflow-hidden flex flex-col justify-between group-hover:border-gold/40 transition">
-                            <div class="absolute top-0 right-0 w-28 h-28 bg-gold/10 rounded-full blur-2xl"></div>
-
-                            <div class="flex justify-between items-center border-b border-white/10 pb-1.5">
-                                <span class="text-[10px] font-semibold text-white">Kalkulator HPP & Modal</span>
-                                <span class="text-[8px] px-1.5 py-0.5 rounded bg-gold/20 text-gold border border-gold/30">HPP</span>
-                            </div>
-
-                            <div class="grid grid-cols-2 gap-2 text-[9px] my-auto">
-                                <div class="bg-white/5 p-1.5 rounded border border-white/5">
-                                    <span class="text-gray-400 block text-[8px]">Modal:</span>
-                                    <span class="text-white font-semibold">Rp500.000</span>
-                                </div>
-                                <div class="bg-white/5 p-1.5 rounded border border-white/5">
-                                    <span class="text-gray-400 block text-[8px]">Jml Produk:</span>
-                                    <span class="text-white font-semibold">50</span>
-                                </div>
-                                <div class="bg-white/5 p-1.5 rounded border border-white/5">
-                                    <span class="text-gray-400 block text-[8px]">HPP:</span>
-                                    <span class="text-gold font-bold">Rp10.000</span>
-                                </div>
-                                <div class="bg-white/5 p-1.5 rounded border border-white/5">
-                                    <span class="text-gray-400 block text-[8px]">Harga Jual:</span>
-                                    <span class="text-emerald-400 font-bold">Rp15.000</span>
-                                </div>
-                            </div>
-
-                            <div class="text-[8px] text-gold/90 text-center border-t border-white/5 pt-1">
-                                Untung: Rp5.000 / produk
-                            </div>
-                        </div>
-
-                        <span class="text-[10px] uppercase tracking-widest text-gold font-semibold">Manajemen Usaha</span>
-                        <h3 class="text-xl font-bold text-white mt-1 mb-3">HITUNG HPP, MODAL & HARGA JUAL</h3>
-                        <p class="text-gray-400 text-sm leading-relaxed mb-6 font-light">
-                            Hitung modal per produk, HPP, sampai bantu tentuin harga jual dan target keuntungan.
-                        </p>
-                    </div>
-                    <a id="hppWhatsapp" target="_blank" rel="noopener noreferrer" 
-                       class="w-full py-3 rounded-xl bg-neutral-800/80 hover:bg-gold hover:text-black text-white font-semibold text-xs tracking-wider uppercase text-center transition duration-300">
-                        COBA HITUNG
-                    </a>
-                </div>
-
-                <!-- 5. CEK OMSET & KEUANGAN USAHA (WITH BADGE) -->
-                <div class="rounded-2xl border border-white/10 bg-neutral-900/40 p-6 flex flex-col justify-between hover:border-gold/50 transition duration-500 gold-glow-hover fade-in group md:col-span-2 lg:col-span-2 relative">
-                    <!-- Badge -->
-                    <div class="absolute top-4 right-4 bg-gold/10 border border-gold/40 px-2.5 py-0.5 rounded-full text-[9px] font-bold text-gold tracking-widest uppercase">
-                        BUAT USAHA
-                    </div>
-
-                    <div>
-                        <!-- Financial Dashboard Visual Mockup -->
-                        <div class="w-full h-44 rounded-xl bg-neutral-950 border border-gold/20 p-3 mb-6 relative overflow-hidden flex flex-col justify-between group-hover:border-gold/40 transition">
-                            <div class="absolute top-0 right-0 w-32 h-32 bg-gold/5 rounded-full blur-2xl"></div>
-
-                            <div class="flex justify-between items-center border-b border-white/10 pb-1.5">
-                                <span class="text-[10px] font-semibold text-white">Dashboard Keuangan Usaha</span>
-                                <span class="text-[8px] px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">Arus Kas</span>
-                            </div>
-
-                            <div class="grid grid-cols-4 gap-2 text-center my-auto">
-                                <div class="bg-white/5 p-2 rounded border border-white/5">
-                                    <span class="text-[8px] text-gray-400 block uppercase">OMSET</span>
-                                    <span class="text-[10px] font-bold text-gold">Rp10 Jt</span>
-                                </div>
-                                <div class="bg-white/5 p-2 rounded border border-white/5">
-                                    <span class="text-[8px] text-gray-400 block uppercase">BIAYA OP</span>
-                                    <span class="text-[10px] font-bold text-gray-300">Rp3 Jt</span>
-                                </div>
-                                <div class="bg-white/5 p-2 rounded border border-white/5">
-                                    <span class="text-[8px] text-gray-400 block uppercase">MODAL</span>
-                                    <span class="text-[10px] font-bold text-gray-300">Rp4 Jt</span>
-                                </div>
-                                <div class="bg-white/5 p-2 rounded border border-white/5">
-                                    <span class="text-[8px] text-gray-400 block uppercase">SISA</span>
-                                    <span class="text-[10px] font-bold text-emerald-400">Rp3 Jt</span>
-                                </div>
-                            </div>
-
-                            <div class="text-[8px] text-gray-500 text-center border-t border-white/5 pt-1">
-                                Analisis estimasi keuntungan & ke mana uang usaha habis
-                            </div>
-                        </div>
-
-                        <span class="text-[10px] uppercase tracking-widest text-gold font-semibold">Keuangan Bisnis</span>
-                        <h3 class="text-xl font-bold text-white mt-1 mb-3">CEK OMSET & KEUANGAN USAHA</h3>
-                        <p class="text-gray-400 text-sm leading-relaxed mb-6 font-light">
-                            Masukin omset dan biaya operasional, lalu lihat estimasi keuntungan dan ke mana aja uang usaha kamu habis.
-                        </p>
-                    </div>
-                    <a id="omsetWhatsapp" target="_blank" rel="noopener noreferrer" 
-                       class="w-full py-3 rounded-xl bg-neutral-800/80 hover:bg-gold hover:text-black text-white font-semibold text-xs tracking-wider uppercase text-center transition duration-300">
-                        CEK OMSET
-                    </a>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- PREMIUM VISUAL SEPARATOR -->
-    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-center gap-4">
-        <div class="h-px bg-gradient-to-r from-transparent via-gold/40 to-transparent flex-1"></div>
-        <div class="w-2 h-2 rounded-full bg-gold/60"></div>
-        <div class="h-px bg-gradient-to-r from-transparent via-gold/40 to-transparent flex-1"></div>
-    </div>
-
-    <!-- TESTIMONI PELANGGAN SECTION -->
-    <section id="testimoni" class="py-20 px-6 relative bg-neutral-950/40">
-        <div class="max-w-7xl mx-auto">
-            <!-- Section Header -->
-            <div class="text-center max-w-2xl mx-auto mb-16 fade-in">
-                <span class="text-xs uppercase tracking-widest text-gold font-semibold mb-3 block">TESTIMONI PELANGGAN</span>
-                <h2 class="text-3xl sm:text-4xl font-bold text-white tracking-tight mb-2">KATA MEREKA</h2>
-                <p class="text-gray-400 text-sm font-light">"Beberapa pengalaman dari yang sudah pakai Rizky Jasa."</p>
-                <div class="w-16 h-0.5 bg-gold mx-auto mt-4"></div>
-            </div>
-
-            <!-- Testimonial Cards Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Card 1 -->
-                <div class="rounded-2xl border border-white/10 bg-neutral-900/50 p-8 flex flex-col justify-between hover:border-gold/40 transition duration-300 fade-in group relative overflow-hidden">
-                    <div class="absolute top-4 right-6 text-gold/20 text-6xl font-serif select-none pointer-events-none">“</div>
-                    <div>
-                        <div class="flex items-center gap-1 text-gold mb-4 text-sm">
-                            ★★★★★
-                        </div>
-                        <p class="text-gray-300 text-sm leading-relaxed font-light mb-6">
-                            "CV gue jadi jauh lebih rapi dan enak dilihat. Tinggal kirim lamaran."
-                        </p>
-                    </div>
-                    <div class="pt-4 border-t border-white/5 flex items-center justify-between">
-                        <span class="text-white font-semibold text-xs">— Aulia</span>
-                        <span class="text-[10px] text-gold/80 font-mono">Edit CV</span>
-                    </div>
-                </div>
-
-                <!-- Card 2 -->
-                <div class="rounded-2xl border border-white/10 bg-neutral-900/50 p-8 flex flex-col justify-between hover:border-gold/40 transition duration-300 fade-in group relative overflow-hidden">
-                    <div class="absolute top-4 right-6 text-gold/20 text-6xl font-serif select-none pointer-events-none">“</div>
-                    <div>
-                        <div class="flex items-center gap-1 text-gold mb-4 text-sm">
-                            ★★★★★
-                        </div>
-                        <p class="text-gray-300 text-sm leading-relaxed font-light mb-6">
-                            "Jadi lebih gampang nentuin harga jual setelah tahu HPP-nya."
-                        </p>
-                    </div>
-                    <div class="pt-4 border-t border-white/5 flex items-center justify-between">
-                        <span class="text-white font-semibold text-xs">— Rian, UMKM</span>
-                        <span class="text-[10px] text-gold/80 font-mono">Hitung HPP</span>
-                    </div>
-                </div>
-
-                <!-- Card 3 -->
-                <div class="rounded-2xl border border-white/10 bg-neutral-900/50 p-8 flex flex-col justify-between hover:border-gold/40 transition duration-300 fade-in group relative overflow-hidden">
-                    <div class="absolute top-4 right-6 text-gold/20 text-6xl font-serif select-none pointer-events-none">“</div>
-                    <div>
-                        <div class="flex items-center gap-1 text-gold mb-4 text-sm">
-                            ★★★★★
-                        </div>
-                        <p class="text-gray-300 text-sm leading-relaxed font-light mb-6">
-                            "Responnya cepat dan hasilnya sesuai kebutuhan."
-                        </p>
-                    </div>
-                    <div class="pt-4 border-t border-white/5 flex items-center justify-between">
-                        <span class="text-white font-semibold text-xs">— Dimas</span>
-                        <span class="text-[10px] text-gold/80 font-mono">Edit Dokumen</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- PREMIUM VISUAL SEPARATOR -->
-    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-center gap-4">
-        <div class="h-px bg-gradient-to-r from-transparent via-gold/40 to-transparent flex-1"></div>
-        <div class="w-2 h-2 rounded-full bg-gold/60"></div>
-        <div class="h-px bg-gradient-to-r from-transparent via-gold/40 to-transparent flex-1"></div>
-    </div>
-
-    <!-- KENAPA RIZKY JASA? SECTION -->
-    <section id="kenapa" class="py-20 px-6 relative">
-        <div class="max-w-5xl mx-auto">
-            <div class="text-center max-w-xl mx-auto mb-16 fade-in">
-                <span class="text-xs uppercase tracking-widest text-gold font-semibold mb-3 block">Keunggulan Layanan</span>
-                <h2 class="text-3xl sm:text-4xl font-bold text-white tracking-tight mb-2">KENAPA RIZKY JASA?</h2>
-                <p class="text-gray-400 text-sm font-light">"Biar urusan kamu nggak makin ribet."</p>
-                <div class="w-16 h-0.5 bg-gold mx-auto mt-4"></div>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
-                <!-- Point 1 -->
-                <div class="bg-neutral-900/40 border border-white/10 rounded-2xl p-8 flex flex-col items-text text-left hover:border-gold/40 transition duration-300 fade-in">
-                    <div class="w-10 h-10 rounded-lg bg-gold/10 border border-gold/30 flex items-center justify-center text-gold font-bold text-sm mb-6">
-                        01
-                    </div>
-                    <h3 class="text-base font-bold text-white mb-2 uppercase tracking-wide">SIMPLE</h3>
-                    <p class="text-gray-400 text-sm font-light leading-relaxed">
-                        "Langsung bahas kebutuhan kamu tanpa proses yang ribet."
-                    </p>
-                </div>
-
-                <!-- Point 2 -->
-                <div class="bg-neutral-900/40 border border-white/10 rounded-2xl p-8 flex flex-col items-text text-left hover:border-gold/40 transition duration-300 fade-in">
-                    <div class="w-10 h-10 rounded-lg bg-gold/10 border border-gold/30 flex items-center justify-center text-gold font-bold text-sm mb-6">
-                        02
-                    </div>
-                    <h3 class="text-base font-bold text-white mb-2 uppercase tracking-wide">PRAKTIS</h3>
-                    <p class="text-gray-400 text-sm font-light leading-relaxed">
-                        "Mulai dari CV sampai kebutuhan usaha, semuanya lebih gampang di satu tempat."
-                    </p>
-                </div>
-
-                <!-- Point 3 -->
-                <div class="bg-neutral-900/40 border border-white/10 rounded-2xl p-8 flex flex-col items-text text-left hover:border-gold/40 transition duration-300 fade-in">
-                    <div class="w-10 h-10 rounded-lg bg-gold/10 border border-gold/30 flex items-center justify-center text-gold font-bold text-sm mb-6">
-                        03
-                    </div>
-                    <h3 class="text-base font-bold text-white mb-2 uppercase tracking-wide">PERSONAL</h3>
-                    <p class="text-gray-400 text-sm font-light leading-relaxed">
-                        "Kalau ada yang mau ditanyain, langsung ngobrol lewat WhatsApp."
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- PREMIUM VISUAL SEPARATOR -->
-    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-center gap-4">
-        <div class="h-px bg-gradient-to-r from-transparent via-gold/40 to-transparent flex-1"></div>
-        <div class="w-2 h-2 rounded-full bg-gold/60"></div>
-        <div class="h-px bg-gradient-to-r from-transparent via-gold/40 to-transparent flex-1"></div>
-    </div>
-
-    <!-- CALL TO ACTION SECTION -->
-    <section class="py-20 px-6 relative overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-t from-yellow-600/10 via-transparent to-transparent pointer-events-none"></div>
-        <div class="max-w-4xl mx-auto rounded-3xl border border-gold/40 bg-neutral-950 p-10 sm:p-14 text-center relative z-10 gold-glow fade-in">
-            <div class="w-12 h-12 rounded-xl bg-black border border-gold flex items-center justify-center mx-auto mb-6 text-gold font-bold text-sm">
-                RJ
-            </div>
-
-            <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight mb-4">
-                Siap Meningkatkan Kualitas Dokumen & Usaha Anda?
-            </h2>
-            <p class="text-gray-400 text-sm sm:text-base max-w-xl mx-auto mb-8 font-light">
-                Hubungi kami sekarang melalui WhatsApp untuk konsultasi awal gratis dan dapatkan penawaran terbaik dari Rizky Jasa.
-            </p>
-
-            <a id="generalWhatsappCTA" target="_blank" rel="noopener noreferrer" 
-               class="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-gradient-to-r from-yellow-500 to-yellow-600 text-black font-bold text-sm tracking-wider uppercase gold-glow hover:scale-105 transition duration-300">
-                <span>Hubungi via WhatsApp</span>
             </a>
+            <!-- Close X Button inside mobile menu header -->
+            <button id="mobileMenuCloseBtn" aria-label="Tutup Menu" class="p-3 text-ink bg-surface rounded-xl border border-lineborder focus:outline-none cursor-pointer shadow-xs">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Menu Navigation Links -->
+        <nav class="flex flex-col space-y-6 text-2xl font-serif text-ink py-4">
+            <a href="#layanan" class="mobile-nav-link hover:text-[#C29B38] transition-colors pb-4 border-b border-lineborder/60 flex items-center justify-between">
+                <span>Layanan</span>
+                <span class="text-xs font-mono text-mutedtext">01</span>
+            </a>
+            <a href="#interview-practice" class="mobile-nav-link hover:text-[#C29B38] transition-colors pb-4 border-b border-lineborder/60 flex items-center justify-between">
+                <span>Interview Practice</span>
+                <span class="text-xs font-mono text-mutedtext">02</span>
+            </a>
+            <a href="#cara-kerja" class="mobile-nav-link hover:text-[#C29B38] transition-colors pb-4 border-b border-lineborder/60 flex items-center justify-between">
+                <span>Cara Kerja</span>
+                <span class="text-xs font-mono text-mutedtext">03</span>
+            </a>
+            <a href="#faq" class="mobile-nav-link hover:text-[#C29B38] transition-colors pb-4 border-b border-lineborder/60 flex items-center justify-between">
+                <span>FAQ</span>
+                <span class="text-xs font-mono text-mutedtext">04</span>
+            </a>
+        </nav>
+
+        <!-- Menu Footer CTA -->
+        <div class="mt-auto pt-8 pb-12 space-y-4">
+            <a href="https://wa.me/6282125424346?text=Halo%20Rizky%20Jasa,%20Saya%20ingin%20diskusi%20lebih%20lanjut%20mengenai%20layanan%20yang%20tersedia." target="_blank" rel="noopener noreferrer" class="w-full inline-flex justify-center items-center gap-2 text-xs font-semibold uppercase tracking-wider bg-brandaccent text-white px-6 py-4 rounded-full shadow-md">
+                <span>Chat WhatsApp</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            </a>
+            <div class="text-center text-xs text-mutedtext font-mono uppercase tracking-widest pt-2">
+                WhatsApp: 0821-2542-4346
+            </div>
+        </div>
+    </div>
+
+    <!-- HERO SECTION -->
+    <section class="relative pt-20 pb-24 lg:pt-32 lg:pb-32 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+                
+                <div class="lg:col-span-7 space-y-8 text-left">
+                    <div class="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-surface border border-lineborder text-xs font-mono tracking-widest text-brandaccent uppercase shadow-xs">
+                        <span class="w-2 h-2 rounded-full bg-[#C29B38] animate-pulse"></span>
+                        <span>Professional CV • Document • Digital Studio</span>
+                    </div>
+
+                    <h1 class="font-serif text-5xl sm:text-6xl lg:text-[72px] font-bold tracking-tight leading-[1.08] text-ink">
+                        Dokumen Profesional, Dibuat Lebih <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#A8822B] to-[#C29B38] italic">Siap</span> untuk Dunia Kerja.
+                    </h1>
+
+                    <p class="text-lg sm:text-xl text-mutedtext font-normal leading-relaxed max-w-2xl">
+                        Bantu siapkan CV, dokumen lamaran, dan kebutuhan digitalmu dengan tampilan yang rapi, modern, dan profesional.
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-4">
+                        <a href="https://wa.me/6282125424346?text=Halo%20Rizky%20Jasa,%20Saya%20ingin%20diskusi%20lebih%20lanjut%20mengenai%20layanan%20yang%20tersedia." target="_blank" rel="noopener noreferrer" class="inline-flex justify-center items-center gap-3 bg-brandaccent text-white font-semibold px-8 py-4 rounded-full hover:bg-brandaccent/90 transition-all shadow-xl shadow-slate-900/10 text-sm uppercase tracking-wider">
+                            <span>Konsultasi via WhatsApp</span>
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                        </a>
+                        <button type="button" id="heroLihatLayananBtn" class="inline-flex justify-center items-center gap-2 bg-surface border border-lineborder text-ink font-semibold px-8 py-4 rounded-full hover:bg-surfacealt transition-all text-sm uppercase tracking-wider cursor-pointer shadow-xs">
+                            <span>Lihat Layanan</span>
+                        </button>
+                    </div>
+
+                    <div class="pt-8 flex items-center gap-8 text-xs text-mutedtext border-t border-lineborder font-mono">
+                        <div class="flex items-center gap-2">
+                            <svg class="w-4 h-4 text-[#C29B38]" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                            <span>ATS Friendly Verified</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <svg class="w-4 h-4 text-[#C29B38]" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                            <span>Fast Delivery & Revision</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- HERO VISUAL COMPOSITION: INTERVIEW PRACTICE FEATURE CARD -->
+                <div class="lg:col-span-5 relative" id="interview-practice">
+                    <div class="relative mx-auto max-w-md lg:max-w-none">
+                        <div class="absolute inset-0 bg-gradient-to-br from-[#C29B38]/10 to-[#A8822B]/10 rounded-[32px] blur-2xl transform rotate-3 scale-105 -z-10"></div>
+                        <div class="editorial-card rounded-[32px] p-8 space-y-6 relative overflow-hidden bg-surface">
+                            <div class="flex items-center justify-between pb-5 border-b border-lineborder">
+                                <div class="flex items-center gap-3.5">
+                                    <div class="w-12 h-12 rounded-2xl bg-amber-100 border border-amber-200 flex items-center justify-center font-serif text-amber-800 font-bold text-xl shadow-sm">🎤</div>
+                                    <div>
+                                        <div class="text-[10px] uppercase tracking-widest text-mutedtext font-mono">INTERACTIVE FEATURE</div>
+                                        <div class="text-base font-semibold text-ink">Simulasi Interview Kerja</div>
+                                    </div>
+                                </div>
+                                <span class="px-3 py-1 bg-surfacealt text-brandaccent text-[11px] font-mono font-semibold rounded-full border border-lineborder">Live Simulator</span>
+                            </div>
+
+                            <div class="space-y-3 bg-surfacealt p-4 rounded-2xl border border-lineborder">
+                                <div class="flex items-start gap-2.5">
+                                    <div class="w-6 h-6 rounded-lg bg-brandaccent text-white flex-shrink-0 flex items-center justify-center text-[10px] font-bold">HRD</div>
+                                    <div class="bg-surface p-3 rounded-xl border border-lineborder text-xs text-ink shadow-xs">
+                                        Halo! Boleh ceritakan latar belakang singkat kamu?
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-2.5 justify-end">
+                                    <div class="bg-brandaccent text-white p-3 rounded-xl text-xs shadow-xs max-w-[85%]">
+                                        Saya fresh graduate jurusan Ilmu Komputer...
+                                    </div>
+                                    <div class="w-6 h-6 rounded-lg bg-emerald-700 text-white flex-shrink-0 flex items-center justify-center text-[10px] font-bold">Kamu</div>
+                                </div>
+                            </div>
+
+                            <div class="space-y-3 pt-2">
+                                <p class="text-sm text-mutedtext font-normal leading-relaxed">
+                                    Latihan interview sebelum ketemu HRD beneran. Jawab pertanyaan seperti sedang interview langsung dan dapatkan feedback setelah selesai.
+                                </p>
+                                <button type="button" id="startInterviewBtn" class="w-full inline-flex justify-center items-center gap-2 bg-brandaccent text-white font-semibold py-4 px-6 rounded-full hover:bg-brandaccent/90 transition-all text-xs uppercase tracking-wider shadow-md cursor-pointer">
+                                    <span>MULAI SIMULASI →</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </div>
     </section>
 
-    <!-- POLISHED FOOTER -->
-    <footer class="border-t border-gold/30 bg-black py-16 px-6 relative overflow-hidden">
-        <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-96 h-24 bg-gold/5 blur-3xl pointer-events-none"></div>
-        
-        <div class="max-w-4xl mx-auto text-center relative z-10">
-            <!-- Brand Mark -->
-            <div class="flex items-center justify-center gap-3 mb-4">
-                <div class="w-10 h-10 rounded-lg bg-neutral-900 border border-gold flex items-center justify-center gold-glow">
-                    <span class="text-gold font-bold text-sm">RJ</span>
+    <!-- INTRO / VALUE PROPOSITION -->
+    <section class="py-24 bg-surfacealt border-y border-lineborder relative">
+        <div class="max-w-4xl mx-auto px-6 text-center space-y-6">
+            <span class="text-xs uppercase tracking-[0.25em] text-[#C29B38] font-mono font-semibold">Filosofi Studio</span>
+            <h2 class="font-serif text-4xl sm:text-5xl text-ink font-normal tracking-tight">
+                “Bukan Sekadar Dirapikan.”
+            </h2>
+            <p class="text-lg sm:text-xl text-mutedtext font-normal leading-relaxed max-w-2xl mx-auto">
+                Setiap layanan dirancang dengan ketelitian struktural dan estetika visual — agar hasil akhirnya bukan hanya estetik, tetapi benar-benar fungsional untuk lolos seleksi.
+            </p>
+        </div>
+    </section>
+
+    <!-- SERVICES SECTION (6 Official Services) -->
+    <section id="layanan" class="py-32 max-w-7xl mx-auto px-6 lg:px-12 relative">
+        <div class="max-w-2xl mb-20 space-y-4">
+            <span class="text-xs uppercase tracking-[0.25em] text-[#C29B38] font-mono font-semibold">Pilihan Layanan</span>
+            <h2 class="font-serif text-4xl sm:text-5xl text-ink font-normal tracking-tight">Layanan Profesional</h2>
+            <p class="text-mutedtext text-lg">Solusi digital dan dokumen siap pakai untuk mendukung perjalanan kariermu.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
+            
+            <!-- SERVICE 01: CV ATS FRIENDLY -->
+            <div class="service-card editorial-card rounded-[32px] p-8 flex flex-col justify-between group cursor-pointer relative" data-service-id="cv-ats">
+                <div class="space-y-6 pointer-events-none">
+                    <div class="flex items-center justify-between">
+                        <span class="bg-brandaccent text-white text-[11px] font-mono font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider">ATS FRIENDLY</span>
+                        <span class="lang-toggle text-[11px] font-mono px-3.5 py-1.5 rounded-full border border-lineborder bg-surface text-mutedtext hover:text-ink transition-all pointer-events-auto">ID / EN</span>
+                    </div>
+
+                    <div class="w-full h-[180px] bg-surfacealt rounded-2xl p-4 flex items-center justify-center border border-lineborder group-hover:border-[#C29B38]/50 transition-colors relative overflow-hidden">
+                        <div class="bg-surface rounded-xl p-3 border border-lineborder w-full h-full flex flex-col justify-between shadow-xs">
+                            <div class="space-y-2">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-8 h-8 rounded-full bg-slate-200 flex-shrink-0"></div>
+                                    <div class="space-y-1 flex-1">
+                                        <div class="h-2 bg-ink rounded w-3/4"></div>
+                                        <div class="h-1.5 bg-[#C29B38] rounded w-1/2"></div>
+                                    </div>
+                                </div>
+                                <div class="space-y-1 pt-1">
+                                    <div class="h-1 bg-slate-300 rounded w-full"></div>
+                                    <div class="h-1 bg-slate-300 rounded w-5/6"></div>
+                                    <div class="h-1 bg-slate-300 rounded w-4/6"></div>
+                                </div>
+                            </div>
+                            <div class="text-[9px] uppercase font-mono text-mutedtext text-right">ATS Clean Format</div>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between pt-1">
+                        <span class="text-[11px] text-mutedtext font-mono font-bold uppercase tracking-wider">SERVICE 01</span>
+                        <span class="text-xs bg-surface text-ink font-medium px-3.5 py-1.5 rounded-full flex items-center gap-1.5 group-hover:translate-x-1 transition-transform border border-lineborder">
+                            Lihat Detail →
+                        </span>
+                    </div>
+
+                    <h3 class="font-serif text-3xl font-semibold text-ink leading-tight">CV ATS Friendly</h3>
+                    <p class="text-sm sm:text-base text-mutedtext leading-relaxed font-normal">
+                        CV dengan struktur bersih tanpa ornamen rumit, dirancang agar mudah dibaca sistem pemindai ATS perusahaan.
+                    </p>
                 </div>
-                <span class="font-extrabold tracking-widest text-white text-lg">RIZKY JASA</span>
+
+                <div class="pt-8">
+                    <button type="button" class="detail-btn w-full inline-flex justify-center items-center gap-2 py-4 px-6 rounded-full bg-surfacealt hover:bg-brandaccent hover:text-white text-ink text-xs font-semibold uppercase tracking-wider transition-all border border-lineborder cursor-pointer pointer-events-auto shadow-xs">
+                        <span>Pilih & Lihat Detail</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                    </button>
+                </div>
             </div>
 
-            <!-- Tagline -->
-            <p class="text-gray-300 text-sm font-medium mb-6">
-                "Beresin urusan digital, gak pake ribet."
+            <!-- SERVICE 02: CV KREATIF -->
+            <div class="service-card editorial-card rounded-[32px] p-8 flex flex-col justify-between group cursor-pointer relative" data-service-id="cv-kreatif">
+                <div class="space-y-6 pointer-events-none">
+                    <div class="flex items-center justify-between">
+                        <span class="bg-emerald-800 text-white text-[11px] font-mono font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider">CREATIVE CV</span>
+                        <span class="lang-toggle text-[11px] font-mono px-3.5 py-1.5 rounded-full border border-lineborder bg-surface text-mutedtext hover:text-ink transition-all pointer-events-auto">ID / EN</span>
+                    </div>
+
+                    <div class="w-full h-[180px] bg-surfacealt rounded-2xl p-4 flex items-center justify-center border border-lineborder group-hover:border-emerald-300 transition-colors relative overflow-hidden">
+                        <div class="bg-surface rounded-xl p-2.5 border border-lineborder w-full h-full grid grid-cols-12 gap-2 shadow-xs">
+                            <div class="col-span-4 bg-emerald-100/60 border border-emerald-200 rounded-lg p-2 flex flex-col items-center justify-between">
+                                <div class="w-6 h-6 rounded-full bg-emerald-200"></div>
+                                <div class="space-y-1 w-full">
+                                    <div class="h-1 bg-emerald-900/40 rounded w-full"></div>
+                                    <div class="h-1 bg-emerald-900/40 rounded w-2/3"></div>
+                                </div>
+                            </div>
+                            <div class="col-span-8 space-y-2 flex flex-col justify-center">
+                                <div class="h-2 bg-ink rounded w-4/5"></div>
+                                <div class="h-1 bg-[#C29B38] rounded w-1/2"></div>
+                                <div class="flex gap-1 pt-1">
+                                    <div class="h-2 w-4 bg-amber-100 rounded"></div>
+                                    <div class="h-2 w-4 bg-slate-200 rounded"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between pt-1">
+                        <span class="text-[11px] text-mutedtext font-mono font-bold uppercase tracking-wider">SERVICE 02</span>
+                        <span class="text-xs bg-surface text-ink font-medium px-3.5 py-1.5 rounded-full flex items-center gap-1.5 group-hover:translate-x-1 transition-transform border border-lineborder">
+                            Lihat Detail →
+                        </span>
+                    </div>
+
+                    <h3 class="font-serif text-3xl font-semibold text-ink leading-tight">CV Kreatif</h3>
+                    <p class="text-sm sm:text-base text-mutedtext leading-relaxed font-normal">
+                        CV dengan layout visual modern & editorial untuk menonjolkan personal branding yang kuat namun tetap profesional.
+                    </p>
+                </div>
+
+                <div class="pt-8">
+                    <button type="button" class="detail-btn w-full inline-flex justify-center items-center gap-2 py-4 px-6 rounded-full bg-surfacealt hover:bg-brandaccent hover:text-white text-ink text-xs font-semibold uppercase tracking-wider transition-all border border-lineborder cursor-pointer pointer-events-auto shadow-xs">
+                        <span>Pilih & Lihat Detail</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- SERVICE 03: PAKET HEMAT -->
+            <div class="service-card editorial-card rounded-[32px] p-8 flex flex-col justify-between group cursor-pointer relative" data-service-id="paket-hemat">
+                <div class="space-y-6 pointer-events-none">
+                    <div class="flex items-center justify-between">
+                        <span class="bg-[#A8822B] text-white text-[11px] font-mono font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider">PAKET HEMAT</span>
+                        <span class="lang-toggle text-[11px] font-mono px-3.5 py-1.5 rounded-full border border-lineborder bg-surface text-mutedtext hover:text-ink transition-all pointer-events-auto">ID / EN</span>
+                    </div>
+
+                    <div class="w-full h-[180px] bg-surfacealt rounded-2xl p-4 flex items-center justify-center border border-lineborder group-hover:border-[#C29B38]/50 transition-colors relative overflow-hidden">
+                        <div class="relative w-full h-full flex items-center justify-center">
+                            <div class="absolute -left-2 top-3 w-24 h-32 bg-surface rounded-lg border border-lineborder p-2 transform -rotate-6 opacity-75 shadow-xs">
+                                <div class="h-1 bg-slate-400 rounded w-1/2 mb-2"></div>
+                                <div class="space-y-1">
+                                    <div class="h-0.5 bg-slate-300 rounded w-full"></div>
+                                    <div class="h-0.5 bg-slate-300 rounded w-4/5"></div>
+                                </div>
+                            </div>
+                            <div class="absolute left-6 top-1 w-28 h-36 bg-surface rounded-lg border border-lineborder shadow-sm p-2.5 transform rotate-3">
+                                <div class="flex items-center gap-1 mb-2">
+                                    <div class="w-3.5 h-3.5 rounded-full bg-[#C29B38]/40"></div>
+                                    <div class="h-1.5 bg-ink rounded w-1/2"></div>
+                                </div>
+                                <div class="space-y-1">
+                                    <div class="h-0.5 bg-slate-300 rounded w-full"></div>
+                                    <div class="h-0.5 bg-slate-300 rounded w-3/4"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between pt-1">
+                        <span class="text-[11px] text-mutedtext font-mono font-bold uppercase tracking-wider">SERVICE 03</span>
+                        <span class="text-xs bg-surface text-ink font-medium px-3.5 py-1.5 rounded-full flex items-center gap-1.5 group-hover:translate-x-1 transition-transform border border-lineborder">
+                            Lihat Detail →
+                        </span>
+                    </div>
+
+                    <h3 class="font-serif text-3xl font-semibold text-ink leading-tight">Paket Hemat</h3>
+                    <p class="text-sm sm:text-base text-mutedtext leading-relaxed font-normal">
+                        Kombinasi praktis untuk mendapatkan CV profesional sekaligus Surat Lamaran Kerja (Cover Letter) dalam sekali proses.
+                    </p>
+                </div>
+
+                <div class="pt-8">
+                    <button type="button" class="detail-btn w-full inline-flex justify-center items-center gap-2 py-4 px-6 rounded-full bg-surfacealt hover:bg-brandaccent hover:text-white text-ink text-xs font-semibold uppercase tracking-wider transition-all border border-lineborder cursor-pointer pointer-events-auto shadow-xs">
+                        <span>Pilih & Lihat Detail</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- SERVICE 04: PAKET KOMPLIT KERJA -->
+            <div class="service-card editorial-card rounded-[32px] p-8 flex flex-col justify-between group cursor-pointer relative" data-service-id="paket-komplit">
+                <div class="space-y-6 pointer-events-none">
+                    <div class="flex items-center justify-between">
+                        <span class="bg-[#C29B38] text-white text-[11px] font-mono font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider">BEST SELLER</span>
+                        <span class="lang-toggle text-[11px] font-mono px-3.5 py-1.5 rounded-full border border-lineborder bg-surface text-mutedtext hover:text-ink transition-all pointer-events-auto">ID / EN</span>
+                    </div>
+
+                    <div class="w-full h-[180px] bg-surfacealt rounded-2xl p-4 flex items-center justify-center border border-lineborder group-hover:border-[#C29B38]/50 transition-colors relative overflow-hidden">
+                        <div class="grid grid-cols-2 gap-2 w-full h-full items-center justify-center p-1">
+                            <div class="bg-surface p-2.5 rounded-xl border border-lineborder flex flex-col items-center text-center shadow-xs">
+                                <svg class="w-4 h-4 text-[#C29B38] mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                                <span class="text-[10px] font-mono font-semibold text-ink">CV Pro</span>
+                            </div>
+                            <div class="bg-surface p-2.5 rounded-xl border border-lineborder flex flex-col items-center text-center shadow-xs">
+                                <svg class="w-4 h-4 text-[#C29B38] mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                                <span class="text-[10px] font-mono font-semibold text-ink">Surat</span>
+                            </div>
+                            <div class="bg-surface p-2.5 rounded-xl border border-lineborder flex flex-col items-center text-center shadow-xs">
+                                <svg class="w-4 h-4 text-[#C29B38] mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
+                                <span class="text-[10px] font-mono font-semibold text-ink">Pass Foto</span>
+                            </div>
+                            <div class="bg-surface p-2.5 rounded-xl border border-lineborder flex flex-col items-center text-center shadow-xs">
+                                <svg class="w-4 h-4 text-[#C29B38] mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+                                <span class="text-[10px] font-mono font-semibold text-ink">Draft WA</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between pt-1">
+                        <span class="text-[11px] text-mutedtext font-mono font-bold uppercase tracking-wider">SERVICE 04</span>
+                        <span class="text-xs bg-surface text-ink font-medium px-3.5 py-1.5 rounded-full flex items-center gap-1.5 group-hover:translate-x-1 transition-transform border border-lineborder">
+                            Lihat Detail →
+                        </span>
+                    </div>
+
+                    <h3 class="font-serif text-3xl font-semibold text-ink leading-tight">Paket Komplit Kerja</h3>
+                    <p class="text-sm sm:text-base text-mutedtext leading-relaxed font-normal">
+                        Solusi menyeluruh dari CV profesional, surat lamaran, gratis edit pass foto, hingga draf pesan pengiriman yang meyakinkan.
+                    </p>
+                </div>
+
+                <div class="pt-8">
+                    <button type="button" class="detail-btn w-full inline-flex justify-center items-center gap-2 py-4 px-6 rounded-full bg-surfacealt hover:bg-brandaccent hover:text-white text-ink text-xs font-semibold uppercase tracking-wider transition-all border border-lineborder cursor-pointer pointer-events-auto shadow-xs">
+                        <span>Pilih & Lihat Detail</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- SERVICE 05: EDIT DOKUMEN RINGAN -->
+            <div class="service-card editorial-card rounded-[32px] p-8 flex flex-col justify-between group cursor-pointer relative" data-service-id="edit-dokumen">
+                <div class="space-y-6 pointer-events-none">
+                    <div class="flex items-center justify-between">
+                        <span class="bg-blue-800 text-white text-[11px] font-mono font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider">EDIT DOKUMEN</span>
+                        <span class="lang-toggle text-[11px] font-mono px-3.5 py-1.5 rounded-full border border-lineborder bg-surface text-mutedtext hover:text-ink transition-all pointer-events-auto">ID / EN</span>
+                    </div>
+
+                    <div class="w-full h-[180px] bg-surfacealt rounded-2xl p-4 flex items-center justify-center border border-lineborder group-hover:border-blue-300 transition-colors relative overflow-hidden">
+                        <div class="bg-surface rounded-xl p-3 border border-lineborder w-full h-full relative flex flex-col justify-between shadow-xs">
+                            <div class="absolute top-2 right-2 bg-blue-50 p-1.5 rounded-lg text-blue-700 border border-blue-200">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="h-2 bg-slate-400 rounded w-2/3"></div>
+                                <div class="space-y-1">
+                                    <div class="h-1 bg-brandaccent rounded w-full"></div>
+                                    <div class="h-1 bg-amber-100 rounded w-4/5 border-b border-dashed border-[#C29B38] pb-0.5"></div>
+                                </div>
+                            </div>
+                            <div class="text-[9px] font-mono text-brandaccent bg-slate-100 px-2.5 py-1 rounded border border-slate-200 inline-block w-max">
+                                Real-time Optimization
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between pt-1">
+                        <span class="text-[11px] text-mutedtext font-mono font-bold uppercase tracking-wider">SERVICE 05</span>
+                        <span class="text-xs bg-surface text-ink font-medium px-3.5 py-1.5 rounded-full flex items-center gap-1.5 group-hover:translate-x-1 transition-transform border border-lineborder">
+                            Lihat Detail →
+                        </span>
+                    </div>
+
+                    <h3 class="font-serif text-3xl font-semibold text-ink leading-tight">Edit Dokumen Ringan</h3>
+                    <p class="text-sm sm:text-base text-mutedtext leading-relaxed font-normal">
+                        Bantuan ahli untuk merapikan tata letak, format, dan struktur dokumen digital agar siap digunakan untuk keperluan penting.
+                    </p>
+                </div>
+
+                <div class="pt-8">
+                    <button type="button" class="detail-btn w-full inline-flex justify-center items-center gap-2 py-4 px-6 rounded-full bg-surfacealt hover:bg-brandaccent hover:text-white text-ink text-xs font-semibold uppercase tracking-wider transition-all border border-lineborder cursor-pointer pointer-events-auto shadow-xs">
+                        <span>Pilih & Lihat Detail</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- SERVICE 06: LANDING PAGE SEDERHANA -->
+            <div class="service-card editorial-card rounded-[32px] p-8 flex flex-col justify-between group cursor-pointer relative" data-service-id="landing-page">
+                <div class="space-y-6 pointer-events-none">
+                    <div class="flex items-center justify-between">
+                        <span class="bg-indigo-900 text-white text-[11px] font-mono font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider">LANDING PAGE</span>
+                        <span class="lang-toggle text-[11px] font-mono px-3.5 py-1.5 rounded-full border border-lineborder bg-surface text-mutedtext hover:text-ink transition-all pointer-events-auto">ID / EN</span>
+                    </div>
+
+                    <div class="w-full h-[180px] bg-surfacealt rounded-2xl p-4 flex items-center justify-center border border-lineborder group-hover:border-indigo-300 transition-colors relative overflow-hidden">
+                        <div class="w-full h-full flex flex-col items-center justify-center relative">
+                            <div class="w-36 h-22 bg-surface rounded-xl border border-lineborder p-2 shadow-sm flex flex-col justify-between">
+                                <div class="flex items-center justify-between pb-1 border-b border-lineborder">
+                                    <div class="flex gap-1">
+                                        <div class="w-1.5 h-1.5 rounded-full bg-rose-400"></div>
+                                        <div class="w-1.5 h-1.5 rounded-full bg-amber-400"></div>
+                                        <div class="w-1.5 h-1.5 rounded-full bg-emerald-400"></div>
+                                    </div>
+                                    <div class="w-12 h-1 bg-lineborder rounded-full"></div>
+                                </div>
+                                <div class="space-y-1 text-center">
+                                    <div class="h-1.5 bg-ink rounded w-3/4 mx-auto"></div>
+                                    <div class="h-1 bg-[#C29B38] rounded w-1/2 mx-auto"></div>
+                                </div>
+                                <div class="h-3 bg-brandaccent rounded-lg w-1/3 mx-auto"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between pt-1">
+                        <span class="text-[11px] text-mutedtext font-mono font-bold uppercase tracking-wider">SERVICE 06</span>
+                        <span class="text-xs bg-surface text-ink font-medium px-3.5 py-1.5 rounded-full flex items-center gap-1.5 group-hover:translate-x-1 transition-transform border border-lineborder">
+                            Lihat Detail →
+                        </span>
+                    </div>
+
+                    <h3 class="font-serif text-3xl font-semibold text-ink leading-tight">Landing Page Sederhana</h3>
+                    <p class="text-sm sm:text-base text-mutedtext leading-relaxed font-normal">
+                        Website portofolio atau bisnis siap pakai berkecepatan tinggi dengan subdomain untuk memperkenalkan brand secara profesional.
+                    </p>
+                </div>
+
+                <div class="pt-8">
+                    <button type="button" class="detail-btn w-full inline-flex justify-center items-center gap-2 py-4 px-6 rounded-full bg-surfacealt hover:bg-brandaccent hover:text-white text-ink text-xs font-semibold uppercase tracking-wider transition-all border border-lineborder cursor-pointer pointer-events-auto shadow-xs">
+                        <span>Pilih & Lihat Detail</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- WHY RIZKY JASA -->
+    <section class="py-32 bg-surfacealt border-y border-lineborder">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+            <div class="max-w-2xl mb-20 space-y-4">
+                <span class="text-xs uppercase tracking-[0.25em] text-[#C29B38] font-mono font-semibold">Keunggulan Studio</span>
+                <h2 class="font-serif text-4xl sm:text-5xl text-ink font-normal tracking-tight">Dibuat untuk Kebutuhan Nyata.</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="editorial-card p-8 rounded-[32px] space-y-4">
+                    <div class="w-12 h-12 rounded-2xl bg-surfacealt border border-lineborder flex items-center justify-center font-serif font-bold text-[#C29B38] text-lg">01</div>
+                    <h3 class="font-serif text-2xl font-semibold text-ink">Personal</h3>
+                    <p class="text-sm text-mutedtext leading-relaxed">Komunikasi langsung dan spesifikasi disesuaikan kebutuhan kariermu.</p>
+                </div>
+                <div class="editorial-card p-8 rounded-[32px] space-y-4">
+                    <div class="w-12 h-12 rounded-2xl bg-surfacealt border border-lineborder flex items-center justify-center font-serif font-bold text-[#C29B38] text-lg">02</div>
+                    <h3 class="font-serif text-2xl font-semibold text-ink">Rapi</h3>
+                    <p class="text-sm text-mutedtext leading-relaxed">Detail visual dan hierarki struktur dokumen sangat diperhatikan.</p>
+                </div>
+                <div class="editorial-card p-8 rounded-[32px] space-y-4">
+                    <div class="w-12 h-12 rounded-2xl bg-surfacealt border border-lineborder flex items-center justify-center font-serif font-bold text-[#C29B38] text-lg">03</div>
+                    <h3 class="font-serif text-2xl font-semibold text-ink">Praktis</h3>
+                    <p class="text-sm text-mutedtext leading-relaxed">Alur pemesanan dibuat sederhana dari konsultasi hingga hasil akhir.</p>
+                </div>
+                <div class="editorial-card p-8 rounded-[32px] space-y-4">
+                    <div class="w-12 h-12 rounded-2xl bg-surfacealt border border-lineborder flex items-center justify-center font-serif font-bold text-[#C29B38] text-lg">04</div>
+                    <h3 class="font-serif text-2xl font-semibold text-ink">Profesional</h3>
+                    <p class="text-sm text-mutedtext leading-relaxed">Hasil akhir siap pakai untuk langsung dikirim ke HRD perusahaan.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CARA KERJA -->
+    <section id="cara-kerja" class="py-32 max-w-7xl mx-auto px-6 lg:px-12">
+        <div class="max-w-2xl mb-20 space-y-4">
+            <span class="text-xs uppercase tracking-[0.25em] text-[#C29B38] font-mono font-semibold">Alur Layanan</span>
+            <h2 class="font-serif text-4xl sm:text-5xl text-ink font-normal tracking-tight">Cara Pesan</h2>
+            <p class="text-mutedtext text-lg">Empat langkah mudah untuk menyiapkan dokumen profesionalmu.</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div class="space-y-5 p-8 editorial-card rounded-[32px]">
+                <span class="font-serif text-5xl text-[#C29B38] font-normal font-mono">01</span>
+                <h3 class="font-serif text-2xl font-semibold text-ink">Kirim Kebutuhan</h3>
+                <p class="text-sm text-mutedtext leading-relaxed">Hubungi via WhatsApp dan sampaikan dokumen atau layanan yang kamu perlukan.</p>
+            </div>
+            <div class="space-y-5 p-8 editorial-card rounded-[32px]">
+                <span class="font-serif text-5xl text-[#C29B38] font-normal font-mono">02</span>
+                <h3 class="font-serif text-2xl font-semibold text-ink">Kami Kerjakan</h3>
+                <p class="text-sm text-mutedtext leading-relaxed">Proses pembuatan atau perapian dokumen dikerjakan dengan presisi tinggi.</p>
+            </div>
+            <div class="space-y-5 p-8 editorial-card rounded-[32px]">
+                <span class="font-serif text-5xl text-[#C29B38] font-normal font-mono">03</span>
+                <h3 class="font-serif text-2xl font-semibold text-ink">Review & Revisi</h3>
+                <p class="text-sm text-mutedtext leading-relaxed">Hasil dokumen dikirimkan untuk diperiksa kembali jika ada penyesuaian.</p>
+            </div>
+            <div class="space-y-5 p-8 editorial-card rounded-[32px]">
+                <span class="font-serif text-5xl text-[#C29B38] font-normal font-mono">04</span>
+                <h3 class="font-serif text-2xl font-semibold text-ink">Selesai</h3>
+                <p class="text-sm text-mutedtext leading-relaxed">Dokumen akhir siap digunakan untuk melamar kerja atau kebutuhan digital.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ SECTION -->
+    <section id="faq" class="py-32 bg-surfacealt border-t border-lineborder">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+                
+                <div class="lg:col-span-5 space-y-6 lg:sticky lg:top-32">
+                    <span class="text-xs uppercase tracking-[0.25em] text-[#C29B38] font-mono font-semibold">Informasi Umum</span>
+                    <h2 class="font-serif text-4xl sm:text-5xl text-ink font-normal tracking-tight">Pertanyaan Populer</h2>
+                    <p class="text-mutedtext text-lg leading-relaxed">
+                        Temukan jawaban lengkap seputar alur pemesanan, waktu pengerjaan, dan ketentuan layanan di Rizky Jasa.
+                    </p>
+                    <div class="pt-4">
+                        <a href="https://wa.me/6282125424346?text=Halo%20Rizky%20Jasa,%20Saya%20ingin%20tanya%20pertanyaan%20lainnya." target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-brandaccent hover:underline">
+                            <span>Punya pertanyaan lain? Chat WhatsApp</span>
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-7 space-y-4" id="faqAccordion">
+                    
+                    <div class="faq-item editorial-card rounded-2xl overflow-hidden">
+                        <button class="faq-btn w-full px-8 py-6 text-left flex items-center justify-between font-serif text-xl sm:text-2xl text-ink focus:outline-none cursor-pointer">
+                            <span>Cara pesan bagaimana?</span>
+                            <span class="faq-icon w-8 h-8 rounded-full bg-surfacealt border border-lineborder flex items-center justify-center text-[#C29B38] transition-transform duration-300 font-mono text-lg">+</span>
+                        </button>
+                        <div class="accordion-content px-8 text-sm text-mutedtext leading-relaxed">
+                            <div class="py-4 border-t border-lineborder">
+                                Kamu cukup klik tombol WhatsApp di website ini, lalu sampaikan layanan yang diinginkan serta data atau CV lamamu. Kami akan memandu proses selanjutnya.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item editorial-card rounded-2xl overflow-hidden">
+                        <button class="faq-btn w-full px-8 py-6 text-left flex items-center justify-between font-serif text-xl sm:text-2xl text-ink focus:outline-none cursor-pointer">
+                            <span>Bisa request perubahan?</span>
+                            <span class="faq-icon w-8 h-8 rounded-full bg-surfacealt border border-lineborder flex items-center justify-center text-[#C29B38] transition-transform duration-300 font-mono text-lg">+</span>
+                        </button>
+                        <div class="accordion-content px-8 text-sm text-mutedtext leading-relaxed">
+                            <div class="py-4 border-t border-lineborder">
+                                Tentu saja. Tersedia sesi revisi maksimal 3x untuk memastikan hasil dokumen sudah sesuai dengan ekspektasi dan kebutuhan profesionalmu.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item editorial-card rounded-2xl overflow-hidden">
+                        <button class="faq-btn w-full px-8 py-6 text-left flex items-center justify-between font-serif text-xl sm:text-2xl text-ink focus:outline-none cursor-pointer">
+                            <span>Berapa lama proses pengerjaannya?</span>
+                            <span class="faq-icon w-8 h-8 rounded-full bg-surfacealt border border-lineborder flex items-center justify-center text-[#C29B38] transition-transform duration-300 font-mono text-lg">+</span>
+                        </button>
+                        <div class="accordion-content px-8 text-sm text-mutedtext leading-relaxed">
+                            <div class="py-4 border-t border-lineborder">
+                                Umumnya pengerjaan dihitung dalam hitungan jam ya 😊 Waktunya bisa menyesuaikan antrean dan kelengkapan data yang kamu berikan. Jadi, semakin lengkap datanya, prosesnya bisa lebih cepat.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item editorial-card rounded-2xl overflow-hidden">
+                        <button class="faq-btn w-full px-8 py-6 text-left flex items-center justify-between font-serif text-xl sm:text-2xl text-ink focus:outline-none cursor-pointer">
+                            <span>Apakah bisa menggunakan Bahasa Inggris?</span>
+                            <span class="faq-icon w-8 h-8 rounded-full bg-surfacealt border border-lineborder flex items-center justify-center text-[#C29B38] transition-transform duration-300 font-mono text-lg">+</span>
+                        </button>
+                        <div class="accordion-content px-8 text-sm text-mutedtext leading-relaxed">
+                            <div class="py-4 border-t border-lineborder">
+                                Ya, untuk layanan CV tersedia opsi Bahasa Indonesia maupun Bahasa Inggris sesuai kebutuhan lamaran kerjamu.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item editorial-card rounded-2xl overflow-hidden">
+                        <button class="faq-btn w-full px-8 py-6 text-left flex items-center justify-between font-serif text-xl sm:text-2xl text-ink focus:outline-none cursor-pointer">
+                            <span>Bagaimana cara mengirim data?</span>
+                            <span class="faq-icon w-8 h-8 rounded-full bg-surfacealt border border-lineborder flex items-center justify-center text-[#C29B38] transition-transform duration-300 font-mono text-lg">+</span>
+                        </button>
+                        <div class="accordion-content px-8 text-sm text-mutedtext leading-relaxed">
+                            <div class="py-4 border-t border-lineborder">
+                                Data seperti pengalaman kerja, riwayat pendidikan, dan informasi pendukung lainnya dapat dikirimkan langsung melalui chat WhatsApp.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item editorial-card rounded-2xl overflow-hidden">
+                        <button class="faq-btn w-full px-8 py-6 text-left flex items-center justify-between font-serif text-xl sm:text-2xl text-ink focus:outline-none cursor-pointer">
+                            <span>Apakah landing page sudah termasuk domain .com atau .id?</span>
+                            <span class="faq-icon w-8 h-8 rounded-full bg-surfacealt border border-lineborder flex items-center justify-center text-[#C29B38] transition-transform duration-300 font-mono text-lg">+</span>
+                        </button>
+                        <div class="accordion-content px-8 text-sm text-mutedtext leading-relaxed">
+                            <div class="py-4 border-t border-lineborder">
+                                Layanan landing page menggunakan subdomain siap pakai seumur hidup. Biaya tersebut belum termasuk sewa domain kustom .com atau .id jika kamu ingin menggunakan domain sendiri.
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="py-32 relative overflow-hidden bg-surface border-t border-lineborder">
+        <div class="absolute inset-0 bg-[#C29B38]/5 pointer-events-none"></div>
+        <div class="max-w-4xl mx-auto px-6 text-center space-y-8 relative z-10">
+            <span class="text-xs uppercase tracking-[0.25em] text-[#C29B38] font-mono font-semibold">Mulai Sekarang</span>
+            <h2 class="font-serif text-4xl sm:text-6xl font-normal tracking-tight text-ink">
+                Sudah Siap Bikin Kebutuhanmu Lebih Profesional?
+            </h2>
+            <p class="text-mutedtext text-lg sm:text-xl max-w-xl mx-auto leading-relaxed">
+                Ceritakan kebutuhanmu. Kami bantu pilih layanan yang paling sesuai.
             </p>
-
-            <!-- Services Bar -->
-            <div class="text-xs text-gold font-mono tracking-widest uppercase mb-8">
-                CV &bull; DOKUMEN &bull; FOTO &bull; UMKM
-            </div>
-
-            <!-- Phone Number & Chat Button -->
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-10">
-                <a id="phoneWhatsapp" class="text-white font-mono font-bold text-lg hover:text-gold transition cursor-pointer">
-                    0821-2542-4346
-                </a>
-                <a id="footerWhatsappBtn" target="_blank" rel="noopener noreferrer" 
-                   class="px-6 py-3 rounded-xl bg-gradient-to-r from-yellow-500 to-yellow-600 text-black font-bold text-xs tracking-wider uppercase gold-glow hover:scale-105 transition duration-300">
-                    CHAT WHATSAPP
+            <div class="pt-4 flex justify-center">
+                <a href="https://wa.me/6282125424346?text=Halo%20Rizky%20Jasa,%20Saya%20ingin%20diskusi%20lebih%20lanjut%20mengenai%20layanan%20yang%20tersedia." target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-3 bg-brandaccent text-white font-semibold px-10 py-5 rounded-full hover:bg-brandaccent/90 transition-all shadow-xl shadow-slate-900/15 text-sm uppercase tracking-wider">
+                    <span>Chat WhatsApp</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                 </a>
             </div>
+            <div class="pt-2 text-xs text-mutedtext font-mono tracking-widest uppercase">
+                WhatsApp: 0821-2542-4346
+            </div>
+        </div>
+    </section>
 
-            <!-- Divider Line -->
-            <div class="w-24 h-px bg-gold/40 mx-auto mb-6"></div>
-
-            <!-- Copyright -->
-            <p class="text-xs text-gray-500">
+    <!-- FOOTER -->
+    <footer class="bg-surfacealt border-t border-lineborder py-14 text-mutedtext text-xs font-mono">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="flex items-center gap-3">
+                <span class="font-serif text-sm font-bold text-ink">Rizky Jasa</span>
+                <span>•</span>
+                <span>Professional Digital & Document Studio</span>
+            </div>
+            <div class="flex items-center gap-8">
+                <a href="#layanan" class="hover:text-ink transition-colors">Layanan</a>
+                <a href="#interview-practice" class="hover:text-ink transition-colors">Interview Practice</a>
+                <a href="#cara-kerja" class="hover:text-ink transition-colors">Cara Kerja</a>
+                <a href="#faq" class="hover:text-ink transition-colors">FAQ</a>
+            </div>
+            <div>
                 &copy; 2026 Rizky Jasa. All rights reserved.
-            </p>
+            </div>
         </div>
     </footer>
 
-    <!-- Script for 15-Point CV Quick Check, Lihat Layanan Scroll, & WhatsApp Links -->
+    <!-- SERVICE DETAIL MODAL -->
+    <div id="serviceModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-ink/30 backdrop-blur-md hidden opacity-0 transition-opacity duration-300 pointer-events-none">
+        <div id="modalContainer" class="editorial-card rounded-[32px] max-w-xl w-full max-h-[90vh] overflow-y-auto p-8 md:p-10 shadow-2xl transform scale-95 transition-transform duration-300 relative space-y-6 pointer-events-auto bg-surface">
+            <button id="modalCloseBtn" aria-label="Tutup" class="absolute top-6 right-6 w-11 h-11 rounded-full bg-surfacealt border border-lineborder flex items-center justify-center text-ink hover:bg-slate-200 transition-colors cursor-pointer shadow-sm">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+            <div id="modalContent" class="space-y-6">
+                <!-- Dynamically injected service details -->
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERVIEW PRACTICE MODAL -->
+    <div id="interviewModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-ink/40 backdrop-blur-md hidden opacity-0 transition-opacity duration-300 pointer-events-none">
+        <div id="interviewModalContainer" class="editorial-card rounded-[32px] max-w-2xl w-full max-h-[92vh] overflow-y-auto p-6 md:p-10 shadow-2xl transform scale-95 transition-transform duration-300 relative space-y-6 pointer-events-auto bg-surface">
+            <button id="interviewCloseBtn" aria-label="Tutup" class="absolute top-6 right-6 w-11 h-11 rounded-full bg-surfacealt border border-lineborder flex items-center justify-center text-ink hover:bg-slate-200 transition-colors cursor-pointer shadow-sm z-10">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+            <div id="interviewModalContent" class="space-y-6">
+                <!-- Dynamically injected interview steps -->
+            </div>
+        </div>
+    </div>
+
+    <!-- RIZKY JASA ASSISTANT (AI CUSTOMER SERVICE WIDGET) -->
+    <div class="fixed bottom-6 right-6 z-50 font-sans">
+        <!-- Floating Chat Toggle Button -->
+        <div class="relative group">
+            <div class="absolute -top-10 right-0 bg-surface text-ink px-3 py-1.5 rounded-full text-xs font-semibold shadow-md border border-lineborder opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
+                Butuh bantuan?
+            </div>
+            <button id="chatToggleBtn" aria-label="Buka AI Assistant" class="w-14 h-14 rounded-full bg-brandaccent text-white flex items-center justify-center shadow-xl hover:scale-105 transition-all cursor-pointer relative focus:outline-none">
+                <svg id="chatIconOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
+                <svg id="chatIconClose" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                <span class="absolute top-1 right-1 w-3.5 h-3.5 bg-emerald-500 rounded-full border-2 border-surface"></span>
+            </button>
+        </div>
+
+        <!-- Chat Window -->
+        <div id="chatWindow" class="hidden absolute bottom-20 right-0 w-[90vw] sm:w-[380px] h-[540px] bg-surface rounded-[28px] border border-lineborder shadow-2xl flex flex-col overflow-hidden transition-all duration-300 transform scale-95 opacity-0">
+            <!-- Header -->
+            <div class="bg-surfacealt px-6 py-4 border-b border-lineborder flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-xl bg-brandaccent text-white flex items-center justify-center font-serif font-bold text-sm shadow-xs">RJ</div>
+                    <div>
+                        <div class="text-sm font-bold text-ink leading-tight">Rizky Jasa Assistant</div>
+                        <div class="text-[11px] text-mutedtext flex items-center gap-1.5 mt-0.5">
+                            <span class="w-2 h-2 rounded-full bg-emerald-500 inline-block"></span>
+                            <span class="text-mutedtext">Siap membantu kamu.</span>
+                        </div>
+                    </div>
+                </div>
+                <button id="chatCloseBtn" aria-label="Tutup Chat" class="p-2 text-mutedtext hover:text-ink rounded-full hover:bg-surface transition-colors cursor-pointer">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+
+            <!-- Messages Container -->
+            <div id="chatMessages" class="flex-1 overflow-y-auto p-4 space-y-4 bg-canvas text-sm">
+                <!-- Initial Bot Greeting -->
+                <div class="flex items-start gap-2.5">
+                    <div class="w-7 h-7 rounded-lg bg-brandaccent text-white flex-shrink-0 flex items-center justify-center text-xs font-bold">RJ</div>
+                    <div class="bg-surface border border-lineborder p-3.5 rounded-2xl rounded-tl-sm max-w-[85%] text-ink space-y-3 shadow-xs">
+                        <p>Haii! 👋✨ Selamat datang di Rizky Jasa! Aku Rizky Jasa Assistant 🙌<br>Lagi cari jasa CV, edit dokumen, atau landing page? Tenang, aku siap bantu! 😄<br>Yuk, pilih yang mau kamu tanyakan di bawah 👇</p>
+                        
+                        <!-- Quick Actions (Strictly 6 official items) -->
+                        <div class="flex flex-wrap gap-1.5 pt-1">
+                            <button type="button" class="quick-action-btn text-xs bg-surfacealt hover:bg-slate-200 text-ink px-3 py-1.5 rounded-full border border-lineborder transition-colors font-medium cursor-pointer" data-query="Tanya Harga">1. Tanya Harga</button>
+                            <button type="button" class="quick-action-btn text-xs bg-surfacealt hover:bg-slate-200 text-ink px-3 py-1.5 rounded-full border border-lineborder transition-colors font-medium cursor-pointer" data-query="Layanan Tersedia">2. Layanan Tersedia</button>
+                            <button type="button" class="quick-action-btn text-xs bg-surfacealt hover:bg-slate-200 text-ink px-3 py-1.5 rounded-full border border-lineborder transition-colors font-medium cursor-pointer" data-query="Edit Dokumen">3. Edit Dokumen</button>
+                            <button type="button" class="quick-action-btn text-xs bg-surfacealt hover:bg-slate-200 text-ink px-3 py-1.5 rounded-full border border-lineborder transition-colors font-medium cursor-pointer" data-query="Landing Page">4. Landing Page</button>
+                            <button type="button" class="quick-action-btn text-xs bg-surfacealt hover:bg-slate-200 text-ink px-3 py-1.5 rounded-full border border-lineborder transition-colors font-medium cursor-pointer" data-query="Tanya Revisi">5. Tanya Revisi</button>
+                            <button type="button" class="quick-action-btn text-xs bg-surfacealt hover:bg-slate-200 text-ink px-3 py-1.5 rounded-full border border-lineborder transition-colors font-medium cursor-pointer" data-query="Hubungi Admin">6. Hubungi Admin</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Typing Indicator (Hidden by default) -->
+            <div id="chatTyping" class="hidden px-4 py-2 bg-canvas flex items-center gap-2 text-xs text-mutedtext italic">
+                <div class="w-6 h-6 rounded-lg bg-brandaccent text-white flex-shrink-0 flex items-center justify-center text-[10px] font-bold">RJ</div>
+                <div class="bg-surface border border-lineborder px-3 py-2 rounded-2xl rounded-tl-sm flex items-center gap-1.5 shadow-xs">
+                    <span class="w-1.5 h-1.5 bg-mutedtext rounded-full animate-bounce"></span>
+                    <span class="w-1.5 h-1.5 bg-mutedtext rounded-full animate-bounce" style="animation-delay: 0.2s"></span>
+                    <span class="w-1.5 h-1.5 bg-mutedtext rounded-full animate-bounce" style="animation-delay: 0.4s"></span>
+                    <span class="ml-1">Rizky Jasa Assistant sedang mengetik…</span>
+                </div>
+            </div>
+
+            <!-- Input Form -->
+            <div class="p-3 bg-surface border-t border-lineborder">
+                <form id="chatForm" class="flex items-center gap-2">
+                    <input type="text" id="chatInput" placeholder="Tulis pertanyaanmu di sini..." autocomplete="off" class="flex-1 bg-canvas border border-lineborder px-4 py-2.5 rounded-full text-[16px] text-ink focus:outline-none focus:border-brandaccent transition-colors">
+                    <button type="submit" aria-label="Kirim Pesan" class="w-10 h-10 rounded-full bg-brandaccent text-white flex items-center justify-center flex-shrink-0 hover:bg-brandaccent/90 transition-all cursor-pointer shadow-sm">
+                        <svg class="w-4 h-4 transform rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPT -->
     <script>
-        function createWhatsAppURL(message) {
-            const phone = "6282125424346";
-            if (!message) {
-                return "https://wa.me/" + phone;
-            }
-            return "https://wa.me/" + phone + "?text=" + encodeURIComponent(message);
-        }
+        document.addEventListener('DOMContentLoaded', () => {
+            // Refactored Mobile Menu State & Elements
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileMenuCloseBtn = document.getElementById('mobileMenuCloseBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const hamburgerIcon = document.getElementById('hamburgerIcon');
+            const closeIcon = document.getElementById('closeIcon');
+            const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+            const mobileBrandLink = document.querySelector('.mobile-brand-link');
 
-        document.addEventListener("DOMContentLoaded", function () {
-            // "LIHAT LAYANAN" smooth scroll handler
-            const lihatBtn = document.getElementById("lihatLayananBtn");
-            const layananSection = document.getElementById("layanan");
+            let mobileMenuOpen = false;
 
-            if (lihatBtn && layananSection) {
-                lihatBtn.addEventListener("click", function (event) {
-                    event.preventDefault();
-                    event.stopPropagation();
-                    layananSection.scrollIntoView({
-                        behavior: "smooth",
-                        block: "start"
+            function updateMobileMenuState() {
+                if (!mobileMenu || !hamburgerIcon || !closeIcon) return;
+                
+                if (mobileMenuOpen) {
+                    // Open state: show solid fullscreen menu, lock body scroll, switch hamburger to X
+                    mobileMenu.classList.remove('hidden');
+                    requestAnimationFrame(() => {
+                        mobileMenu.classList.remove('opacity-0');
                     });
+                    hamburgerIcon.classList.add('hidden');
+                    closeIcon.classList.remove('hidden');
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    // Close state: hide menu, restore body scroll, switch X to hamburger
+                    mobileMenu.classList.add('opacity-0');
+                    hamburgerIcon.classList.remove('hidden');
+                    closeIcon.classList.add('hidden');
+                    document.body.style.overflow = '';
+                    setTimeout(() => {
+                        if (!mobileMenuOpen) {
+                            mobileMenu.classList.add('hidden');
+                        }
+                    }, 300);
+                }
+            }
+
+            if (mobileMenuBtn) {
+                mobileMenuBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    mobileMenuOpen = !mobileMenuOpen;
+                    updateMobileMenuState();
                 });
             }
 
-            // Assign WhatsApp links precisely
-            const setLink = (id, msg) => {
-                const el = document.getElementById(id);
-                if (el) el.href = createWhatsAppURL(msg);
-            };
-
-            setLink("cvWhatsapp", "Halo Rizky Jasa, saya mau tanya tentang jasa Edit CV.");
-            setLink("dokumenWhatsapp", "Halo Rizky Jasa, saya mau tanya tentang jasa Edit Dokumen.");
-            setLink("fotoWhatsapp", "Halo Rizky Jasa, saya mau tanya tentang jasa Edit Foto.");
-            setLink("hppWhatsapp", "Halo Rizky Jasa, saya mau tanya tentang jasa Hitung HPP, Modal & Harga Jual.");
-            setLink("omsetWhatsapp", "Halo Rizky Jasa, saya mau tanya tentang jasa Cek Omset & Keuangan Usaha.");
-            setLink("generalWhatsapp", "Halo Rizky Jasa, saya mau konsultasi tentang jasa yang tersedia.");
-            setLink("generalWhatsappBtn", "Halo Rizky Jasa, saya mau konsultasi tentang jasa yang tersedia.");
-            setLink("generalWhatsappCTA", "Halo Rizky Jasa, saya mau konsultasi tentang jasa yang tersedia.");
-            setLink("generalWhatsappFooter", "Halo Rizky Jasa, saya mau konsultasi tentang jasa yang tersedia.");
-            setLink("cvCheckWhatsappBtn", "Halo Rizky Jasa, saya mau sekalian dibantu rapihin CV saya.");
-            setLink("footerWhatsappBtn", "Halo Rizky Jasa, saya mau konsultasi tentang jasa yang tersedia.");
-            
-            const phoneLink = document.getElementById("phoneWhatsapp");
-            if (phoneLink) {
-                phoneLink.href = createWhatsAppURL("");
+            if (mobileMenuCloseBtn) {
+                mobileMenuCloseBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    mobileMenuOpen = false;
+                    updateMobileMenuState();
+                });
             }
 
-            // --- 15-POINT CV QUICK CHECK INTERACTIVE SCRIPT ---
-            const questions = [
-                {
-                    id: 1,
-                    text: "CV kamu sudah mencantumkan nama lengkap?",
-                    goodText: "Nama lengkap sudah dicantumkan",
-                    problemText: "Nama lengkap belum dicantumkan"
+            if (mobileBrandLink) {
+                mobileBrandLink.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    mobileMenuOpen = false;
+                    updateMobileMenuState();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+            }
+
+            mobileNavLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = link.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+
+                    // Close menu and unlock scroll immediately
+                    mobileMenuOpen = false;
+                    updateMobileMenuState();
+
+                    if (targetElement) {
+                        const navbarHeight = 80;
+                        const elementPosition = targetElement.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - navbarHeight;
+
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            // Hero "Lihat Layanan" Smooth Scroll
+            const heroLihatLayananBtn = document.getElementById('heroLihatLayananBtn');
+            if (heroLihatLayananBtn) {
+                heroLihatLayananBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const target = document.querySelector('#layanan');
+                    if (target) {
+                        const navbarHeight = 80;
+                        const elementPosition = target.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - navbarHeight;
+                        window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+                    }
+                });
+            }
+
+            // Language Toggles
+            const langToggles = document.querySelectorAll('.lang-toggle');
+            langToggles.forEach(toggle => {
+                toggle.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    toggle.textContent = toggle.textContent.includes('ID') ? 'EN / ID' : 'ID / EN';
+                });
+            });
+
+            // FAQ Accordion
+            const faqItems = document.querySelectorAll('.faq-item');
+            faqItems.forEach(item => {
+                const btn = item.querySelector('.faq-btn');
+                const content = item.querySelector('.accordion-content');
+                const icon = item.querySelector('.faq-icon');
+
+                btn.addEventListener('click', () => {
+                    const isOpen = content.classList.contains('open');
+
+                    faqItems.forEach(otherItem => {
+                        const otherContent = otherItem.querySelector('.accordion-content');
+                        const otherIcon = otherItem.querySelector('.faq-icon');
+                        otherContent.classList.remove('open');
+                        if (otherIcon) {
+                            otherIcon.textContent = '+';
+                            otherIcon.style.transform = 'rotate(0deg)';
+                        }
+                    });
+
+                    if (!isOpen) {
+                        content.classList.add('open');
+                        if (icon) {
+                            icon.textContent = '—';
+                            icon.style.transform = 'rotate(180deg)';
+                        }
+                    }
+                });
+            });
+
+            // Services Data Modal Definition (Strictly 6 Official Services)
+            const servicesData = {
+                'cv-ats': {
+                    title: 'CV ATS Friendly',
+                    badge: 'ATS FRIENDLY',
+                    badgeColor: 'bg-brandaccent text-white',
+                    description: 'CV dengan struktur bersih tanpa ornamen rumit, dirancang agar mudah dibaca sistem pemindai ATS perusahaan.',
+                    details: 'Dibuat khusus agar lolos pemindaian ATS perusahaan. Format bersih, tanpa kolom atau tabel rumit, siap dikirim dalam format PDF dan Word. Harga mulai Rp17.000.',
+                    waMessage: 'Halo Rizky Jasa, saya tertarik dengan layanan CV ATS Friendly.'
                 },
-                {
-                    id: 2,
-                    text: "Nomor WhatsApp atau HP yang aktif sudah dicantumkan?",
-                    goodText: "Nomor WhatsApp/HP aktif sudah tersedia",
-                    problemText: "Nomor WhatsApp atau HP belum dicantumkan"
+                'cv-kreatif': {
+                    title: 'CV Kreatif',
+                    badge: 'CREATIVE CV',
+                    badgeColor: 'bg-emerald-800 text-white',
+                    description: 'CV dengan layout visual modern & editorial untuk menonjolkan personal branding yang kuat namun tetap profesional.',
+                    details: 'Cocok untuk industri kreatif dan modern. Dilengkapi tata letak visual elegan, pilihan palet warna profesional, dan penonjolan portofolio.',
+                    waMessage: 'Halo Rizky Jasa, saya tertarik dengan layanan CV Kreatif.'
                 },
-                {
-                    id: 3,
-                    text: "Kamu sudah pakai email yang terlihat profesional? (Contoh: nama@gmail.com, bukan alay123@gmail.com)",
-                    goodText: "Email terlihat profesional",
-                    problemText: "Email belum terlihat profesional"
+                'paket-hemat': {
+                    title: 'Paket Hemat',
+                    badge: 'PAKET HEMAT',
+                    badgeColor: 'bg-[#A8822B] text-white',
+                    description: 'Kombinasi praktis untuk mendapatkan CV profesional sekaligus Surat Lamaran Kerja (Cover Letter) dalam sekali proses.',
+                    details: 'Menghemat waktu dan memastikan keselarasan isi antara CV profesional dan Surat Lamaran Kerja (Cover Letter) yang siap dikirim. Harga spesial Rp35.000 sudah termasuk bonus penyesuaian pass foto.',
+                    waMessage: 'Halo Rizky Jasa, saya tertarik dengan Paket Hemat.'
                 },
-                {
-                    id: 4,
-                    text: "Domisili kamu sudah dicantumkan?",
-                    goodText: "Domisili sudah dicantumkan dengan jelas",
-                    problemText: "Domisili belum dicantumkan"
+                'paket-komplit': {
+                    title: 'Paket Komplit Kerja',
+                    badge: 'BEST SELLER',
+                    badgeColor: 'bg-[#C29B38] text-white',
+                    description: 'Solusi menyeluruh dari CV profesional, surat lamaran, gratis edit pass foto, hingga draf pesan pengiriman yang meyakinkan.',
+                    details: 'Mendapatkan CV Profesional, Surat Lamaran, Gratis Edit & Penyesuaian Pass Foto, serta Draft Pesan Email/WhatsApp yang meyakinkan.',
+                    waMessage: 'Halo Rizky Jasa, saya tertarik dengan Paket Komplit Kerja.'
                 },
-                {
-                    id: 5,
-                    text: "Posisi pekerjaan yang kamu incar sudah jelas?",
-                    goodText: "Posisi yang dituju sudah jelas",
-                    problemText: "Posisi yang dituju belum dicantumkan atau kurang jelas"
+                'edit-dokumen': {
+                    title: 'Edit Dokumen Ringan',
+                    badge: 'EDIT DOKUMEN',
+                    badgeColor: 'bg-blue-800 text-white',
+                    description: 'Bantuan ahli untuk merapikan tata letak, format, dan struktur dokumen digital agar siap digunakan untuk keperluan penting.',
+                    details: 'Memperbaiki tata letak, margin, spasi, dan struktur dokumen digital agar terlihat sangat rapi dan siap digunakan untuk keperluan penting.',
+                    waMessage: 'Halo Rizky Jasa, saya tertarik dengan layanan Edit Dokumen Ringan.'
                 },
-                {
-                    id: 6,
-                    text: "CV kamu punya profil singkat yang menjelaskan siapa kamu dan keahlian utama kamu?",
-                    goodText: "Profil singkat sudah ada dan menarik",
-                    problemText: "Profil singkat belum ada"
-                },
-                {
-                    id: 7,
-                    text: "Pengalaman kerja kamu sudah ditulis dengan jelas?",
-                    goodText: "Pengalaman kerja sudah jelas",
-                    problemText: "Pengalaman kerja belum ditulis dengan jelas"
-                },
-                {
-                    id: 8,
-                    text: "Selain tugas kerja, kamu sudah mencantumkan hasil atau pencapaian? (Contoh: Memproses 100+ order per hari)",
-                    goodText: "Sudah mencantumkan hasil atau pencapaian konkret",
-                    problemText: "Belum mencantumkan pencapaian / hasil kerja"
-                },
-                {
-                    id: 9,
-                    text: "Riwayat pendidikan kamu sudah dicantumkan dengan jelas?",
-                    goodText: "Riwayat pendidikan sudah tercantum dengan baik",
-                    problemText: "Riwayat pendidikan belum lengkap atau kurang jelas"
-                },
-                {
-                    id: 10,
-                    text: "Skill yang relevan dengan pekerjaan sudah dicantumkan?",
-                    goodText: "Skill yang relevan sudah dicantumkan",
-                    problemText: "Skill belum dicantumkan"
-                },
-                {
-                    id: 11,
-                    text: "Kalau punya sertifikat atau pelatihan yang relevan, sudah kamu cantumkan?",
-                    goodText: "Sertifikat atau pelatihan relevan sudah dicantumkan",
-                    problemText: "Sertifikat/pelatihan belum dicantumkan",
-                    allowTidakAda: true
-                },
-                {
-                    id: 12,
-                    text: "CV kamu sudah rapi dan mudah dibaca dalam sekali lihat?",
-                    goodText: "Format CV sudah rapi dan mudah dibaca",
-                    problemText: "Format CV belum rapi atau kurang mudah dibaca"
-                },
-                {
-                    id: 13,
-                    text: "CV kamu sudah dicek dari typo atau salah ejaan?",
-                    goodText: "Bebas dari typo dan salah ejaan",
-                    problemText: "Masih ada potensi typo atau salah ejaan"
-                },
-                {
-                    id: 14,
-                    text: "Isi CV kamu sudah cukup ringkas dan tidak bertele-tele?",
-                    goodText: "Panjang CV sudah ringkas dan padat",
-                    problemText: "CV terlalu panjang atau bertele-tele"
-                },
-                {
-                    id: 15,
-                    text: "Isi CV kamu sudah disesuaikan dengan posisi yang sedang kamu lamar?",
-                    goodText: "Isi CV sudah disesuaikan dengan posisi lamaran",
-                    problemText: "Isi CV belum disesuaikan dengan posisi yang dilamar"
+                'landing-page': {
+                    title: 'Landing Page Sederhana',
+                    badge: 'LANDING PAGE',
+                    badgeColor: 'bg-indigo-900 text-white',
+                    description: 'Website portofolio atau bisnis siap pakai berkecepatan tinggi dengan subdomain untuk memperkenalkan brand secara profesional.',
+                    details: 'Solusi cepat memiliki website portofolio atau bisnis siap pakai dengan subdomain, desain responsif, dan tampilan modern. Belum termasuk sewa domain .com / .id.',
+                    waMessage: 'Halo Rizky Jasa, saya tertarik dengan layanan Landing Page Sederhana.'
                 }
-            ];
+            };
 
-            let currentStep = 0;
-            const userAnswers = {};
+            const serviceModal = document.getElementById('serviceModal');
+            const modalContainer = document.getElementById('modalContainer');
+            const modalCloseBtn = document.getElementById('modalCloseBtn');
+            const modalContent = document.getElementById('modalContent');
 
-            const questionContainer = document.getElementById("questionContainer");
-            const stepIndicator = document.getElementById("stepIndicator");
-            const stepPercent = document.getElementById("stepPercent");
-            const progressBar = document.getElementById("progressBar");
-            const cvCheckerForm = document.getElementById("cvCheckerForm");
-            const cvCheckerResult = document.getElementById("cvCheckerResult");
-            const scoreNumber = document.getElementById("scoreNumber");
-            const resultMessage = document.getElementById("resultMessage");
-            const improvementsList = document.getElementById("improvementsList");
-            const goodPointsList = document.getElementById("goodPointsList");
-            const improvementsBox = document.getElementById("improvementsBox");
-            const goodPointsBox = document.getElementById("goodPointsBox");
-            const resetBtn = document.getElementById("resetBtn");
+            function openModal(serviceKey) {
+                const data = servicesData[serviceKey];
+                if (!data) return;
 
-            function renderQuestion() {
-                const q = questions[currentStep];
-
-                stepIndicator.textContent = `${String(currentStep + 1).padStart(2, '0')} / ${questions.length}`;
-                const pct = Math.round(((currentStep + 1) / questions.length) * 100);
-                stepPercent.textContent = pct + "%";
-                progressBar.style.width = pct + "%";
-
-                let optionsHTML = `
-                    <div class="grid grid-cols-2 gap-4 max-w-md mx-auto w-full">
-                        <button type="button" class="option-btn py-3.5 px-6 rounded-xl border border-white/10 bg-neutral-900/60 text-gray-300 hover:border-gold hover:text-white transition font-medium" data-val="Sudah">
-                            SUDAH
-                        </button>
-                        <button type="button" class="option-btn py-3.5 px-6 rounded-xl border border-white/10 bg-neutral-900/60 text-gray-300 hover:border-gold hover:text-white transition font-medium" data-val="Belum">
-                            BELUM
-                        </button>
+                modalContent.innerHTML = `
+                    <div class="space-y-4">
+                        <span class="${data.badgeColor} text-[11px] font-mono font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider inline-block">
+                            ${data.badge}
+                        </span>
+                        <h3 class="font-serif text-3xl font-semibold text-ink">${data.title}</h3>
+                        <p class="text-base text-mutedtext leading-relaxed">${data.description}</p>
+                        <div class="p-5 bg-surfacealt rounded-2xl border border-lineborder text-sm text-ink leading-relaxed">
+                            ${data.details}
+                        </div>
+                    </div>
+                    <div class="pt-2">
+                        <a href="https://wa.me/6282125424346?text=${encodeURIComponent(data.waMessage)}" target="_blank" rel="noopener noreferrer" class="w-full inline-flex justify-center items-center gap-3 bg-brandaccent text-white font-semibold px-8 py-4 rounded-full hover:bg-brandaccent/90 transition-all text-sm uppercase tracking-wider shadow-md">
+                            <span>Tanya / Pesan via WhatsApp</span>
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                        </a>
                     </div>
                 `;
 
-                if (q.allowTidakAda) {
-                    optionsHTML = `
-                        <div class="grid grid-cols-3 gap-3 max-w-lg mx-auto w-full">
-                            <button type="button" class="option-btn py-3.5 px-4 rounded-xl border border-white/10 bg-neutral-900/60 text-gray-300 hover:border-gold hover:text-white transition text-xs font-semibold" data-val="Sudah">
-                                SUDAH
-                            </button>
-                            <button type="button" class="option-btn py-3.5 px-4 rounded-xl border border-white/10 bg-neutral-900/60 text-gray-300 hover:border-gold hover:text-white transition text-xs font-semibold" data-val="Belum">
-                                BELUM
-                            </button>
-                            <button type="button" class="option-btn py-3.5 px-4 rounded-xl border border-white/10 bg-neutral-900/60 text-gray-300 hover:border-gold hover:text-white transition text-xs font-semibold" data-val="Tidak Ada">
-                                TIDAK ADA
-                            </button>
+                if (serviceModal) {
+                    serviceModal.classList.remove('hidden');
+                    serviceModal.classList.remove('pointer-events-none');
+                    setTimeout(() => {
+                        serviceModal.classList.remove('opacity-0');
+                        if (modalContainer) {
+                            modalContainer.classList.remove('scale-95');
+                            modalContainer.classList.add('scale-100');
+                        }
+                    }, 10);
+                }
+            }
+
+            function closeModal() {
+                if (!serviceModal) return;
+                serviceModal.classList.add('opacity-0');
+                if (modalContainer) {
+                    modalContainer.classList.remove('scale-100');
+                    modalContainer.classList.add('scale-95');
+                }
+                setTimeout(() => {
+                    serviceModal.classList.add('hidden');
+                    serviceModal.classList.add('pointer-events-none');
+                }, 300);
+            }
+
+            const serviceCards = document.querySelectorAll('.service-card');
+            serviceCards.forEach(card => {
+                card.addEventListener('click', (e) => {
+                    if (e.target.closest('.lang-toggle')) return;
+                    const id = card.getAttribute('data-service-id');
+                    openModal(id);
+                });
+            });
+
+            const detailButtons = document.querySelectorAll('.detail-btn');
+            detailButtons.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const card = btn.closest('.service-card');
+                    if (card) {
+                        const id = card.getAttribute('data-service-id');
+                        openModal(id);
+                    }
+                });
+            });
+
+            if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeModal);
+            if (serviceModal) {
+                serviceModal.addEventListener('click', (e) => {
+                    if (e.target === serviceModal) closeModal();
+                });
+            }
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') closeModal();
+            });
+
+            // -------------------------------------------------------------
+            // INTERVIEW PRACTICE SIMULATOR LOGIC
+            // -------------------------------------------------------------
+            const interviewModal = document.getElementById('interviewModal');
+            const interviewModalContainer = document.getElementById('interviewModalContainer');
+            const interviewCloseBtn = document.getElementById('interviewCloseBtn');
+            const interviewModalContent = document.getElementById('interviewModalContent');
+            const startInterviewBtn = document.getElementById('startInterviewBtn');
+
+            let interviewState = {
+                step: 1, // 1: role, 2: experience, 3: mode, 4: chat, 5: result
+                role: '',
+                customRole: '',
+                experience: '',
+                mode: '', // basic, hrd, lengkap
+                currentQuestionIndex: 0,
+                questions: [],
+                messages: [], // Append-only chat history: array of { role: 'hrd'|'user', content: string }
+                isSubmitting: false
+            };
+
+            const sampleQuestionsPool = {
+                'Customer Service': [
+                    "Boleh ceritakan latar belakang dan tanggung jawab utama di pekerjaan kamu sebelumnya?",
+                    "Kenapa kamu tertarik melamar sebagai Customer Service di perusahaan kami?",
+                    "Bagaimana cara kamu menghadapi pelanggan yang sedang marah atau kecewa?",
+                    "Ceritakan pengalaman kerja atau organisasi kamu sebelumnya yang relevan.",
+                    "Apa kelebihan dan kekurangan terbesar kamu dalam melayani pelanggan?",
+                    "Bagaimana kamu memastikan kualitas komunikasi tetap terjaga saat menangani banyak antrean pelanggan?",
+                    "Kenapa kami harus memilih kamu untuk posisi Customer Service ini?"
+                ],
+                'Admin': [
+                    "Boleh ceritakan latar belakang dan tanggung jawab utama di pekerjaan kamu sebelumnya?",
+                    "Bagaimana cara kamu memastikan tidak terjadi kesalahan (zero-error) saat input data penting?",
+                    "Software atau tools apa saja yang biasa kamu gunakan untuk pekerjaan administratif?",
+                    "Ceritakan situasi ketika kamu harus menghadapi tumpukan pekerjaan dengan deadline ketat.",
+                    "Bagaimana kamu mengorganisir arsip atau dokumen penting di kantor?"
+                ],
+                'Marketing': [
+                    "Boleh ceritakan latar belakang dan tanggung jawab utama di pekerjaan kamu sebelumnya?",
+                    "Apa strategi utama yang biasa kamu gunakan untuk menarik perhatian target audiens?",
+                    "Ceritakan pencapaian terbaik kamu dalam mencapai target penjualan atau kampanye.",
+                    "Bagaimana cara kamu menangani penolakan (rejection) dari calon klien?",
+                    "Tools analitik atau media sosial apa saja yang paling kamu kuasai?"
+                ],
+                'Operator': [
+                    "Boleh ceritakan latar belakang dan tanggung jawab utama di pekerjaan kamu sebelumnya?",
+                    "Apa saja langkah keselamatan kerja (K3) yang selalu kamu utamakan di area kerja?",
+                    "Bagaimana cara kamu menjaga konsistensi dan kecepatan kerja dalam shift panjang?",
+                    "Ceritakan pengalaman kamu dalam mengoperasikan mesin atau alat produksi.",
+                    "Apa yang kamu lakukan jika menemukan kendala teknis atau kerusakan pada alat operasional?"
+                ],
+                'Staff': [
+                    "Boleh ceritakan latar belakang dan tanggung jawab utama di pekerjaan kamu sebelumnya?",
+                    "Bagaimana cara kamu berkoordinasi dengan rekan kerja atau lintas divisi?",
+                    "Ceritakan tantangan terbesar yang pernah kamu hadapi di tempat kerja dan cara menyelesaikannya."
+                ]
+            };
+
+            function openInterviewModal() {
+                interviewState = { 
+                    step: 1, 
+                    role: '', 
+                    customRole: '', 
+                    experience: '', 
+                    mode: '', 
+                    currentQuestionIndex: 0, 
+                    questions: [], 
+                    messages: [], 
+                    isSubmitting: false 
+                };
+                renderInterviewStep();
+                if (interviewModal) {
+                    interviewModal.classList.remove('hidden');
+                    interviewModal.classList.remove('pointer-events-none');
+                    setTimeout(() => {
+                        interviewModal.classList.remove('opacity-0');
+                        if (interviewModalContainer) {
+                            interviewModalContainer.classList.remove('scale-95');
+                            interviewModalContainer.classList.add('scale-100');
+                        }
+                    }, 10);
+                }
+            }
+
+            function closeInterviewModal() {
+                if (!interviewModal) return;
+                interviewModal.classList.add('opacity-0');
+                if (interviewModalContainer) {
+                    interviewModalContainer.classList.remove('scale-100');
+                    interviewModalContainer.classList.add('scale-95');
+                }
+                setTimeout(() => {
+                    interviewModal.classList.add('hidden');
+                    interviewModal.classList.add('pointer-events-none');
+                }, 300);
+            }
+
+            function renderInterviewStep() {
+                if (interviewState.step === 1) {
+                    interviewModalContent.innerHTML = `
+                        <div class="space-y-6">
+                            <div class="flex items-center justify-between pb-3 border-b border-lineborder">
+                                <div class="space-y-0.5">
+                                    <span class="text-[11px] font-mono font-bold px-3 py-1 bg-surfacealt rounded-full uppercase text-[#C29B38] border border-lineborder">Langkah 1 dari 3</span>
+                                    <h3 class="font-serif text-2xl font-bold text-ink mt-1">Posisi yang kamu lamar?</h3>
+                                </div>
+                                <button type="button" id="headerCloseInterviewBtn" aria-label="Tutup" class="w-9 h-9 rounded-full bg-surfacealt border border-lineborder flex items-center justify-center text-ink hover:bg-slate-200 transition-colors cursor-pointer shadow-sm">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                                </button>
+                            </div>
+                            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                                ${['Customer Service', 'Admin', 'Marketing', 'Operator', 'Staff', 'Lainnya'].map(r => `
+                                    <button type="button" class="role-select-btn p-4 rounded-2xl border border-lineborder bg-surface hover:bg-surfacealt text-ink font-semibold text-sm transition-all text-center cursor-pointer shadow-xs" data-role="${r}">
+                                        ${r}
+                                    </button>
+                                `).join('')}
+                            </div>
+                            <div id="customRoleWrap" class="hidden space-y-2 pt-2">
+                                <label class="text-xs font-mono text-mutedtext uppercase">Tulis posisi yang kamu lamar:</label>
+                                <input type="text" id="customRoleInput" placeholder="Contoh: Graphic Designer, Finance..." class="w-full bg-canvas border border-lineborder px-4 py-3 rounded-2xl text-[16px] text-ink focus:outline-none focus:border-brandaccent">
+                                <button type="button" id="confirmCustomRoleBtn" class="mt-2 w-full bg-brandaccent text-white py-3 rounded-xl text-xs uppercase tracking-wider font-semibold cursor-pointer">Lanjutkan →</button>
+                            </div>
+                        </div>
+                    `;
+
+                    document.getElementById('headerCloseInterviewBtn').addEventListener('click', closeInterviewModal);
+
+                    interviewModalContent.querySelectorAll('.role-select-btn').forEach(btn => {
+                        btn.addEventListener('click', () => {
+                            const role = btn.getAttribute('data-role');
+                            if (role === 'Lainnya') {
+                                document.getElementById('customRoleWrap').classList.remove('hidden');
+                            } else {
+                                interviewState.role = role;
+                                interviewState.step = 2;
+                                renderInterviewStep();
+                            }
+                        });
+                    });
+
+                    const confirmCustomBtn = document.getElementById('confirmCustomRoleBtn');
+                    if (confirmCustomBtn) {
+                        confirmCustomBtn.addEventListener('click', () => {
+                            const val = document.getElementById('customRoleInput').value.trim();
+                            if (!val) {
+                                alert('Mohon tulis posisi terlebih dahulu.');
+                                return;
+                            }
+                            interviewState.role = val;
+                            interviewState.step = 2;
+                            renderInterviewStep();
+                        });
+                    }
+                } else if (interviewState.step === 2) {
+                    interviewModalContent.innerHTML = `
+                        <div class="space-y-6">
+                            <div class="flex items-center justify-between pb-3 border-b border-lineborder">
+                                <div class="space-y-0.5">
+                                    <span class="text-[11px] font-mono font-bold px-3 py-1 bg-surfacealt rounded-full uppercase text-[#C29B38] border border-lineborder">Langkah 2 dari 3</span>
+                                    <h3 class="font-serif text-2xl font-bold text-ink mt-1">Pengalaman kerja kamu?</h3>
+                                </div>
+                                <button type="button" id="headerCloseInterviewBtn2" aria-label="Tutup" class="w-9 h-9 rounded-full bg-surfacealt border border-lineborder flex items-center justify-center text-ink hover:bg-slate-200 transition-colors cursor-pointer shadow-sm">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                                </button>
+                            </div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                ${['Fresh Graduate', 'Kurang dari 1 Tahun', '1–3 Tahun', '3+ Tahun'].map(exp => `
+                                    <button type="button" class="exp-select-btn p-4 rounded-2xl border border-lineborder bg-surface hover:bg-surfacealt text-ink font-semibold text-sm transition-all text-left cursor-pointer shadow-xs flex items-center justify-between" data-exp="${exp}">
+                                        <span>${exp}</span>
+                                        <svg class="w-4 h-4 text-mutedtext" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                                    </button>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `;
+
+                    document.getElementById('headerCloseInterviewBtn2').addEventListener('click', closeInterviewModal);
+
+                    interviewModalContent.querySelectorAll('.exp-select-btn').forEach(btn => {
+                        btn.addEventListener('click', () => {
+                            interviewState.experience = btn.getAttribute('data-exp');
+                            interviewState.step = 3;
+                            renderInterviewStep();
+                        });
+                    });
+                } else if (interviewState.step === 3) {
+                    interviewModalContent.innerHTML = `
+                        <div class="space-y-6">
+                            <div class="flex items-center justify-between pb-3 border-b border-lineborder">
+                                <div class="space-y-0.5">
+                                    <span class="text-[11px] font-mono font-bold px-3 py-1 bg-surfacealt rounded-full uppercase text-[#C29B38] border border-lineborder">Langkah 3 dari 3</span>
+                                    <h3 class="font-serif text-2xl font-bold text-ink mt-1">Pilih mode interview</h3>
+                                </div>
+                                <button type="button" id="headerCloseInterviewBtn3" aria-label="Tutup" class="w-9 h-9 rounded-full bg-surfacealt border border-lineborder flex items-center justify-center text-ink hover:bg-slate-200 transition-colors cursor-pointer shadow-sm">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                                </button>
+                            </div>
+                            <div class="space-y-3">
+                                <button type="button" class="mode-select-btn w-full p-4 rounded-2xl border border-lineborder bg-surface hover:bg-surfacealt text-left transition-all cursor-pointer shadow-xs space-y-1" data-mode="basic" data-count="5">
+                                    <div class="flex items-center justify-between">
+                                        <span class="font-bold text-ink text-sm">🟢 BASIC INTERVIEW (5 Pertanyaan)</span>
+                                        <span class="text-[10px] font-mono bg-surfacealt px-2.5 py-1 rounded-full text-mutedtext">Pemanasan</span>
+                                    </div>
+                                    <p class="text-xs text-mutedtext">Untuk pemanasan dan latihan dasar mengenal ritme interview.</p>
+                                </button>
+                                <button type="button" class="mode-select-btn w-full p-4 rounded-2xl border border-lineborder bg-surface hover:bg-surfacealt text-left transition-all cursor-pointer shadow-xs space-y-1" data-mode="hrd" data-count="7">
+                                    <div class="flex items-center justify-between">
+                                        <span class="font-bold text-ink text-sm">🔵 INTERVIEW HRD (7 Pertanyaan)</span>
+                                        <span class="text-[10px] font-mono bg-surfacealt px-2.5 py-1 rounded-full text-mutedtext">Standar Rekrutmen</span>
+                                    </div>
+                                    <p class="text-xs text-mutedtext">Fokus pada pertanyaan umum yang sering ditanyakan HRD perusahaan.</p>
+                                </button>
+                                <button type="button" class="mode-select-btn w-full p-4 rounded-2xl border border-lineborder bg-surface hover:bg-surfacealt text-left transition-all cursor-pointer shadow-xs space-y-1" data-mode="lengkap" data-count="10">
+                                    <div class="flex items-center justify-between">
+                                        <span class="font-bold text-ink text-sm">🟣 INTERVIEW LENGKAP (10 Pertanyaan)</span>
+                                        <span class="text-[10px] font-mono bg-surfacealt px-2.5 py-1 rounded-full text-mutedtext">Mendalam</span>
+                                    </div>
+                                    <p class="text-xs text-mutedtext">Simulasi mendalam dengan pertanyaan lanjutan dan situasional.</p>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+
+                    document.getElementById('headerCloseInterviewBtn3').addEventListener('click', closeInterviewModal);
+
+                    interviewModalContent.querySelectorAll('.mode-select-btn').forEach(btn => {
+                        btn.addEventListener('click', () => {
+                            interviewState.mode = btn.getAttribute('data-mode');
+                            const count = parseInt(btn.getAttribute('data-count'), 10);
+                            
+                            const pool = sampleQuestionsPool[interviewState.role] || sampleQuestionsPool['Staff'];
+                            let selected = [...pool];
+                            while (selected.length < count) {
+                                selected = selected.concat(pool);
+                            }
+                            interviewState.questions = selected.slice(0, count);
+                            interviewState.currentQuestionIndex = 0;
+                            
+                            // Initialize first question in messages array (Append-only history)
+                            interviewState.messages = [
+                                { role: 'hrd', content: interviewState.questions[0] }
+                            ];
+
+                            interviewState.step = 4;
+                            renderInterviewStep();
+                        });
+                    });
+                } else if (interviewState.step === 4) {
+                    const qIndex = interviewState.currentQuestionIndex;
+                    const totalQ = interviewState.questions.length;
+
+                    interviewModalContent.innerHTML = `
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between pb-3 border-b border-lineborder">
+                                <div>
+                                    <span class="text-xs font-mono uppercase text-[#C29B38] font-bold">Posisi: ${interviewState.role}</span>
+                                    <h3 class="font-serif text-xl font-bold text-ink">Interview Practice</h3>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <span class="text-xs font-mono bg-surfacealt px-3 py-1 rounded-full border border-lineborder font-semibold">Pertanyaan ${qIndex + 1} dari ${totalQ}</span>
+                                    <button type="button" id="headerCloseInterviewBtn4" aria-label="Tutup" class="w-9 h-9 rounded-full bg-surfacealt border border-lineborder flex items-center justify-center text-ink hover:bg-slate-200 transition-colors cursor-pointer shadow-sm">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div id="chatHistory" class="space-y-3 max-h-[300px] overflow-y-auto p-3 bg-canvas rounded-2xl border border-lineborder text-sm">
+                                ${interviewState.messages.map(msg => {
+                                    if (msg.role === 'hrd') {
+                                        return `
+                                            <div class="flex items-start gap-2.5">
+                                                <div class="w-7 h-7 rounded-lg bg-brandaccent text-white flex-shrink-0 flex items-center justify-center text-xs font-bold">HRD</div>
+                                                <div class="bg-surface border border-lineborder p-3.5 rounded-2xl rounded-tl-sm text-ink max-w-[85%] shadow-xs whitespace-pre-line">
+                                                    ${escapeHtml(msg.content)}
+                                                </div>
+                                            </div>
+                                        `;
+                                    } else {
+                                        return `
+                                            <div class="flex items-start gap-2.5 justify-end">
+                                                <div class="bg-brandaccent text-white p-3.5 rounded-2xl rounded-tr-sm text-xs max-w-[85%] shadow-xs whitespace-pre-line">
+                                                    ${escapeHtml(msg.content)}
+                                                </div>
+                                                <div class="w-7 h-7 rounded-lg bg-emerald-700 text-white flex-shrink-0 flex items-center justify-center text-xs font-bold">Kamu</div>
+                                            </div>
+                                        `;
+                                    }
+                                }).join('')}
+                            </div>
+
+                            <div class="space-y-2 pt-2">
+                                <textarea id="answerInput" rows="3" placeholder="Ketik jawaban kamu di sini..." class="w-full bg-canvas border border-lineborder p-3 rounded-2xl text-[16px] text-ink focus:outline-none focus:border-brandaccent transition-colors"></textarea>
+                                <button type="button" id="submitAnswerBtn" class="w-full bg-brandaccent hover:bg-brandaccent/90 text-white font-semibold py-3.5 rounded-xl text-xs uppercase tracking-wider transition-all cursor-pointer shadow-sm">
+                                    Kirim Jawaban →
+                                </button>
+                            </div>
+                        </div>
+                    `;
+
+                    document.getElementById('headerCloseInterviewBtn4').addEventListener('click', closeInterviewModal);
+
+                    const submitBtn = document.getElementById('submitAnswerBtn');
+                    const answerInput = document.getElementById('answerInput');
+                    const chatHistory = document.getElementById('chatHistory');
+                    chatHistory.scrollTop = chatHistory.scrollHeight;
+
+                    if (submitBtn) {
+                        submitBtn.addEventListener('click', () => {
+                            if (interviewState.isSubmitting) return;
+                            const val = answerInput.value.trim();
+                            if (!val) {
+                                alert('Jawab dulu pertanyaannya sebelum lanjut ya 😊');
+                                return;
+                            }
+                            interviewState.isSubmitting = true;
+                            submitBtn.disabled = true;
+                            submitBtn.textContent = 'Memproses...';
+
+                            // 1. Append user answer to history
+                            interviewState.messages.push({ role: 'user', content: val });
+
+                            // 2. Evaluate answer length/content for realistic interview flow
+                            setTimeout(() => {
+                                interviewState.isSubmitting = false;
+
+                                const lowerVal = val.toLowerCase();
+                                const wordCount = val.split(/\s+/).length;
+                                const shortTriggers = ['melakukan support', 'support', 'ya', 'pernah', 'bisa', 'biasa aja', 'kerja tim', 'melakukan pengecekan', 'mengoperasikan mesin', 'membantu', 'administrasi', 'customer service', 'iya', 'karena saya tertarik', 'karena sesuai', 'ingin berkembang', 'siap bekerja', 'teamwork', 'komunikasi', 'produksi', 'leadership', 'teliti', 'disiplin'];
+                                
+                                const isTooShort = wordCount <= 3 || shortTriggers.includes(lowerVal) || (lowerVal.length < 15 && !lowerVal.includes('saya') && !lowerVal.includes('karena') && !lowerVal.includes('sebagai'));
+
+                                if (isTooShort) {
+                                    // HRD provides constructive warning feedback + improvement tip + pattern example
+                                    let warningMsg = `⚠️ Jawaban kamu masih terlalu singkat.\n\n💡 Di interview sungguhan, HRD perlu tahu apa yang kamu lakukan atau alasan spesifik, bukan hanya kata kunci atau jawaban umum.\n\n👉 Coba jelaskan tanggung jawab utama + cara melakukannya + contoh atau alasan yang lebih spesifik.\n\n📝 Contoh pola jawaban:\n"Saya sebelumnya bekerja sebagai [posisi]. Tanggung jawab utama saya adalah [tanggung jawab]."\n\nSesuaikan dengan pengalaman kamu sendiri ya. Coba jawab lagi.`;
+                                    
+                                    if (lowerVal.includes('tertarik') || lowerVal.includes('alasan')) {
+                                        warningMsg = `⚠️ Jawaban kamu masih terlalu umum.\n\n💡 Di interview sungguhan, HRD ingin tahu alasan yang lebih spesifik dan terhubung dengan kemampuan atau tujuan kariermu.\n\n👉 Coba jelaskan apa yang membuat kamu tertarik dan hubungkan dengan pengalaman atau hal yang ingin kamu kembangkan.\n\n📝 Contoh pola:\n"Saya tertarik dengan posisi ini karena [alasan spesifik]. Saya juga ingin mengembangkannya melalui posisi ini."\n\nCoba jawab lagi dengan alasan kamu sendiri.`;
+                                    }
+
+                                    interviewState.messages.push({
+                                        role: 'hrd',
+                                        content: warningMsg
+                                    });
+                                } else {
+                                    // Sufficient answer: HRD acknowledges and asks next question (or finishes)
+                                    interviewState.messages.push({
+                                        role: 'hrd',
+                                        content: "Baik, jawaban kamu sudah cukup jelas. Kamu sudah menjelaskan poin dengan baik."
+                                    });
+
+                                    interviewState.currentQuestionIndex++;
+                                    if (interviewState.currentQuestionIndex < interviewState.questions.length) {
+                                        interviewState.messages.push({
+                                            role: 'hrd',
+                                            content: interviewState.questions[interviewState.currentQuestionIndex]
+                                        });
+                                    } else {
+                                        // All questions completed -> move to result step
+                                        interviewState.step = 5;
+                                    }
+                                }
+
+                                renderInterviewStep();
+                            }, 600);
+                        });
+                    }
+                } else if (interviewState.step === 5) {
+                    interviewModalContent.innerHTML = `
+                        <div class="space-y-6 text-center sm:text-left">
+                            <div class="flex items-center justify-between pb-3 border-b border-lineborder">
+                                <div class="space-y-0.5">
+                                    <span class="text-[11px] font-mono font-bold px-3 py-1 bg-amber-100 text-[#C29B38] rounded-full uppercase border border-lineborder">Selesai</span>
+                                    <h3 class="font-serif text-2xl font-bold text-ink mt-1">Hasil Interview Practice</h3>
+                                </div>
+                                <button type="button" id="headerCloseInterviewBtn5" aria-label="Tutup" class="w-9 h-9 rounded-full bg-surfacealt border border-lineborder flex items-center justify-center text-ink hover:bg-slate-200 transition-colors cursor-pointer shadow-sm">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                                </button>
+                            </div>
+
+                            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                                <div class="bg-surfacealt p-4 rounded-2xl border border-lineborder text-center">
+                                    <div class="text-[10px] font-mono text-mutedtext uppercase">Komunikasi</div>
+                                    <div class="text-sm font-bold text-ink mt-1">Baik</div>
+                                </div>
+                                <div class="bg-surfacealt p-4 rounded-2xl border border-lineborder text-center">
+                                    <div class="text-[10px] font-mono text-mutedtext uppercase">Kejelasan Jawaban</div>
+                                    <div class="text-sm font-bold text-ink mt-1">Cukup</div>
+                                </div>
+                                <div class="bg-surfacealt p-4 rounded-2xl border border-lineborder text-center">
+                                    <div class="text-[10px] font-mono text-mutedtext uppercase">Relevansi</div>
+                                    <div class="text-sm font-bold text-ink mt-1">Sangat baik</div>
+                                </div>
+                                <div class="bg-surfacealt p-4 rounded-2xl border border-lineborder text-center">
+                                    <div class="text-[10px] font-mono text-mutedtext uppercase">Kelengkapan</div>
+                                    <div class="text-sm font-bold text-ink mt-1">Baik</div>
+                                </div>
+                                <div class="bg-surfacealt p-4 rounded-2xl border border-lineborder text-center col-span-2 sm:col-span-2">
+                                    <div class="text-[10px] font-mono text-mutedtext uppercase">Penyampaian</div>
+                                    <div class="text-sm font-bold text-ink mt-1">Baik & Terstruktur</div>
+                                </div>
+                            </div>
+
+                            <div class="space-y-4 bg-surfacealt p-5 rounded-2xl border border-lineborder text-left">
+                                <div>
+                                    <h4 class="text-xs font-mono uppercase font-bold text-ink">✨ Yang Sudah Bagus:</h4>
+                                    <p class="text-xs text-mutedtext mt-1">Jawaban kamu tersusun dengan rapi dalam riwayat percakapan dan relevan dengan posisi yang dituju.</p>
+                                </div>
+                                <div class="pt-2 border-t border-lineborder">
+                                    <h4 class="text-xs font-mono uppercase font-bold text-ink">💡 Yang Perlu Perbaikan:</h4>
+                                    <ul class="text-xs text-mutedtext mt-1 space-y-1 list-disc list-inside">
+                                        <li>Berikan contoh nyata atau angka konkret ketika menjelaskan pengalaman kerja.</li>
+                                        <li>Hubungkan langsung pencapaian masa lalu dengan kebutuhan posisi yang dilamar.</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="pt-2 flex flex-col sm:flex-row gap-3">
+                                <button type="button" id="retryInterviewBtn" class="flex-1 bg-surface border border-lineborder hover:bg-surfacealt text-ink font-semibold py-3.5 rounded-full text-xs uppercase tracking-wider transition-all cursor-pointer">
+                                    🔄 COBA LAGI
+                                </button>
+                                <button type="button" id="newInterviewBtn" class="flex-1 bg-brandaccent text-white font-semibold py-3.5 rounded-full text-xs uppercase tracking-wider transition-all cursor-pointer">
+                                    🎤 INTERVIEW BARU
+                                </button>
+                            </div>
+                        </div>
+                    `;
+
+                    document.getElementById('headerCloseInterviewBtn5').addEventListener('click', closeInterviewModal);
+
+                    document.getElementById('retryInterviewBtn').addEventListener('click', () => {
+                        interviewState.currentQuestionIndex = 0;
+                        interviewState.messages = [{ role: 'hrd', content: interviewState.questions[0] }];
+                        interviewState.step = 4;
+                        renderInterviewStep();
+                    });
+
+                    document.getElementById('newInterviewBtn').addEventListener('click', () => {
+                        openInterviewModal();
+                    });
+                }
+            }
+
+            if (startInterviewBtn) {
+                startInterviewBtn.addEventListener('click', openInterviewModal);
+            }
+            if (interviewCloseBtn) {
+                interviewCloseBtn.addEventListener('click', closeInterviewModal);
+            }
+            if (interviewModal) {
+                interviewModal.addEventListener('click', (e) => {
+                    if (e.target === interviewModal) closeInterviewModal();
+                });
+            }
+
+            // -------------------------------------------------------------
+            // RIZKY JASA ASSISTANT (AI CUSTOMER SERVICE LOGIC)
+            // -------------------------------------------------------------
+            const chatToggleBtn = document.getElementById('chatToggleBtn');
+            const chatWindow = document.getElementById('chatWindow');
+            const chatCloseBtn = document.getElementById('chatCloseBtn');
+            const chatIconOpen = document.getElementById('chatIconOpen');
+            const chatIconClose = document.getElementById('chatIconClose');
+            const chatMessages = document.getElementById('chatMessages');
+            const chatForm = document.getElementById('chatForm');
+            const chatInput = document.getElementById('chatInput');
+            const chatTyping = document.getElementById('chatTyping');
+
+            let chatIsOpen = false;
+
+            function toggleChat() {
+                chatIsOpen = !chatIsOpen;
+                if (chatIsOpen) {
+                    chatWindow.classList.remove('hidden');
+                    chatIconOpen.classList.add('hidden');
+                    chatIconClose.classList.remove('hidden');
+                    setTimeout(() => {
+                        chatWindow.classList.remove('scale-95', 'opacity-0');
+                        chatWindow.classList.add('scale-100', 'opacity-100');
+                    }, 10);
+                    chatInput.focus();
+                } else {
+                    chatWindow.classList.remove('scale-100', 'opacity-100');
+                    chatWindow.classList.add('scale-95', 'opacity-0');
+                    chatIconOpen.classList.remove('hidden');
+                    chatIconClose.classList.add('hidden');
+                    setTimeout(() => {
+                        chatWindow.classList.add('hidden');
+                    }, 300);
+                }
+            }
+
+            if (chatToggleBtn) chatToggleBtn.addEventListener('click', toggleChat);
+            if (chatCloseBtn) chatCloseBtn.addEventListener('click', toggleChat);
+
+            function getBotResponse(userMsg) {
+                const query = userMsg.toLowerCase().trim();
+
+                const recoveryTriggers = ['kok ga nyambung', 'gak nyambung', 'kok nggak nyambung', 'bukan itu', 'maksudku bukan itu', 'salah', 'bukan maksud saya', 'lu salah paham', 'bukan begitu'];
+                if (recoveryTriggers.some(t => query.includes(t))) {
+                    return "Maaf ya, kayaknya aku salah memahami maksud kamu. 😊 Coba jelaskan sedikit lagi, nanti aku bantu sesuai maksudnya.";
+                }
+
+                const greetingTriggers = ['halo', 'hai', 'hi', 'hey', 'halo min', 'hai min', 'hi kak', 'pagi', 'siang', 'sore', 'malam', 'permisi', 'min'];
+                if (greetingTriggers.some(t => query === t || query.startsWith(t + ' ') || query.endsWith(' ' + t))) {
+                    if (query.includes('malam')) return "Malam 😊 Ada yang mau kamu tanyakan?";
+                    if (query.includes('pagi')) return "Pagi 😊 Ada yang bisa aku bantu seputar Rizky Jasa?";
+                    if (query.includes('siang')) return "Siang 😊 Ada yang bisa aku bantu seputar Rizky Jasa?";
+                    if (query.includes('sore')) return "Sore 😊 Ada yang bisa aku bantu seputar Rizky Jasa?";
+                    return "Halo! 👋😊 Ada yang bisa aku bantu seputar Rizky Jasa?";
+                }
+
+                const thankTriggers = ['makasih', 'terima kasih', 'thank', 'thx', 'tysm'];
+                if (thankTriggers.some(t => query.includes(t))) {
+                    return "Sama-sama 😊 Senang bisa membantu. Kalau masih ada yang mau ditanyakan, tinggal chat aku lagi ya.";
+                }
+
+                const confirmTriggers = ['oke', 'ok', 'okay', 'sip', 'siap', 'baik', 'noted', 'mengerti', 'paham', 'iya', 'ya', 'yup', 'betul', 'mantap', 'alright'];
+                if (confirmTriggers.some(t => query === t || query === t + ' kak' || query === 'oke deh')) {
+                    return "Siap 😊 Kalau ada yang mau kamu tanyakan lagi, langsung aja ya.";
+                }
+
+                const closingTriggers = ['bye', 'dadah', 'sampai jumpa', 'sampai nanti', 'pergi dulu', 'pamit dulu', 'nanti lagi', 'udah dulu', 'cukup', 'selesai'];
+                if (closingTriggers.some(t => query.includes(t))) {
+                    return "Siap 😊 Sampai ketemu lagi. Semoga semuanya lancar ya!";
+                }
+
+                const timeTriggers = ['berapa lama', 'lama', 'pengerjaannya', 'jadinya', 'kapan selesai', 'hari ini', 'berapa jam', 'prosesnya', 'pesan sekarang', 'estimasi', 'butuh waktu', 'ngerjainnya', 'cepet', 'cepat'];
+                if (timeTriggers.some(trigger => query.includes(trigger))) {
+                    return "Umumnya pengerjaan dihitung dalam hitungan jam ya 😊 Waktunya bisa menyesuaikan antrean dan kelengkapan data yang kamu berikan. Jadi, semakin lengkap datanya, prosesnya bisa lebih cepat.";
+                }
+
+                const hoursTriggers = ['tutup', 'buka', 'jam', 'online', 'admin', 'malam', 'operasional', 'close', 'open', 'available', 'aktif', 'dilayani'];
+                if (hoursTriggers.some(trigger => query.includes(trigger))) {
+                    return "Rizky Jasa buka setiap hari mulai pukul 08.00 sampai 23.00 😊 Tapi kalau kamu masih mendapatkan balasan dari kami di luar jam tersebut, berarti masih ada admin yang sedang bersedia membantu kamu ya.";
+                }
+
+                if (query.includes('hubungi admin') || query === '6. hubungi admin' || query.includes('admin') || query.includes('chat admin') || query.includes('pesan') || query.includes('order')) {
+                    return `Siap 😊 Kalau kamu ingin tanya langsung atau punya kebutuhan khusus, kamu bisa langsung hubungi admin Rizky Jasa melalui WhatsApp.\n\n<div class="pt-2"><a href="https://wa.me/6282125424346?text=${encodeURIComponent('Halo Rizky Jasa, saya ingin terhubung dengan admin.')}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-brandaccent text-white px-4 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider shadow-sm">💬 Hubungi Admin via WhatsApp</a></div>`;
+                }
+
+                if (query.includes('tanya harga') || query === '1. tanya harga' || query.includes('harga') || query.includes('biaya') || query.includes('tarif')) {
+                    if (query.includes('ats')) return "Untuk CV ATS Friendly, harganya mulai dari Rp17.000 (tersedia Bahasa Indonesia / Inggris).";
+                    if (query.includes('kreatif')) return "Untuk CV Kreatif, harganya disesuaikan dengan tingkat kesulitan dan detail visual yang kamu inginkan.";
+                    if (query.includes('hemat')) return "Paket Hemat harganya Rp35.000 sudah termasuk CV dan Surat Lamaran.";
+                    return "Siap! Untuk harga, tergantung layanan yang kamu butuhkan 😊 Kamu mau tanya harga layanan yang mana? Ada CV ATS Friendly, CV Kreatif, Paket Hemat, Paket Komplit Kerja, Edit Dokumen Ringan, dan Landing Page Sederhana.";
+                }
+
+                if (query.includes('layanan tersedia') || query === '2. layanan tersedia' || query.includes('layanan') || query.includes('cv') || query.includes('fresh graduate') || query.includes('pengalaman') || query.includes('ats itu apa')) {
+                    if (query.includes('fresh graduate') || query.includes('pengalaman') || query.includes('belum pernah')) {
+                        return "Bisa 😊 Rizky Jasa menyediakan CV ATS Friendly dan CV Kreatif yang bisa disesuaikan dengan kebutuhan, termasuk untuk fresh graduate. Belum punya pengalaman kerja bukan berarti CV-nya nggak bisa dibuat — kita bisa tonjolkan pendidikan, skill, organisasi, atau magang.";
+                    }
+                    if (query.includes('ats')) {
+                        return "CV ATS Friendly adalah CV yang disusun agar lebih mudah dibaca oleh sistem ATS perusahaan. Format bersih tanpa ornamen rumit.";
+                    }
+                    return "Rizky Jasa menyediakan 6 layanan resmi:\n• CV ATS Friendly\n• CV Kreatif\n• Paket Hemat\n• Paket Komplit Kerja\n• Edit Dokumen Ringan\n• Landing Page Sederhana";
+                }
+
+                if (query.includes('edit dokumen') || query === '3. edit dokumen') {
+                    return "Bisa 😊 Rizky Jasa melayani Edit Dokumen Ringan untuk merapikan tata letak, format, dan struktur dokumen digital. Kamu bisa kasih tahu jenis dokumen yang ingin diedit ke admin.";
+                }
+
+                if (query.includes('landing page') || query === '4. landing page') {
+                    return "Bisa 😊 Rizky Jasa juga menyediakan pembuatan Landing Page Sederhana berkecepatan tinggi dengan subdomain siap pakai.";
+                }
+
+                if (query.includes('tanya revisi') || query === '5. tanya revisi' || query.includes('revisi')) {
+                    return "Untuk revisi, Rizky Jasa menyediakan maksimal 3x revisi 😊 Kalau ada bagian yang ingin diperbaiki, bisa disampaikan ke admin agar dibantu.";
+                }
+
+                return "Maaf ya, aku belum bisa memahami pertanyaan tersebut. 😊 Coba pilih salah satu pertanyaan yang tersedia di atas, atau langsung hubungi admin Rizky Jasa kalau kamu punya pertanyaan lainnya.";
+            }
+
+            function appendMessage(sender, htmlContent) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `flex items-start gap-2.5 ${sender === 'user' ? 'justify-end' : ''}`;
+
+                if (sender === 'bot') {
+                    messageDiv.innerHTML = `
+                        <div class="w-7 h-7 rounded-lg bg-brandaccent text-white flex-shrink-0 flex items-center justify-center text-xs font-bold">RJ</div>
+                        <div class="bg-surface border border-lineborder p-3.5 rounded-2xl rounded-tl-sm max-w-[85%] text-ink space-y-2 shadow-xs text-sm">
+                            ${htmlContent}
+                        </div>
+                    `;
+                } else {
+                    messageDiv.innerHTML = `
+                        <div class="bg-brandaccent text-white p-3.5 rounded-2xl rounded-tr-sm max-w-[85%] text-sm shadow-xs">
+                            ${escapeHtml(htmlContent)}
                         </div>
                     `;
                 }
 
-                questionContainer.innerHTML = `
-                    <h3 class="text-lg sm:text-xl font-bold text-white mb-6 text-center leading-snug">${q.text}</h3>
-                    ${optionsHTML}
-                `;
+                chatMessages.appendChild(messageDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
 
-                const optionBtns = questionContainer.querySelectorAll(".option-btn");
-                optionBtns.forEach(btn => {
-                    btn.addEventListener("click", function() {
-                        const val = this.getAttribute("data-val");
-                        userAnswers[q.id] = val;
+            function escapeHtml(text) {
+                const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
+                return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+            }
 
-                        if (currentStep < questions.length - 1) {
-                            currentStep++;
-                            renderQuestion();
-                        } else {
-                            showResult();
-                        }
-                    });
+            function handleUserSubmit(text) {
+                if (!text.trim()) return;
+                appendMessage('user', text);
+                chatInput.value = '';
+
+                chatTyping.classList.remove('hidden');
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+
+                setTimeout(() => {
+                    chatTyping.classList.add('hidden');
+                    const reply = getBotResponse(text);
+                    appendMessage('bot', reply);
+                }, 800);
+            }
+
+            if (chatForm) {
+                chatForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    handleUserSubmit(chatInput.value);
                 });
             }
 
-            function showResult() {
-                let pointsEarned = 0;
-                let problems = [];
-                let goodPoints = [];
-
-                questions.forEach(q => {
-                    const ans = userAnswers[q.id];
-                    if (ans === "Sudah" || (q.allowTidakAda && ans === "Tidak Ada")) {
-                        pointsEarned += 1;
-                        if (ans === "Sudah") {
-                            goodPoints.push(q.goodText);
-                        }
-                    } else {
-                        problems.push(q.problemText);
+            document.addEventListener('click', (e) => {
+                if (e.target && e.target.classList.contains('quick-action-btn')) {
+                    const query = e.target.getAttribute('data-query');
+                    if (query) {
+                        handleUserSubmit(query);
                     }
-                });
-
-                const finalScore = Math.round((pointsEarned / questions.length) * 100);
-
-                let currentDisp = 0;
-                const scoreInterval = setInterval(() => {
-                    if (currentDisp >= finalScore) {
-                        scoreNumber.textContent = finalScore;
-                        clearInterval(scoreInterval);
-                    } else {
-                        currentDisp += 2;
-                        if (currentDisp > finalScore) currentDisp = finalScore;
-                        scoreNumber.textContent = currentDisp;
-                    }
-                }, 20);
-
-                if (finalScore >= 90) {
-                    resultMessage.textContent = `"CV kamu sudah cukup siap. Tinggal pastikan isinya benar-benar disesuaikan dengan lowongan yang kamu incar."`;
-                } else if (finalScore >= 75) {
-                    resultMessage.textContent = `"CV kamu sudah lumayan siap, tapi masih ada beberapa bagian yang bisa diperkuat."`;
-                } else if (finalScore >= 60) {
-                    resultMessage.textContent = `"CV kamu masih punya beberapa bagian penting yang sebaiknya diperbaiki sebelum melamar."`;
-                } else {
-                    resultMessage.textContent = `"CV kamu masih perlu banyak dirapikan. Sebaiknya perbaiki beberapa bagian penting sebelum mulai melamar."`;
                 }
-
-                if (problems.length > 0) {
-                    improvementsBox.classList.remove("hidden");
-                    improvementsList.innerHTML = problems.map(p => `<li class="flex items-start gap-2.5"><span class="text-red-400 font-bold mt-0.5">⚠</span> <span>${p}</span></li>`).join("");
-                } else {
-                    improvementsBox.classList.add("hidden");
-                }
-
-                if (goodPoints.length > 0) {
-                    goodPointsBox.classList.remove("hidden");
-                    goodPointsList.innerHTML = goodPoints.map(g => `<li class="flex items-start gap-2.5"><span class="text-emerald-400 font-bold mt-0.5">✓</span> <span>${g}</span></li>`).join("");
-                } else {
-                    goodPointsBox.classList.add("hidden");
-                }
-
-                cvCheckerForm.classList.add("hidden");
-                cvCheckerResult.classList.remove("hidden");
-            }
-
-            resetBtn.addEventListener("click", function() {
-                currentStep = 0;
-                for (let key in userAnswers) {
-                    delete userAnswers[key];
-                }
-                cvCheckerResult.classList.add("hidden");
-                cvCheckerForm.classList.remove("hidden");
-                renderQuestion();
-            });
-
-            renderQuestion();
-
-            // Intersection Observer for Fade-In Animations
-            const observerOptions = {
-                root: null,
-                rootMargin: '0px',
-                threshold: 0.1
-            };
-
-            const observer = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('appear');
-                    }
-                });
-            }, observerOptions);
-
-            document.querySelectorAll('.fade-in').forEach(element => {
-                observer.observe(element);
             });
         });
     </script>
