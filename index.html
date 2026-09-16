@@ -188,7 +188,7 @@
         <div class="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
                 
-                <div class="lg:col-span-7 space-y-8 text-left">
+                <div class="lg:col-span-7 space-y-6 text-left">
                     <div class="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-surface border border-lineborder text-xs font-mono tracking-widest text-brandaccent uppercase shadow-xs">
                         <span class="w-2 h-2 rounded-full bg-[#C29B38] animate-pulse"></span>
                         <span>Professional CV • Document • Digital Studio</span>
@@ -202,7 +202,20 @@
                         Bantu siapkan CV, dokumen lamaran, dan kebutuhan digitalmu dengan tampilan yang rapi, modern, dan profesional.
                     </p>
 
-                    <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-4">
+                    <!-- Trust Signals (Added directly below subheadline and before CTA) -->
+                    <div class="flex flex-wrap items-center gap-x-6 gap-y-2 pt-1 pb-1 text-xs text-mutedtext font-mono">
+                        <div class="flex items-center gap-2">
+                            <span class="w-4 h-4 rounded-full bg-[#C29B38]/15 text-[#C29B38] flex items-center justify-center font-bold text-[10px]">✓</span>
+                            <span>Dipercaya 160+ jobseeker dari berbagai bidang</span>
+                        </div>
+                        <div class="hidden sm:inline-block text-lineborder">•</div>
+                        <div class="flex items-center gap-2">
+                            <span class="w-4 h-4 rounded-full bg-[#C29B38]/15 text-[#C29B38] flex items-center justify-center font-bold text-[10px]">✓</span>
+                            <span>Respon kurang dari 1 jam</span>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2">
                         <a href="https://wa.me/6282125424346?text=Halo%20Rizky%20Jasa,%20Saya%20ingin%20diskusi%20lebih%20lanjut%20mengenai%20layanan%20yang%20tersedia." target="_blank" rel="noopener noreferrer" class="inline-flex justify-center items-center gap-3 bg-brandaccent text-white font-semibold px-8 py-4 rounded-full hover:bg-brandaccent/90 transition-all shadow-xl shadow-slate-900/10 text-sm uppercase tracking-wider">
                             <span>Konsultasi via WhatsApp</span>
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
@@ -1654,7 +1667,7 @@
             function getBotResponse(userMsg) {
                 const query = userMsg.toLowerCase().trim();
 
-                // 1. Check for Pricing / Cost Intent across any service or general query
+                // 1. Comprehensive Pricing / Cost Intent Detection across all services or general query
                 const priceKeywords = [
                     'harga', 'harganya', 'berapa', 'kena berapa', 'biaya', 'biayanya', 
                     'tarif', 'tarifnya', 'budget', 'budgetnya', 'mulai dari', 'ada harga', 
@@ -1666,8 +1679,16 @@
                 const isAskingPrice = priceKeywords.some(keyword => query.includes(keyword)) || query === 'berapa' || query === '1. tanya harga';
 
                 if (isAskingPrice) {
-                    const waText = encodeURIComponent(`Halo Rizky Jasa, saya ingin menanyakan info harga dan detail layanan.`);
-                    return `Untuk info harga dan detail layanan, langsung tanya admin Rizky Jasa ya 😊 Admin akan bantu kasih informasi yang sesuai dengan kebutuhan kamu.<br><br><div class="pt-1"><a href="https://wa.me/6282125424346?text=${waText}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 bg-brandaccent text-white px-3.5 py-2 rounded-full text-xs font-semibold uppercase tracking-wider shadow-sm">💬 Tanya Admin via WhatsApp</a></div>`;
+                    let serviceName = "layanan";
+                    if (query.includes('cv kreat')) serviceName = "CV Kreatif";
+                    else if (query.includes('ats')) serviceName = "CV ATS Friendly";
+                    else if (query.includes('hemat')) serviceName = "Paket Hemat";
+                    else if (query.includes('komplit')) serviceName = "Paket Komplit Kerja";
+                    else if (query.includes('edit')) serviceName = "Edit Dokumen Ringan";
+                    else if (query.includes('landing page')) serviceName = "Landing Page Sederhana";
+
+                    const waText = encodeURIComponent(`Halo Rizky Jasa, saya ingin menanyakan info harga dan detail untuk ${serviceName}.`);
+                    return `Untuk info harga dan detail ${serviceName}, langsung tanya admin Rizky Jasa ya 😊 Admin akan bantu kasih informasi yang sesuai dengan kebutuhan kamu.<br><br><div class="pt-1"><a href="https://wa.me/6282125424346?text=${waText}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 bg-brandaccent text-white px-3.5 py-2 rounded-full text-xs font-semibold uppercase tracking-wider shadow-sm">💬 Tanya Admin via WhatsApp</a></div>`;
                 }
 
                 // 2. Recovery triggers
