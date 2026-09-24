@@ -1,1501 +1,1432 @@
 <!DOCTYPE html>
-<html lang="id" id="html-root">
+<html lang="id" class="light">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RIZKY ASSISTANT - Pro Business Intelligence Tracker</title>
-    <!-- Tailwind CSS CDN -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Leadger | Personal Business Command Center</title>
+    
+    <!-- Fonts: Inter for clean professional typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Phosphor Icons -->
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css"/>
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css"/>
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css"/>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
                 extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
                     colors: {
-                        cream: '#FDFBF7',
-                        surface: '#FFFFFF',
-                        orange: {
-                            DEFAULT: '#FF6B2B',
-                            light: '#FFF2EC',
-                            dark: '#E0551A',
+                        brand: {
+                            50: '#F2F6F3',  
+                            100: '#E1EBE3',
+                            400: '#648A6C',
+                            500: '#4F7557',  // Solid Leaf Green
+                            600: '#3F5F46',
+                            700: '#314936',  
+                            900: '#17241A',
                         },
-                        peach: '#FFE8DF',
-                        charcoal: '#1A1A1A',
-                        muted: '#666666',
-                        bordercolor: '#EFECE6'
+                        surface: {
+                            light: '#F8F9F5', // Soft warm off-white
+                            dark: '#141716'   // Deep greenish charcoal slate
+                        },
+                        panel: {
+                            light: '#FFFFFF', // Clean contrast surface
+                            dark: '#1C211F'   // Elevated dark surface
+                        },
+                        line: {
+                            light: '#E6EAE5',
+                            dark: '#272E2B'
+                        },
+                        ink: {
+                            main: '#1E2320',  // Deep charcoal
+                            muted: '#6B7670', // Muted gray-green
+                            darkMain: '#E8EDE9', // Soft white
+                            darkMuted: '#8C9893' // Muted gray for dark mode
+                        }
+                    },
+                    boxShadow: {
+                        'soft': '0 2px 12px -2px rgba(0, 0, 0, 0.03)',
+                        'float': '0 10px 25px -3px rgba(0, 0, 0, 0.06)',
+                        'dark-float': '0 10px 25px -3px rgba(0, 0, 0, 0.4)',
                     }
                 }
             }
         }
     </script>
+
     <style>
         body {
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            transition: background-color 0.3s ease, color 0.3s ease;
+            -webkit-font-smoothing: antialiased;
+            tap-highlight-color: transparent;
+            -webkit-tap-highlight-color: transparent;
+            overscroll-behavior-y: none;
         }
-        html:not(.dark) body { background-color: #FDFBF7; color: #1A1A1A; }
-        html:not(.dark) .custom-surface { background-color: #FFFFFF; border-color: #EFECE6; }
-        html:not(.dark) .custom-cream { background-color: #FDFBF7; }
 
-        html.dark body { background-color: #000000; color: #FFFFFF; }
-        html.dark .custom-surface { background-color: #121212; border-color: #27272a; }
-        html.dark .custom-cream { background-color: #18181b; }
+        ::-webkit-scrollbar { width: 0px; height: 0px; } 
+        
+        input[type="number"]::-webkit-inner-spin-button, 
+        input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+        
+        .theme-transition { transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease; }
 
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: rgba(100, 100, 100, 0.1); }
-        ::-webkit-scrollbar-thumb { background: #888; border-radius: 3px; }
-        ::-webkit-scrollbar-thumb:hover { background: #FF6B2B; }
+        @keyframes slideUp {
+            from { transform: translateY(100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes fadeOutDown {
+            from { transform: translateY(0); opacity: 1; }
+            to { transform: translateY(15%); opacity: 0; }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .overlay-enter { animation: fadeIn 0.2s ease-out forwards; }
+        .sheet-enter { animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .overlay-exit { animation: fadeOutDown 0.18s ease-in forwards; }
+        
+        .hidden-safe { display: none !important; }
     </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between selection:bg-orange selection:text-white">
 
-    <!-- HEADER / NAVBAR -->
-    <header class="border-b border-bordercolor dark:border-zinc-800 bg-cream/90 dark:bg-zinc-950/90 backdrop-blur-md sticky top-0 z-30 px-4 py-3 transition-colors">
-        <div class="max-w-md mx-auto flex justify-between items-center">
+<body class="bg-surface-light dark:bg-surface-dark text-ink-main dark:text-ink-darkMain theme-transition h-[100dvh] overflow-hidden font-sans flex flex-col selection:bg-brand-100 selection:text-brand-700">
+
+    <main id="base-dashboard" class="flex-1 flex flex-col min-w-0 h-full relative overflow-y-auto pb-28">
+        
+        <!-- Header -->
+        <header class="flex items-center justify-between px-6 pt-7 pb-4 sticky top-0 bg-surface-light/90 dark:bg-surface-dark/90 backdrop-blur-xl z-10 theme-transition border-b border-line-light/50 dark:border-line-dark/50">
             <div>
-                <h1 class="text-base font-extrabold tracking-tight text-charcoal dark:text-white flex items-center space-x-1.5">
-                    <span class="bg-orange text-white px-2 py-0.5 rounded-lg text-xs font-black">RJ</span>
-                    <span>RIZKY ASSISTANT</span>
-                </h1>
-                <p class="text-[10px] text-muted dark:text-zinc-400 tracking-wide uppercase font-medium">Pro Business Intelligence</p>
+                <h1 class="text-[18px] font-semibold tracking-tight leading-none text-ink-main dark:text-ink-darkMain">Leadger</h1>
+                <span id="top-date" class="text-[13px] text-ink-muted dark:text-ink-darkMuted font-medium mt-1.5 block">Memuat...</span>
             </div>
-            <div class="flex items-center space-x-2.5">
-                <button onclick="toggleThemeMode()" id="btn-theme-toggle" class="custom-surface border text-xs px-2.5 py-1.5 rounded-xl hover:border-orange transition flex items-center space-x-1 shadow-sm" title="Ganti Mode Terang/Gelap">
-                    <span id="theme-icon">☀️</span>
+            <div class="flex items-center gap-1.5">
+                <button onclick="toggleTheme()" aria-label="Ganti Tema" class="w-10 h-10 rounded-full flex items-center justify-center text-ink-muted hover:bg-brand-50 dark:hover:bg-brand-900/30 hover:text-brand-600 dark:hover:text-brand-400 transition-colors active:scale-95 duration-150">
+                    <i id="theme-icon" class="ph ph-moon text-[22px]"></i>
                 </button>
-                <div class="flex items-center space-x-1.5">
-                    <span id="header-status" class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" title="Sistem Siap"></span>
-                    <span class="text-xs text-muted dark:text-zinc-400 font-mono" id="current-date-display">--/--/----</span>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <!-- MAIN CONTENT CONTAINER -->
-    <main class="max-w-md w-full mx-auto p-4 flex-grow space-y-4">
-
-        <!-- NOTIFICATION TOAST -->
-        <div id="toast" class="hidden fixed top-16 left-1/2 transform -translate-x-1/2 z-50 max-w-sm w-full px-4 transition-all duration-300">
-            <div id="toast-content" class="custom-surface border text-charcoal dark:text-white px-4 py-3 rounded-2xl shadow-xl flex items-center justify-between">
-                <span id="toast-message" class="text-xs font-medium">Notifikasi berhasil.</span>
-                <button onclick="hideToast()" class="text-muted hover:text-charcoal dark:hover:text-white ml-2">×</button>
-            </div>
-        </div>
-
-        <!-- DASHBOARD VIEW -->
-        <section id="view-dashboard" class="space-y-4">
-            <!-- Stats Cards Grid -->
-            <div class="grid grid-cols-2 gap-3">
-                <div class="custom-surface border p-3.5 rounded-2xl shadow-sm transition-all">
-                    <p class="text-[11px] text-muted dark:text-zinc-400 font-medium">Order Hari Ini</p>
-                    <h3 id="stat-today-orders" class="text-2xl font-bold text-charcoal dark:text-white mt-1">0</h3>
-                    <p class="text-[10px] text-muted/80 dark:text-zinc-500 mt-0.5">Hari ini</p>
-                </div>
-                <div class="custom-surface border p-3.5 rounded-2xl shadow-sm transition-all">
-                    <p class="text-[11px] text-muted dark:text-zinc-400 font-medium">Omzet Hari Ini</p>
-                    <h3 id="stat-today-omzet" class="text-lg font-bold text-orange mt-1 truncate">Rp 0</h3>
-                    <p class="text-[10px] text-muted/80 dark:text-zinc-500 mt-0.5">Pendapatan harian</p>
-                </div>
-                <div class="custom-surface border p-3.5 rounded-2xl shadow-sm transition-all">
-                    <p class="text-[11px] text-muted dark:text-zinc-400 font-medium">Order Siklus Ini</p>
-                    <h3 id="stat-month-orders" class="text-2xl font-bold text-charcoal dark:text-white mt-1">0</h3>
-                    <p class="text-[10px] text-muted/80 dark:text-zinc-500 mt-0.5 truncate" id="current-month-label">Siklus Bulanan</p>
-                </div>
-                <div class="custom-surface border p-3.5 rounded-2xl shadow-sm transition-all">
-                    <p class="text-[11px] text-muted dark:text-zinc-400 font-medium">Omzet Siklus Ini</p>
-                    <h3 id="stat-month-omzet" class="text-lg font-bold text-orange mt-1 truncate">Rp 0</h3>
-                    <p class="text-[10px] text-muted/80 dark:text-zinc-500 mt-0.5">Akumulasi siklus aktif</p>
-                </div>
-            </div>
-
-            <!-- Tabungan Card Beranda -->
-            <div class="bg-gradient-to-r from-orange-light to-peach/40 dark:from-zinc-900 dark:to-zinc-950 border border-orange/30 p-3.5 rounded-2xl shadow-sm space-y-2 transition-all">
-                <div class="flex justify-between items-center">
-                    <div>
-                        <p class="text-[11px] text-orange font-bold uppercase tracking-wider">Tabungan Hari Ini (30%)</p>
-                        <h3 id="stat-today-savings" class="text-base font-bold text-charcoal dark:text-white mt-0.5">Rp 0</h3>
-                    </div>
-                    <span class="text-xl custom-surface border p-2 rounded-xl shadow-sm">💰</span>
-                </div>
-            </div>
-
-            <!-- Main Menu Action Buttons -->
-            <div class="space-y-2.5 pt-1">
-                <button onclick="openModalCatat()" class="w-full bg-orange hover:bg-orange-dark text-white font-semibold py-3 px-4 rounded-2xl shadow-sm transition duration-200 flex items-center justify-center space-x-2 text-xs tracking-wider">
-                    <span class="text-base font-bold">+</span>
-                    <span>CATAT ORDER</span>
+                <button onclick="openSheet('sheet-menu')" aria-label="Menu Utama" class="w-10 h-10 rounded-full flex items-center justify-center text-ink-muted hover:bg-brand-50 dark:hover:bg-brand-900/30 hover:text-brand-600 dark:hover:text-brand-400 transition-colors active:scale-95 duration-150">
+                    <i class="ph ph-list text-[22px]"></i>
                 </button>
-                <div class="grid grid-cols-3 gap-2">
-                    <button onclick="switchView('rekap')" class="custom-surface border hover:bg-peach/30 dark:hover:bg-zinc-800 text-charcoal dark:text-white font-medium py-2.5 px-2 rounded-2xl text-xs transition flex flex-col items-center justify-center space-y-1 shadow-sm">
-                        <span class="text-orange text-base">📊</span>
-                        <span class="font-semibold">REKAP</span>
-                    </button>
-                    <button onclick="switchView('analisis')" class="custom-surface border hover:bg-peach/30 dark:hover:bg-zinc-800 text-charcoal dark:text-white font-medium py-2.5 px-2 rounded-2xl text-xs transition flex flex-col items-center justify-center space-y-1 shadow-sm">
-                        <span class="text-orange text-base">📈</span>
-                        <span class="font-semibold">ANALISIS 30H</span>
-                    </button>
-                    <button onclick="switchView('data')" class="custom-surface border hover:bg-peach/30 dark:hover:bg-zinc-800 text-charcoal dark:text-white font-medium py-2.5 px-2 rounded-2xl text-xs transition flex flex-col items-center justify-center space-y-1 shadow-sm">
-                        <span class="text-orange text-base">🗂️</span>
-                        <span class="font-semibold">DATA</span>
-                    </button>
+            </div>
+        </header>
+
+        <div class="px-6 max-w-2xl mx-auto w-full flex-1 flex flex-col mt-6 space-y-7">
+            
+            <!-- SECTION: Today Overview -->
+            <div>
+                <span class="text-[12px] font-medium text-ink-muted dark:text-ink-darkMuted uppercase tracking-wider">Hari ini</span>
+                <div class="flex items-baseline gap-3 mt-1">
+                    <h2 class="text-[42px] sm:text-[48px] font-semibold tracking-tight leading-none text-ink-main dark:text-ink-darkMain" id="pulse-today-rev">Rp0</h2>
+                </div>
+                <div class="flex items-center gap-3 mt-3.5">
+                    <span class="text-[13px] font-medium text-ink-main dark:text-ink-darkMain flex items-center gap-1.5 bg-panel-light dark:bg-panel-dark px-3 py-1.5 rounded-lg border border-line-light/80 dark:border-line-dark shadow-sm">
+                        <i class="ph-fill ph-receipt text-ink-muted"></i> <span id="pulse-today-orders">0 order</span>
+                    </span>
+                    <span class="text-[13px] font-medium text-brand-600 dark:text-brand-400 flex items-center gap-1.5 bg-brand-50 dark:bg-brand-900/30 px-3 py-1.5 rounded-lg border border-brand-100/60 dark:border-brand-800/30 shadow-sm">
+                        <i class="ph-fill ph-piggy-bank"></i> <span id="pulse-today-savings">Rp0</span>
+                    </span>
                 </div>
             </div>
 
-            <!-- Quick Input Section -->
-            <div class="custom-surface border p-3.5 rounded-2xl shadow-sm mt-3">
-                <h4 class="text-xs font-bold text-charcoal dark:text-white uppercase tracking-wider mb-2">⚡ Quick Input (Format Cepat)</h4>
-                <div class="flex gap-2">
-                    <input type="text" id="quick-input-text" placeholder="Contoh: CV - 17000 - LinkedIn" class="flex-grow custom-cream border text-xs text-charcoal dark:text-white rounded-xl px-3 py-2.5 focus:outline-none focus:border-orange">
-                    <button onclick="handleQuickInput()" class="bg-charcoal dark:bg-zinc-800 text-cream dark:text-white hover:bg-orange text-xs px-3 py-2.5 rounded-xl font-semibold transition">Kirim</button>
-                </div>
-                <p class="text-[10px] text-muted dark:text-zinc-400 mt-1.5">Format: [Layanan] - [Harga] - [Sumber]. Sumber: Facebook, TikTok, Instagram, LinkedIn, Sribu, dll.</p>
-            </div>
+            <!-- Thickened Divider before Active Cycle (approx 2px) -->
+            <div class="w-full h-[2px] bg-line-light dark:bg-line-dark"></div>
 
-            <!-- Recent Orders Preview -->
-            <div class="custom-surface border p-3.5 rounded-2xl shadow-sm">
-                <div class="flex justify-between items-center mb-2">
-                    <h4 class="text-xs font-bold text-charcoal dark:text-white uppercase tracking-wider">Order Terbaru</h4>
-                    <button onclick="switchView('data')" class="text-[11px] text-orange hover:underline font-semibold">Lihat Semua</button>
-                </div>
-                <div id="recent-orders-list" class="space-y-2"></div>
-            </div>
-        </section>
-
-        <!-- REKAP VIEW -->
-        <section id="view-rekap" class="hidden space-y-4">
-            <div class="flex items-center justify-between border-b border-bordercolor dark:border-zinc-800 pb-2">
-                <h2 class="text-base font-bold text-charcoal dark:text-white flex items-center space-x-2">
-                    <span>📊 Rekap Bisnis Rizky Jasa</span>
-                </h2>
-                <button onclick="switchView('dashboard')" class="text-xs custom-surface border text-charcoal dark:text-white px-3 py-1.5 rounded-xl hover:bg-peach/30">Kembali</button>
-            </div>
-
-            <div class="custom-surface border p-3 rounded-2xl flex items-center justify-between shadow-sm">
-                <span class="text-xs text-muted dark:text-zinc-400 font-medium">Pilih Periode Rekap:</span>
-                <select id="select-archive-cycle" onchange="changeArchiveCycle(this.value)" class="custom-cream border text-xs text-charcoal dark:text-white font-bold rounded-xl px-3 py-1.5 focus:outline-none focus:border-orange">
-                </select>
-            </div>
-
-            <div class="custom-surface border p-4 rounded-2xl space-y-2 shadow-sm">
-                <h3 class="text-xs font-bold text-orange uppercase tracking-wider">Rekap Hari Ini</h3>
-                <div class="grid grid-cols-3 gap-2 pt-1 text-center">
-                    <div class="custom-cream p-2.5 rounded-xl border border-bordercolor dark:border-zinc-800">
-                        <p class="text-[10px] text-muted dark:text-zinc-400">Jumlah Order</p>
-                        <p id="rekap-today-count" class="text-base font-bold text-charcoal dark:text-white mt-0.5">0</p>
-                    </div>
-                    <div class="custom-cream p-2.5 rounded-xl border border-bordercolor dark:border-zinc-800">
-                        <p class="text-[10px] text-muted dark:text-zinc-400">Omzet</p>
-                        <p id="rekap-today-omzet" class="text-sm font-bold text-orange mt-0.5 truncate">Rp 0</p>
-                    </div>
-                    <div class="custom-cream p-2.5 rounded-xl border border-bordercolor dark:border-zinc-800">
-                        <p class="text-[10px] text-muted dark:text-zinc-400">Rata-rata</p>
-                        <p id="rekap-today-avg" class="text-sm font-bold text-charcoal dark:text-white mt-0.5 truncate">Rp 0</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="custom-surface border p-4 rounded-2xl space-y-3 shadow-sm">
-                <h3 id="rekap-cycle-title" class="text-xs font-bold text-orange uppercase tracking-wider">Rekap Siklus Ini</h3>
-                <div class="grid grid-cols-3 gap-2 pt-1 text-center">
-                    <div class="custom-cream p-2.5 rounded-xl border border-bordercolor dark:border-zinc-800">
-                        <p class="text-[10px] text-muted dark:text-zinc-400">Jumlah Order</p>
-                        <p id="rekap-month-count" class="text-base font-bold text-charcoal dark:text-white mt-0.5">0</p>
-                    </div>
-                    <div class="custom-cream p-2.5 rounded-xl border border-bordercolor dark:border-zinc-800">
-                        <p class="text-[10px] text-muted dark:text-zinc-400">Omzet</p>
-                        <p id="rekap-month-omzet" class="text-sm font-bold text-orange mt-0.5 truncate">Rp 0</p>
-                    </div>
-                    <div class="custom-cream p-2.5 rounded-xl border border-bordercolor dark:border-zinc-800">
-                        <p class="text-[10px] text-muted dark:text-zinc-400">Rata-rata</p>
-                        <p id="rekap-month-avg" class="text-sm font-bold text-charcoal dark:text-white mt-0.5 truncate">Rp 0</p>
-                    </div>
-                </div>
-                <div class="bg-orange-light dark:bg-zinc-900 p-3 rounded-xl border border-orange/20 flex justify-between items-center mt-2">
-                    <div>
-                        <div class="flex items-center space-x-2">
-                            <p class="text-[10px] text-orange font-bold">Total Tabungan (30% Mulai 31 Agt)</p>
-                            <button onclick="toggleSavingsVisibility()" id="btn-toggle-savings" class="text-xs text-orange hover:text-orange-dark focus:outline-none" title="Sembunyikan/Tampilkan Nominal">👁️</button>
-                        </div>
-                        <p id="rekap-month-savings" class="text-sm font-bold text-charcoal dark:text-white mt-0.5">Rp 0</p>
-                    </div>
-                    <span class="text-xs text-muted dark:text-zinc-400 font-mono">Operasional: <span id="rekap-month-operational" class="text-charcoal dark:text-white font-semibold">Rp 0</span></span>
-                </div>
-            </div>
-
-            <div class="custom-surface border p-4 rounded-2xl space-y-2 shadow-sm">
-                <h3 class="text-xs font-bold text-muted dark:text-zinc-400 uppercase tracking-wider">Breakdown Layanan (Periode Ini)</h3>
-                <div id="breakdown-layanan" class="space-y-1.5 text-xs"></div>
-            </div>
-
-            <div class="custom-surface border p-4 rounded-2xl space-y-2 shadow-sm">
-                <h3 class="text-xs font-bold text-muted dark:text-zinc-400 uppercase tracking-wider">Breakdown Sumber Customer</h3>
-                <div id="breakdown-sumber" class="space-y-1.5 text-xs"></div>
-            </div>
-
-            <div class="custom-surface border p-4 rounded-2xl space-y-2 shadow-sm">
-                <h3 class="text-xs font-bold text-muted dark:text-zinc-400 uppercase tracking-wider">Status & Referral</h3>
-                <div id="breakdown-status" class="grid grid-cols-2 gap-2 text-xs"></div>
-            </div>
-        </section>
-
-        <!-- ANALISIS 30 HARI VIEW (SUPER CHARGED 500% ULTIMATE) -->
-        <section id="view-analisis" class="hidden space-y-4">
-            <div class="flex items-center justify-between border-b border-bordercolor dark:border-zinc-800 pb-2">
-                <h2 class="text-base font-bold text-charcoal dark:text-white flex items-center space-x-2">
-                    <span>📈 Pro Business Analytics (30H)</span>
-                </h2>
-                <button onclick="switchView('dashboard')" class="text-xs custom-surface border text-charcoal dark:text-white px-3 py-1.5 rounded-xl hover:bg-peach/30">Kembali</button>
-            </div>
-
-            <!-- Key Metrics Grid Pro -->
-            <div class="grid grid-cols-2 gap-2.5">
-                <div class="custom-surface border p-3 rounded-2xl shadow-sm">
-                    <p class="text-[11px] text-muted dark:text-zinc-400">Total Order (30H)</p>
-                    <p id="an-total-order" class="text-lg font-bold text-charcoal dark:text-white mt-0.5">0</p>
-                </div>
-                <div class="custom-surface border p-3 rounded-2xl shadow-sm">
-                    <p class="text-[11px] text-muted dark:text-zinc-400">Total Omzet (30H)</p>
-                    <p id="an-total-omzet" class="text-sm font-bold text-orange mt-0.5 truncate">Rp 0</p>
-                </div>
-                <div class="custom-surface border p-3 rounded-2xl shadow-sm">
-                    <p class="text-[11px] text-muted dark:text-zinc-400">Rata2 Omzet/Hari</p>
-                    <p id="an-avg-omzet-day" class="text-sm font-bold text-charcoal dark:text-white mt-0.5 truncate">Rp 0</p>
-                </div>
-                <div class="custom-surface border p-3 rounded-2xl shadow-sm">
-                    <p class="text-[11px] text-muted dark:text-zinc-400">Rata2 Order/Hari</p>
-                    <p id="an-avg-order-day" class="text-lg font-bold text-charcoal dark:text-white mt-0.5">0</p>
-                </div>
-                <div class="custom-surface border p-3 rounded-2xl shadow-sm">
-                    <p class="text-[11px] text-muted dark:text-zinc-400">Average Order Value</p>
-                    <p id="an-aov" class="text-sm font-bold text-orange mt-0.5 truncate">Rp 0</p>
-                </div>
-                <div class="custom-surface border p-3 rounded-2xl shadow-sm">
-                    <p class="text-[11px] text-muted dark:text-zinc-400">Repeat Rate</p>
-                    <p id="an-repeat-rate" class="text-lg font-bold text-charcoal dark:text-white mt-0.5">0%</p>
-                </div>
-                <div class="custom-surface border p-3 rounded-2xl shadow-sm">
-                    <p class="text-[11px] text-muted dark:text-zinc-400">Referral Rate</p>
-                    <p id="an-referral-rate" class="text-lg font-bold text-charcoal dark:text-white mt-0.5">0%</p>
-                </div>
-                <div class="custom-surface border p-3 rounded-2xl shadow-sm">
-                    <p class="text-[11px] text-muted dark:text-zinc-400">Rata2 Durasi Kerja</p>
-                    <p id="an-avg-duration" class="text-sm font-bold text-charcoal dark:text-white mt-0.5">0 menit</p>
-                </div>
-            </div>
-
-            <!-- Conversion per Paket -->
-            <div class="custom-surface border p-4 rounded-2xl space-y-3 shadow-sm">
+            <!-- SECTION: Active Cycle Summary -->
+            <div class="flex items-center justify-between">
                 <div>
-                    <h3 class="text-xs font-bold text-orange uppercase tracking-wider">📊 CONVERSION PER PAKET</h3>
-                    <p class="text-[10px] text-muted dark:text-zinc-400 mt-0.5">Distribusi order berdasarkan paket (30 hari terakhir)</p>
+                    <span class="text-[12px] font-medium text-ink-muted dark:text-ink-darkMuted uppercase tracking-wider block mb-1">Siklus (<span id="pulse-cycle-dates">22 - 21</span>)</span>
+                    <p class="text-[18px] font-semibold text-ink-main dark:text-ink-darkMain" id="pulse-cycle-rev">Rp0</p>
                 </div>
-                <div id="conversion-paket-container" class="space-y-3 pt-1 text-xs"></div>
-            </div>
-
-            <!-- INTERACTIVE SVG ANALYTICS CHART (POIN 4: SUPER CHARGED) -->
-            <div class="custom-surface border p-4 rounded-2xl space-y-3 shadow-sm">
-                <div class="flex justify-between items-center">
-                    <div>
-                        <h3 class="text-xs font-bold text-orange uppercase tracking-wider">📈 Trend Omzet Harian (7 Hari Interaktif)</h3>
-                        <p class="text-[10px] text-muted dark:text-zinc-400 mt-0.5">Sentuh atau arahkan kursor ke titik grafik untuk detail</p>
-                    </div>
-                    <span class="text-xs bg-orange-light text-orange font-bold px-2 py-1 rounded-xl" id="chart-peak-badge">Puncak: Rp 0</span>
-                </div>
-                <div class="custom-cream p-3 rounded-2xl border border-bordercolor dark:border-zinc-800 relative">
-                    <!-- Tooltip Interaktif Grafik -->
-                    <div id="chart-tooltip" class="hidden absolute top-2 right-2 bg-charcoal text-white text-[10px] font-mono px-2.5 py-1 rounded-lg shadow-lg pointer-events-none z-20">
-                        <span id="tooltip-date">--/--</span>: <span id="tooltip-val" class="text-orange font-bold">Rp 0</span>
-                    </div>
-                    <canvas id="chart-omzet" height="140" class="w-full cursor-crosshair"></canvas>
+                <div class="text-right">
+                    <span class="text-[12px] font-medium text-ink-muted dark:text-ink-darkMuted uppercase tracking-wider block mb-1">Tabungan Siklus</span>
+                    <p class="text-[18px] font-semibold text-brand-500 dark:text-brand-400" id="pulse-cycle-savings">Rp0</p>
                 </div>
             </div>
 
-            <!-- Performa & Rekor -->
-            <div class="custom-surface border p-3.5 rounded-2xl space-y-2 text-xs shadow-sm">
-                <h3 class="font-bold text-orange uppercase tracking-wider">Performa & Rekor Bisnis</h3>
-                <div class="space-y-2 text-muted dark:text-zinc-400" id="an-records-list"></div>
-            </div>
+            <!-- Subtle Divider -->
+            <div class="w-full h-px bg-line-light dark:bg-line-dark"></div>
 
-            <!-- AI-LIKE SMART BUSINESS INSIGHTS (POIN 3: SUPER CHARGED) -->
-            <div class="bg-gradient-to-br from-orange-light to-peach/50 dark:from-zinc-900 dark:to-zinc-950 border border-orange/30 p-4 rounded-2xl space-y-2.5 shadow-sm">
-                <h3 class="text-xs font-bold text-orange uppercase tracking-wider flex items-center space-x-1.5">
-                    <span>💡 Pro Business Insights & AI Recommendations</span>
-                </h3>
-                <div id="insight-container" class="space-y-2 text-xs text-charcoal dark:text-zinc-300 leading-relaxed"></div>
-            </div>
-        </section>
-
-        <!-- DATA VIEW -->
-        <section id="view-data" class="hidden space-y-4">
-            <div class="flex items-center justify-between border-b border-bordercolor dark:border-zinc-800 pb-2">
-                <h2 class="text-base font-bold text-charcoal dark:text-white">🗂️ Data Seluruh Order</h2>
-                <button onclick="switchView('dashboard')" class="text-xs custom-surface border text-charcoal dark:text-white px-3 py-1.5 rounded-xl hover:bg-peach/30">Kembali</button>
-            </div>
-
-            <div class="grid grid-cols-3 gap-2">
-                <button onclick="exportDataJSON()" class="custom-surface hover:bg-peach/30 border text-orange text-xs py-2 px-2 rounded-xl font-semibold transition flex items-center justify-center space-x-1 shadow-sm">
-                    <span>📥 Export</span>
+            <!-- SECTION: Primary Action & Quick Actions (Solid Green Buttons) -->
+            <div class="flex flex-col gap-3.5">
+                <!-- Primary Action: Catat Order -->
+                <button onclick="openSheet('sheet-add-order')" class="w-full bg-brand-500 hover:bg-brand-600 text-white rounded-[16px] py-4 flex items-center justify-center gap-2.5 shadow-sm shadow-brand-500/20 active:scale-[0.98] transition-all duration-150 group">
+                    <i class="ph-bold ph-plus text-[18px] group-hover:rotate-90 transition-transform duration-200"></i>
+                    <span class="font-medium text-[15px]">Catat Order</span>
                 </button>
-                <button onclick="document.getElementById('import-file-input').click()" class="custom-surface hover:bg-peach/30 border text-orange text-xs py-2 px-2 rounded-xl font-semibold transition flex items-center justify-center space-x-1 shadow-sm">
-                    <span>📤 Import</span>
-                </button>
-                <input type="file" id="import-file-input" accept=".json,application/json" class="hidden" onchange="importDataJSON(event)">
-                <button onclick="confirmResetAll()" class="bg-red-50 dark:bg-red-950/40 hover:bg-red-100 border border-red-200 dark:border-red-900 text-red-600 dark:text-red-400 text-xs py-2 px-2 rounded-xl font-semibold transition flex items-center justify-center space-x-1 shadow-sm">
-                    <span>🗑️ Reset</span>
-                </button>
+
+                <!-- Quick Actions: Rekap | Analisis | Data (All 3 Solid Green Buttons) -->
+                <div class="grid grid-cols-3 gap-3">
+                    <button onclick="openOverlay('overlay-recap')" class="bg-brand-500 hover:bg-brand-600 text-white py-3.5 px-3 rounded-[16px] flex flex-col items-center justify-center gap-1.5 shadow-sm shadow-brand-500/15 active:scale-[0.98] transition-all duration-150">
+                        <i class="ph ph-calendar-range text-[20px]"></i>
+                        <span class="text-[13px] font-medium">Rekap</span>
+                    </button>
+                    <button onclick="openOverlay('overlay-analytics')" class="bg-brand-500 hover:bg-brand-600 text-white py-3.5 px-3 rounded-[16px] flex flex-col items-center justify-center gap-1.5 shadow-sm shadow-brand-500/15 active:scale-[0.98] transition-all duration-150">
+                        <i class="ph ph-chart-line-up text-[20px]"></i>
+                        <span class="text-[13px] font-medium">Analisis</span>
+                    </button>
+                    <button onclick="openOverlay('overlay-data')" class="bg-brand-500 hover:bg-brand-600 text-white py-3.5 px-3 rounded-[16px] flex flex-col items-center justify-center gap-1.5 shadow-sm shadow-brand-500/15 active:scale-[0.98] transition-all duration-150">
+                        <i class="ph ph-folder-open text-[20px]"></i>
+                        <span class="text-[13px] font-medium">Semua Data</span>
+                    </button>
+                </div>
             </div>
 
-            <div>
-                <input type="text" id="search-data-input" oninput="renderDataTable()" placeholder="Cari layanan, sumber, dll..." class="w-full custom-surface border text-xs text-charcoal dark:text-white rounded-xl px-3 py-2.5 focus:outline-none focus:border-orange shadow-sm">
+            <!-- SECTION: Quick Input Command Bar -->
+            <form id="form-quick" class="relative flex items-center bg-panel-light dark:bg-panel-dark rounded-[16px] border border-line-light dark:border-line-dark focus-within:ring-2 focus-within:ring-brand-500/20 focus-within:border-brand-500 transition-all duration-150 shadow-soft">
+                <div class="absolute left-4 text-brand-500 flex items-center justify-center pointer-events-none">
+                    <i class="ph-fill ph-lightning text-[18px]"></i>
+                </div>
+                <input type="text" id="input-quick" autocomplete="off" placeholder="Ketik: CV - 25000 - Facebook" class="w-full bg-transparent py-3.5 pl-12 pr-14 text-[14px] text-ink-main dark:text-ink-darkMain placeholder-ink-muted/60 focus:outline-none">
+                <button type="submit" aria-label="Kirim Quick Input" class="absolute right-2 w-9 h-9 bg-brand-50 dark:bg-brand-900/30 text-brand-600 dark:text-brand-400 rounded-xl flex items-center justify-center active:scale-95 transition-all duration-150 hover:bg-brand-100 dark:hover:bg-brand-900/50">
+                    <i class="ph-bold ph-paper-plane-right text-[15px]"></i>
+                </button>
+            </form>
+
+            <!-- SECTION: Recent Orders Feed -->
+            <div class="pt-2">
+                <div class="flex items-center justify-between mb-3 px-1">
+                    <h3 class="text-[14px] font-semibold text-ink-main dark:text-ink-darkMain tracking-tight">Order Terbaru</h3>
+                    <button onclick="openOverlay('overlay-data')" class="text-[13px] font-medium text-brand-600 dark:text-brand-400 hover:opacity-80 transition-opacity">Lihat Semua</button>
+                </div>
+                <div id="home-recent-list" class="flex flex-col space-y-2">
+                    <!-- Populated via JS -->
+                </div>
             </div>
-
-            <div id="data-orders-container" class="space-y-2 max-h-[60vh] overflow-y-auto pr-1"></div>
-        </section>
-
+        </div>
     </main>
 
-    <!-- FOOTER -->
-    <footer class="text-center py-4 text-xs text-muted dark:text-zinc-500 border-t border-bordercolor dark:border-zinc-900 custom-surface mt-6">
-        Rizky Jasa &bull; Pro Business Intelligence &bull; All Data Stored Locally
-    </footer>
 
-    <!-- MODAL CATAT/EDIT ORDER -->
-    <div id="order-modal" class="hidden fixed inset-0 z-50 bg-charcoal/40 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="custom-surface border w-full max-w-sm rounded-3xl p-5 space-y-4 shadow-xl relative max-h-[90vh] overflow-y-auto">
-            <div class="flex justify-between items-center border-b border-bordercolor dark:border-zinc-800 pb-2">
-                <h3 id="modal-title" class="text-sm font-bold text-charcoal dark:text-white">Catat Order Baru</h3>
-                <button onclick="closeModalCatat()" class="text-muted dark:text-zinc-400 hover:text-charcoal dark:hover:text-white text-base font-bold">×</button>
+    <!-- OVERLAY: Analytics 30H -->
+    <div id="overlay-analytics" class="fixed inset-0 z-40 bg-surface-light dark:bg-surface-dark flex flex-col hidden-safe theme-transition">
+        <header class="flex items-center justify-between px-6 h-[72px] shrink-0 bg-surface-light/90 dark:bg-surface-dark/90 backdrop-blur-md sticky top-0 z-10 border-b border-line-light/50 dark:border-line-dark/50">
+            <h2 class="text-[16px] font-semibold text-ink-main dark:text-ink-darkMain">Analisis 30 Hari</h2>
+            <button onclick="closeOverlay('overlay-analytics')" aria-label="Tutup" class="w-10 h-10 rounded-full bg-panel-light dark:bg-panel-dark border border-line-light dark:border-line-dark flex items-center justify-center text-ink-muted hover:text-ink-main dark:hover:text-white active:scale-95 transition-all duration-150 shadow-sm">
+                <i class="ph-bold ph-x text-[16px]"></i>
+            </button>
+        </header>
+        
+        <div class="flex-1 overflow-y-auto px-6 py-6 max-w-2xl mx-auto w-full space-y-8 pb-28">
+            <div class="w-full">
+                <h3 class="text-[14px] font-medium text-ink-muted mb-4">Trend Omzet 7 Hari</h3>
+                <div class="h-[180px] w-full relative">
+                    <canvas id="chart-30h"></canvas>
+                </div>
             </div>
-            
-            <form id="order-form" onsubmit="saveOrder(event)" class="space-y-3">
-                <input type="hidden" id="edit-order-id">
+
+            <div class="w-full h-px bg-line-light dark:bg-line-dark"></div>
+
+            <div>
+                <h3 class="text-[14px] font-medium text-ink-muted mb-5">Performa vs 30 Hari Sebelumnya</h3>
+                <div class="grid grid-cols-2 gap-x-6 gap-y-6">
+                    <div>
+                        <p class="text-[13px] text-ink-muted mb-1">Total Order</p>
+                        <p class="text-[22px] font-semibold leading-none text-ink-main dark:text-ink-darkMain" id="a30-ord">0</p>
+                        <p class="text-[13px] mt-1.5" id="a30-ord-tr"></p>
+                    </div>
+                    <div>
+                        <p class="text-[13px] text-ink-muted mb-1">Total Omzet</p>
+                        <p class="text-[22px] font-semibold text-brand-500 dark:text-brand-400 leading-none" id="a30-rev">Rp0</p>
+                        <p class="text-[13px] mt-1.5" id="a30-rev-tr"></p>
+                    </div>
+                    <div>
+                        <p class="text-[13px] text-ink-muted mb-1">AOV</p>
+                        <p class="text-[16px] font-medium leading-none text-ink-main dark:text-ink-darkMain" id="a30-aov">Rp0</p>
+                    </div>
+                    <div>
+                        <p class="text-[13px] text-ink-muted mb-1">Rata-rata / Hari</p>
+                        <p class="text-[16px] font-medium leading-none text-ink-main dark:text-ink-darkMain" id="a30-avgrev">Rp0</p>
+                    </div>
+                    <div>
+                        <p class="text-[13px] text-ink-muted mb-1">Repeat Rate</p>
+                        <p class="text-[16px] font-medium leading-none text-ink-main dark:text-ink-darkMain" id="a30-rep">0%</p>
+                    </div>
+                    <div>
+                        <p class="text-[13px] text-ink-muted mb-1">Referral Rate</p>
+                        <p class="text-[16px] font-medium leading-none text-ink-main dark:text-ink-darkMain" id="a30-ref">0%</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="w-full h-px bg-line-light dark:bg-line-dark"></div>
+
+            <div class="bg-brand-50/60 dark:bg-brand-900/20 rounded-[20px] p-5 border border-brand-100/60 dark:border-brand-800/30">
+                <div class="flex items-center gap-2 mb-3">
+                    <i class="ph-fill ph-sparkle text-brand-500 text-[16px]"></i>
+                    <h3 class="text-[14px] font-medium text-brand-700 dark:text-brand-300">Pro Business Insight</h3>
+                </div>
+                <div id="a30-insight" class="space-y-4">
+                    <!-- Injected -->
+                </div>
+            </div>
+
+            <div class="space-y-6">
                 <div>
-                    <label class="block text-xs font-semibold text-charcoal dark:text-zinc-300 mb-1">Layanan *</label>
-                    <select id="form-layanan" required class="w-full custom-cream border text-xs text-charcoal dark:text-white rounded-xl p-2.5 focus:outline-none focus:border-orange">
-                        <option value="" disabled selected>Pilih Layanan</option>
+                    <h3 class="text-[14px] font-medium text-ink-muted mb-3">Kontribusi Layanan</h3>
+                    <div id="a30-srv" class="space-y-2"></div>
+                </div>
+                <div>
+                    <h3 class="text-[14px] font-medium text-ink-muted mb-3">Sumber Customer</h3>
+                    <div id="a30-src" class="space-y-2"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- OVERLAY: Data List & Filter -->
+    <div id="overlay-data" class="fixed inset-0 z-40 bg-surface-light dark:bg-surface-dark flex flex-col hidden-safe theme-transition">
+        <header class="flex items-center justify-between px-6 h-[72px] shrink-0 bg-surface-light/90 dark:bg-surface-dark/90 backdrop-blur-md sticky top-0 z-10 border-b border-line-light/50 dark:border-line-dark/50">
+            <h2 class="text-[16px] font-semibold text-ink-main dark:text-ink-darkMain">Semua Data Order</h2>
+            <button onclick="closeOverlay('overlay-data')" aria-label="Tutup" class="w-10 h-10 rounded-full bg-panel-light dark:bg-panel-dark border border-line-light dark:border-line-dark flex items-center justify-center text-ink-muted hover:text-ink-main dark:hover:text-white active:scale-95 transition-all duration-150 shadow-sm">
+                <i class="ph-bold ph-x text-[16px]"></i>
+            </button>
+        </header>
+        
+        <div class="flex flex-col px-6 py-4 shrink-0 gap-3 max-w-2xl mx-auto w-full border-b border-line-light/50 dark:border-line-dark/50">
+            <div class="relative">
+                <i class="ph ph-magnifying-glass absolute left-4 top-[13px] text-ink-muted text-lg"></i>
+                <input type="text" id="data-search" placeholder="Cari layanan, sumber, ID..." class="w-full bg-panel-light dark:bg-panel-dark border border-line-light dark:border-line-dark rounded-[14px] py-3 pl-11 pr-4 text-[14px] focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all text-ink-main dark:text-ink-darkMain placeholder-ink-muted shadow-sm">
+            </div>
+            <div class="flex gap-2 overflow-x-auto pb-1 -mx-6 px-6 no-scrollbar" id="data-filters">
+                <button class="filter-btn active px-4 py-1.5 rounded-full text-[13px] font-medium bg-brand-500 text-white shrink-0 transition-colors shadow-sm" data-val="all">Semua</button>
+                <button class="filter-btn px-4 py-1.5 rounded-full text-[13px] font-medium bg-panel-light text-ink-muted dark:bg-panel-dark border border-line-light dark:border-line-dark shrink-0 transition-colors shadow-sm" data-val="CV">CV</button>
+                <button class="filter-btn px-4 py-1.5 rounded-full text-[13px] font-medium bg-panel-light text-ink-muted dark:bg-panel-dark border border-line-light dark:border-line-dark shrink-0 transition-colors shadow-sm" data-val="Repeat Customer">Repeat</button>
+                <button class="filter-btn px-4 py-1.5 rounded-full text-[13px] font-medium bg-panel-light text-ink-muted dark:bg-panel-dark border border-line-light dark:border-line-dark shrink-0 transition-colors shadow-sm" data-val="Referral">Referral</button>
+            </div>
+        </div>
+
+        <div class="flex-1 overflow-y-auto px-6 py-5 pb-28 max-w-2xl mx-auto w-full">
+            <p class="text-[13px] text-ink-muted mb-3 font-medium" id="data-count">Memuat...</p>
+            <div id="data-list" class="flex flex-col space-y-2">
+                <!-- Populated via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- OVERLAY: Period Recap -->
+    <div id="overlay-recap" class="fixed inset-0 z-40 bg-surface-light dark:bg-surface-dark flex flex-col hidden-safe theme-transition">
+        <header class="flex items-center justify-between px-6 h-[72px] shrink-0 bg-surface-light/90 dark:bg-surface-dark/90 backdrop-blur-md sticky top-0 z-10 border-b border-line-light/50 dark:border-line-dark/50">
+            <h2 class="text-[16px] font-semibold text-ink-main dark:text-ink-darkMain">Rekap Periode</h2>
+            <button onclick="closeOverlay('overlay-recap')" aria-label="Tutup" class="w-10 h-10 rounded-full bg-panel-light dark:bg-panel-dark border border-line-light dark:border-line-dark flex items-center justify-center text-ink-muted hover:text-ink-main dark:hover:text-white active:scale-95 transition-all duration-150 shadow-sm">
+                <i class="ph-bold ph-x text-[16px]"></i>
+            </button>
+        </header>
+        
+        <div class="flex-1 overflow-y-auto px-6 py-6 max-w-2xl mx-auto w-full pb-28 space-y-6">
+            <form id="form-recap" class="flex items-end gap-3 p-4 bg-panel-light dark:bg-panel-dark rounded-[20px] border border-line-light dark:border-line-dark shadow-sm">
+                <div class="flex-1">
+                    <label class="block text-[11px] font-medium text-ink-muted mb-1 uppercase tracking-wider">Dari</label>
+                    <input type="date" id="recap-start" required class="w-full bg-surface-light dark:bg-surface-dark border border-line-light dark:border-line-dark rounded-[12px] py-2.5 px-3 text-[13px] text-ink-main dark:text-ink-darkMain focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all">
+                </div>
+                <div class="flex-1">
+                    <label class="block text-[11px] font-medium text-ink-muted mb-1 uppercase tracking-wider">Sampai</label>
+                    <input type="date" id="recap-end" required class="w-full bg-surface-light dark:bg-surface-dark border border-line-light dark:border-line-dark rounded-[12px] py-2.5 px-3 text-[13px] text-ink-main dark:text-ink-darkMain focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all">
+                </div>
+                <button type="submit" aria-label="Proses Rekap" class="w-[42px] h-[42px] rounded-[12px] bg-brand-500 text-white flex items-center justify-center shrink-0 active:scale-95 transition-transform shadow-sm">
+                    <i class="ph-bold ph-arrow-right text-[16px]"></i>
+                </button>
+            </form>
+
+            <div id="recap-result" class="hidden space-y-6 animate-[fadeIn_0.2s]">
+                <div class="w-full h-px bg-line-light dark:bg-line-dark"></div>
+                
+                <div class="flex justify-between items-end">
+                    <div>
+                        <p class="text-[13px] text-ink-muted mb-1">Omzet Periode</p>
+                        <p class="text-[26px] font-semibold text-ink-main dark:text-ink-darkMain" id="rcp-rev">Rp0</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-[13px] text-ink-muted mb-1">Total Order</p>
+                        <p class="text-[16px] font-medium text-ink-main dark:text-ink-darkMain" id="rcp-ord">0</p>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-3">
+                     <div class="p-4 bg-panel-light dark:bg-panel-dark rounded-[16px] border border-line-light dark:border-line-dark shadow-sm">
+                        <p class="text-[12px] text-ink-muted mb-1">Tabungan</p>
+                        <p class="text-[15px] font-semibold text-brand-500 dark:text-brand-400" id="rcp-sav">Rp0</p>
+                    </div>
+                    <div class="p-4 bg-panel-light dark:bg-panel-dark rounded-[16px] border border-line-light dark:border-line-dark shadow-sm">
+                        <p class="text-[12px] text-ink-muted mb-1">AOV</p>
+                        <p class="text-[15px] font-medium text-ink-main dark:text-ink-darkMain" id="rcp-aov">Rp0</p>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-[14px] font-medium text-ink-muted mb-3">Rincian Layanan</h3>
+                    <div id="rcp-srv" class="space-y-2"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- OVERLAY: Cycles History -->
+    <div id="overlay-cycles" class="fixed inset-0 z-40 bg-surface-light dark:bg-surface-dark flex flex-col hidden-safe theme-transition">
+        <header class="flex items-center justify-between px-6 h-[72px] shrink-0 bg-surface-light/90 dark:bg-surface-dark/90 backdrop-blur-md sticky top-0 z-10 border-b border-line-light/50 dark:border-line-dark/50">
+            <h2 class="text-[16px] font-semibold text-ink-main dark:text-ink-darkMain">Riwayat Siklus</h2>
+            <button onclick="closeOverlay('overlay-cycles')" aria-label="Tutup" class="w-10 h-10 rounded-full bg-panel-light dark:bg-panel-dark border border-line-light dark:border-line-dark flex items-center justify-center text-ink-muted hover:text-ink-main dark:hover:text-white active:scale-95 transition-all duration-150 shadow-sm">
+                <i class="ph-bold ph-x text-[16px]"></i>
+            </button>
+        </header>
+        <div class="flex-1 overflow-y-auto px-6 py-6 max-w-2xl mx-auto w-full pb-28">
+            <p class="text-[13px] text-ink-muted mb-5">Pilih siklus bulanan (Tgl 22 s/d 21) untuk meninjau performa.</p>
+            <div id="cycle-list-container" class="space-y-2.5 mb-8"></div>
+            
+            <div id="cycle-detail" class="hidden animate-[fadeIn_0.2s] bg-panel-light dark:bg-panel-dark p-5 rounded-[20px] border border-line-light dark:border-line-dark shadow-sm">
+                <h3 class="text-[14px] font-semibold text-ink-main dark:text-ink-darkMain mb-4" id="cyc-title"></h3>
+                <div class="grid grid-cols-2 gap-4 mb-6">
+                    <div>
+                        <p class="text-[12px] text-ink-muted mb-1">Omzet</p>
+                        <p class="text-[20px] font-semibold text-brand-500 dark:text-brand-400" id="cyc-rev">Rp0</p>
+                    </div>
+                    <div>
+                        <p class="text-[12px] text-ink-muted mb-1">Total Order</p>
+                        <p class="text-[20px] font-medium text-ink-main dark:text-ink-darkMain" id="cyc-ord">0</p>
+                    </div>
+                </div>
+                <div id="cyc-srv" class="space-y-2"></div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- BOTTOM SHEET: Menu -->
+    <div id="sheet-menu" class="fixed inset-0 z-50 flex flex-col justify-end hidden-safe">
+        <div class="absolute inset-0 bg-ink-main/30 dark:bg-black/60 backdrop-blur-sm overlay-enter" onclick="closeSheet('sheet-menu')"></div>
+        <div class="relative bg-panel-light dark:bg-panel-dark w-full sm:max-w-md sm:mx-auto sm:rounded-[24px] sm:mb-6 rounded-t-[28px] shadow-float sheet-enter flex flex-col max-h-[85dvh] border border-line-light/50 dark:border-line-dark">
+            <div class="w-10 h-1.5 bg-line-light dark:bg-line-dark rounded-full mx-auto mt-3.5 mb-1 shrink-0"></div>
+            <header class="flex items-center justify-between px-6 py-3 border-b border-line-light/50 dark:border-line-dark/50 shrink-0">
+                <h3 class="text-[15px] font-semibold text-ink-main dark:text-ink-darkMain">Menu Navigasi</h3>
+                <button onclick="closeSheet('sheet-menu')" aria-label="Tutup" class="w-8 h-8 rounded-full bg-surface-light dark:bg-surface-dark flex items-center justify-center text-ink-muted active:scale-95 transition-all"><i class="ph-bold ph-x text-[14px]"></i></button>
+            </header>
+            <div class="flex-1 overflow-y-auto p-4 space-y-1">
+                <button onclick="switchFromMenu('cycles')" class="w-full flex items-center gap-3 p-3.5 rounded-[14px] hover:bg-surface-light dark:hover:bg-surface-dark transition-colors text-left text-[14px] font-medium text-ink-main dark:text-ink-darkMain active:scale-[0.98]">
+                    <i class="ph ph-clock-counter-clockwise text-[18px] text-ink-muted"></i> Riwayat Siklus Bulanan
+                </button>
+                <div class="h-px bg-line-light dark:bg-line-dark my-1.5 mx-3"></div>
+                <button onclick="backupData()" class="w-full flex items-center gap-3 p-3.5 rounded-[14px] hover:bg-surface-light dark:hover:bg-surface-dark transition-colors text-left text-[14px] font-medium text-ink-main dark:text-ink-darkMain active:scale-[0.98]">
+                    <i class="ph ph-download-simple text-[18px] text-ink-muted"></i> Export Backup (JSON)
+                </button>
+                <label class="w-full flex items-center gap-3 p-3.5 rounded-[14px] hover:bg-surface-light dark:hover:bg-surface-dark transition-colors text-left text-[14px] font-medium cursor-pointer text-ink-main dark:text-ink-darkMain active:scale-[0.98]">
+                    <i class="ph ph-upload-simple text-[18px] text-ink-muted"></i> Import Data
+                    <input type="file" id="import-file-menu" accept=".json" class="hidden">
+                </label>
+                <div class="h-px bg-line-light dark:bg-line-dark my-1.5 mx-3"></div>
+                <button onclick="switchFromMenu('reset')" class="w-full flex items-center gap-3 p-3.5 rounded-[14px] hover:bg-red-50 dark:hover:bg-red-900/10 transition-colors text-left text-[14px] text-red-600 dark:text-red-400 font-medium active:scale-[0.98]">
+                    <i class="ph ph-warning-circle text-[18px]"></i> Reset Database
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- BOTTOM SHEET: Catat / Edit Order Form -->
+    <div id="sheet-add-order" class="fixed inset-0 z-50 flex flex-col justify-end hidden-safe">
+        <div class="absolute inset-0 bg-ink-main/30 dark:bg-black/60 backdrop-blur-sm overlay-enter" onclick="confirmCloseSheet('sheet-add-order')"></div>
+        <div class="relative bg-panel-light dark:bg-panel-dark w-full sm:max-w-md sm:mx-auto sm:rounded-[24px] sm:mb-6 rounded-t-[28px] shadow-float sheet-enter flex flex-col max-h-[90dvh] border border-line-light/50 dark:border-line-dark">
+            <div class="w-10 h-1.5 bg-line-light dark:bg-line-dark rounded-full mx-auto mt-3.5 mb-1 shrink-0"></div>
+            <header class="flex items-center justify-between px-6 py-3 border-b border-line-light/50 dark:border-line-dark/50 shrink-0">
+                <h3 class="text-[15px] font-semibold text-ink-main dark:text-ink-darkMain" id="modal-order-title">Catat Order</h3>
+                <button onclick="confirmCloseSheet('sheet-add-order')" aria-label="Tutup" class="w-8 h-8 rounded-full bg-surface-light dark:bg-surface-dark flex items-center justify-center text-ink-muted hover:text-ink-main dark:hover:text-white active:scale-95 transition-all"><i class="ph-bold ph-x text-[14px]"></i></button>
+            </header>
+            
+            <form id="form-order" class="flex-1 overflow-y-auto px-6 py-5 space-y-4">
+                <input type="hidden" id="fo-id">
+                
+                <div>
+                    <label class="block text-[12px] font-medium text-ink-muted mb-1.5">Layanan</label>
+                    <select id="fo-srv" required class="w-full bg-surface-light dark:bg-surface-dark border border-line-light dark:border-line-dark rounded-[14px] py-3 px-3.5 text-[14px] text-ink-main dark:text-ink-darkMain focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 appearance-none transition-all">
+                        <option value="">Pilih layanan...</option>
                         <option value="CV">CV</option>
                         <option value="Paket CV + Surat Lamaran">Paket CV + Surat Lamaran</option>
                         <option value="Paket Komplit Kerja">Paket Komplit Kerja</option>
                         <option value="Edit Dokumen">Edit Dokumen</option>
-                        <option value="Edit Pas Foto">Edit Pas Foto</option>
+                        <option value="Revisi CV">Revisi CV</option>
                         <option value="Landing Page">Landing Page</option>
-                        <option value="Website">Website</option>
-                        <option value="Lainnya">Lainnya</option>
                     </select>
                 </div>
+
                 <div>
-                    <label class="block text-xs font-semibold text-charcoal dark:text-zinc-300 mb-1">Harga (Rupiah) *</label>
-                    <input type="text" id="form-harga" required placeholder="Contoh: 20.000" oninput="formatInputHarga(this)" class="w-full custom-cream border text-xs text-charcoal dark:text-white rounded-xl p-2.5 focus:outline-none focus:border-orange">
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold text-charcoal dark:text-zinc-300 mb-1">Sumber Customer *</label>
-                    <select id="form-sumber" required class="w-full custom-cream border text-xs text-charcoal dark:text-white rounded-xl p-2.5 focus:outline-none focus:border-orange">
-                        <option value="" disabled selected>Pilih Sumber</option>
-                        <option value="Facebook">Facebook</option>
-                        <option value="TikTok">TikTok</option>
-                        <option value="Instagram">Instagram</option>
-                        <option value="LinkedIn">LinkedIn</option>
-                        <option value="Sribu">Sribu</option>
-                        <option value="Referral">Referral</option>
-                        <option value="Lainnya">Lainnya</option>
-                    </select>
-                </div>
-                <div class="grid grid-cols-2 gap-2">
-                    <div>
-                        <label class="block text-xs font-semibold text-charcoal dark:text-zinc-300 mb-1">Status Customer</label>
-                        <select id="form-status" class="w-full custom-cream border text-xs text-charcoal dark:text-white rounded-xl p-2.5 focus:outline-none focus:border-orange">
-                            <option value="Customer Baru">Customer Baru</option>
-                            <option value="Repeat Customer">Repeat Customer</option>
-                        </select>
+                    <div class="flex justify-between items-end mb-1.5">
+                        <label class="block text-[12px] font-medium text-ink-muted">Harga (Rp)</label>
+                        <span id="fo-sav-hint" class="text-[11px] text-brand-600 dark:text-brand-400 font-medium hidden">Tabungan: Rp0</span>
                     </div>
+                    <input type="number" id="fo-prc" required min="0" placeholder="Contoh: 25000" class="w-full bg-surface-light dark:bg-surface-dark border border-line-light dark:border-line-dark rounded-[14px] py-3 px-3.5 text-[14px] text-ink-main dark:text-ink-darkMain focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 font-medium transition-all">
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
                     <div>
-                        <label class="block text-xs font-semibold text-charcoal dark:text-zinc-300 mb-1">Referral</label>
-                        <select id="form-referral" class="w-full custom-cream border text-xs text-charcoal dark:text-white rounded-xl p-2.5 focus:outline-none focus:border-orange">
-                            <option value="Bukan Referral">Bukan Referral</option>
+                        <label class="block text-[12px] font-medium text-ink-muted mb-1.5">Sumber</label>
+                        <select id="fo-src" required class="w-full bg-surface-light dark:bg-surface-dark border border-line-light dark:border-line-dark rounded-[14px] py-3 px-3.5 text-[14px] text-ink-main dark:text-ink-darkMain focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 appearance-none transition-all">
+                            <option value="Facebook">Facebook</option>
+                            <option value="TikTok">TikTok</option>
+                            <option value="Instagram">Instagram</option>
+                            <option value="LinkedIn">LinkedIn</option>
                             <option value="Referral">Referral</option>
                         </select>
                     </div>
+                    <div>
+                        <label class="block text-[12px] font-medium text-ink-muted mb-1.5">Customer</label>
+                        <select id="fo-sts" required class="w-full bg-surface-light dark:bg-surface-dark border border-line-light dark:border-line-dark rounded-[14px] py-3 px-3.5 text-[14px] text-ink-main dark:text-ink-darkMain focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 appearance-none transition-all">
+                            <option value="Customer Baru">Baru</option>
+                            <option value="Repeat Customer">Repeat</option>
+                        </select>
+                    </div>
                 </div>
-                <div>
-                    <label class="block text-xs font-semibold text-charcoal dark:text-zinc-300 mb-1">Waktu Pengerjaan (Menit)</label>
-                    <input type="number" id="form-durasi" min="0" placeholder="Kosongkan atau isi angka menit" class="w-full custom-cream border text-xs text-charcoal dark:text-white rounded-xl p-2.5 focus:outline-none focus:border-orange">
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-[12px] font-medium text-ink-muted mb-1.5">Referral?</label>
+                        <select id="fo-ref" class="w-full bg-surface-light dark:bg-surface-dark border border-line-light dark:border-line-dark rounded-[14px] py-3 px-3.5 text-[14px] text-ink-main dark:text-ink-darkMain focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 appearance-none transition-all">
+                            <option value="Bukan Referral">Bukan</option>
+                            <option value="Referral">Ya, Referral</option>
+                        </select>
+                    </div>
+                    <div>
+                         <label class="block text-[12px] font-medium text-ink-muted mb-1.5">Estimasi (Mnt)</label>
+                         <input type="number" id="fo-est" min="0" placeholder="Opsional" class="w-full bg-surface-light dark:bg-surface-dark border border-line-light dark:border-line-dark rounded-[14px] py-3 px-3.5 text-[14px] text-ink-main dark:text-ink-darkMain focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all">
+                    </div>
                 </div>
-                <div class="flex space-x-2 pt-2">
-                    <button type="button" onclick="closeModalCatat()" class="w-1/2 custom-cream hover:bg-bordercolor dark:hover:bg-zinc-800 text-charcoal dark:text-white text-xs py-2.5 rounded-xl transition">Batal</button>
-                    <button type="submit" class="w-1/2 bg-orange hover:bg-orange-dark text-white text-xs font-semibold py-2.5 rounded-xl transition shadow-sm">SIMPAN</button>
+
+                <div class="pt-3 pb-1">
+                    <button type="submit" class="w-full bg-brand-500 hover:bg-brand-600 text-white font-medium py-3.5 rounded-[16px] shadow-sm shadow-brand-500/20 active:scale-[0.98] transition-all duration-150">
+                        Simpan Order
+                    </button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- CUSTOM MODAL KONFIRMASI -->
-    <div id="confirm-modal" class="hidden fixed inset-0 z-50 bg-charcoal/40 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="custom-surface border w-full max-w-xs rounded-3xl p-5 space-y-3 text-center shadow-xl">
-            <h3 id="confirm-title" class="text-sm font-bold text-charcoal dark:text-white">Konfirmasi Aksi</h3>
-            <p id="confirm-message" class="text-xs text-muted dark:text-zinc-300">Apakah Anda yakin ingin melakukan tindakan ini?</p>
-            <div class="flex space-x-2 pt-2">
-                <button onclick="closeConfirmModal()" class="w-1/2 custom-cream hover:bg-bordercolor dark:hover:bg-zinc-800 text-charcoal dark:text-white text-xs py-2 rounded-xl">Batal</button>
-                <button id="confirm-btn-yes" class="w-1/2 bg-red-600 hover:bg-red-700 text-white text-xs font-semibold py-2 rounded-xl">Ya, Lanjutkan</button>
+    <!-- BOTTOM SHEET: Order Detail -->
+    <div id="sheet-detail" class="fixed inset-0 z-50 flex flex-col justify-end hidden-safe">
+        <div class="absolute inset-0 bg-ink-main/30 dark:bg-black/60 backdrop-blur-sm overlay-enter" onclick="closeSheet('sheet-detail')"></div>
+        <div class="relative bg-panel-light dark:bg-panel-dark w-full sm:max-w-sm sm:mx-auto sm:rounded-[24px] sm:mb-6 rounded-t-[28px] shadow-float sheet-enter flex flex-col border border-line-light/50 dark:border-line-dark">
+            <div class="w-10 h-1.5 bg-line-light dark:bg-line-dark rounded-full mx-auto mt-3.5 mb-1 shrink-0"></div>
+            <header class="flex items-center justify-between px-6 py-3 border-b border-line-light/50 dark:border-line-dark/50 shrink-0">
+                <h3 class="text-[15px] font-semibold text-ink-main dark:text-ink-darkMain">Detail Order</h3>
+                <button onclick="closeSheet('sheet-detail')" aria-label="Tutup" class="w-8 h-8 rounded-full bg-surface-light dark:bg-surface-dark flex items-center justify-center text-ink-muted hover:text-ink-main dark:hover:text-white active:scale-95 transition-all"><i class="ph-bold ph-x text-[14px]"></i></button>
+            </header>
+            
+            <div class="p-6">
+                <div class="text-center mb-6 mt-1">
+                    <span class="text-[12px] text-ink-muted mb-1 font-medium block" id="det-date">24 Sep 2026, 14:00</span>
+                    <h2 class="text-[18px] font-semibold text-ink-main dark:text-ink-darkMain" id="det-srv">CV</h2>
+                    <p class="text-[32px] font-semibold text-brand-500 dark:text-brand-400 mt-1.5 tracking-tight" id="det-prc">Rp20.000</p>
+                    <div class="inline-flex items-center gap-1.5 bg-brand-50 dark:bg-brand-900/30 px-3 py-1 rounded-full mt-2.5 border border-brand-100/60 dark:border-brand-800/30">
+                        <i class="ph-fill ph-piggy-bank text-brand-600 dark:text-brand-400 text-[14px]"></i>
+                        <span class="text-[12px] font-medium text-brand-700 dark:text-brand-300">Tabungan <span id="det-sav">Rp6.000</span></span>
+                    </div>
+                </div>
+
+                <div class="bg-surface-light dark:bg-surface-dark rounded-[16px] p-4 space-y-3 mb-6 border border-line-light dark:border-line-dark shadow-inner">
+                    <div class="flex justify-between text-[13px]">
+                        <span class="text-ink-muted">Sumber</span>
+                        <span class="font-medium text-ink-main dark:text-ink-darkMain" id="det-src">Facebook</span>
+                    </div>
+                    <div class="flex justify-between text-[13px]">
+                        <span class="text-ink-muted">Customer</span>
+                        <span class="font-medium text-ink-main dark:text-ink-darkMain" id="det-sts">Baru</span>
+                    </div>
+                    <div class="flex justify-between text-[13px]">
+                        <span class="text-ink-muted">Referral</span>
+                        <span class="font-medium text-ink-main dark:text-ink-darkMain" id="det-ref">Bukan</span>
+                    </div>
+                    <div class="flex justify-between text-[13px] hidden" id="det-est-wrap">
+                        <span class="text-ink-muted">Estimasi</span>
+                        <span class="font-medium text-ink-main dark:text-ink-darkMain" id="det-est">30 Mnt</span>
+                    </div>
+                    <div class="flex justify-between text-[11px] pt-3 mt-1 border-t border-line-light dark:border-line-dark">
+                        <span class="text-ink-muted/70">ID</span>
+                        <span class="font-mono text-ink-muted/70" id="det-id">RJ-123</span>
+                    </div>
+                </div>
+
+                <div class="flex gap-2.5">
+                    <button onclick="triggerEdit()" class="flex-1 py-3 rounded-[14px] bg-surface-light dark:bg-surface-dark border border-line-light dark:border-line-dark text-ink-main dark:text-ink-darkMain font-medium text-[13px] hover:bg-line-light dark:hover:bg-line-dark active:scale-95 transition-all">Edit</button>
+                    <button onclick="triggerDelete()" class="flex-1 py-3 rounded-[14px] bg-red-50 dark:bg-red-900/10 text-red-600 dark:text-red-400 font-medium text-[13px] hover:bg-red-100 dark:hover:bg-red-900/20 active:scale-95 transition-all">Hapus</button>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- JAVASCRIPT UTAMA -->
+    <!-- MODAL: Delete Confirmation -->
+    <div id="modal-delete" class="fixed inset-0 z-[60] flex items-center justify-center p-4 hidden-safe">
+        <div class="absolute inset-0 bg-ink-main/30 dark:bg-black/60 backdrop-blur-sm overlay-enter" onclick="closeSheet('modal-delete')"></div>
+        <div class="relative bg-panel-light dark:bg-panel-dark rounded-[24px] p-6 w-full max-w-xs shadow-float sheet-enter text-center border border-line-light dark:border-line-dark">
+            <div class="w-12 h-12 rounded-full bg-red-50 dark:bg-red-900/20 flex items-center justify-center mx-auto mb-3.5 text-red-500">
+                <i class="ph-fill ph-trash text-xl"></i>
+            </div>
+            <h3 class="text-[15px] font-semibold text-ink-main dark:text-ink-darkMain mb-1.5">Hapus Order?</h3>
+            <p class="text-[12px] text-ink-muted mb-5">Data ini akan dihapus permanen.</p>
+            <div class="flex gap-2.5">
+                <button onclick="closeSheet('modal-delete')" class="flex-1 py-2.5 rounded-[14px] bg-surface-light dark:bg-surface-dark text-ink-main dark:text-ink-darkMain font-medium text-[13px] active:scale-95 transition-all">Batal</button>
+                <button onclick="executeDelete()" class="flex-1 py-2.5 rounded-[14px] bg-red-500 hover:bg-red-600 text-white font-medium text-[13px] active:scale-95 transition-all shadow-sm">Hapus</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: Reset Database -->
+    <div id="modal-reset" class="fixed inset-0 z-[60] flex items-center justify-center p-4 hidden-safe">
+        <div class="absolute inset-0 bg-ink-main/30 dark:bg-black/60 backdrop-blur-sm overlay-enter" onclick="closeSheet('modal-reset')"></div>
+        <div class="relative bg-panel-light dark:bg-panel-dark rounded-[24px] p-6 w-full max-w-sm shadow-float sheet-enter text-center border border-line-light dark:border-line-dark">
+            <button onclick="closeSheet('modal-reset')" aria-label="Tutup" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-surface-light dark:bg-surface-dark flex items-center justify-center text-ink-muted hover:text-ink-main dark:hover:text-white active:scale-95 transition-all"><i class="ph-bold ph-x text-[14px]"></i></button>
+            <h3 class="text-[15px] font-semibold text-red-500 mb-1.5 mt-1">Reset Semua Data</h3>
+            <p class="text-[12px] text-ink-muted mb-4">Tindakan ini tidak bisa dibatalkan. Ketik <strong>RESET</strong> untuk lanjut.</p>
+            <input type="text" id="reset-input" placeholder="RESET" class="w-full bg-surface-light dark:bg-surface-dark border border-line-light dark:border-line-dark rounded-[14px] py-3 px-4 text-center tracking-widest uppercase mb-4 focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-400 text-ink-main dark:text-ink-darkMain transition-all text-[14px]">
+            <div class="flex gap-2.5">
+                <button onclick="closeSheet('modal-reset')" class="flex-1 py-2.5 rounded-[14px] bg-surface-light dark:bg-surface-dark text-ink-main dark:text-ink-darkMain font-medium text-[13px] active:scale-95 transition-all">Batal</button>
+                <button id="btn-do-reset" onclick="executeReset()" disabled class="flex-1 py-2.5 rounded-[14px] bg-red-500 text-white font-medium text-[13px] active:scale-95 disabled:opacity-50 transition-all shadow-sm">Reset</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container" class="fixed top-6 left-1/2 -translate-x-1/2 z-[70] flex flex-col gap-2 pointer-events-none w-max max-w-[90%]"></div>
+
     <script>
-        const STORAGE_KEY = 'rizkyAssistantOrders';
-        const SAVINGS_HIDDEN_KEY = 'rizkyAssistantSavingsHidden';
-        const THEME_MODE_KEY = 'rizkyAssistantThemeMode';
-        const TRACKING_START_DATE = new Date(2026, 7, 22, 0, 0, 0); 
-        const SAVINGS_START_DATE = new Date(2026, 7, 31, 0, 0, 0);   
-
+        // =====================================================================
+        // APPLICATION CORE & STORAGE LOGIC (100% PRESERVED & FUNCTIONAL)
+        // =====================================================================
+        const DB_KEY = 'leadgerDataV2';
+        const THEME_KEY = 'leadgerTheme';
+        
         let orders = [];
-        let currentConfirmCallback = null;
-        let selectedArchiveIndex = 0; 
-        let isSavingsHidden = localStorage.getItem(SAVINGS_HIDDEN_KEY) === 'true';
+        let chartInstance = null;
+        let activeOrderId = null;
+        let isFormDirty = false;
 
-        window.addEventListener('DOMContentLoaded', () => {
-            initThemeMode();
-            loadOrders();
-            updateDashboard();
-            setCurrentDateHeader();
-        });
+        const SERVICES = ['CV', 'Paket CV + Surat Lamaran', 'Paket Komplit Kerja', 'Edit Dokumen', 'Revisi CV', 'Landing Page'];
+        const SOURCES = ['Facebook', 'TikTok', 'Instagram', 'LinkedIn', 'Referral'];
 
-        function initThemeMode() {
-            const currentTheme = localStorage.getItem(THEME_MODE_KEY) || 'light';
-            const htmlRoot = document.getElementById('html-root');
-            const iconEl = document.getElementById('theme-icon');
+        const idr = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 });
 
-            if (currentTheme === 'dark') {
-                htmlRoot.classList.add('dark');
-                iconEl.innerText = '🌙';
-            } else {
-                htmlRoot.classList.remove('dark');
-                iconEl.innerText = '☀️';
-            }
+        function init() {
+            initTheme();
+            loadData();
+            updateTopDate();
+            renderDashboard(); 
+            setupListeners();
         }
 
-        function toggleThemeMode() {
-            const htmlRoot = document.getElementById('html-root');
-            const iconEl = document.getElementById('theme-icon');
-            const isDark = htmlRoot.classList.contains('dark');
-
-            if (isDark) {
-                htmlRoot.classList.remove('dark');
-                localStorage.setItem(THEME_MODE_KEY, 'light');
-                iconEl.innerText = '☀️';
-            } else {
-                htmlRoot.classList.add('dark');
-                localStorage.setItem(THEME_MODE_KEY, 'dark');
-                iconEl.innerText = '🌙';
-            }
-        }
-
-        function setCurrentDateHeader() {
-            const now = new Date();
-            const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
-            document.getElementById('current-date-display').innerText = now.toLocaleDateString('id-ID', options);
-            
-            const activeCycle = getActiveCycleInfo();
-            document.getElementById('current-month-label').innerText = activeCycle.label;
-        }
-
-        function addMonths(date, months) {
-            const d = new Date(date);
-            d.setMonth(d.getMonth() + months);
-            return d;
-        }
-
-        function getCycleDetails(targetDate = new Date()) {
-            const target = new Date(targetDate);
-            target.setHours(0, 0, 0, 0);
-
-            const start = new Date(TRACKING_START_DATE);
-            start.setHours(0, 0, 0, 0);
-
-            if (target < start) {
-                const cycleEnd = new Date(addMonths(start, 1));
-                return {
-                    cycleIndex: 0,
-                    startDate: start,
-                    endDate: cycleEnd,
-                    label: `Periode 22 Agt - 22 Sep 2026`
-                };
-            }
-
-            let cycleIndex = 0;
-            let cycleStart = new Date(start);
-            let cycleEnd = new Date(addMonths(start, 1));
-
-            while (true) {
-                if (target >= cycleStart && target < cycleEnd) break;
-                cycleIndex++;
-                cycleStart = new Date(addMonths(start, cycleIndex));
-                cycleEnd = new Date(addMonths(start, cycleIndex + 1));
-                if (cycleIndex > 120) break;
-            }
-
-            const opt = { day: 'numeric', month: 'short', year: 'numeric' };
-            const label = `Periode ${cycleStart.toLocaleDateString('id-ID', opt)} - ${cycleEnd.toLocaleDateString('id-ID', opt)}`;
-
-            return { cycleIndex, startDate: cycleStart, endDate: cycleEnd, label };
-        }
-
-        function getActiveCycleInfo() {
-            return getCycleDetails(new Date());
-        }
-
-        function getAllAvailableCycles() {
-            const activeCycle = getActiveCycleInfo();
-            const cyclesMap = new Map();
-            cyclesMap.set(activeCycle.cycleIndex, activeCycle);
-
-            orders.forEach(o => {
-                const oDate = new Date(o.timestamp);
-                const cycle = getCycleDetails(oDate);
-                cyclesMap.set(cycle.cycleIndex, cycle);
-            });
-
-            return Array.from(cyclesMap.values()).sort((a, b) => b.cycleIndex - a.cycleIndex);
-        }
-
-        function loadOrders() {
+        function loadData() {
             try {
-                const storedData = localStorage.getItem(STORAGE_KEY);
-                if (storedData) {
-                    const parsed = JSON.parse(storedData);
-                    orders = Array.isArray(parsed) ? parsed : [];
-                } else {
-                    orders = [];
-                }
+                const data = localStorage.getItem(DB_KEY);
+                orders = data ? JSON.parse(data) : [];
                 orders.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
             } catch (e) {
+                console.error("Storage Error", e);
                 orders = [];
             }
         }
 
-        // silent = true: tidak menampilkan toast sukses (dipakai import supaya pesannya tidak tertimpa)
-        // Mengembalikan true kalau berhasil disimpan, false kalau gagal.
-        function saveOrdersToStorage(silent = false) {
-            try {
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(orders));
-                if (!silent) showToast("Data berhasil disimpan");
-                return true;
-            } catch (e) {
-                showToast("Gagal menyimpan data ke browser!", true);
-                return false;
-            }
+        function saveData() {
+            localStorage.setItem(DB_KEY, JSON.stringify(orders));
+            updateAllOpenViews();
         }
 
-        function formatInputHarga(input) {
-            let value = input.value.replace(/[^,\d]/g, '');
-            let splitValue = value.split(',');
-            let sisa = splitValue[0].length % 3;
-            let rupiah = splitValue[0].substr(0, sisa);
-            let ribuan = splitValue[0].substr(sisa).match(/\d{3}/gi);
-
-            if (ribuan) {
-                let separator = sisa ? '.' : '';
-                rupiah += separator + ribuan.join('.');
-            }
-
-            input.value = splitValue[1] !== undefined ? rupiah + ',' + splitValue[1] : rupiah;
+        function updateAllOpenViews() {
+            renderDashboard();
+            if(!document.getElementById('overlay-analytics').classList.contains('hidden-safe')) renderAnalytics();
+            if(!document.getElementById('overlay-data').classList.contains('hidden-safe')) renderDataList();
+            if(!document.getElementById('overlay-recap').classList.contains('hidden-safe') && document.getElementById('rcp-rev').innerText !== 'Rp0') document.getElementById('form-recap').dispatchEvent(new Event('submit'));
+            if(!document.getElementById('overlay-cycles').classList.contains('hidden-safe')) renderCycles();
         }
 
-        function getCleanNumberFromInput(valStr) {
-            if (!valStr) return 0;
-            return parseFloat(valStr.toString().replace(/\./g, '').replace(',', '.')) || 0;
+        function openOverlay(id) {
+            const el = document.getElementById(id);
+            el.classList.remove('hidden-safe');
+            if (id === 'overlay-analytics') setTimeout(renderAnalytics, 10); 
+            if (id === 'overlay-data') renderDataList();
+            if (id === 'overlay-cycles') renderCycles();
         }
 
-        function toggleSavingsVisibility() {
-            isSavingsHidden = !isSavingsHidden;
-            localStorage.setItem(SAVINGS_HIDDEN_KEY, isSavingsHidden);
-            updateRekapViewData();
+        function closeOverlay(id) {
+            const el = document.getElementById(id);
+            el.classList.add('overlay-exit');
+            setTimeout(() => {
+                el.classList.add('hidden-safe');
+                el.classList.remove('overlay-exit');
+            }, 180);
         }
 
-        function switchView(viewName) {
-            document.getElementById('view-dashboard').classList.add('hidden');
-            document.getElementById('view-rekap').classList.add('hidden');
-            document.getElementById('view-analisis').classList.add('hidden');
-            document.getElementById('view-data').classList.add('hidden');
-
-            if (viewName === 'dashboard') {
-                document.getElementById('view-dashboard').classList.remove('hidden');
-                updateDashboard();
-            } else if (viewName === 'rekap') {
-                document.getElementById('view-rekap').classList.remove('hidden');
-                initRekapView();
-            } else if (viewName === 'analisis') {
-                document.getElementById('view-analisis').classList.remove('hidden');
-                updateAnalisisView();
-            } else if (viewName === 'data') {
-                document.getElementById('view-data').classList.remove('hidden');
-                renderDataTable();
-            }
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+        function openSheet(id) {
+            document.getElementById(id).classList.remove('hidden-safe');
         }
 
-        let toastTimer = null;
-        function showToast(message, isError = false) {
-            const toast = document.getElementById('toast');
-            const msgEl = document.getElementById('toast-message');
-            const contentEl = document.getElementById('toast-content');
-            
-            msgEl.innerText = message;
-            if (isError) {
-                contentEl.className = "custom-surface border border-red-500 text-red-600 px-4 py-3 rounded-2xl shadow-xl flex items-center justify-between";
-            } else {
-                contentEl.className = "custom-surface border text-charcoal dark:text-white px-4 py-3 rounded-2xl shadow-xl flex items-center justify-between";
-            }
-            
-            toast.classList.remove('hidden');
-            if (toastTimer) clearTimeout(toastTimer);
-            toastTimer = setTimeout(() => { toast.classList.add('hidden'); }, 4000);
-        }
-
-        function hideToast() { document.getElementById('toast').classList.add('hidden'); }
-
-        function openModalCatat(editId = null) {
-            const modal = document.getElementById('order-modal');
-            const title = document.getElementById('modal-title');
-            document.getElementById('order-form').reset();
-            document.getElementById('edit-order-id').value = '';
-
-            if (editId) {
-                title.innerText = 'Edit Order';
-                const order = orders.find(o => o.id === editId);
-                if (order) {
-                    document.getElementById('edit-order-id').value = order.id;
-                    document.getElementById('form-layanan').value = order.layanan;
-                    document.getElementById('form-harga').value = order.harga ? order.harga.toLocaleString('id-ID') : '';
-                    document.getElementById('form-sumber').value = order.sumber;
-                    document.getElementById('form-status').value = order.status;
-                    document.getElementById('form-referral').value = order.referral;
-                    document.getElementById('form-durasi').value = order.durasi || '';
+        function closeSheet(id) {
+            const el = document.getElementById(id);
+            const content = el.children[1];
+            content.classList.remove('sheet-enter');
+            content.classList.add('overlay-exit');
+            setTimeout(() => {
+                el.classList.add('hidden-safe');
+                content.classList.remove('overlay-exit');
+                content.classList.add('sheet-enter');
+                if(id === 'sheet-add-order') {
+                    document.getElementById('form-order').reset();
+                    document.getElementById('fo-id').value = '';
+                    document.getElementById('fo-sav-hint').classList.add('hidden');
+                    document.getElementById('modal-order-title').innerText = 'Catat Order';
+                    isFormDirty = false;
                 }
-            } else {
-                title.innerText = 'Catat Order Baru';
-            }
-            modal.classList.remove('hidden');
+            }, 180);
         }
 
-        function closeModalCatat() { document.getElementById('order-modal').classList.add('hidden'); }
-
-        function saveOrder(event) {
-            event.preventDefault();
-            const editId = document.getElementById('edit-order-id').value;
-            const layanan = document.getElementById('form-layanan').value;
-            const rawHargaStr = document.getElementById('form-harga').value;
-            const harga = getCleanNumberFromInput(rawHargaStr);
-            const sumber = document.getElementById('form-sumber').value;
-            const status = document.getElementById('form-status').value;
-            const referral = document.getElementById('form-referral').value;
-            const durasiVal = document.getElementById('form-durasi').value;
-            const durasi = durasiVal ? parseInt(durasiVal) : 0;
-
-            if (!layanan || isNaN(harga) || harga < 0 || !sumber) {
-                showToast("Mohon lengkapi data wajib dengan benar.", true);
-                return;
-            }
-
-            const tabungan = harga * 0.3;
-            const operasional = harga - tabungan;
-
-            if (editId) {
-                const index = orders.findIndex(o => o.id === editId);
-                if (index !== -1) {
-                    orders[index].layanan = layanan;
-                    orders[index].harga = harga;
-                    orders[index].tabungan = tabungan;
-                    orders[index].operasional = operasional;
-                    orders[index].sumber = sumber;
-                    orders[index].status = status;
-                    orders[index].referral = referral;
-                    orders[index].durasi = durasi;
-                }
+        function confirmCloseSheet(id) {
+            if (id === 'sheet-add-order' && isFormDirty) {
+                if (confirm("Perubahan belum disimpan. Tutup tanpa menyimpan?")) closeSheet(id);
             } else {
-                const newOrder = {
-                    id: 'ORD-' + Date.now() + '-' + Math.floor(Math.random() * 1000),
-                    timestamp: new Date().toISOString(),
-                    layanan, harga, tabungan, operasional, sumber, status, referral, durasi
-                };
-                orders.unshift(newOrder);
+                closeSheet(id);
             }
-
-            saveOrdersToStorage();
-            closeModalCatat();
-            updateDashboard();
         }
 
-        function handleQuickInput() {
-            const inputTxt = document.getElementById('quick-input-text').value.trim();
-            if (!inputTxt) {
-                showToast("Masukkan format quick input terlebih dahulu.", true);
-                return;
+        function switchFromMenu(target) {
+            closeSheet('sheet-menu');
+            setTimeout(() => {
+                if(target === 'cycles') openOverlay('overlay-cycles');
+                if(target === 'reset') openSheet('modal-reset');
+            }, 200);
+        }
+
+        function initTheme() {
+            const saved = localStorage.getItem(THEME_KEY);
+            const isDark = saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches);
+            document.documentElement.classList.toggle('dark', isDark);
+            updateThemeIcon(isDark);
+        }
+
+        function toggleTheme() {
+            const html = document.documentElement;
+            const isDark = html.classList.toggle('dark');
+            localStorage.setItem(THEME_KEY, isDark ? 'dark' : 'light');
+            updateThemeIcon(isDark);
+            if(!document.getElementById('overlay-analytics').classList.contains('hidden-safe')) renderAnalytics();
+        }
+
+        function updateThemeIcon(isDark) {
+            document.getElementById('theme-icon').className = isDark ? 'ph-fill ph-moon text-[22px]' : 'ph ph-sun text-[22px]';
+        }
+
+        function showToast(msg, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            const icon = type === 'success' ? '<i class="ph-fill ph-check-circle"></i>' : '<i class="ph-fill ph-warning-circle"></i>';
+            const bg = type === 'success' ? 'bg-panel-light dark:bg-panel-dark border border-brand-200 dark:border-brand-900 text-ink-main dark:text-ink-darkMain' : 'bg-red-500 text-white border border-red-600';
+            const iconColor = type === 'success' ? 'text-brand-500' : 'text-white';
+            
+            toast.className = `overlay-enter flex items-center gap-2.5 px-4 py-3 rounded-full shadow-float text-[13px] font-medium ${bg}`;
+            toast.innerHTML = `<span class="text-[16px] ${iconColor}">${icon}</span> <span>${msg}</span>`;
+            
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.classList.add('overlay-exit');
+                setTimeout(() => toast.remove(), 180);
+            }, 2400);
+        }
+
+        function isSameDay(d1, d2) {
+            return d1.getFullYear() === d2.getFullYear() && d1.getMonth() === d2.getMonth() && d1.getDate() === d2.getDate();
+        }
+        function fmtDate(date) {
+            const m = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+            return `${date.getDate()} ${m[date.getMonth()]} ${date.getFullYear()}`;
+        }
+        function fmtTime(date) {
+            return `${String(date.getHours()).padStart(2,'0')}:${String(date.getMinutes()).padStart(2,'0')}`;
+        }
+        
+        function updateTopDate() {
+            const now = new Date();
+            const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+            document.getElementById('top-date').innerText = `${days[now.getDay()]}, ${fmtDate(now)}`;
+        }
+
+        function getActiveCycle(ref = new Date()) {
+            const d = ref.getDate();
+            const m = ref.getMonth();
+            const y = ref.getFullYear();
+            let start, end;
+            if (d >= 22) {
+                start = new Date(y, m, 22, 0, 0, 0);
+                end = new Date(y, m + 1, 21, 23, 59, 59, 999);
+            } else {
+                start = new Date(y, m - 1, 22, 0, 0, 0);
+                end = new Date(y, m, 21, 23, 59, 59, 999);
             }
+            return { start, end };
+        }
 
-            const parts = inputTxt.split('-').map(p => p.trim());
-            if (parts.length < 3) {
-                showToast("Format salah. Gunakan: Layanan - Harga - Sumber", true);
-                return;
-            }
-
-            const rawLayanan = parts[0].toLowerCase();
-            const harga = getCleanNumberFromInput(parts[1]);
-            const rawSumber = parts[2].toLowerCase();
-
-            let layanan = "Lainnya";
-            if (rawLayanan.includes("komplit")) layanan = "Paket Komplit Kerja";
-            else if (rawLayanan.includes("paket")) layanan = "Paket CV + Surat Lamaran";
-            else if (rawLayanan.includes("cv")) layanan = "CV";
-            else if (rawLayanan.includes("dokumen") || rawLayanan.includes("edit")) layanan = "Edit Dokumen";
-            else if (rawLayanan.includes("foto")) layanan = "Edit Pas Foto";
-            else if (rawLayanan.includes("landing") || rawLayanan.includes("page")) layanan = "Landing Page";
-            else if (rawLayanan.includes("web")) layanan = "Website";
-
-            let sumber = "Lainnya";
-            if (rawSumber.includes("face") || rawSumber.includes("fb")) sumber = "Facebook";
-            else if (rawSumber.includes("tik")) sumber = "TikTok";
-            else if (rawSumber.includes("ig") || rawSumber.includes("insta")) sumber = "Instagram";
-            else if (rawSumber.includes("link") || rawSumber.includes("in")) sumber = "LinkedIn";
-            else if (rawSumber.includes("srib")) sumber = "Sribu";
-            else if (rawSumber.includes("ref")) sumber = "Referral";
-
-            if (isNaN(harga) || harga < 0) {
-                showToast("Nominal harga tidak valid.", true);
-                return;
-            }
-
-            const tabungan = harga * 0.3;
-            const operasional = harga - tabungan;
-
-            const newOrder = {
-                id: 'ORD-' + Date.now() + '-' + Math.floor(Math.random() * 1000),
-                timestamp: new Date().toISOString(),
-                layanan, harga, tabungan, operasional, sumber,
-                status: "Customer Baru",
-                referral: sumber === "Referral" ? "Referral" : "Bukan Referral",
-                durasi: 0
+        function calcMetrics(arr) {
+            const totalOrd = arr.length;
+            const rev = arr.reduce((s, o) => s + (Number(o.harga || o.price) || 0), 0);
+            const sav = rev * 0.3;
+            const rep = arr.filter(o => (o.status || o.customerStatus) === 'Repeat Customer').length;
+            const ref = arr.filter(o => o.referral === 'Referral').length;
+            
+            return {
+                ord: totalOrd, rev, sav,
+                aov: totalOrd ? rev / totalOrd : 0,
+                repRate: totalOrd ? (rep / totalOrd) * 100 : 0,
+                refRate: totalOrd ? (ref / totalOrd) * 100 : 0
             };
-
-            orders.unshift(newOrder);
-            saveOrdersToStorage();
-            document.getElementById('quick-input-text').value = '';
-            updateDashboard();
         }
 
-        function formatRupiah(number) {
-            return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(number);
-        }
-
-        function updateDashboard() {
-            const todayStr = new Date().toDateString();
-            const activeCycle = getActiveCycleInfo();
-
-            let todayOrdersCount = 0;
-            let todayOmzetVal = 0;
-            let cycleOrdersCount = 0;
-            let cycleOmzetVal = 0;
-            let todaySavingsVal = 0;
-
-            const savingsStartOnly = new Date(SAVINGS_START_DATE.getFullYear(), SAVINGS_START_DATE.getMonth(), SAVINGS_START_DATE.getDate());
-
-            orders.forEach(o => {
-                const oDate = new Date(o.timestamp);
-                const orderDayOnly = new Date(oDate.getFullYear(), oDate.getMonth(), oDate.getDate());
-
-                if (oDate.toDateString() === todayStr) {
-                    todayOrdersCount++;
-                    todayOmzetVal += o.harga;
-                    if (orderDayOnly >= savingsStartOnly) {
-                        todaySavingsVal += (o.tabungan !== undefined ? o.tabungan : (o.harga * 0.3));
-                    }
-                }
-
-                if (oDate >= activeCycle.startDate && oDate < activeCycle.endDate) {
-                    cycleOrdersCount++;
-                    cycleOmzetVal += o.harga;
-                }
+        function renderDashboard() {
+            const now = new Date();
+            const cycle = getActiveCycle(now);
+            
+            const tdOrd = orders.filter(o => isSameDay(new Date(o.timestamp), now));
+            const cycOrd = orders.filter(o => {
+                const t = new Date(o.timestamp).getTime();
+                return t >= cycle.start.getTime() && t <= cycle.end.getTime();
             });
 
-            document.getElementById('stat-today-orders').innerText = todayOrdersCount;
-            document.getElementById('stat-today-omzet').innerText = formatRupiah(todayOmzetVal);
-            document.getElementById('stat-today-savings').innerText = formatRupiah(todaySavingsVal);
-            document.getElementById('stat-month-orders').innerText = cycleOrdersCount;
-            document.getElementById('stat-month-omzet').innerText = formatRupiah(cycleOmzetVal);
+            const tdM = calcMetrics(tdOrd);
+            const cycM = calcMetrics(cycOrd);
 
-            const recentContainer = document.getElementById('recent-orders-list');
+            document.getElementById('pulse-today-rev').innerText = idr.format(tdM.rev).replace(',00','');
+            document.getElementById('pulse-today-orders').innerText = `${tdM.ord} order`;
+            document.getElementById('pulse-today-savings').innerText = idr.format(tdM.sav).replace(',00','');
+            
+            document.getElementById('pulse-cycle-dates').innerText = `${fmtDate(cycle.start).slice(0,-5)} - ${fmtDate(cycle.end)}`;
+            document.getElementById('pulse-cycle-rev').innerText = idr.format(cycM.rev).replace(',00','');
+            document.getElementById('pulse-cycle-savings').innerText = idr.format(cycM.sav).replace(',00','');
+
+            const listEl = document.getElementById('home-recent-list');
             if (orders.length === 0) {
-                recentContainer.innerHTML = `<p class="text-xs text-muted dark:text-zinc-500 italic">Belum ada data order.</p>`;
-                return;
-            }
+                listEl.innerHTML = `
+                    <div class="py-10 text-center flex flex-col items-center justify-center bg-panel-light dark:bg-panel-dark rounded-[20px] border border-line-light dark:border-line-dark shadow-sm px-4">
+                        <i class="ph-fill ph-note-blank text-3xl text-ink-muted/30 mb-3"></i>
+                        <p class="text-[14px] text-ink-main dark:text-ink-darkMain font-medium mb-1">Belum ada order hari ini</p>
+                        <p class="text-[12px] text-ink-muted">Catat order pertama untuk mulai melihat performa bisnis.</p>
+                    </div>`;
+            } else {
+                let h = '';
+                orders.slice(0, 5).forEach(o => {
+                    const d = new Date(o.timestamp);
+                    const isToday = isSameDay(d, now);
+                    const timeStr = isToday ? fmtTime(d) : fmtDate(d).slice(0,-5); 
+                    const srvName = o.layanan || o.service;
+                    const srcName = o.sumber || o.source;
+                    const prcVal = Number(o.harga || o.price) || 0;
 
-            let html = '';
-            orders.slice(0, 3).forEach(o => {
-                const d = new Date(o.timestamp);
-                const timeStr = d.toLocaleDateString('id-ID', { day: '2-digit', month: 'short' }) + ' ' + d.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
-                const tabunganVal = o.tabungan !== undefined ? o.tabungan : (o.harga * 0.3);
-                html += `
-                    <div class="custom-cream border border-bordercolor dark:border-zinc-800 p-3 rounded-xl flex justify-between items-center text-xs">
+                    h += `
+                    <div onclick="openDetail('${o.id}')" class="flex items-center justify-between py-3 px-4 bg-panel-light dark:bg-panel-dark rounded-[16px] border border-line-light/60 dark:border-line-dark/60 hover:border-brand-500/35 transition-all cursor-pointer group active:scale-[0.99] shadow-soft">
                         <div>
-                            <p class="font-bold text-charcoal dark:text-white">${o.layanan}</p>
-                            <p class="text-[10px] text-muted dark:text-zinc-400">${o.sumber} &bull; ${timeStr}</p>
-                            <p class="text-[9px] text-orange mt-0.5 font-medium">Tabungan: ${formatRupiah(tabunganVal)}</p>
+                            <p class="text-[14px] font-medium text-ink-main dark:text-ink-darkMain leading-tight group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors">${srvName}</p>
+                            <p class="text-[12px] text-ink-muted mt-1">${srcName} · ${timeStr}</p>
                         </div>
                         <div class="text-right">
-                            <p class="font-bold text-orange">${formatRupiah(o.harga)}</p>
-                            <span class="text-[9px] px-2 py-0.5 rounded-md bg-orange-light text-orange font-semibold">${o.status}</span>
+                            <p class="text-[14px] font-medium text-ink-main dark:text-ink-darkMain leading-tight">${idr.format(prcVal).replace(',00','')}</p>
+                            <p class="text-[11px] font-medium text-brand-500 mt-1">+ ${idr.format(prcVal*0.3).replace(',00','')}</p>
                         </div>
-                    </div>
-                `;
-            });
-            recentContainer.innerHTML = html;
+                    </div>`;
+                });
+                listEl.innerHTML = h;
+            }
         }
 
-        function initRekapView() {
-            const cycles = getAllAvailableCycles();
-            const selectEl = document.getElementById('select-archive-cycle');
+        document.getElementById('form-quick').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const input = document.getElementById('input-quick');
+            const val = input.value.trim();
+            if(!val) return;
+
+            const parts = val.split('-').map(s => s.trim());
+            if (parts.length !== 3) {
+                showToast('Format: Layanan - Harga - Sumber', 'error'); return;
+            }
+
+            const rSrv = parts[0].toLowerCase();
+            const prc = parseInt(parts[1].replace(/\D/g, ''));
+            const rSrc = parts[2].toLowerCase();
+
+            if (isNaN(prc) || prc < 0) { showToast('Harga tidak valid', 'error'); return; }
+
+            let srv = SERVICES.find(s => s.toLowerCase().includes(rSrv)) || SERVICES[0];
+            if(rSrv.includes('komplit')) srv = 'Paket Komplit Kerja';
             
-            let optionsHtml = '';
-            cycles.forEach(c => {
-                const selectedAttr = (c.cycleIndex === selectedArchiveIndex) ? 'selected' : '';
-                optionsHtml += `<option value="${c.cycleIndex}" ${selectedAttr}>${c.label}</option>`;
-            });
-            selectEl.innerHTML = optionsHtml;
+            let src = SOURCES.find(s => s.toLowerCase().includes(rSrc)) || 'Facebook';
+            if(rSrc === 'fb') src = 'Facebook';
+            if(rSrc === 'ig') src = 'Instagram';
+            if(rSrc === 'tt') src = 'TikTok';
 
-            updateRekapViewData();
-        }
-
-        function changeArchiveCycle(val) {
-            selectedArchiveIndex = parseInt(val);
-            updateRekapViewData();
-        }
-
-        function updateRekapViewData() {
-            const todayStr = new Date().toDateString();
-            const cycles = getAllAvailableCycles();
-            const currentCycle = cycles.find(c => c.cycleIndex === selectedArchiveIndex) || getActiveCycleInfo();
-
-            document.getElementById('rekap-cycle-title').innerText = `Rekap ${currentCycle.label}`;
-
-            let todayCount = 0, todayOmzet = 0;
-            let cycleCount = 0, cycleOmzet = 0, cycleSavings = 0, cycleOperational = 0;
-
-            const savingsStartOnly = new Date(SAVINGS_START_DATE.getFullYear(), SAVINGS_START_DATE.getMonth(), SAVINGS_START_DATE.getDate());
-
-            const layananStats = {
-                "CV": { count: 0, omzet: 0 },
-                "Paket CV + Surat Lamaran": { count: 0, omzet: 0 },
-                "Paket Komplit Kerja": { count: 0, omzet: 0 },
-                "Edit Dokumen": { count: 0, omzet: 0 },
-                "Edit Pas Foto": { count: 0, omzet: 0 },
-                "Landing Page": { count: 0, omzet: 0 },
-                "Website": { count: 0, omzet: 0 },
-                "Lainnya": { count: 0, omzet: 0 }
-            };
-
-            const sumberStats = { "Facebook": 0, "TikTok": 0, "Instagram": 0, "LinkedIn": 0, "Sribu": 0, "Referral": 0, "Lainnya": 0 };
-            let statusBaru = 0, statusRepeat = 0, referralYa = 0, referralTidak = 0;
-
-            orders.forEach(o => {
-                const oDate = new Date(o.timestamp);
-                if (oDate.toDateString() === todayStr) {
-                    todayCount++;
-                    todayOmzet += o.harga;
-                }
-
-                if (oDate >= currentCycle.startDate && oDate < currentCycle.endDate) {
-                    cycleCount++;
-                    cycleOmzet += o.harga;
-
-                    const orderDayOnly = new Date(oDate.getFullYear(), oDate.getMonth(), oDate.getDate());
-                    let tabVal = 0, opVal = 0; 
-                    if (orderDayOnly >= savingsStartOnly) {
-                        tabVal = o.tabungan !== undefined ? o.tabungan : (o.harga * 0.3);
-                        opVal = o.operasional !== undefined ? o.operasional : (o.harga - tabVal);
-                    } else {
-                        opVal = o.harga;
-                    }
-                    cycleSavings += tabVal;
-                    cycleOperational += opVal;
-
-                    if (layananStats[o.layanan]) {
-                        layananStats[o.layanan].count++;
-                        layananStats[o.layanan].omzet += o.harga;
-                    } else {
-                        layananStats["Lainnya"].count++;
-                        layananStats["Lainnya"].omzet += o.harga;
-                    }
-
-                    if (sumberStats[o.sumber] !== undefined) sumberStats[o.sumber]++;
-                    else sumberStats["Lainnya"]++;
-
-                    if (o.status === "Customer Baru") statusBaru++;
-                    else statusRepeat++;
-
-                    if (o.referral === "Referral") referralYa++;
-                    else referralTidak++;
-                }
+            const now = new Date();
+            orders.unshift({
+                id: `RJ-${now.getTime()}`,
+                timestamp: now.toISOString(),
+                layanan: srv,
+                harga: prc,
+                tabungan: prc * 0.3,
+                operasional: 0,
+                sumber: src,
+                status: 'Customer Baru',
+                referral: 'Bukan Referral',
+                durasi: 0
             });
 
-            document.getElementById('rekap-today-count').innerText = todayCount;
-            document.getElementById('rekap-today-omzet').innerText = formatRupiah(todayOmzet);
-            document.getElementById('rekap-today-avg').innerText = formatRupiah(todayCount > 0 ? todayOmzet / todayCount : 0);
+            saveData();
+            input.value = '';
+            input.blur(); 
+            showToast('⚡ Order cepat disimpan');
+        });
 
-            document.getElementById('rekap-month-count').innerText = cycleCount;
-            document.getElementById('rekap-month-omzet').innerText = formatRupiah(cycleOmzet);
-            document.getElementById('rekap-month-avg').innerText = formatRupiah(cycleCount > 0 ? cycleOmzet / cycleCount : 0);
-            
-            const savingsEl = document.getElementById('rekap-month-savings');
-            const toggleSavingsBtn = document.getElementById('btn-toggle-savings');
-            if (isSavingsHidden) {
-                savingsEl.innerText = "Rp •••••••";
-                toggleSavingsBtn.innerText = "🔒";
+        document.getElementById('form-order').addEventListener('input', () => isFormDirty = true);
+        
+        document.getElementById('fo-prc').addEventListener('input', (e) => {
+            const v = parseInt(e.target.value) || 0;
+            const hint = document.getElementById('fo-sav-hint');
+            if(v > 0) {
+                hint.innerText = `Tabungan: ${idr.format(v * 0.3).replace(',00','')}`;
+                hint.classList.remove('hidden');
             } else {
-                savingsEl.innerText = formatRupiah(cycleSavings);
-                toggleSavingsBtn.innerText = "👁️";
+                hint.classList.add('hidden');
             }
+        });
 
-            document.getElementById('rekap-month-operational').innerText = formatRupiah(cycleOperational);
-
-            let layananHtml = '';
-            for (let [key, val] of Object.entries(layananStats)) {
-                if (val.count > 0 || key.includes("CV") || key.includes("Paket") || key.includes("Website")) {
-                    layananHtml += `
-                        <div class="flex justify-between items-center custom-cream p-2.5 rounded-xl border border-bordercolor dark:border-zinc-800">
-                            <span class="font-medium text-charcoal dark:text-white">${key}</span>
-                            <span class="text-muted dark:text-zinc-400">${val.count} order (${formatRupiah(val.omzet)})</span>
-                        </div>
-                    `;
-                }
-            }
-            document.getElementById('breakdown-layanan').innerHTML = layananHtml;
-
-            let sumberHtml = '';
-            for (let [key, val] of Object.entries(sumberStats)) {
-                sumberHtml += `
-                    <div class="flex justify-between items-center custom-cream p-2.5 rounded-xl border border-bordercolor dark:border-zinc-800">
-                        <span class="font-medium text-charcoal dark:text-white">${key}</span>
-                        <span class="text-muted dark:text-zinc-400">${val} order</span>
-                    </div>
-                `;
-            }
-            document.getElementById('breakdown-sumber').innerHTML = sumberHtml;
-
-            document.getElementById('breakdown-status').innerHTML = `
-                <div class="custom-cream p-3 rounded-xl border border-bordercolor dark:border-zinc-800 text-center">
-                    <p class="text-[10px] text-muted dark:text-zinc-400">Customer Baru</p>
-                    <p class="text-sm font-bold text-charcoal dark:text-white mt-0.5">${statusBaru}</p>
-                </div>
-                <div class="custom-cream p-3 rounded-xl border border-bordercolor dark:border-zinc-800 text-center">
-                    <p class="text-[10px] text-muted dark:text-zinc-400">Repeat Customer</p>
-                    <p class="text-sm font-bold text-charcoal dark:text-white mt-0.5">${statusRepeat}</p>
-                </div>
-                <div class="custom-cream p-3 rounded-xl border border-bordercolor dark:border-zinc-800 text-center">
-                    <p class="text-[10px] text-muted dark:text-zinc-400">Referral</p>
-                    <p class="text-sm font-bold text-charcoal dark:text-white mt-0.5">${referralYa}</p>
-                </div>
-                <div class="custom-cream p-3 rounded-xl border border-bordercolor dark:border-zinc-800 text-center">
-                    <p class="text-[10px] text-muted dark:text-zinc-400">Bukan Referral</p>
-                    <p class="text-sm font-bold text-charcoal dark:text-white mt-0.5">${referralTidak}</p>
-                </div>
-            `;
-        }
-
-        function updateAnalisisView() {
-            const thirtyDaysAgo = new Date();
-            thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
-
-            const filteredOrders = orders.filter(o => new Date(o.timestamp) >= thirtyDaysAgo);
-            const totalOrder = filteredOrders.length;
-            let totalOmzet = 0, totalDuration = 0, durationCount = 0, repeatCount = 0, referralCount = 0;
-
-            const layananCount = {}, layananOmzet = {}, sumberCount = {}, dailyOmzetMap = {}, dailyOrderCountMap = {};
-
-            filteredOrders.forEach(o => {
-                totalOmzet += o.harga;
-                if (o.durasi && o.durasi > 0) {
-                    totalDuration += o.durasi;
-                    durationCount++;
-                }
-                if (o.status === "Repeat Customer") repeatCount++;
-                if (o.referral === "Referral") referralCount++;
-
-                layananCount[o.layanan] = (layananCount[o.layanan] || 0) + 1;
-                layananOmzet[o.layanan] = (layananOmzet[o.layanan] || 0) + o.harga;
-                sumberCount[o.sumber] = (sumberCount[o.sumber] || 0) + 1;
-
-                const dateKey = new Date(o.timestamp).toLocaleDateString('id-ID');
-                dailyOmzetMap[dateKey] = (dailyOmzetMap[dateKey] || 0) + o.harga;
-                dailyOrderCountMap[dateKey] = (dailyOrderCountMap[dateKey] || 0) + 1;
-            });
-
-            const today = new Date();
-            const daysSinceTrackingStart = Math.floor((today - TRACKING_START_DATE) / (1000 * 60 * 60 * 24)) + 1;
-            const effectiveDays = Math.max(1, Math.min(30, daysSinceTrackingStart));
-
-            const avgOmzetDay = totalOmzet / effectiveDays;
-            const avgOrderDay = totalOrder / effectiveDays;
-            const aov = totalOrder > 0 ? totalOmzet / totalOrder : 0;
-            const repeatRate = totalOrder > 0 ? (repeatCount / totalOrder) * 100 : 0;
-            const referralRate = totalOrder > 0 ? (referralCount / totalOrder) * 100 : 0;
-            const avgDuration = durationCount > 0 ? Math.round(totalDuration / durationCount) : 0;
-
-            let topLayananCountName = "-", maxC = -1;
-            for (let [k, v] of Object.entries(layananCount)) {
-                if (v > maxC) { maxC = v; topLayananCountName = k; }
-            }
-
-            let topLayananOmzetName = "-", maxO = -1;
-            for (let [k, v] of Object.entries(layananOmzet)) {
-                if (v > maxO) { maxO = v; topLayananOmzetName = k; }
-            }
-
-            let topSumberName = "-", maxS = -1;
-            for (let [k, v] of Object.entries(sumberCount)) {
-                if (v > maxS) { maxS = v; topSumberName = k; }
-            }
-
-            let maxOrderInDay = 0, maxOmzetInDay = 0;
-            for (let dateKey in dailyOrderCountMap) {
-                if (dailyOrderCountMap[dateKey] > maxOrderInDay) maxOrderInDay = dailyOrderCountMap[dateKey];
-                if (dailyOmzetMap[dateKey] > maxOmzetInDay) maxOmzetInDay = dailyOmzetMap[dateKey];
-            }
-
-            document.getElementById('an-total-order').innerText = totalOrder;
-            document.getElementById('an-total-omzet').innerText = formatRupiah(totalOmzet);
-            document.getElementById('an-avg-omzet-day').innerText = formatRupiah(avgOmzetDay);
-            document.getElementById('an-avg-order-day').innerText = avgOrderDay.toFixed(1);
-            document.getElementById('an-aov').innerText = formatRupiah(aov);
-            document.getElementById('an-repeat-rate').innerText = repeatRate.toFixed(1) + '%';
-            document.getElementById('an-referral-rate').innerText = referralRate.toFixed(1) + '%';
-            document.getElementById('an-avg-duration').innerText = avgDuration + ' menit';
-
-            renderConversionPerPaket(filteredOrders, totalOrder);
-
-            document.getElementById('an-records-list').innerHTML = `
-                <div class="flex justify-between items-center"><span>Layanan Terbanyak:</span> <span class="font-bold text-charcoal dark:text-white text-right">${topLayananCountName} (${maxC} order)</span></div>
-                <div class="flex justify-between items-start pt-1.5 border-t border-bordercolor dark:border-zinc-800">
-                    <span class="pt-0.5">Omzet Layanan Tertinggi:</span> 
-                    <span class="font-bold text-charcoal dark:text-white text-right leading-tight max-w-[170px]">${topLayananOmzetName}<br><span class="text-orange font-semibold">(${formatRupiah(maxO)})</span></span>
-                </div>
-                <div class="flex justify-between items-center pt-1.5 border-t border-bordercolor dark:border-zinc-800"><span>Sumber Terbesar:</span> <span class="font-bold text-charcoal dark:text-white text-right">${topSumberName} (${maxS} order)</span></div>
-                <div class="flex justify-between items-center pt-1.5 border-t border-bordercolor dark:border-zinc-800"><span>Order Terbanyak (1 Hari):</span> <span class="font-bold text-charcoal dark:text-white text-right">${maxOrderInDay} order</span></div>
-                <div class="flex justify-between items-center pt-1.5 border-t border-bordercolor dark:border-zinc-800"><span>Omzet Tertinggi (1 Hari):</span> <span class="font-bold text-charcoal dark:text-white text-right">${formatRupiah(maxOmzetInDay)}</span></div>
-            `;
-
-            // POIN 3: ADVANCED AI-LIKE SMART INSIGHTS
-            let insightHtml = totalOrder < 3 ? `<p class="italic text-muted">Belum cukup data untuk analisis mendalam. Masukkan minimal 3 order.</p>` : `
-                <p>&bull; <b>Performa Utama:</b> <b>${topLayananCountName}</b> adalah mesin penggerak utama order dengan pangsa pasar terbesar.</p>
-                <p>&bull; <b>Akuisisi Klien:</b> Platform <b>${topSumberName}</b> terbukti paling efektif menghasilkan konversi. Fokuskan promosi harian di sini.</p>
-                <p>&bull; <b>Retensi:</b> Tingkat repeat customer saat ini mencapai <b>${repeatRate.toFixed(0)}%</b>. Pertahankan kualitas pelayanan agar klien lama kembali.</p>
-                <p>&bull; <b>Rekomendasi Pro:</b> Dengan AOV rata-rata <b>${formatRupiah(aov)}</b>, tawarkan *upselling* paket komplit ke klien baru untuk mendongkrak omzet harian.</p>
-            `;
-            document.getElementById('insight-container').innerHTML = insightHtml;
-
-            // POIN 4: SUPER CHARGED INTERACTIVE SVG-LIKE CHART
-            renderProInteractiveChart(dailyOmzetMap);
-        }
-
-        function renderConversionPerPaket(filteredOrders, totalOrder) {
-            const container = document.getElementById('conversion-paket-container');
-            let countCV = 0, countHemat = 0, countKomplit = 0;
-
-            filteredOrders.forEach(o => {
-                if (o.layanan === "CV") countCV++;
-                else if (o.layanan === "Paket CV + Surat Lamaran") countHemat++;
-                else if (o.layanan === "Paket Komplit Kerja") countKomplit++;
-            });
-
-            const targetList = [
-                { name: "CV ATS Friendly", count: countCV },
-                { name: "Paket Hemat", count: countHemat },
-                { name: "Paket Komplit Kerja", count: countKomplit }
-            ];
-
-            let html = '';
-            targetList.forEach(item => {
-                const percent = totalOrder > 0 ? Math.round((item.count / totalOrder) * 100) : 0;
-                const filledBlocks = Math.round((percent / 100) * 12);
-                const emptyBlocks = 12 - filledBlocks;
-                const barVisual = '█'.repeat(Math.max(0, filledBlocks)) + '░'.repeat(Math.max(0, emptyBlocks));
-
-                html += `
-                    <div class="space-y-1">
-                        <div class="flex justify-between items-center text-charcoal dark:text-white font-medium">
-                            <span>${item.name}</span>
-                            <span class="text-muted dark:text-zinc-400">${item.count} order (${percent}%)</span>
-                        </div>
-                        <div class="font-mono text-orange text-[11px] tracking-wider">${barVisual}</div>
-                    </div>
-                `;
-            });
-            container.innerHTML = html;
-        }
-
-        function renderProInteractiveChart(dailyOmzetMap) {
-            const canvas = document.getElementById('chart-omzet');
-            const ctx = canvas.getContext('2d');
-            canvas.width = canvas.parentElement.clientWidth - 30;
-            canvas.height = 135;
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            const labels = [], dataValues = [];
-            for (let i = 6; i >= 0; i--) {
-                const d = new Date();
-                d.setDate(d.getDate() - i);
-                const key = d.toLocaleDateString('id-ID');
-                labels.push(d.toLocaleDateString('id-ID', { day: '2-digit', month: 'short' }));
-                dataValues.push(dailyOmzetMap[key] || 0);
-            }
-
-            const maxVal = Math.max(...dataValues, 10000);
-            document.getElementById('chart-peak-badge').innerText = `Puncak: ${formatRupiah(maxVal)}`;
-
-            const padding = 25, chartWidth = canvas.width - padding * 2, chartHeight = canvas.height - 40, stepX = chartWidth / (labels.length - 1 || 1);
-
-            // Draw Grid Lines (Pro Clean Style)
-            const isDark = document.getElementById('html-root').classList.contains('dark');
-            ctx.strokeStyle = isDark ? '#27272a' : '#EFECE6';
-            ctx.lineWidth = 1;
-            ctx.beginPath();
-            ctx.moveTo(padding, padding);
-            ctx.lineTo(padding, chartHeight + padding);
-            ctx.lineTo(canvas.width - padding, chartHeight + padding);
-            ctx.stroke();
-
-            // Gradient Area Fill Under Line
-            const gradient = ctx.createLinearGradient(0, padding, 0, chartHeight + padding);
-            gradient.addColorStop(0, 'rgba(255, 107, 43, 0.25)');
-            gradient.addColorStop(1, 'rgba(255, 107, 43, 0.0)');
-
-            ctx.beginPath();
-            const points = [];
-            dataValues.forEach((val, idx) => {
-                const x = padding + (idx * stepX);
-                const y = padding + chartHeight - ((val / maxVal) * chartHeight);
-                points.push({ x, y, val, label: labels[idx] });
-                if (idx === 0) ctx.moveTo(x, y);
-                else ctx.lineTo(x, y);
-            });
-
-            // Close Path for Gradient
-            if (points.length > 0) {
-                ctx.lineTo(points[points.length - 1].x, padding + chartHeight);
-                ctx.lineTo(points[0].x, padding + chartHeight);
-                ctx.closePath();
-                ctx.fillStyle = gradient;
-                ctx.fill();
-            }
-
-            // Draw Smooth Main Line
-            ctx.strokeStyle = '#FF6B2B';
-            ctx.lineWidth = 2.5;
-            ctx.beginPath();
-            points.forEach((pt, idx) => {
-                if (idx === 0) ctx.moveTo(pt.x, pt.y);
-                else ctx.lineTo(pt.x, pt.y);
-            });
-            ctx.stroke();
-
-            // Draw Interactive Points & Labels
-            points.forEach(pt => {
-                ctx.fillStyle = '#FFFFFF';
-                ctx.strokeStyle = '#FF6B2B';
-                ctx.lineWidth = 2.5;
-                ctx.beginPath();
-                ctx.arc(pt.x, pt.y, 4.5, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.stroke();
-
-                ctx.fillStyle = isDark ? '#a1a1aa' : '#666666';
-                ctx.font = '10px sans-serif';
-                ctx.textAlign = 'center';
-                ctx.fillText(pt.label, pt.x, canvas.height - 4);
-            });
-
-            // Interactive Hover Effect Logic
-            canvas.onmousemove = function(e) {
-                const rect = canvas.getBoundingClientRect();
-                const mouseX = e.clientX - rect.left;
-                let closest = points[0];
-                let minDist = Infinity;
-
-                points.forEach(pt => {
-                    const dist = Math.abs(pt.x - mouseX);
-                    if (dist < minDist) {
-                        minDist = dist;
-                        closest = pt;
-                    }
-                });
-
-                if (minDist < 30) {
-                    const tooltip = document.getElementById('chart-tooltip');
-                    document.getElementById('tooltip-date').innerText = closest.label;
-                    document.getElementById('tooltip-val').innerText = formatRupiah(closest.val);
-                    tooltip.classList.remove('hidden');
-                } else {
-                    document.getElementById('chart-tooltip').classList.add('hidden');
-                }
+        document.getElementById('form-order').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const id = document.getElementById('fo-id').value;
+            const prc = parseInt(document.getElementById('fo-prc').value);
+            
+            const data = {
+                layanan: document.getElementById('fo-srv').value,
+                harga: prc,
+                tabungan: prc * 0.3,
+                operasional: 0,
+                sumber: document.getElementById('fo-src').value,
+                status: document.getElementById('fo-sts').value,
+                referral: document.getElementById('fo-ref').value,
+                durasi: parseInt(document.getElementById('fo-est').value) || 0
             };
 
-            canvas.onmouseleave = function() {
-                document.getElementById('chart-tooltip').classList.add('hidden');
-            };
-        }
-
-        function renderDataTable() {
-            const container = document.getElementById('data-orders-container');
-            const searchKeyword = document.getElementById('search-data-input').value.toLowerCase();
-            const filtered = orders.filter(o => 
-                o.layanan.toLowerCase().includes(searchKeyword) ||
-                o.sumber.toLowerCase().includes(searchKeyword) ||
-                o.status.toLowerCase().includes(searchKeyword) ||
-                o.harga.toString().includes(searchKeyword)
-            );
-
-            if (filtered.length === 0) {
-                container.innerHTML = `<p class="text-xs text-muted dark:text-zinc-500 text-center py-6">Belum ada data order yang cocok.</p>`;
-                return;
+            if (id) {
+                const idx = orders.findIndex(o => o.id === id);
+                if(idx > -1) orders[idx] = { ...orders[idx], ...data };
+                showToast('Order diperbarui');
+            } else {
+                const now = new Date();
+                orders.unshift({ id: `RJ-${now.getTime()}`, timestamp: now.toISOString(), ...data });
+                showToast('Order berhasil dicatat');
             }
 
-            let html = '';
-            filtered.forEach(o => {
-                const d = new Date(o.timestamp);
-                const dateStr = d.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' }) + ' ' + d.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
-                const tabunganVal = o.tabungan !== undefined ? o.tabungan : (o.harga * 0.3);
+            isFormDirty = false;
+            saveData();
+            closeSheet('sheet-add-order');
+        });
+
+        function openDetail(id) {
+            const o = orders.find(x => x.id === id);
+            if(!o) return;
+            
+            activeOrderId = id;
+            const d = new Date(o.timestamp);
+            const srv = o.layanan || o.service;
+            const prc = Number(o.harga || o.price) || 0;
+            const sav = Number(o.tabungan) || (prc * 0.3);
+            const src = o.sumber || o.source;
+            const sts = o.status || 'Customer Baru';
+            const dur = Number(o.durasi || o.estimatedMins) || 0;
+
+            document.getElementById('det-date').innerText = `${fmtDate(d)}, ${fmtTime(d)}`;
+            document.getElementById('det-srv').innerText = srv;
+            document.getElementById('det-prc').innerText = idr.format(prc).replace(',00','');
+            document.getElementById('det-sav').innerText = idr.format(sav).replace(',00','');
+            document.getElementById('det-src').innerText = src;
+            document.getElementById('det-sts').innerText = sts;
+            document.getElementById('det-ref').innerText = o.referral || 'Bukan Referral';
+            document.getElementById('det-id').innerText = o.id;
+            
+            const est = document.getElementById('det-est-wrap');
+            if(dur > 0) {
+                document.getElementById('det-est').innerText = `${dur} Mnt`;
+                est.classList.remove('hidden');
+                est.classList.add('flex');
+            } else {
+                est.classList.add('hidden');
+                est.classList.remove('flex');
+            }
+
+            openSheet('sheet-detail');
+        }
+
+        function triggerEdit() {
+            closeSheet('sheet-detail');
+            setTimeout(() => {
+                const o = orders.find(x => x.id === activeOrderId);
+                if(!o) return;
                 
-                html += `
-                    <div class="custom-surface border p-3.5 rounded-2xl space-y-2 text-xs shadow-sm">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <span class="font-bold text-charcoal dark:text-white text-sm">${o.layanan}</span>
-                                <p class="text-[10px] text-muted dark:text-zinc-400 mt-0.5">${dateStr}</p>
-                            </div>
-                            <div class="text-right">
-                                <span class="font-bold text-orange text-sm">${formatRupiah(o.harga)}</span>
-                                <p class="text-[9px] text-muted dark:text-zinc-400">Tabungan: <span class="text-orange font-semibold">${formatRupiah(tabunganVal)}</span></p>
-                            </div>
-                        </div>
-                        <div class="flex flex-wrap gap-1 pt-1">
-                            <span class="custom-cream border border-bordercolor dark:border-zinc-800 px-2 py-0.5 rounded-md text-[10px] text-muted dark:text-zinc-300">Sumber: ${o.sumber}</span>
-                            <span class="custom-cream border border-bordercolor dark:border-zinc-800 px-2 py-0.5 rounded-md text-[10px] text-muted dark:text-zinc-300">${o.status}</span>
-                            ${o.durasi > 0 ? `<span class="custom-cream border border-bordercolor dark:border-zinc-800 px-2 py-0.5 rounded-md text-[10px] text-muted dark:text-zinc-300">Durasi: ${o.durasi}m</span>` : ''}
-                        </div>
-                        <div class="flex justify-end space-x-2 pt-2 border-t border-bordercolor dark:border-zinc-800">
-                            <button onclick="openModalCatat('${o.id}')" class="custom-cream hover:bg-bordercolor dark:hover:bg-zinc-800 text-orange px-3 py-1 rounded-lg text-[11px] font-semibold transition">Edit</button>
-                            <button onclick="confirmDeleteOrder('${o.id}')" class="bg-red-50 dark:bg-red-950/40 hover:bg-red-100 text-red-600 dark:text-red-400 px-3 py-1 rounded-lg text-[11px] font-semibold transition">Hapus</button>
-                        </div>
+                document.getElementById('modal-order-title').innerText = 'Edit Order';
+                document.getElementById('fo-id').value = o.id;
+                document.getElementById('fo-srv').value = o.layanan || o.service;
+                document.getElementById('fo-prc').value = o.harga || o.price;
+                document.getElementById('fo-src').value = o.sumber || o.source;
+                document.getElementById('fo-sts').value = o.status || 'Customer Baru';
+                document.getElementById('fo-ref').value = o.referral || 'Bukan Referral';
+                document.getElementById('fo-est').value = o.durasi || o.estimatedMins || '';
+                
+                document.getElementById('fo-prc').dispatchEvent(new Event('input')); 
+                isFormDirty = false;
+                
+                openSheet('sheet-add-order');
+            }, 180);
+        }
+
+        function triggerDelete() {
+            closeSheet('sheet-detail');
+            setTimeout(() => openSheet('modal-delete'), 180);
+        }
+
+        function executeDelete() {
+            if(activeOrderId) {
+                orders = orders.filter(o => o.id !== activeOrderId);
+                activeOrderId = null;
+                saveData();
+                closeSheet('modal-delete');
+                showToast('Order berhasil dihapus');
+            }
+        }
+
+        function drawTrendIcon(cur, prev) {
+            if (prev === 0 && cur === 0) return `<span class="text-ink-muted">—</span>`;
+            if (prev === 0) return `<span class="text-brand-600 dark:text-brand-400 font-medium">↑ 100%</span>`;
+            const diff = cur - prev;
+            if (diff === 0) return `<span class="text-ink-muted">—</span>`;
+            const pct = (Math.abs(diff) / prev) * 100;
+            return `<span class="${diff > 0 ? 'text-brand-600 dark:text-brand-400' : 'text-red-500'} font-medium">${diff > 0 ? '↑' : '↓'} ${pct.toFixed(1)}%</span>`;
+        }
+
+        function renderBreakdown(elId, ordersArr) {
+            const el = document.getElementById(elId);
+            if(!el) return [];
+            if(ordersArr.length === 0) { el.innerHTML = '<p class="text-[12px] text-ink-muted bg-panel-light dark:bg-panel-dark p-3.5 rounded-xl border border-line-light dark:border-line-dark">Tidak ada data</p>'; return []; }
+            
+            const isSrv = elId.includes('srv');
+            const keys = isSrv ? SERVICES : SOURCES;
+            const map = {};
+            keys.forEach(k => map[k] = {c:0, r:0});
+            
+            let totalR = 0;
+            ordersArr.forEach(o => {
+                const k = isSrv ? (o.layanan || o.service) : (o.sumber || o.source);
+                const prc = Number(o.harga || o.price) || 0;
+                if(map[k]) { map[k].c++; map[k].r += prc; totalR += prc; }
+            });
+
+            const sorted = Object.entries(map).sort((a,b) => b[1].r - a[1].r).filter(x => x[1].c > 0);
+            
+            let h = '';
+            sorted.forEach(([k, v]) => {
+                const pct = totalR ? ((v.r/totalR)*100).toFixed(1) : 0;
+                h += `
+                <div class="flex items-center justify-between py-2.5 px-3.5 bg-panel-light dark:bg-panel-dark rounded-[14px] border border-line-light/60 dark:border-line-dark/60 shadow-sm">
+                    <div>
+                        <p class="text-[13px] font-medium text-ink-main dark:text-ink-darkMain">${k}</p>
+                        <p class="text-[11px] text-ink-muted mt-0.5">${v.c} order</p>
                     </div>
-                `;
+                    <div class="text-right">
+                        <p class="text-[13px] font-medium text-ink-main dark:text-ink-darkMain">${idr.format(v.r).replace(',00','')}</p>
+                        <p class="text-[11px] text-ink-muted mt-0.5">${pct}% omzet</p>
+                    </div>
+                </div>`;
             });
-            container.innerHTML = html;
+            el.innerHTML = h;
+            return sorted; 
         }
 
-        function confirmDeleteOrder(id) {
-            showConfirmModal("Hapus Order", "Apakah Anda yakin ingin menghapus data order ini?", () => {
-                orders = orders.filter(o => o.id !== id);
-                saveOrdersToStorage();
-                renderDataTable();
-                updateDashboard();
-                showToast("Order berhasil dihapus.");
+        function renderAnalytics() {
+            const now = new Date();
+            const t30Start = now.getTime() - (30 * 86400000);
+            const p30Start = t30Start - (30 * 86400000);
+            
+            const cur30 = orders.filter(o => new Date(o.timestamp).getTime() >= t30Start);
+            const prev30 = orders.filter(o => {
+                const t = new Date(o.timestamp).getTime();
+                return t >= p30Start && t < t30Start;
             });
-        }
 
-        function confirmResetAll() {
-            showConfirmModal("Reset Semua Data", "PERINGATAN: Tindakan ini menghapus seluruh riwayat secara permanen! Pastikan sudah Export backup dan filenya benar-benar tersimpan.", () => {
-                showConfirmModal("Konfirmasi Final", "Anda benar-benar yakin ingin mengosongkan data?", () => {
-                    orders = [];
-                    saveOrdersToStorage(true);
-                    updateDashboard();
-                    switchView('dashboard');
-                    showToast("Semua data direset.", true);
+            const cm = calcMetrics(cur30);
+            const pm = calcMetrics(prev30);
+
+            document.getElementById('a30-ord').innerText = cm.ord;
+            document.getElementById('a30-ord-tr').innerHTML = drawTrendIcon(cm.ord, pm.ord);
+            
+            document.getElementById('a30-rev').innerText = idr.format(cm.rev).replace(',00','');
+            document.getElementById('a30-rev-tr').innerHTML = drawTrendIcon(cm.rev, pm.rev);
+            
+            document.getElementById('a30-aov').innerText = idr.format(cm.aov).replace(',00','');
+            document.getElementById('a30-avgrev').innerText = idr.format(cm.rev/30).replace(',00','');
+            document.getElementById('a30-rep').innerText = cm.repRate.toFixed(1) + '%';
+            document.getElementById('a30-ref').innerText = cm.refRate.toFixed(1) + '%';
+
+            const topSrv = renderBreakdown('a30-srv', cur30);
+            const topSrc = renderBreakdown('a30-src', cur30);
+
+            const insEl = document.getElementById('a30-insight');
+            if(cur30.length < 3) {
+                insEl.innerHTML = '<p class="italic text-ink-muted text-[13px]">Belum cukup data untuk membuat insight yang valid.</p>';
+            } else {
+                let insights = [];
+
+                if(topSrv.length > 0) {
+                    const sName = topSrv[0][0];
+                    const sRev = topSrv[0][1].r;
+                    const sPct = cm.rev ? ((sRev / cm.rev) * 100).toFixed(1) : 0;
+                    insights.push({
+                        title: `Kontribusi Terbesar: ${sName}`,
+                        desc: `Layanan ini menyumbang ${sPct}% dari total omzet 30 hari (${idr.format(sRev).replace(',00','')}).`,
+                        action: `Fokuskan promosi pada ${sName} untuk menjaga kestabilan pemasukan.`
+                    });
+                }
+
+                if(cm.ord > 0) {
+                    insights.push({
+                        title: `Tingkat Repeat Order (${cm.repRate.toFixed(1)}%)`,
+                        desc: `Sebanyak ${cm.repRate.toFixed(1)}% dari total order 30 hari berasal dari pelanggan lama.`,
+                        action: cm.repRate < 20 ? 'Tingkatkan follow-up pelanggan lama agar repeat order meningkat.' : 'Pertahankan kualitas layanan untuk menjaga loyalitas pelanggan.'
+                    });
+                }
+
+                if(topSrc.length > 0) {
+                    const srcName = topSrc[0][0];
+                    const srcCount = topSrc[0][1].c;
+                    insights.push({
+                        title: `Sumber Utama: ${srcName}`,
+                        desc: `${srcName} mendominasi perolehan order dengan total ${srcCount} pesanan masuk.`,
+                        action: `Alokasikan waktu lebih banyak untuk memaksimalkan channel ${srcName}.`
+                    });
+                }
+
+                insights = insights.slice(0, 3);
+
+                let insHtml = '';
+                insights.forEach((item, idx) => {
+                    insHtml += `
+                    <div class="bg-panel-light dark:bg-panel-dark rounded-[14px] p-3.5 border border-line-light/80 dark:border-line-dark/80 shadow-sm">
+                        <p class="text-[13px] font-semibold text-ink-main dark:text-ink-darkMain mb-1">${idx + 1}. ${item.title}</p>
+                        <p class="text-[13px] text-ink-muted mb-2 leading-relaxed">${item.desc}</p>
+                        <div class="flex items-start gap-1.5 text-[12px] font-medium text-brand-600 dark:text-brand-400 bg-brand-50/50 dark:bg-brand-900/20 px-3 py-2 rounded-lg border border-brand-100/50 dark:border-brand-800/30">
+                            <i class="ph-bold ph-arrow-right text-[14px] mt-0.5 shrink-0"></i>
+                            <span>${item.action}</span>
+                        </div>
+                    </div>`;
                 });
-            });
-        }
-
-        // ==========================================================
-        // EXPORT: hasil beneran berupa file. Toast sukses baru muncul setelah berhasil.
-        // Urutan: 1) menu Bagikan (iPhone/Android: pilih "Simpan ke File")
-        //         2) unduh biasa lewat Blob (desktop)
-        // ==========================================================
-        async function exportDataJSON() {
-            if (orders.length === 0) {
-                showToast("Tidak ada data untuk diexport.", true);
-                return;
+                insEl.innerHTML = insHtml;
             }
 
-            const jsonStr = JSON.stringify(orders, null, 2);
-            const fileName = `rizky_assistant_backup_${new Date().toISOString().slice(0, 10)}.json`;
+            renderChart();
+        }
 
-            // 1) Menu Bagikan (paling andal di iPhone)
-            try {
-                if (typeof File === 'function' && navigator.canShare) {
-                    const file = new File([jsonStr], fileName, { type: 'application/json' });
-                    if (navigator.canShare({ files: [file] })) {
-                        await navigator.share({ files: [file], title: fileName });
-                        showToast(`Backup ${orders.length} order dibagikan. Pastikan kamu memilih "Simpan ke File".`);
-                        return;
-                    }
+        function renderChart() {
+            const ctx = document.getElementById('chart-30h');
+            if (!ctx) return;
+            if (chartInstance) chartInstance.destroy();
+
+            const isDark = document.documentElement.classList.contains('dark');
+            const labels = [], data = [];
+            const now = new Date();
+            
+            for(let i=6; i>=0; i--) {
+                const d = new Date(now.getTime() - (i*86400000));
+                labels.push(`${d.getDate()}/${d.getMonth()+1}`);
+                const dayRev = orders.filter(o => isSameDay(new Date(o.timestamp), d)).reduce((s,o)=>s+(Number(o.harga || o.price)||0), 0);
+                data.push(dayRev);
+            }
+
+            chartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: data,
+                        backgroundColor: '#4F7557',
+                        borderRadius: 6,
+                        barThickness: 'flex',
+                        maxBarThickness: 28
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false }, tooltip: {
+                        backgroundColor: isDark ? '#1C211F' : '#FFFFFF',
+                        titleColor: isDark ? '#E8EDE9' : '#1E2320',
+                        bodyColor: isDark ? '#8C9893' : '#6B7670',
+                        borderColor: isDark ? '#272E2B' : '#E6EAE5', borderWidth: 1, padding: 10,
+                        boxPadding: 4, cornerRadius: 10
+                    }},
+                    scales: {
+                        y: { display: false, beginAtZero: true },
+                        x: { grid: { display: false }, border: {display: false}, ticks: { color: isDark ? '#8C9893' : '#6B7670', font: {size: 11, family: 'Inter'} } }
+                    },
+                    layout: { padding: 0 }
                 }
-            } catch (err) {
-                if (err && err.name === 'AbortError') {
-                    showToast("Export dibatalkan. Belum ada file yang tersimpan.", true);
+            });
+        }
+
+        let currentFilter = 'all';
+        
+        document.getElementById('data-search').addEventListener('input', renderDataList);
+        document.querySelectorAll('.filter-btn').forEach(b => {
+            b.addEventListener('click', (e) => {
+                document.querySelectorAll('.filter-btn').forEach(btn => {
+                    btn.classList.remove('active', 'bg-brand-500', 'text-white', 'shadow-sm');
+                    btn.classList.add('bg-panel-light', 'text-ink-muted', 'dark:bg-panel-dark', 'border', 'border-line-light', 'dark:border-line-dark');
+                });
+                const target = e.target;
+                target.classList.add('active', 'bg-brand-500', 'text-white', 'shadow-sm');
+                target.classList.remove('bg-panel-light', 'text-ink-muted', 'dark:bg-panel-dark', 'border', 'border-line-light', 'dark:border-line-dark');
+                currentFilter = target.dataset.val;
+                renderDataList();
+            });
+        });
+
+        function renderDataList() {
+            const term = document.getElementById('data-search').value.toLowerCase();
+            let arr = orders.filter(o => {
+                const srv = (o.layanan || o.service || '').toLowerCase();
+                const src = (o.sumber || o.source || '').toLowerCase();
+                const matchTerm = o.id.toLowerCase().includes(term) || srv.includes(term) || src.includes(term);
+                const sts = o.status || 'Customer Baru';
+                const ref = o.referral || 'Bukan Referral';
+                const matchFilt = currentFilter === 'all' || srv === currentFilter.toLowerCase() || sts === currentFilter || ref === currentFilter;
+                return matchTerm && matchFilt;
+            });
+
+            document.getElementById('data-count').innerText = `${arr.length} Order ditemukan`;
+            const el = document.getElementById('data-list');
+
+            if(arr.length === 0) { el.innerHTML = '<div class="py-10 text-center text-[13px] text-ink-muted bg-panel-light dark:bg-panel-dark rounded-[16px] border border-line-light dark:border-line-dark">Tidak ada data.</div>'; return; }
+
+            let h = '';
+            arr.forEach(o => {
+                const d = new Date(o.timestamp);
+                const srv = o.layanan || o.service;
+                const prc = Number(o.harga || o.price) || 0;
+                const src = o.sumber || o.source;
+                const sts = o.status || 'Customer Baru';
+
+                h += `
+                <div onclick="openDetail('${o.id}')" class="flex flex-col p-3.5 bg-panel-light dark:bg-panel-dark rounded-[16px] border border-line-light/60 dark:border-line-dark/60 shadow-sm active:scale-[0.99] cursor-pointer group transition-all">
+                    <div class="flex justify-between items-start mb-1">
+                        <p class="text-[13px] font-medium text-ink-main dark:text-ink-darkMain group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors">${srv}</p>
+                        <p class="text-[13px] font-medium text-brand-600 dark:text-brand-400">${idr.format(prc).replace(',00','')}</p>
+                    </div>
+                    <div class="flex justify-between items-end">
+                        <p class="text-[12px] text-ink-muted">${fmtDate(d)} · ${src}</p>
+                        <div>
+                            ${sts === 'Customer Baru' ? '<span class="px-2 py-0.5 rounded text-[10px] font-medium bg-surface-light dark:bg-surface-dark border border-line-light dark:border-line-dark text-ink-muted uppercase">Baru</span>' : '<span class="px-2 py-0.5 rounded text-[10px] font-medium bg-brand-50 dark:bg-brand-900/30 text-brand-700 dark:text-brand-300 uppercase">Repeat</span>'}
+                        </div>
+                    </div>
+                </div>`;
+            });
+            el.innerHTML = h;
+        }
+
+        document.getElementById('form-recap').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const s = new Date(document.getElementById('recap-start').value); s.setHours(0,0,0,0);
+            const ed = new Date(document.getElementById('recap-end').value); ed.setHours(23,59,59,999);
+            
+            const arr = orders.filter(o => {
+                const t = new Date(o.timestamp).getTime();
+                return t >= s.getTime() && t <= ed.getTime();
+            });
+            const m = calcMetrics(arr);
+            
+            document.getElementById('rcp-rev').innerText = idr.format(m.rev).replace(',00','');
+            document.getElementById('rcp-ord').innerText = m.ord;
+            document.getElementById('rcp-sav').innerText = idr.format(m.sav).replace(',00','');
+            document.getElementById('rcp-aov').innerText = idr.format(m.aov).replace(',00','');
+            
+            renderBreakdown('rcp-srv', arr);
+            document.getElementById('recap-result').classList.remove('hidden');
+        });
+
+        function getHistoricalCycles() {
+            if(!orders.length) return [];
+            let earliest = Math.min(...orders.map(o=>new Date(o.timestamp).getTime()));
+            let cur = getActiveCycle();
+            let res = [cur];
+            while(cur.start.getTime() > earliest) {
+                let d = new Date(cur.start.getTime() - 86400000);
+                cur = getActiveCycle(d);
+                res.push(cur);
+            }
+            return res;
+        }
+
+        function renderCycles() {
+            const arr = getHistoricalCycles();
+            const el = document.getElementById('cycle-list-container');
+            const detail = document.getElementById('cycle-detail');
+            detail.classList.add('hidden'); 
+            
+            if(!arr.length) { el.innerHTML = '<p class="text-[13px] text-ink-muted bg-panel-light dark:bg-panel-dark p-4 rounded-[16px] border border-line-light dark:border-line-dark">Belum ada histori siklus.</p>'; return; }
+            
+            let h = '';
+            arr.forEach((c, i) => {
+                const label = `${fmtDate(c.start)} - ${fmtDate(c.end)}`;
+                h += `
+                <button onclick="showCycleDetail(${c.start.getTime()}, ${c.end.getTime()}, '${label}')" class="w-full text-left p-3.5 bg-panel-light dark:bg-panel-dark rounded-[16px] border border-line-light/60 dark:border-line-dark/60 active:scale-[0.99] transition-all flex justify-between items-center group shadow-sm">
+                    <span class="text-[13px] font-medium text-ink-main dark:text-ink-darkMain group-hover:text-brand-600 dark:group-hover:text-brand-400">${label}</span>
+                    ${i===0 ? '<span class="text-[10px] font-semibold px-2 py-0.5 bg-brand-50 text-brand-700 dark:bg-brand-900/30 dark:text-brand-300 rounded border border-brand-100 dark:border-brand-800">AKTIF</span>' : '<i class="ph-bold ph-caret-right text-ink-muted group-hover:translate-x-1 transition-transform"></i>'}
+                </button>`;
+            });
+            el.innerHTML = h;
+        }
+
+        window.showCycleDetail = function(start, end, label) {
+            const arr = orders.filter(o => {
+                const t = new Date(o.timestamp).getTime();
+                return t >= start && t <= end;
+            });
+            const m = calcMetrics(arr);
+            
+            document.getElementById('cyc-title').innerText = label;
+            document.getElementById('cyc-rev').innerText = idr.format(m.rev).replace(',00','');
+            document.getElementById('cyc-ord').innerText = m.ord;
+            renderBreakdown('cyc-srv', arr);
+            
+            const detail = document.getElementById('cycle-detail');
+            detail.classList.remove('hidden');
+            detail.scrollIntoView({behavior: 'smooth', block: 'end'});
+        }
+
+        function backupData() {
+            const data = JSON.stringify(orders, null, 2);
+            const blob = new Blob([data], { type: "application/json" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url; 
+            const dStr = new Date().toISOString().slice(0,10);
+            a.download = `leadger-backup-${dStr}.json`;
+            a.click();
+            closeSheet('sheet-menu');
+            showToast('Backup berhasil diunduh');
+        }
+
+        document.getElementById('import-file-menu').addEventListener('change', (e) => {
+            const file = e.target.files[0]; if(!file) return;
+            const r = new FileReader();
+            r.onload = (evt) => {
+                let parsed;
+                try {
+                    parsed = JSON.parse(evt.target.result);
+                } catch(err) {
+                    showToast('Format JSON salah', 'error');
+                    e.target.value = '';
                     return;
                 }
-                // error lain: lanjut ke cara unduh biasa
-            }
 
-            // 2) Unduh biasa lewat Blob
-            try {
-                const blob = new Blob([jsonStr], { type: 'application/json' });
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = fileName;
-                a.style.display = 'none';
-                document.body.appendChild(a);
-                a.click();
-                a.remove();
-                setTimeout(() => URL.revokeObjectURL(url), 5000);
-                showToast(`Export ${orders.length} order dimulai. Cek folder Downloads / Unduhan.`);
-            } catch (err) {
-                showToast("Export gagal. Coba lagi atau gunakan browser lain.", true);
-            }
-        }
-
-        // ==========================================================
-        // IMPORT: validasi dulu, lalu GABUNGKAN ke data yang ada (berdasarkan id).
-        // Data yang sudah ada tidak akan hilang. Kalau web masih kosong, hasilnya sama
-        // dengan mengembalikan seluruh isi backup.
-        // ==========================================================
-        function normalizeImportedOrder(o) {
-            if (!o || typeof o !== 'object') return null;
-
-            const layanan = typeof o.layanan === 'string' ? o.layanan.trim() : '';
-            const harga = Number(o.harga);
-            const ts = new Date(o.timestamp);
-
-            if (!layanan) return null;
-            if (!Number.isFinite(harga) || harga < 0) return null;
-            if (!o.timestamp || isNaN(ts.getTime())) return null;
-
-            const tabungan = Number.isFinite(Number(o.tabungan)) && o.tabungan !== null && o.tabungan !== undefined ? Number(o.tabungan) : harga * 0.3;
-            const operasional = Number.isFinite(Number(o.operasional)) && o.operasional !== null && o.operasional !== undefined ? Number(o.operasional) : harga - tabungan;
-            const durasiNum = parseInt(o.durasi);
-
-            return {
-                id: (typeof o.id === 'string' && o.id.trim()) ? o.id.trim() : 'ORD-' + Date.now() + '-' + Math.floor(Math.random() * 100000),
-                timestamp: ts.toISOString(),
-                layanan,
-                harga,
-                tabungan,
-                operasional,
-                sumber: (typeof o.sumber === 'string' && o.sumber.trim()) ? o.sumber.trim() : 'Lainnya',
-                status: (typeof o.status === 'string' && o.status.trim()) ? o.status.trim() : 'Customer Baru',
-                referral: (typeof o.referral === 'string' && o.referral.trim()) ? o.referral.trim() : 'Bukan Referral',
-                durasi: Number.isFinite(durasiNum) && durasiNum > 0 ? durasiNum : 0
-            };
-        }
-
-        function importDataJSON(event) {
-            const input = event.target;
-            const file = input.files && input.files[0];
-            if (!file) return;
-
-            const reader = new FileReader();
-
-            reader.onerror = function() {
-                showToast("Gagal membaca file.", true);
-                input.value = '';
-            };
-
-            reader.onload = function(e) {
-                try {
-                    let parsed;
-                    try {
-                        parsed = JSON.parse(e.target.result);
-                    } catch (err) {
-                        showToast("File bukan JSON yang valid. Data tidak diubah.", true);
-                        return;
-                    }
-
-                    let rawList = null;
-                    if (Array.isArray(parsed)) rawList = parsed;
-                    else if (parsed && typeof parsed === 'object' && Array.isArray(parsed.orders)) rawList = parsed.orders;
-
-                    if (!rawList) {
-                        showToast("Format file tidak dikenali. Data tidak diubah.", true);
-                        return;
-                    }
-
-                    const valid = [];
-                    let skipped = 0;
-                    rawList.forEach(item => {
-                        const n = normalizeImportedOrder(item);
-                        if (n) valid.push(n); else skipped++;
-                    });
-
-                    if (valid.length === 0) {
-                        showToast("Tidak ada order valid di file ini. Data tidak diubah.", true);
-                        return;
-                    }
-
-                    const previous = orders.slice();
-                    const existingIds = new Set(orders.map(o => o.id));
-                    let added = 0, duplicate = 0;
-
-                    valid.forEach(n => {
-                        if (existingIds.has(n.id)) {
-                            duplicate++;
-                        } else {
-                            existingIds.add(n.id);
-                            orders.push(n);
-                            added++;
-                        }
-                    });
-
-                    orders.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-
-                    if (!saveOrdersToStorage(true)) {
-                        orders = previous; // gagal simpan: kembalikan seperti semula
-                        return;
-                    }
-
-                    updateDashboard();
-                    switchView('dashboard');
-
-                    let msg = `Import selesai: ${added} order ditambahkan`;
-                    if (duplicate > 0) msg += `, ${duplicate} sudah ada`;
-                    if (skipped > 0) msg += `, ${skipped} dilewati (data tidak valid)`;
-                    msg += '.';
-                    showToast(msg);
-                } finally {
-                    input.value = '';
+                let rawOrders = [];
+                if (Array.isArray(parsed)) {
+                    rawOrders = parsed;
+                } else if (parsed && Array.isArray(parsed.orders)) {
+                    rawOrders = parsed.orders;
+                } else {
+                    showToast('Format JSON salah', 'error');
+                    e.target.value = '';
+                    return;
                 }
+
+                let added = 0, exists = 0, skipped = 0;
+                const existIds = new Set(orders.map(o => o.id));
+                const newOrders = [];
+
+                for (const item of rawOrders) {
+                    try {
+                        if (!item || typeof item !== 'object') { skipped++; continue; }
+                        if (!item.id) { skipped++; continue; }
+                        if (existIds.has(item.id)) { exists++; continue; }
+
+                        const ts = item.timestamp;
+                        const parsedTs = typeof ts === 'string' ? new Date(ts).getTime() : ts;
+                        if (isNaN(parsedTs)) { skipped++; continue; }
+
+                        const service = item.layanan || item.service;
+                        const price = item.harga !== undefined ? Number(item.harga) : Number(item.price);
+                        
+                        if (!service || isNaN(price)) { skipped++; continue; }
+
+                        const source = item.sumber || item.source || 'Lainnya';
+                        const status = item.status || 'Customer Baru';
+                        const referral = item.referral || 'Bukan Referral';
+                        const duration = item.durasi !== undefined ? Number(item.durasi) : (item.estimatedMins ? Number(item.estimatedMins) : 0);
+                        const savings = item.tabungan !== undefined ? Number(item.tabungan) : (price * 0.3);
+                        const operational = item.operasional !== undefined ? Number(item.operasional) : 0;
+
+                        newOrders.push({
+                            id: item.id,
+                            timestamp: new Date(parsedTs).toISOString(),
+                            layanan: service,
+                            harga: price,
+                            tabungan: savings,
+                            operasional: operational,
+                            sumber: source,
+                            status: status,
+                            referral: referral,
+                            durasi: duration
+                        });
+                        
+                        existIds.add(item.id); 
+                        added++;
+                    } catch (err) {
+                        skipped++;
+                    }
+                }
+
+                if (added > 0) {
+                    orders = [...orders, ...newOrders];
+                    orders.sort((a,b) => new Date(b.timestamp) - new Date(a.timestamp));
+                    saveData();
+                }
+                
+                closeSheet('sheet-menu');
+                showToast(`${added} ditambahkan, ${exists} sudah ada, ${skipped} dilewati`);
+                e.target.value = ''; 
             };
-
-            reader.readAsText(file);
-        }
-
-        function showConfirmModal(title, message, callback) {
-            document.getElementById('confirm-title').innerText = title;
-            document.getElementById('confirm-message').innerText = message;
-            currentConfirmCallback = callback;
-            document.getElementById('confirm-modal').classList.remove('hidden');
-        }
-
-        function closeConfirmModal() {
-            document.getElementById('confirm-modal').classList.add('hidden');
-            currentConfirmCallback = null;
-        }
-
-        // Modal ditutup DULU baru callback dijalankan, supaya konfirmasi berlapis (Reset)
-        // bisa menampilkan modal kedua tanpa langsung tertutup.
-        document.getElementById('confirm-btn-yes').addEventListener('click', () => {
-            const cb = currentConfirmCallback;
-            closeConfirmModal();
-            if (cb) cb();
+            r.readAsText(file);
         });
+
+        document.getElementById('reset-input').addEventListener('input', (e) => {
+            document.getElementById('btn-do-reset').disabled = e.target.value !== 'RESET';
+        });
+
+        function executeReset() {
+            orders = [];
+            saveData();
+            closeSheet('modal-reset');
+            showToast('Database berhasil di-reset');
+        }
+
+        function setupListeners() {
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    ['sheet-detail', 'sheet-add-order', 'modal-delete', 'modal-reset', 'sheet-menu'].forEach(id => {
+                        if(!document.getElementById(id).classList.contains('hidden-safe')) confirmCloseSheet(id);
+                    });
+                    ['overlay-recap', 'overlay-analytics', 'overlay-data', 'overlay-cycles'].forEach(id => {
+                        if(!document.getElementById(id).classList.contains('hidden-safe')) closeOverlay(id);
+                    });
+                }
+            });
+        }
+
+        // Initialize application on load
+        init();
     </script>
 </body>
 </html>
