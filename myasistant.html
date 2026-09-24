@@ -339,7 +339,7 @@
                 <button onclick="document.getElementById('import-file-input').click()" class="custom-surface hover:bg-peach/30 border text-orange text-xs py-2 px-2 rounded-xl font-semibold transition flex items-center justify-center space-x-1 shadow-sm">
                     <span>📤 Import</span>
                 </button>
-                <input type="file" id="import-file-input" accept=".json" class="hidden" onchange="importDataJSON(event)">
+                <input type="file" id="import-file-input" accept=".json,application/json" class="hidden" onchange="importDataJSON(event)">
                 <button onclick="confirmResetAll()" class="bg-red-50 dark:bg-red-950/40 hover:bg-red-100 border border-red-200 dark:border-red-900 text-red-600 dark:text-red-400 text-xs py-2 px-2 rounded-xl font-semibold transition flex items-center justify-center space-x-1 shadow-sm">
                     <span>🗑️ Reset</span>
                 </button>
@@ -573,12 +573,16 @@
             }
         }
 
-        function saveOrdersToStorage() {
+        // silent = true: tidak menampilkan toast sukses (dipakai import supaya pesannya tidak tertimpa)
+        // Mengembalikan true kalau berhasil disimpan, false kalau gagal.
+        function saveOrdersToStorage(silent = false) {
             try {
                 localStorage.setItem(STORAGE_KEY, JSON.stringify(orders));
-                showToast("Data berhasil disimpan");
+                if (!silent) showToast("Data berhasil disimpan");
+                return true;
             } catch (e) {
                 showToast("Gagal menyimpan data ke browser!", true);
+                return false;
             }
         }
 
@@ -630,6 +634,7 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
+        let toastTimer = null;
         function showToast(message, isError = false) {
             const toast = document.getElementById('toast');
             const msgEl = document.getElementById('toast-message');
@@ -643,7 +648,8 @@
             }
             
             toast.classList.remove('hidden');
-            setTimeout(() => { toast.classList.add('hidden'); }, 3000);
+            if (toastTimer) clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => { toast.classList.add('hidden'); }, 4000);
         }
 
         function hideToast() { document.getElementById('toast').classList.add('hidden'); }
@@ -1296,10 +1302,10 @@
         }
 
         function confirmResetAll() {
-            showConfirmModal("Reset Semua Data", "PERINGATAN: Tindakan ini menghapus seluruh riwayat secara permanen!", () => {
+            showConfirmModal("Reset Semua Data", "PERINGATAN: Tindakan ini menghapus seluruh riwayat secara permanen! Pastikan sudah Export backup dan filenya benar-benar tersimpan.", () => {
                 showConfirmModal("Konfirmasi Final", "Anda benar-benar yakin ingin mengosongkan data?", () => {
                     orders = [];
-                    saveOrdersToStorage();
+                    saveOrdersToStorage(true);
                     updateDashboard();
                     switchView('dashboard');
                     showToast("Semua data direset.", true);
@@ -1307,42 +1313,167 @@
             });
         }
 
-        function exportDataJSON() {
+        // ==========================================================
+        // EXPORT: hasil beneran berupa file. Toast sukses baru muncul setelah berhasil.
+        // Urutan: 1) menu Bagikan (iPhone/Android: pilih "Simpan ke File")
+        //         2) unduh biasa lewat Blob (desktop)
+        // ==========================================================
+        async function exportDataJSON() {
             if (orders.length === 0) {
                 showToast("Tidak ada data untuk diexport.", true);
                 return;
             }
-            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(orders, null, 2));
-            const downloadAnchor = document.createElement('a');
-            downloadAnchor.setAttribute("href", dataStr);
-            downloadAnchor.setAttribute("download", `rizky_assistant_backup_${new Date().toISOString().slice(0, 10)}.json`);
-            document.body.appendChild(downloadAnchor);
-            downloadAnchor.click();
-            downloadAnchor.remove();
-            showToast("Data di-export ke JSON.");
+
+            const jsonStr = JSON.stringify(orders, null, 2);
+            const fileName = `rizky_assistant_backup_${new Date().toISOString().slice(0, 10)}.json`;
+
+            // 1) Menu Bagikan (paling andal di iPhone)
+            try {
+                if (typeof File === 'function' && navigator.canShare) {
+                    const file = new File([jsonStr], fileName, { type: 'application/json' });
+                    if (navigator.canShare({ files: [file] })) {
+                        await navigator.share({ files: [file], title: fileName });
+                        showToast(`Backup ${orders.length} order dibagikan. Pastikan kamu memilih "Simpan ke File".`);
+                        return;
+                    }
+                }
+            } catch (err) {
+                if (err && err.name === 'AbortError') {
+                    showToast("Export dibatalkan. Belum ada file yang tersimpan.", true);
+                    return;
+                }
+                // error lain: lanjut ke cara unduh biasa
+            }
+
+            // 2) Unduh biasa lewat Blob
+            try {
+                const blob = new Blob([jsonStr], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = fileName;
+                a.style.display = 'none';
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+                setTimeout(() => URL.revokeObjectURL(url), 5000);
+                showToast(`Export ${orders.length} order dimulai. Cek folder Downloads / Unduhan.`);
+            } catch (err) {
+                showToast("Export gagal. Coba lagi atau gunakan browser lain.", true);
+            }
+        }
+
+        // ==========================================================
+        // IMPORT: validasi dulu, lalu GABUNGKAN ke data yang ada (berdasarkan id).
+        // Data yang sudah ada tidak akan hilang. Kalau web masih kosong, hasilnya sama
+        // dengan mengembalikan seluruh isi backup.
+        // ==========================================================
+        function normalizeImportedOrder(o) {
+            if (!o || typeof o !== 'object') return null;
+
+            const layanan = typeof o.layanan === 'string' ? o.layanan.trim() : '';
+            const harga = Number(o.harga);
+            const ts = new Date(o.timestamp);
+
+            if (!layanan) return null;
+            if (!Number.isFinite(harga) || harga < 0) return null;
+            if (!o.timestamp || isNaN(ts.getTime())) return null;
+
+            const tabungan = Number.isFinite(Number(o.tabungan)) && o.tabungan !== null && o.tabungan !== undefined ? Number(o.tabungan) : harga * 0.3;
+            const operasional = Number.isFinite(Number(o.operasional)) && o.operasional !== null && o.operasional !== undefined ? Number(o.operasional) : harga - tabungan;
+            const durasiNum = parseInt(o.durasi);
+
+            return {
+                id: (typeof o.id === 'string' && o.id.trim()) ? o.id.trim() : 'ORD-' + Date.now() + '-' + Math.floor(Math.random() * 100000),
+                timestamp: ts.toISOString(),
+                layanan,
+                harga,
+                tabungan,
+                operasional,
+                sumber: (typeof o.sumber === 'string' && o.sumber.trim()) ? o.sumber.trim() : 'Lainnya',
+                status: (typeof o.status === 'string' && o.status.trim()) ? o.status.trim() : 'Customer Baru',
+                referral: (typeof o.referral === 'string' && o.referral.trim()) ? o.referral.trim() : 'Bukan Referral',
+                durasi: Number.isFinite(durasiNum) && durasiNum > 0 ? durasiNum : 0
+            };
         }
 
         function importDataJSON(event) {
-            const file = event.target.files[0];
+            const input = event.target;
+            const file = input.files && input.files[0];
             if (!file) return;
+
             const reader = new FileReader();
+
+            reader.onerror = function() {
+                showToast("Gagal membaca file.", true);
+                input.value = '';
+            };
+
             reader.onload = function(e) {
                 try {
-                    const parsed = JSON.parse(e.target.result);
-                    if (Array.isArray(parsed)) {
-                        orders = parsed;
-                    } else if (parsed && typeof parsed === 'object' && Array.isArray(parsed.orders)) {
-                        orders = parsed.orders;
+                    let parsed;
+                    try {
+                        parsed = JSON.parse(e.target.result);
+                    } catch (err) {
+                        showToast("File bukan JSON yang valid. Data tidak diubah.", true);
+                        return;
                     }
-                    saveOrdersToStorage();
+
+                    let rawList = null;
+                    if (Array.isArray(parsed)) rawList = parsed;
+                    else if (parsed && typeof parsed === 'object' && Array.isArray(parsed.orders)) rawList = parsed.orders;
+
+                    if (!rawList) {
+                        showToast("Format file tidak dikenali. Data tidak diubah.", true);
+                        return;
+                    }
+
+                    const valid = [];
+                    let skipped = 0;
+                    rawList.forEach(item => {
+                        const n = normalizeImportedOrder(item);
+                        if (n) valid.push(n); else skipped++;
+                    });
+
+                    if (valid.length === 0) {
+                        showToast("Tidak ada order valid di file ini. Data tidak diubah.", true);
+                        return;
+                    }
+
+                    const previous = orders.slice();
+                    const existingIds = new Set(orders.map(o => o.id));
+                    let added = 0, duplicate = 0;
+
+                    valid.forEach(n => {
+                        if (existingIds.has(n.id)) {
+                            duplicate++;
+                        } else {
+                            existingIds.add(n.id);
+                            orders.push(n);
+                            added++;
+                        }
+                    });
+
+                    orders.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+                    if (!saveOrdersToStorage(true)) {
+                        orders = previous; // gagal simpan: kembalikan seperti semula
+                        return;
+                    }
+
                     updateDashboard();
                     switchView('dashboard');
-                    showToast("Data berhasil di-import.");
-                } catch (err) {
-                    showToast("Gagal membaca file JSON.", true);
+
+                    let msg = `Import selesai: ${added} order ditambahkan`;
+                    if (duplicate > 0) msg += `, ${duplicate} sudah ada`;
+                    if (skipped > 0) msg += `, ${skipped} dilewati (data tidak valid)`;
+                    msg += '.';
+                    showToast(msg);
+                } finally {
+                    input.value = '';
                 }
-                event.target.value = '';
             };
+
             reader.readAsText(file);
         }
 
@@ -1358,9 +1489,12 @@
             currentConfirmCallback = null;
         }
 
+        // Modal ditutup DULU baru callback dijalankan, supaya konfirmasi berlapis (Reset)
+        // bisa menampilkan modal kedua tanpa langsung tertutup.
         document.getElementById('confirm-btn-yes').addEventListener('click', () => {
-            if (currentConfirmCallback) currentConfirmCallback();
+            const cb = currentConfirmCallback;
             closeConfirmModal();
+            if (cb) cb();
         });
     </script>
 </body>
