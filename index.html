@@ -3,342 +3,365 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rizky Jasa - Jasa Pembuatan CV ATS Friendly Profesional Bogor & Indonesia</title>
-    <meta name="description" content="Jasa Pembuatan CV ATS Friendly profesional di Citeureup, Cibinong, Bogor, dan Sentul. Proses kilat 1 jam, file Word + PDF, revisi sampai puas.">
-    
-    <!-- Tailwind CSS CDN -->
+    <title>Rizky Jasa - Jasa Pembuatan CV ATS Friendly Profesional</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- GSAP & ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <!-- Three.js for Neural Quantum 3D Canvas -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {"@type":"Question","name":"Berapa lama proses pembuatan CV?","acceptedAnswer":{"@type":"Answer","text":"Kilat 1-3 jam saja setelah data lengkap. Jam operasional 08.00-23.00 WIB, respon kurang dari 1 jam."}},
+        {"@type":"Question","name":"Apakah ada garansi revisi?","acceptedAnswer":{"@type":"Answer","text":"Ada, kami berikan garansi 3x revisi gratis untuk penyempurnaan agar CV sesuai dengan yang Anda inginkan."}},
+        {"@type":"Question","name":"Saya di luar Bogor, apakah bisa order?","acceptedAnswer":{"@type":"Answer","text":"Bisa. Kami berbasis di Citeureup Bogor, melayani online untuk seluruh Indonesia via WhatsApp."}},
+        {"@type":"Question","name":"Apa saja paket yang tersedia?","acceptedAnswer":{"@type":"Answer","text":"Kami menyediakan Paket Hemat (CV + Surat Lamaran), Paket Komplit Kerja (CV + Surat Lamaran + Edit Foto + Teks Email), Paket CV Only, Edit Dokumen Sederhana, dan Revisi CV."}},
+        {"@type":"Question","name":"File apa yang akan saya dapatkan?","acceptedAnswer":{"@type":"Answer","text":"File Word (.docx) yang bisa diedit dan file PDF siap kirim. Bonus edit pas foto untuk Paket Komplit."}},
+        {"@type":"Question","name":"Bagaimana cara order?","acceptedAnswer":{"@type":"Answer","text":"Klik WhatsApp 0821-2542-4346, kirim data diri, langsung kami proses di jam 08.00-23.00 WIB."}}
+      ]
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ProfessionalService",
+      "name": "Rizky Jasa - Jasa Pembuatan CV ATS Friendly",
+      "telephone": "+6282125424346",
+      "url": "https://rizkyjasa.github.io/Rizky-Jasa/",
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "-6.5400",
+        "longitude": "106.8800"
+      },
+      "description": "Berbasis di Citeureup Bogor, melayani jasa pembuatan CV ATS Friendly online seluruh Indonesia. Dipercaya 190+ jobseeker. Garansi 3x revisi gratis.",
+      "address": {"@type":"PostalAddress","streetAddress":"Jl. Mayor Oking, Karang Asem Barat","addressLocality":"Citeureup","addressRegion":"Jawa Barat","postalCode":"16810","addressCountry":"ID"},
+      "areaServed": {"@type":"Country","name":"Indonesia"},
+      "openingHours": "Mo-Su 08:00-23:00"
+    }
+    </script>
+
+    <!-- Tailwind Config -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
+                    fontFamily: { sans: ['"Plus Jakarta Sans"', 'sans-serif'] },
                     colors: {
-                        darkBg: '#090D16',      /* Deep Midnight Charcoal Navy */
-                        darkCard: '#121A2B',    /* Elevated Card Surface */
-                        darkInner: '#1C263B',   /* Inner Card & Accent Surface */
-                        emeraldAccent: '#10B981', /* Luxury Emerald Green Accent */
-                        emeraldHover: '#059669'
+                        brand: {
+                            base: '#03060B',
+                            surface: '#090E17',
+                            card: '#0E1726',
+                            border: '#182640',
+                            accent: '#22D3EE',
+                            accentGlow: '#06B6D4',
+                            platinum: '#94A3B8'
+                        }
                     },
-                    fontFamily: {
-                        sans: ['Plus Jakarta Sans', 'Inter', 'sans-serif']
+                    boxShadow: {
+                        'luxury': '0 30px 100px -20px rgba(0, 0, 0, 0.9), 0 0 50px rgba(34, 211, 238, 0.12)',
+                        'luxury-hover': '0 40px 140px -25px rgba(0, 0, 0, 0.95), 0 0 80px rgba(34, 211, 238, 0.25)',
                     }
                 }
             }
         }
     </script>
-    
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    
-    <!-- FontAwesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background-color: #03060B;
+            color: #F8FAFC;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+        }
 
-    <!-- Schema.org LocalBusiness & FAQPage JSON-LD -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "LocalBusiness",
-      "name": "Rizky Jasa",
-      "image": "https://placehold.co/600x400/121A2B/10B981?text=Rizky+Jasa",
-      "@id": "",
-      "url": "",
-      "telephone": "+6282125424346",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "Citeureup",
-        "addressLocality": "Citeureup, Cibinong",
-        "addressRegion": "Bogor, Jawa Barat",
-        "postalCode": "16820",
-        "addressCountry": "ID"
-      },
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": -6.4833,
-        "longitude": 106.8833
-      },
-      "openingHoursSpecification": {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": [
-          "Monday",
-          "Tuesday",
-          "Wednesday",
-          "Thursday",
-          "Friday",
-          "Saturday",
-          "Sunday"
-        ],
-        "opens": "08:00",
-        "closes": "21:00"
-      },
-      "priceRange": "Hubungi Admin",
-      "sameAs": []
-    }
-    </script>
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [{
-        "@type": "Question",
-        "name": "Apakah CV di Rizky Jasa benar-benar ATS Friendly?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Ya, sangat ATS Friendly. Kami merancang struktur, layout, dan pemilihan keyword sesuai standar Applicant Tracking System agar lolos seleksi otomatis perusahaan."
+        /* Neural Quantum 3D WebGL Canvas */
+        #webgl-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 1;
         }
-      }, {
-        "@type": "Question",
-        "name": "Berapa lama proses pembuatan CV di Rizky Jasa?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Proses kilat hanya memakan waktu 1 jam setelah data lengkap terkumpul, tanpa mengurangi kualitas estetika dan profesionalisme."
+
+        /* Ambient Cursor Glow */
+        #cursor-glow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 700px;
+            height: 700px;
+            background: radial-gradient(circle, rgba(34, 211, 238, 0.07) 0%, rgba(6, 182, 212, 0.015) 50%, transparent 70%);
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 2;
+            transition: width 0.4s, height 0.4s;
         }
-      }, {
-        "@type": "Question",
-        "name": "Berapa tarif jasa pembuatan CV di Citeureup dan sekitarnya?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Hubungi admin kami untuk mendapatkan penawaran harga terbaik yang sangat terjangkau sesuai paket pilihan karier Anda."
+
+        /* Glassmorphism Panels */
+        .glass-panel {
+            background: rgba(14, 23, 38, 0.7);
+            backdrop-filter: blur(36px);
+            -webkit-backdrop-filter: blur(36px);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
-      }]
-    }
-    </script>
+        .glass-panel:hover {
+            border-color: rgba(34, 211, 238, 0.35);
+            background: rgba(18, 29, 48, 0.85);
+            box-shadow: 0 35px 90px -20px rgba(0, 0, 0, 0.9), 0 0 50px rgba(34, 211, 238, 0.18);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #FFFFFF 0%, #E2E8F0 45%, #22D3EE 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #03060B; }
+        ::-webkit-scrollbar-thumb { background: #182640; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #22D3EE; }
+    </style>
 </head>
-<body class="bg-darkBg text-slate-100 font-sans antialiased selection:bg-emeraldAccent selection:text-darkBg">
+<body class="selection:bg-cyan-500/30 selection:text-cyan-200">
 
-    <header class="sticky top-0 z-50 bg-darkBg/95 backdrop-blur-md border-b border-slate-800/80 transition-all duration-300">
+    <div id="cursor-glow"></div>
+    <canvas id="webgl-canvas"></canvas>
+
+    <!-- Navigation -->
+    <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-[#03060B]/85 backdrop-blur-2xl border-b border-white/5">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            <!-- Logo Brand -->
-            <a href="#" class="flex items-center gap-3 group">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-500 border border-emerald-400/30 flex items-center justify-center text-slate-950 font-extrabold text-xl shadow-lg shadow-emerald-500/20 group-hover:scale-105 transition-all">
-                    RJ
+            <div class="flex items-center space-x-3 cursor-pointer group" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+                <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-[#090E17] via-[#0E1726] to-cyan-500 border border-cyan-500/30 flex items-center justify-center text-cyan-400 shadow-xl group-hover:scale-105 group-hover:rotate-6 transition-all duration-500">
+                    <i data-lucide="shield-check" class="w-6 h-6"></i>
                 </div>
-                <div class="flex flex-col">
-                    <span class="font-extrabold tracking-wide text-lg text-white leading-tight">RIZKY JASA</span>
-                    <span class="text-xs text-emerald-400 tracking-wider">ATS Friendly CV</span>
+                <div>
+                    <span class="text-xl font-extrabold tracking-tight text-white block leading-tight">Rizky Jasa</span>
+                    <span class="text-[10px] uppercase tracking-widest text-cyan-400 font-semibold block">Executive ATS Career Hub</span>
                 </div>
-            </a>
+            </div>
 
-            <!-- Desktop Nav Links -->
-            <nav class="hidden md:flex items-center gap-8">
-                <button type="button" onclick="scrollToSectionId('paket')" class="text-slate-300 hover:text-emerald-400 font-medium text-sm transition-colors cursor-pointer">Paket Layanan</button>
-                <button type="button" onclick="scrollToSectionId('keunggulan')" class="text-slate-300 hover:text-emerald-400 font-medium text-sm transition-colors cursor-pointer">Keunggulan</button>
-                <button type="button" onclick="scrollToSectionId('area')" class="text-slate-300 hover:text-emerald-400 font-medium text-sm transition-colors cursor-pointer">Area Layanan</button>
-                <button type="button" onclick="scrollToSectionId('faq')" class="text-slate-300 hover:text-emerald-400 font-medium text-sm transition-colors cursor-pointer">FAQ</button>
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-slate-300">
+                <a href="#fitur" class="hover:text-cyan-400 transition-colors">Keunggulan Utama</a>
+                <a href="#layanan" class="hover:text-cyan-400 transition-colors">Paket Profesional</a>
+                <a href="#kalkulator" class="hover:text-cyan-400 transition-colors">Alur & FAQ</a>
             </nav>
 
-            <!-- Action Button Header -->
-            <div class="flex items-center gap-4">
-                <a href="https://wa.me/6282125424346?text=Halo%20Rizky%20Jasa,%20saya%20mau%20konsultasi%20pembuatan%20CV%20ATS%20Friendly" target="_blank" rel="noopener noreferrer" class="hidden sm:inline-flex items-center gap-2 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-slate-950 font-bold px-5 py-2.5 rounded-xl shadow-lg shadow-emerald-500/20 transition-all text-sm transform hover:-translate-y-0.5">
-                    <i class="fa-brands fa-whatsapp text-lg"></i>
-                    <span>Hubungi Admin</span>
-                </a>
-                
-                <!-- Mobile Menu Button -->
-                <button id="menu-btn" type="button" aria-label="Toggle Menu" class="md:hidden text-slate-300 hover:text-white p-2.5 rounded-xl bg-darkCard border border-slate-700/80 focus:outline-none cursor-pointer">
-                    <i class="fa-solid fa-bars text-xl"></i>
-                </button>
-            </div>
-        </div>
-
-        <!-- Mobile Nav Dropdown -->
-        <div id="mobile-menu" class="hidden md:hidden bg-darkCard border-b border-slate-800 px-6 py-6 space-y-3 shadow-2xl">
-            <button type="button" onclick="scrollToSectionId('paket')" class="block w-full text-left text-slate-200 hover:text-emerald-400 font-medium py-2.5 px-3 rounded-lg hover:bg-darkInner transition-colors cursor-pointer">Paket Layanan</button>
-            <button type="button" onclick="scrollToSectionId('keunggulan')" class="block w-full text-left text-slate-200 hover:text-emerald-400 font-medium py-2.5 px-3 rounded-lg hover:bg-darkInner transition-colors cursor-pointer">Keunggulan</button>
-            <button type="button" onclick="scrollToSectionId('area')" class="block w-full text-left text-slate-200 hover:text-emerald-400 font-medium py-2.5 px-3 rounded-lg hover:bg-darkInner transition-colors cursor-pointer">Area Layanan</button>
-            <button type="button" onclick="scrollToSectionId('faq')" class="block w-full text-left text-slate-200 hover:text-emerald-400 font-medium py-2.5 px-3 rounded-lg hover:bg-darkInner transition-colors cursor-pointer">FAQ</button>
-            <div class="pt-3 border-t border-slate-800">
-                <a href="https://wa.me/6282125424346?text=Halo%20Rizky%20Jasa,%20saya%20mau%20konsultasi%20pembuatan%20CV%20ATS%20Friendly" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 w-full bg-emerald-500 text-slate-950 font-bold py-3 px-4 rounded-xl shadow-md">
-                    <i class="fa-brands fa-whatsapp text-lg"></i>
-                    <span>Hubungi Admin (WhatsApp)</span>
+            <div>
+                <a href="https://wa.me/6282125424346" target="_blank" class="relative group overflow-hidden rounded-xl p-[1px] font-semibold text-sm">
+                    <span class="absolute inset-0 bg-gradient-to-r from-cyan-400 to-blue-600 rounded-xl transition-all duration-500 group-hover:opacity-100 opacity-80"></span>
+                    <span class="relative px-3.5 py-2 sm:px-5 sm:py-2.5 rounded-xl bg-[#03060B] text-white flex items-center transition-all duration-300 group-hover:bg-opacity-0 whitespace-nowrap" style="white-space: nowrap !important; display: inline-flex !important; align-items: center !important; gap: 6px;">
+                        <i data-lucide="clock" class="w-4 h-4 text-cyan-400 group-hover:text-white shrink-0"></i>
+                        <span style="white-space: nowrap !important;">08.00-23.00</span>
+                    </span>
                 </a>
             </div>
         </div>
     </header>
 
-    <section class="relative overflow-hidden pt-16 pb-24 lg:pt-24 lg:pb-32 bg-darkBg">
-        <!-- Background tech glow effects -->
-        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-emerald-500/10 blur-[140px] rounded-full pointer-events-none"></div>
-
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-            <!-- Badge -->
-            <div class="inline-flex items-center gap-2.5 bg-darkCard border border-emerald-500/30 px-4 py-2 rounded-full shadow-inner mb-8">
-                <span class="flex h-2.5 w-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                <span class="text-xs sm:text-sm font-medium text-slate-300">Dipercaya <strong class="text-emerald-400">190+ Jobseeker</strong> | Respon <span class="text-white">&lt;1 jam</span></span>
+    <!-- Hero Section -->
+    <section class="relative pt-44 pb-32 md:pt-56 md:pb-40 z-10 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative">
+            <div class="hero-badge inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-[#0E1726] border border-cyan-500/30 text-cyan-300 text-xs font-semibold mb-6 shadow-inner tracking-wider opacity-0 transform translate-y-6">
+                <i data-lucide="sparkles" class="w-3.5 h-3.5 text-cyan-400"></i>
+                <span>190+ Klien Puas | Respon &lt;1 Jam | Garansi 3x Revisi</span>
             </div>
 
-            <!-- Main Heading -->
-            <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white tracking-tight leading-[1.1] mb-6">
-                CV yang Bikin HRD <br class="hidden sm:inline">
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-emerald-500">Berhenti Scroll.</span>
+            <h1 class="hero-title text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white tracking-tight max-w-5xl mx-auto leading-[1.1] opacity-0 transform translate-y-8">
+                CV ATS Friendly <span class="gradient-text">Yang Bikin HRD Berhenti Scrolling</span>
             </h1>
 
-            <!-- Subtext -->
-            <p class="text-base sm:text-xl text-slate-300 max-w-2xl mx-auto mb-10 leading-relaxed font-normal">
-                Jasa Pembuatan & Redesign CV ATS Friendly profesional basis Citeureup, Cibinong, Bogor. Proses super kilat jadi dalam <span class="text-white font-semibold">1 jam</span>, tingkatkan peluang lebih besar dilirik HRD!
+            <p class="hero-desc mt-6 text-lg sm:text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed opacity-0 transform translate-y-8">
+                Berbasis di Citeureup Bogor, melayani online seluruh Indonesia. Dipercaya 190+ jobseeker. Pengerjaan kilat 1-3 jam, respon cepat.
             </p>
 
-            <!-- CTA Buttons -->
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <a href="https://wa.me/6282125424346?text=Halo%20Rizky%20Jasa,%20saya%20ingin%20Konsultasi%20Gratis%20pembuatan%20CV%20ATS%20Friendly." target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-slate-950 font-extrabold px-8 py-4 rounded-2xl shadow-xl shadow-emerald-500/25 transition-all flex items-center justify-center gap-3 text-base transform hover:-translate-y-1">
-                    <i class="fa-brands fa-whatsapp text-xl"></i>
-                    <span>Konsultasi Gratis</span>
+            <div class="hero-btns mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 opacity-0 transform translate-y-8">
+                <a href="https://wa.me/6282125424346" target="_blank" class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 rounded-xl bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-bold shadow-xl shadow-cyan-500/20 transition-all duration-300 transform hover:-translate-y-1">
+                    <i data-lucide="message-circle" class="w-5 h-5 mr-2"></i>
+                    <span>Konsultasi Gratis di WhatsApp</span>
                 </a>
-                <button type="button" onclick="scrollToSectionId('paket')" class="w-full sm:w-auto bg-darkCard hover:bg-darkInner border border-slate-700 text-slate-200 font-semibold px-8 py-4 rounded-2xl shadow-md transition-all flex items-center justify-center gap-2 text-base cursor-pointer">
-                    <span>Lihat Paket</span>
-                    <i class="fa-solid fa-arrow-down text-sm text-emerald-400"></i>
-                </button>
+                <a id="btn-lihat-layanan" href="#layanan" class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 rounded-xl bg-[#0E1726] hover:bg-[#152238] border border-slate-700 text-slate-200 font-semibold transition-all duration-300 hover:border-cyan-500/50">
+                    <i data-lucide="arrow-down" class="w-5 h-5 mr-2 text-cyan-400"></i>
+                    <span>Lihat Layanan</span>
+                </a>
             </div>
 
-            <!-- Trust Bar Stats -->
-            <div class="mt-16 grid grid-cols-2 md:grid-cols-3 gap-6 pt-10 border-t border-slate-800/80 max-w-3xl mx-auto">
-                <div class="bg-darkCard/60 border border-slate-800/80 p-4 rounded-2xl shadow-lg">
-                    <div class="text-2xl sm:text-3xl font-extrabold text-emerald-400 mb-1">190+</div>
-                    <div class="text-xs sm:text-sm text-slate-400">Pencari Kerja Terbantu</div>
+            <!-- Stats -->
+            <div class="hero-stats mt-20 pt-10 border-t border-slate-800/80 grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto opacity-0 transform translate-y-10">
+                <div class="p-5 rounded-2xl bg-[#0E1726]/60 border border-slate-800 backdrop-blur-md">
+                    <div class="text-3xl sm:text-4xl font-extrabold text-white">190+</div>
+                    <div class="text-xs sm:text-sm text-slate-400 mt-1 font-medium">Klien Puas</div>
                 </div>
-                <div class="bg-darkCard/60 border border-slate-800/80 p-4 rounded-2xl shadow-lg">
-                    <div class="text-2xl sm:text-3xl font-extrabold text-emerald-400 mb-1">1 Jam</div>
-                    <div class="text-xs sm:text-sm text-slate-400">Pengerjaan Kilat</div>
+                <div class="p-5 rounded-2xl bg-[#0E1726]/60 border border-slate-800 backdrop-blur-md">
+                    <div class="text-3xl sm:text-4xl font-extrabold text-white">1-3 Jam</div>
+                    <div class="text-xs sm:text-sm text-slate-400 mt-1 font-medium">Pengerjaan</div>
                 </div>
-                <div class="col-span-2 md:col-span-1 bg-darkCard/60 border border-slate-800/80 p-4 rounded-2xl shadow-lg">
-                    <div class="text-2xl sm:text-3xl font-extrabold text-emerald-400 mb-1">Word + PDF</div>
-                    <div class="text-xs sm:text-sm text-slate-400">Format Lengkap & Fleksibel</div>
+                <div class="p-5 rounded-2xl bg-[#0E1726]/60 border border-slate-800 backdrop-blur-md">
+                    <div class="text-3xl sm:text-4xl font-extrabold text-white">3x</div>
+                    <div class="text-xs sm:text-sm text-slate-400 mt-1 font-medium">Garansi Revisi</div>
+                </div>
+                <div class="p-5 rounded-2xl bg-[#0E1726]/60 border border-slate-800 backdrop-blur-md">
+                    <div class="text-3xl sm:text-4xl font-extrabold text-white">Online</div>
+                    <div class="text-xs sm:text-sm text-slate-400 mt-1 font-medium">Seluruh Indonesia</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="paket" class="scroll-mt-28 py-20 bg-darkBg/80 border-t border-slate-800/60">
+    <!-- About / Mengapa Kami Section -->
+    <section id="fitur" class="py-28 relative z-10 bg-[#090E17]/60 border-t border-b border-slate-800/80">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-2xl mx-auto mb-16">
-                <span class="text-emerald-400 font-bold uppercase tracking-wider text-xs bg-emerald-500/10 px-3 py-1.5 rounded-full border border-emerald-500/20">Pilihan Paket Terbaik</span>
-                <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-4 mb-3">Investasi Karier Masa Depan</h2>
-                <p class="text-slate-400 text-sm sm:text-base">Pilih paket pembuatan CV ATS Friendly sesuai kebutuhan pencarian kerja Anda.</p>
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="px-4 py-1.5 rounded-full bg-[#0E1726] border border-slate-700 text-cyan-400 text-xs font-bold uppercase tracking-wider mb-4 inline-block">Keunggulan Utama</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-2">Bukan Sekedar CV Bagus, Tapi CV Yang Lolos Sistem</h2>
+                <p class="mt-4 text-slate-300 leading-relaxed">90% CV ditolak bukan karena pengalaman kurang, tapi karena tidak lolos ATS. Di Rizky Jasa, kami tidak hanya mendesain CV agar enak dilihat, kami menyusunnya agar lolos robot ATS dan dilirik HRD. Berbasis di Citeureup, kami melayani jobseeker dari Sabang sampai Merauke secara online.</p>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch max-w-6xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
+                <div class="glass-panel p-8 rounded-3xl relative overflow-hidden group">
+                    <div class="w-12 h-12 rounded-2xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center mb-6 border border-cyan-500/20">
+                        <i data-lucide="shield-check" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">1. Strategi ATS Proven</h3>
+                    <p class="text-sm text-slate-300 leading-relaxed">Format teruji lolos sistem rekrutmen perusahaan besar.</p>
+                </div>
+
+                <div class="glass-panel p-8 rounded-3xl relative overflow-hidden group">
+                    <div class="w-12 h-12 rounded-2xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center mb-6 border border-cyan-500/20">
+                        <i data-lucide="zap" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">2. Cepat Tanpa Drama</h3>
+                    <p class="text-sm text-slate-300 leading-relaxed">Order siang, sore sudah bisa melamar.</p>
+                </div>
+
+                <div class="glass-panel p-8 rounded-3xl relative overflow-hidden group">
+                    <div class="w-12 h-12 rounded-2xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center mb-6 border border-cyan-500/20">
+                        <i data-lucide="refresh-cw" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">3. Revisi Sampai Pas</h3>
+                    <p class="text-sm text-slate-300 leading-relaxed">Garansi 3x revisi gratis, kami kawal sampai kamu puas.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5 Packages Section -->
+    <section id="layanan" class="py-32 relative z-10 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="text-center max-w-3xl mx-auto mb-20">
+                <span class="px-4 py-1.5 rounded-full bg-[#0E1726] border border-slate-700 text-cyan-400 text-xs font-bold uppercase tracking-wider mb-4 inline-block">Paket Profesional</span>
+                <h2 class="text-3xl sm:text-5xl font-extrabold text-white mt-2">Pilihan Paket Layanan</h2>
+                <p class="mt-4 text-slate-300 text-base sm:text-lg">Solusi tepat untuk meningkatkan peluang Anda dipanggil interview oleh HRD.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
                 
-                <!-- Card 1: CV Only -->
-                <div class="bg-darkCard border border-slate-800 hover:border-slate-700 rounded-3xl p-8 flex flex-col justify-between shadow-xl transition-all duration-300">
+                <!-- Paket 1 -->
+                <div class="glass-panel rounded-2xl p-8 flex flex-col justify-between group border-2 border-cyan-500/60 relative">
+                    <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-cyan-400 text-slate-950 text-xs font-bold uppercase tracking-wider shadow-lg flex items-center space-x-1">
+                        <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+                        <span>BEST SELLER</span>
+                    </div>
                     <div>
-                        <div class="inline-block bg-slate-800 text-slate-300 text-xs font-bold px-3 py-1 rounded-full mb-6">BASIC</div>
-                        <h3 class="text-2xl font-bold text-white mb-2">CV Only</h3>
-                        <p class="text-slate-400 text-sm mb-6">Cocok buat kamu yang punya data lengkap dan butuh perapian format standar ATS.</p>
-                        
-                        <div class="text-xl sm:text-2xl font-extrabold text-white mb-6">
-                            Paket Standar <span class="text-xs text-emerald-400 font-normal block sm:inline">Terjangkau</span>
-                        </div>
-
-                        <ul class="space-y-3.5 text-sm text-slate-300 mb-8">
-                            <li class="flex items-center gap-3">
-                                <i class="fa-solid fa-check text-emerald-400 bg-emerald-500/10 p-1 rounded-full text-xs"></i>
-                                <span>Format ATS Friendly Standar</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i class="fa-solid fa-check text-emerald-400 bg-emerald-500/10 p-1 rounded-full text-xs"></i>
-                                <span>File Word & PDF</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i class="fa-solid fa-check text-emerald-400 bg-emerald-500/10 p-1 rounded-full text-xs"></i>
-                                <span>Revisi 1x Kesalahan Pengetikan</span>
-                            </li>
-                            <li class="flex items-center gap-3 text-slate-500 line-through">
-                                <i class="fa-solid fa-xmark text-slate-600"></i>
-                                <span>Optimasi Keyword & Bullet Point</span>
-                            </li>
+                        <div class="inline-block px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-400 text-xs font-semibold mb-6 border border-cyan-500/30">Paket 01</div>
+                        <h3 class="text-2xl font-bold text-white">Paket Hemat</h3>
+                        <p class="text-slate-300 text-sm mt-3 leading-relaxed">Paling banyak dipesan untuk pemula. Kombinasi esensial agar lamaran terlihat profesional dan siap dikirim dalam 1-3 jam. Termasuk 3x revisi gratis.</p>
+                        <ul class="space-y-3.5 text-sm text-slate-300 my-8">
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-cyan-400 mr-3 shrink-0"></i> CV ATS Friendly (Word & PDF)</li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-cyan-400 mr-3 shrink-0"></i> Surat Lamaran Kerja</li>
                         </ul>
                     </div>
-
-                    <a href="https://wa.me/6282125424346?text=Halo%20Rizky%20Jasa,%20saya%20tertarik%20pesan%20Paket%20CV%20Only." target="_blank" rel="noopener noreferrer" class="w-full bg-darkInner hover:bg-slate-700 text-white font-bold py-3.5 px-6 rounded-xl text-center transition-colors border border-slate-700 flex items-center justify-center gap-2">
-                        <i class="fa-brands fa-whatsapp text-emerald-400"></i>
-                        <span>Hubungi Admin</span>
+                    <a href="https://wa.me/6282125424346?text=Halo%2C%20saya%20tertarik%20dengan%20Paket%20Hemat" target="_blank" class="w-full py-3.5 px-4 rounded-xl bg-cyan-400 text-slate-950 font-bold text-center hover:bg-cyan-300 transition-all duration-300 flex items-center justify-center space-x-2 shadow-xl shadow-cyan-500/20">
+                        <i data-lucide="message-circle" class="w-4 h-4 text-slate-950"></i>
+                        <span>Konsultasi & Pesan</span>
                     </a>
                 </div>
 
-                <!-- Card 2: Paket Hemat (Styled with eye-catching border & badge) -->
-                <div class="bg-gradient-to-b from-darkCard to-darkInner border-2 border-emerald-500/60 hover:border-emerald-400 rounded-3xl p-8 flex flex-col justify-between shadow-xl shadow-emerald-500/5 relative transition-all duration-300">
-                    <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-emerald-500 text-slate-950 text-xs font-extrabold uppercase px-4 py-1.5 rounded-full shadow-md">
-                        ⭐ Favorit Fresh Graduate
+                <!-- Paket 2 -->
+                <div class="glass-panel rounded-2xl p-8 flex flex-col justify-between group border-2 border-cyan-500/60 relative">
+                    <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-cyan-400 text-slate-950 text-xs font-bold uppercase tracking-wider shadow-lg flex items-center space-x-1">
+                        <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+                        <span>BEST SELLER</span>
                     </div>
-
                     <div>
-                        <div class="inline-block bg-emerald-500/20 text-emerald-400 text-xs font-bold px-3 py-1 rounded-full mb-6 mt-2">VALUE PACK</div>
-                        <h3 class="text-2xl font-bold text-white mb-2">Paket Hemat</h3>
-                        <p class="text-slate-300 text-sm mb-6">Paket ekonomis buat fresh graduate atau pekerja pemula yang ingin CV rapi & profesional.</p>
-                        
-                        <div class="text-xl sm:text-2xl font-extrabold text-emerald-400 mb-6">
-                            Paket Hemat <span class="text-xs text-slate-400 font-normal block sm:inline">Eksklusif</span>
-                        </div>
-
-                        <ul class="space-y-3.5 text-sm text-slate-200 mb-8">
-                            <li class="flex items-center gap-3">
-                                <i class="fa-solid fa-check text-slate-950 bg-emerald-400 p-1 rounded-full text-xs font-bold"></i>
-                                <span>CV ATS Friendly Standar Industri</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i class="fa-solid fa-check text-slate-950 bg-emerald-400 p-1 rounded-full text-xs font-bold"></i>
-                                <span>File Word & PDF</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i class="fa-solid fa-check text-slate-950 bg-emerald-400 p-1 rounded-full text-xs font-bold"></i>
-                                <span>Bonus Template Email Lamaran</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i class="fa-solid fa-check text-slate-950 bg-emerald-400 p-1 rounded-full text-xs font-bold"></i>
-                                <span>Revisi Fleksibel 2x</span>
-                            </li>
+                        <div class="inline-block px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-400 text-xs font-semibold mb-6 border border-cyan-500/30">Paket 02</div>
+                        <h3 class="text-2xl font-bold text-white">Paket Komplit Kerja</h3>
+                        <p class="text-slate-300 text-sm mt-3 leading-relaxed">Solusi lengkap tanpa ribet. Dari CV, surat lamaran, sampai teks email lamaran sudah kami siapkan. Kamu tinggal kirim. Termasuk 3x revisi gratis.</p>
+                        <ul class="space-y-3.5 text-sm text-slate-300 my-8">
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-cyan-400 mr-3 shrink-0"></i> CV ATS Friendly (Word & PDF)</li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-cyan-400 mr-3 shrink-0"></i> Surat Lamaran Kerja</li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-cyan-400 mr-3 shrink-0"></i> Edit Pas Foto Gratis (background & rapi)</li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-cyan-400 mr-3 shrink-0"></i> Body Teks Email/WA Lamaran Siap Pakai</li>
                         </ul>
                     </div>
-
-                    <a href="https://wa.me/6282125424346?text=Halo%20Rizky%20Jasa,%20saya%20tertarik%20pesan%20Paket%20Hemat." target="_blank" rel="noopener noreferrer" class="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold py-3.5 px-6 rounded-xl text-center transition-all shadow-md flex items-center justify-center gap-2">
-                        <i class="fa-brands fa-whatsapp text-lg"></i>
-                        <span>Hubungi Admin</span>
+                    <a href="https://wa.me/6282125424346?text=Halo%2C%20saya%20tertarik%20dengan%20Paket%20Komplit%20Kerja" target="_blank" class="w-full py-3.5 px-4 rounded-xl bg-cyan-400 text-slate-950 font-bold text-center hover:bg-cyan-300 transition-all duration-300 flex items-center justify-center space-x-2 shadow-xl shadow-cyan-500/20">
+                        <i data-lucide="message-circle" class="w-4 h-4 text-slate-950"></i>
+                        <span>Konsultasi & Pesan</span>
                     </a>
                 </div>
 
-                <!-- Card 3: Paket Komplit (Paling Laku) -->
-                <div class="bg-gradient-to-b from-darkCard to-darkInner border-2 border-emerald-400 rounded-3xl p-8 flex flex-col justify-between shadow-2xl shadow-emerald-500/10 relative transform lg:-translate-y-4">
-                    <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-emerald-400 to-teal-500 text-slate-950 text-xs font-extrabold uppercase px-4 py-1.5 rounded-full shadow-md">
-                        🔥 Paling Laku & Rekomendasi
-                    </div>
-
+                <!-- Paket 3 -->
+                <div class="glass-panel rounded-2xl p-8 flex flex-col justify-between group">
                     <div>
-                        <div class="inline-block bg-emerald-500/20 text-emerald-300 text-xs font-bold px-3 py-1 rounded-full mb-6 mt-2">PREMIUM KOMPLIT</div>
-                        <h3 class="text-2xl font-bold text-white mb-2">Paket Komplit</h3>
-                        <p class="text-slate-300 text-sm mb-6">Solusi total dari A-Z untuk melipatgandakan peluang dipanggil interview HRD.</p>
-                        
-                        <div class="text-xl sm:text-2xl font-extrabold text-emerald-300 mb-6">
-                            All-in Package <span class="text-xs text-slate-400 font-normal block sm:inline">Terlaris</span>
-                        </div>
-
-                        <ul class="space-y-3.5 text-sm text-slate-200 mb-8">
-                            <li class="flex items-center gap-3">
-                                <i class="fa-solid fa-check text-slate-950 bg-emerald-400 p-1 rounded-full text-xs font-bold"></i>
-                                <span>CV ATS Friendly Custom Layout</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i class="fa-solid fa-check text-slate-950 bg-emerald-400 p-1 rounded-full text-xs font-bold"></i>
-                                <span>File Word (.docx) & PDF Hi-Res</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i class="fa-solid fa-check text-slate-950 bg-emerald-400 p-1 rounded-full text-xs font-bold"></i>
-                                <span>Bonus Surat Lamaran (Cover Letter)</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i class="fa-solid fa-check text-slate-950 bg-emerald-400 p-1 rounded-full text-xs font-bold"></i>
-                                <span>Optimasi Keyword Lowongan Kerja</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i class="fa-solid fa-check text-slate-950 bg-emerald-400 p-1 rounded-full text-xs font-bold"></i>
-                                <span>Revisi Puas Sampai Sesuai</span>
-                            </li>
+                        <div class="inline-block px-3 py-1 rounded-full bg-[#0E1726] text-slate-300 text-xs font-semibold mb-6 border border-slate-700">Paket 03</div>
+                        <h3 class="text-2xl font-bold text-white">Paket CV Only</h3>
+                        <p class="text-slate-300 text-sm mt-3 leading-relaxed">Fokus untuk kamu yang hanya butuh CV saja. Format ATS Friendly yang sudah disesuaikan dengan posisi yang kamu lamar. Termasuk 3x revisi gratis.</p>
+                        <ul class="space-y-3.5 text-sm text-slate-300 my-8">
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-cyan-400 mr-3 shrink-0"></i> CV ATS Friendly (Word & PDF)</li>
                         </ul>
                     </div>
+                    <a href="https://wa.me/6282125424346?text=Halo%2C%20saya%20tertarik%20dengan%20Paket%20CV%20Only" target="_blank" class="w-full py-3.5 px-4 rounded-xl bg-[#0E1726] text-white font-semibold text-center hover:bg-cyan-400 hover:text-slate-950 transition-all duration-300 flex items-center justify-center space-x-2 border border-slate-700 group-hover:border-cyan-500/50">
+                        <i data-lucide="message-circle" class="w-4 h-4 text-cyan-400 group-hover:text-slate-950"></i>
+                        <span>Konsultasi Sekarang</span>
+                    </a>
+                </div>
 
-                    <a href="https://wa.me/6282125424346?text=Halo%20Rizky%20Jasa,%20saya%20mau%20pesan%20Paket%20Komplit%20(Paling%20Laku)." target="_blank" rel="noopener noreferrer" class="w-full bg-gradient-to-r from-emerald-400 to-teal-500 hover:from-emerald-300 hover:to-teal-400 text-slate-950 font-extrabold py-3.5 px-6 rounded-xl text-center transition-all shadow-lg shadow-emerald-500/25 flex items-center justify-center gap-2">
-                        <i class="fa-brands fa-whatsapp text-lg"></i>
-                        <span>Hubungi Admin</span>
+                <!-- Paket 4 -->
+                <div class="glass-panel rounded-2xl p-8 flex flex-col justify-between group">
+                    <div>
+                        <div class="inline-block px-3 py-1 rounded-full bg-[#0E1726] text-slate-300 text-xs font-semibold mb-6 border border-slate-700">Paket 04</div>
+                        <h3 class="text-2xl font-bold text-white">Edit Dokumen Sederhana</h3>
+                        <p class="text-slate-300 text-sm mt-3 leading-relaxed">Perapian & edit dokumen umum (Word, PDF, surat, dll) selain CV. Merapikan layout, typo, dan format agar lebih profesional.</p>
+                        <ul class="space-y-3.5 text-sm text-slate-300 my-8">
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-cyan-400 mr-3 shrink-0"></i> Perapian & edit dokumen umum selain CV</li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-cyan-400 mr-3 shrink-0"></i> Penyesuaian tata letak, kerapian teks, & format profesional</li>
+                        </ul>
+                    </div>
+                    <a href="https://wa.me/6282125424346?text=Halo%2C%20saya%20tertarik%20dengan%20Edit%20Dokumen%20Sederhana" target="_blank" class="w-full py-3.5 px-4 rounded-xl bg-[#0E1726] text-white font-semibold text-center hover:bg-cyan-400 hover:text-slate-950 transition-all duration-300 flex items-center justify-center space-x-2 border border-slate-700 group-hover:border-cyan-500/50">
+                        <i data-lucide="message-circle" class="w-4 h-4 text-cyan-400 group-hover:text-slate-950"></i>
+                        <span>Konsultasi Sekarang</span>
+                    </a>
+                </div>
+
+                <!-- Paket 5 -->
+                <div class="glass-panel rounded-2xl p-8 flex flex-col justify-between group lg:col-span-2">
+                    <div>
+                        <div class="inline-block px-3 py-1 rounded-full bg-[#0E1726] text-slate-300 text-xs font-semibold mb-6 border border-slate-700">Paket 05</div>
+                        <h3 class="text-2xl font-bold text-white">Revisi CV</h3>
+                        <p class="text-slate-300 text-sm mt-3 leading-relaxed">CV sudah jadi tapi belum maksimal? Kami bantu perbaiki susunan kata dan struktur agar lebih relevan dengan lowongan tujuan. Termasuk dalam garansi 3x revisi untuk klien kami.</p>
+                        <ul class="space-y-3.5 text-sm text-slate-300 my-8">
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-cyan-400 mr-3 shrink-0"></i> Penyempurnaan CV yang sudah tersedia</li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-cyan-400 mr-3 shrink-0"></i> Penyesuaian kata kunci pekerjaan</li>
+                        </ul>
+                    </div>
+                    <a href="https://wa.me/6282125424346?text=Halo%2C%20saya%20tertarik%20dengan%20layanan%20Revisi%20CV" target="_blank" class="w-full py-3.5 px-4 rounded-xl bg-[#0E1726] text-white font-semibold text-center hover:bg-cyan-400 hover:text-slate-950 transition-all duration-300 flex items-center justify-center space-x-2 border border-slate-700 group-hover:border-cyan-500/50">
+                        <i data-lucide="message-circle" class="w-4 h-4 text-cyan-400 group-hover:text-slate-950"></i>
+                        <span>Konsultasi Sekarang</span>
                     </a>
                 </div>
 
@@ -346,220 +369,228 @@
         </div>
     </section>
 
-    <section id="keunggulan" class="scroll-mt-28 py-20 bg-darkBg">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-2xl mx-auto mb-16">
-                <span class="text-emerald-400 font-bold uppercase tracking-wider text-xs bg-emerald-500/10 px-3 py-1.5 rounded-full border border-emerald-500/20">Keunggulan Kami</span>
-                <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-4 mb-3">Kenapa Harus Rizky Jasa?</h2>
-                <p class="text-slate-400 text-sm sm:text-base">Alasan para pencari kerja mempercayakan pembuatan CV mereka kepada kami.</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                
-                <!-- Poin 1 -->
-                <div class="bg-darkCard border border-slate-800 p-6 rounded-3xl shadow-lg hover:border-emerald-500/40 transition-all group">
-                    <div class="w-12 h-12 bg-darkInner rounded-2xl flex items-center justify-center text-emerald-400 text-xl mb-5 group-hover:scale-110 transition-transform">
-                        <i class="fa-solid fa-users-viewfinder"></i>
-                    </div>
-                    <h3 class="text-lg font-bold text-white mb-2">190+ Jobseeker</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed">Telah dipercaya ratusan pencari kerja dari berbagai latar belakang industri dan perusahaan.</p>
-                </div>
-
-                <!-- Poin 2 -->
-                <div class="bg-darkCard border border-slate-800 p-6 rounded-3xl shadow-lg hover:border-emerald-500/40 transition-all group">
-                    <div class="w-12 h-12 bg-darkInner rounded-2xl flex items-center justify-center text-emerald-400 text-xl mb-5 group-hover:scale-110 transition-transform">
-                        <i class="fa-solid fa-bolt"></i>
-                    </div>
-                    <h3 class="text-lg font-bold text-white mb-2">Respon Cepat Kilat</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed">Pelayanan ramah, konsultasi responsif, dan proses pengerjaan kilat hanya 1 jam jadi.</p>
-                </div>
-
-                <!-- Poin 3 -->
-                <div class="bg-darkCard border border-slate-800 p-6 rounded-3xl shadow-lg hover:border-emerald-500/40 transition-all group">
-                    <div class="w-12 h-12 bg-darkInner rounded-2xl flex items-center justify-center text-emerald-400 text-xl mb-5 group-hover:scale-110 transition-transform">
-                        <i class="fa-solid fa-file-lines"></i>
-                    </div>
-                    <h3 class="text-lg font-bold text-white mb-2">File Word & PDF</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed">Mendapatkan file master Word (.docx) yang mudah diedit mandiri serta format PDF berkualitas tinggi.</p>
-                </div>
-
-                <!-- Poin 4 -->
-                <div class="bg-darkCard border border-slate-800 p-6 rounded-3xl shadow-lg hover:border-emerald-500/40 transition-all group">
-                    <div class="w-12 h-12 bg-darkInner rounded-2xl flex items-center justify-center text-emerald-400 text-xl mb-5 group-hover:scale-110 transition-transform">
-                        <i class="fa-solid fa-rotate-right"></i>
-                    </div>
-                    <h3 class="text-lg font-bold text-white mb-2">Revisi Fleksibel</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed">Garansi revisi untuk memastikan isi CV sudah sesuai dengan data diri dan pengalaman kerja Anda.</p>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <section id="area" class="scroll-mt-28 py-16 bg-darkBg/90 border-t border-b border-slate-800">
+    <!-- Cara Order Kilat 1-3 Jam & FAQ Section -->
+    <section id="kalkulator" class="py-28 relative z-10 bg-[#090E17]/60 border-t border-b border-slate-800">
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="bg-gradient-to-r from-darkCard to-darkInner border border-emerald-500/20 rounded-3xl p-8 sm:p-12 shadow-2xl relative overflow-hidden">
-                <!-- Decorative element -->
-                <div class="absolute -right-10 -bottom-10 w-48 h-48 bg-emerald-500/10 rounded-full blur-2xl pointer-events-none"></div>
-
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center relative z-10">
-                    <div class="lg:col-span-2">
-                        <div class="inline-flex items-center gap-2 bg-emerald-500/10 text-emerald-400 text-xs font-bold px-3 py-1.5 rounded-full mb-4">
-                            <i class="fa-solid fa-location-dot"></i> Basecamp & Jangkauan
-                        </div>
-                        <h2 class="text-2xl sm:text-3xl font-extrabold text-white mb-4">
-                            Pusat Jasa CV Terpercaya dari Citeureup untuk Seluruh Indonesia
-                        </h2>
-                        <p class="text-slate-300 text-sm sm:text-base leading-relaxed mb-6">
-                            Rizky Jasa berbasis di <strong class="text-white">Citeureup</strong>, secara aktif melayani klien dari <strong class="text-white">Cibinong, Bogor, Sentul</strong>, hingga melayani secara online ke seluruh penjuru Indonesia tanpa batasan jarak.
-                        </p>
-                        <div class="flex flex-wrap gap-3">
-                            <span class="bg-darkBg text-slate-300 text-xs font-medium px-3 py-1.5 rounded-xl border border-slate-700">📍 Citeureup</span>
-                            <span class="bg-darkBg text-slate-300 text-xs font-medium px-3 py-1.5 rounded-xl border border-slate-700">📍 Cibinong</span>
-                            <span class="bg-darkBg text-slate-300 text-xs font-medium px-3 py-1.5 rounded-xl border border-slate-700">📍 Bogor</span>
-                            <span class="bg-darkBg text-slate-300 text-xs font-medium px-3 py-1.5 rounded-xl border border-slate-700">📍 Sentul</span>
-                            <span class="bg-darkBg text-emerald-400 font-bold text-xs px-3 py-1.5 rounded-xl border border-emerald-500/30">🌐 Seluruh Indonesia</span>
-                        </div>
-                    </div>
-                    
-                    <div class="flex flex-col items-center justify-center bg-darkBg/80 border border-slate-700 p-6 rounded-2xl text-center shadow-lg">
-                        <div class="w-12 h-12 bg-emerald-500/10 text-emerald-400 rounded-full flex items-center justify-center text-xl mb-3">
-                            <i class="fa-solid fa-headset"></i>
-                        </div>
-                        <h3 class="text-white font-bold text-base mb-1">Konsultasi Lokasi / Online</h3>
-                        <p class="text-slate-400 text-xs mb-4">Chat cepat via WhatsApp untuk konsultasi karier Anda hari ini.</p>
-                        <a href="https://wa.me/6282125424346?text=Halo%20Rizky%20Jasa,%20saya%20ingin%20konsultasi%20pembuatan%20CV." target="_blank" rel="noopener noreferrer" class="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold py-2.5 px-4 rounded-xl text-xs transition-all shadow-md">
-                            Chat WhatsApp Sekarang
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="faq" class="scroll-mt-28 py-20 bg-darkBg">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-2xl mx-auto mb-16">
-                <span class="text-emerald-400 font-bold uppercase tracking-wider text-xs bg-emerald-500/10 px-3 py-1.5 rounded-full border border-emerald-500/20">Pertanyaan Umum</span>
-                <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-4 mb-3">Frequently Asked Questions</h2>
-                <p class="text-slate-400 text-sm sm:text-base">Hal yang sering ditanyakan seputar layanan pembuatan CV di Rizky Jasa.</p>
+                <span class="px-3.5 py-1 rounded-full bg-cyan-500/10 text-cyan-400 text-xs font-bold uppercase tracking-wider mb-3 inline-block border border-cyan-500/20">Alur Pemesanan</span>
+                <h2 class="text-2xl sm:text-4xl font-extrabold text-white">Cara Order Kilat 1-3 Jam</h2>
             </div>
 
-            <div class="space-y-4">
-                
-                <!-- FAQ Box 1 -->
-                <div class="bg-darkCard border border-slate-800 rounded-2xl overflow-hidden transition-all">
-                    <button type="button" onclick="toggleFaq(1)" class="w-full flex items-center justify-between p-6 text-left focus:outline-none cursor-pointer">
-                        <span class="font-bold text-white text-base sm:text-lg">Q: Apakah CV di Rizky Jasa benar-benar ATS Friendly?</span>
-                        <i id="faq-icon-1" class="fa-solid fa-chevron-down text-emerald-400 transition-transform duration-300"></i>
-                    </button>
-                    <div id="faq-content-1" class="hidden px-6 pb-6 text-slate-300 text-sm sm:text-base leading-relaxed border-t border-slate-800/60 pt-4">
-                        Ya, sangat ATS Friendly! Kami menyusun struktur layout, pemilihan font yang bersih dari elemen grafik berlebih, serta penempatan keyword yang tepat agar lolos seleksi otomatis software ATS perusahaan. Kami fokus memberikan <strong class="text-white">peluang lebih besar dilirik HRD</strong>.
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                <div class="glass-panel p-6 rounded-2xl flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-2xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center mb-4 border border-cyan-500/20">
+                            <i data-lucide="message-square" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="font-bold text-white text-lg mb-2">1. Chat & Kirim Data</h3>
+                        <p class="text-sm text-slate-300 leading-relaxed">Hubungi WA 0821-2542-4346, kirim data diri, pengalaman, dan posisi lamaran tujuan. Bisa foto tulisan tangan juga.</p>
                     </div>
                 </div>
-
-                <!-- FAQ Box 2 -->
-                <div class="bg-darkCard border border-slate-800 rounded-2xl overflow-hidden transition-all">
-                    <button type="button" onclick="toggleFaq(2)" class="w-full flex items-center justify-between p-6 text-left focus:outline-none cursor-pointer">
-                        <span class="font-bold text-white text-base sm:text-lg">Q: Berapa lama waktu pengerjaan CV sampai jadi?</span>
-                        <i id="faq-icon-2" class="fa-solid fa-chevron-down text-emerald-400 transition-transform duration-300"></i>
-                    </button>
-                    <div id="faq-content-2" class="hidden px-6 pb-6 text-slate-300 text-sm sm:text-base leading-relaxed border-t border-slate-800/60 pt-4">
-                        Proses pengerjaan kilat hanya memakan waktu <strong class="text-white">1 jam</strong> setelah data diri dan riwayat pengalaman kerja lengkap Anda berikan kepada admin kami. Cepat, efisien, dan siap langsung dikirim ke perusahaan impian.
+                <div class="glass-panel p-6 rounded-2xl flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-2xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center mb-4 border border-cyan-500/20">
+                            <i data-lucide="cpu" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="font-bold text-white text-lg mb-2">2. Kami Proses 1-3 Jam</h3>
+                        <p class="text-sm text-slate-300 leading-relaxed">Tim Rizky Jasa langsung susun CV ATS Friendly sesuai lowongan. Kamu bisa santai, kami yang kerjakan. Update progress via WA.</p>
                     </div>
                 </div>
-
-                <!-- FAQ Box 3 -->
-                <div class="bg-darkCard border border-slate-800 rounded-2xl overflow-hidden transition-all">
-                    <button type="button" onclick="toggleFaq(3)" class="w-full flex items-center justify-between p-6 text-left focus:outline-none cursor-pointer">
-                        <span class="font-bold text-white text-base sm:text-lg">Q: Bagaimana cara pemesanan dan konsultasi untuk wilayah Citeureup dan sekitarnya?</span>
-                        <i id="faq-icon-3" class="fa-solid fa-chevron-down text-emerald-400 transition-transform duration-300"></i>
-                    </button>
-                    <div id="faq-content-3" class="hidden px-6 pb-6 text-slate-300 text-sm sm:text-base leading-relaxed border-t border-slate-800/60 pt-4">
-                        Anda dapat langsung menghubungi admin kami via WhatsApp kapan saja. Kami melayani konsultasi secara online maupun dari wilayah Citeureup, Cibinong, Bogor, dan Sentul dengan harga yang sangat bersahabat dan transparan sesuai paket yang Anda pilih.
+                <div class="glass-panel p-6 rounded-2xl flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-2xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center mb-4 border border-cyan-500/20">
+                            <i data-lucide="check-circle-2" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="font-bold text-white text-lg mb-2">3. File Jadi & Siap Lamar</h3>
+                        <p class="text-sm text-slate-300 leading-relaxed">Kamu terima file Word + PDF + Bonus. Garansi 3x revisi gratis. Langsung bisa dipakai melamar di jam 08.00-23.00.</p>
                     </div>
                 </div>
+            </div>
 
+            <div class="text-center mb-24">
+                <a href="https://wa.me/6282125424346" target="_blank" class="inline-flex items-center justify-center px-8 py-4 rounded-xl bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-bold shadow-xl shadow-cyan-500/20 transition-all duration-300 transform hover:-translate-y-1">
+                    <i data-lucide="message-circle" class="w-5 h-5 mr-2"></i>
+                    <span>Mulai Order Sekarang - WA 0821-2542-4346</span>
+                </a>
+            </div>
+
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="px-3.5 py-1 rounded-full bg-cyan-500/10 text-cyan-400 text-xs font-bold uppercase tracking-wider mb-3 inline-block border border-cyan-500/20">FAQ</span>
+                <h2 class="text-2xl sm:text-4xl font-extrabold text-white">Pertanyaan yang Sering Diajukan</h2>
+            </div>
+
+            <div class="space-y-4 max-w-3xl mx-auto">
+                <div class="glass-panel p-6 rounded-2xl">
+                    <h3 class="font-bold text-white text-base">Q1: Berapa lama proses pembuatan CV?</h3>
+                    <p class="text-sm text-slate-300 mt-2">A: Kilat 1-3 jam saja setelah data lengkap. Jam operasional 08.00-23.00 WIB, respon kurang dari 1 jam.</p>
+                </div>
+                <div class="glass-panel p-6 rounded-2xl">
+                    <h3 class="font-bold text-white text-base">Q2: Apakah ada garansi revisi?</h3>
+                    <p class="text-sm text-slate-300 mt-2">A: Ada, kami berikan garansi 3x revisi gratis untuk penyempurnaan agar CV sesuai dengan yang Anda inginkan.</p>
+                </div>
+                <div class="glass-panel p-6 rounded-2xl">
+                    <h3 class="font-bold text-white text-base">Q3: Saya di luar Bogor, apakah bisa order?</h3>
+                    <p class="text-sm text-slate-300 mt-2">A: Bisa. Kami berbasis di Citeureup Bogor, melayani online untuk seluruh Indonesia via WhatsApp.</p>
+                </div>
+                <div class="glass-panel p-6 rounded-2xl">
+                    <h3 class="font-bold text-white text-base">Q4: Apa saja paket yang tersedia?</h3>
+                    <p class="text-sm text-slate-300 mt-2">A: Kami menyediakan Paket Hemat (CV + Surat Lamaran), Paket Komplit Kerja (CV + Surat Lamaran + Edit Foto + Teks Email), Paket CV Only, Edit Dokumen Sederhana, dan Revisi CV.</p>
+                </div>
+                <div class="glass-panel p-6 rounded-2xl">
+                    <h3 class="font-bold text-white text-base">Q5: File apa yang akan saya dapatkan?</h3>
+                    <p class="text-sm text-slate-300 mt-2">A: File Word (.docx) yang bisa diedit dan file PDF siap kirim. Bonus edit pas foto untuk Paket Komplit.</p>
+                </div>
+                <div class="glass-panel p-6 rounded-2xl">
+                    <h3 class="font-bold text-white text-base">Q6: Bagaimana cara order?</h3>
+                    <p class="text-sm text-slate-300 mt-2">A: Klik WhatsApp 0821-2542-4346, kirim data diri, langsung kami proses di jam 08.00-23.00 WIB.</p>
+                </div>
             </div>
         </div>
     </section>
 
-    <footer class="bg-darkCard border-t border-slate-800 py-12 text-slate-400 text-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row items-center justify-between gap-6 mb-8">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-xl bg-darkBg border border-slate-700 flex items-center justify-center text-emerald-400 font-extrabold text-xl shadow-md">
-                        RJ
-                    </div>
-                    <div class="flex flex-col">
-                        <span class="font-extrabold tracking-wide text-white text-base">RIZKY JASA</span>
-                        <span class="text-xs text-slate-400">Jasa Pembuatan CV ATS Friendly Profesional</span>
-                    </div>
-                </div>
-                
-                <div class="flex items-center gap-6 text-sm">
-                    <button type="button" onclick="scrollToSectionId('paket')" class="hover:text-emerald-400 transition-colors cursor-pointer">Paket</button>
-                    <button type="button" onclick="scrollToSectionId('keunggulan')" class="hover:text-emerald-400 transition-colors cursor-pointer">Keunggulan</button>
-                    <button type="button" onclick="scrollToSectionId('area')" class="hover:text-emerald-400 transition-colors cursor-pointer">Lokasi</button>
-                    <button type="button" onclick="scrollToSectionId('faq')" class="hover:text-emerald-400 transition-colors cursor-pointer">FAQ</button>
-                </div>
-            </div>
-            
-            <div class="border-t border-slate-800/80 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
-                <p>&copy; 2026 Rizky Jasa Citeureup, Cibinong, Bogor. All rights reserved.</p>
-                <p>Professional ATS Friendly CV Solutions.</p>
-            </div>
+    <!-- Footer -->
+    <footer class="py-16 bg-[#03060B] border-t border-slate-800/80 text-center text-sm text-slate-400 relative z-10">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <p class="leading-relaxed text-slate-300 mb-6">
+                Rizky Jasa berbasis di Citeureup, Kabupaten Bogor dan melayani jasa pembuatan CV ATS Friendly & surat lamaran kerja secara online untuk seluruh Indonesia. Telah dipercaya oleh lebih dari 190 pencari kerja dengan layanan operasional pukul 08.00-23.00 serta garansi 3x revisi gratis. Melayani prioritas untuk wilayah Citeureup, Karang Asem Barat, Tajur, Cibinong, Sentul, dan Bogor sekitarnya.
+            </p>
+            <p class="text-xs text-slate-500">
+                &copy; 2026 Rizky Jasa. All rights reserved.
+            </p>
         </div>
     </footer>
 
-    <!-- Floating WhatsApp Button (Bottom Right) -->
-    <a href="https://wa.me/6282125424346?text=Halo%20Rizky%20Jasa,%20saya%20ingin%20tanya-tanya%20tentang%20pembuatan%20CV%20ATS%20Friendly." target="_blank" rel="noopener noreferrer" aria-label="Chat WhatsApp Admin Rizky Jasa" class="fixed bottom-6 right-6 z-50 bg-emerald-500 hover:bg-emerald-600 text-slate-950 w-14 h-14 rounded-full shadow-2xl flex items-center justify-center text-2xl transition-all transform hover:scale-110 active:scale-95 group font-bold">
-        <i class="fa-brands fa-whatsapp text-3xl"></i>
-        <span class="absolute right-16 bg-darkCard text-white text-xs font-bold py-1.5 px-3 rounded-xl shadow-lg border border-slate-700 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
-            Chat Admin (&lt; 1 Jam)
-        </span>
-    </a>
-
+    <!-- Three.js Neural Quantum DNA & Floating Data Constellation Matrix -->
     <script>
-        const mobileMenuBtn = document.getElementById('menu-btn');
-        const mobileNavMenu = document.getElementById('mobile-menu');
+        lucide.createIcons();
 
-        if (mobileMenuBtn && mobileNavMenu) {
-            mobileMenuBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                mobileNavMenu.classList.toggle('hidden');
-            });
-
-            document.addEventListener('click', (e) => {
-                if (!mobileNavMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
-                    mobileNavMenu.classList.add('hidden');
-                }
-            });
-        }
-
-        function scrollToSectionId(id) {
-            if (mobileNavMenu) {
-                mobileNavMenu.classList.add('hidden');
+        // Smooth scroll for Lihat Layanan button
+        document.getElementById('btn-lihat-layanan').addEventListener('click', function(e) {
+            e.preventDefault();
+            const layananSection = document.getElementById('layanan');
+            if (layananSection) {
+                layananSection.scrollIntoView({ behavior: 'smooth' });
             }
-            const targetElement = document.getElementById(id);
-            if (targetElement) {
-                targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-        }
+        });
 
-        function toggleFaq(num) {
-            const content = document.getElementById(`faq-content-${num}`);
-            const icon = document.getElementById(`faq-icon-${num}`);
+        // Cursor Glow
+        const cursorGlow = document.getElementById('cursor-glow');
+        window.addEventListener('mousemove', (e) => {
+            gsap.to(cursorGlow, { x: e.clientX, y: e.clientY, duration: 0.5, ease: 'power2.out' });
+        });
+
+        // Neural Quantum DNA & Data Constellation Engine
+        const canvas = document.getElementById('webgl-canvas');
+        const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(65, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.z = 7;
+
+        // Neural Quantum Particles (DNA Double Helix & Data Nodes)
+        const particleCount = 2200;
+        const particleGeo = new THREE.BufferGeometry();
+        const positions = new Float32Array(particleCount * 3);
+        const originalY = new Float32Array(particleCount);
+
+        for (let i = 0; i < particleCount * 3; i += 3) {
+            const u = Math.random() * Math.PI * 2;
+            const h = (Math.random() - 0.5) * 16;
+            const r = 2.2 + Math.random() * 0.8;
             
-            if (content && icon) {
-                content.classList.toggle('hidden');
-                if (content.classList.contains('hidden')) {
-                    icon.classList.remove('rotate-180');
-                } else {
-                    icon.classList.add('rotate-180');
-                }
-            }
+            // Double helix DNA architecture combined with quantum cloud
+            positions[i] = Math.cos(u * 2 + h) * r;
+            positions[i + 1] = h;
+            positions[i + 2] = Math.sin(u * 2 + h) * r;
+            originalY[i / 3] = h;
         }
+
+        particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        const particleMat = new THREE.PointsMaterial({
+            size: 0.035,
+            color: 0x22d3ee,
+            transparent: true,
+            opacity: 0.8,
+            blending: THREE.AdditiveBlending
+        });
+        const particleSystem = new THREE.Points(particleGeo, particleMat);
+        scene.add(particleSystem);
+
+        // Interconnected Neural Data Wireframes
+        const neuralGroup = new THREE.Group();
+        
+        const coreIcosahedron = new THREE.Mesh(
+            new THREE.IcosahedronGeometry(2.0, 2),
+            new THREE.MeshBasicMaterial({ color: 0x22d3ee, wireframe: true, transparent: true, opacity: 0.25 })
+        );
+        neuralGroup.add(coreIcosahedron);
+
+        const outerOctahedron = new THREE.Mesh(
+            new THREE.OctahedronGeometry(3.5, 0),
+            new THREE.MeshBasicMaterial({ color: 0x06b6d4, wireframe: true, transparent: true, opacity: 0.15 })
+        );
+        neuralGroup.add(outerOctahedron);
+
+        scene.add(neuralGroup);
+
+        let mouseX = 0, mouseY = 0;
+        let targetX = 0, targetY = 0;
+        let clock = new THREE.Clock();
+
+        window.addEventListener('mousemove', (e) => {
+            mouseX = (e.clientX - window.innerWidth / 2) * 0.0025;
+            mouseY = (e.clientY - window.innerHeight / 2) * 0.0025;
+        });
+
+        function animate() {
+            requestAnimationFrame(animate);
+
+            const elapsedTime = clock.getElapsedTime();
+
+            targetX += (mouseX - targetX) * 0.06;
+            targetY += (mouseY - targetY) * 0.06;
+
+            // Neural particle wave pulsation
+            const posAttr = particleGeo.attributes.position;
+            for (let i = 0; i < particleCount; i++) {
+                let y = posAttr.getY(i);
+                y += Math.sin(elapsedTime * 2 + i) * 0.004;
+                posAttr.setY(i, y);
+            }
+            posAttr.needsUpdate = true;
+
+            particleSystem.rotation.y = elapsedTime * 0.15 + targetX * 3;
+            particleSystem.rotation.x = targetY * 3;
+
+            neuralGroup.rotation.x = elapsedTime * 0.1 + targetY * 2;
+            neuralGroup.rotation.y = elapsedTime * 0.12 + targetX * 2;
+            
+            coreIcosahedron.rotation.z += 0.004;
+            outerOctahedron.rotation.z -= 0.003;
+
+            camera.position.x += (targetX * 3 - camera.position.x) * 0.08;
+            camera.position.y += (-targetY * 3 - camera.position.y) * 0.08;
+            camera.lookAt(scene.position);
+
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // GSAP Hero Entrance Animations
+        const heroTl = gsap.timeline({ defaults: { ease: 'power4.out' } });
+        heroTl.to('.hero-badge', { opacity: 1, y: 0, duration: 1.2, delay: 0.1 })
+              .to('.hero-title', { opacity: 1, y: 0, duration: 1.4 }, '-=0.9')
+              .to('.hero-desc', { opacity: 1, y: 0, duration: 1.4 }, '-=1.1')
+              .to('.hero-btns', { opacity: 1, y: 0, duration: 1.2 }, '-=1.0')
+              .to('.hero-stats', { opacity: 1, y: 0, duration: 1.4 }, '-=0.9');
     </script>
 </body>
 </html>
