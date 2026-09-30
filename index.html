@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rizky Jasa - Jasa Pembuatan CV ATS Friendly Profesional</title>
+    <title>Jasa Pembuatan CV ATS Friendly Citeureup Bogor | Rizky Jasa</title>
+    <meta name="description" content="Jasa pembuatan CV ATS Friendly dan surat lamaran kerja, berbasis di Citeureup Bogor, melayani online seluruh Indonesia. Pengerjaan 1-3 jam, garansi 3x revisi.">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts: Plus Jakarta Sans -->
@@ -15,8 +16,6 @@
     <!-- GSAP & ScrollTrigger -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <!-- Three.js for Neural Quantum 3D Canvas -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
     <!-- Schema.org Structured Data -->
     <script type="application/ld+json">
@@ -86,17 +85,6 @@
             overflow-x: hidden;
         }
 
-        /* Neural Quantum 3D WebGL Canvas */
-        #webgl-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            pointer-events: none;
-            z-index: 1;
-        }
-
         /* Ambient Cursor Glow */
         #cursor-glow {
             position: fixed;
@@ -141,7 +129,6 @@
 <body class="selection:bg-cyan-500/30 selection:text-cyan-200">
 
     <div id="cursor-glow"></div>
-    <canvas id="webgl-canvas"></canvas>
 
     <!-- Navigation -->
     <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-[#03060B]/85 backdrop-blur-2xl border-b border-white/5">
@@ -229,7 +216,7 @@
             <div class="text-center max-w-3xl mx-auto mb-16">
                 <span class="px-4 py-1.5 rounded-full bg-[#0E1726] border border-slate-700 text-cyan-400 text-xs font-bold uppercase tracking-wider mb-4 inline-block">Keunggulan Utama</span>
                 <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-2">Bukan Sekedar CV Bagus, Tapi CV Yang Lolos Sistem</h2>
-                <p class="mt-4 text-slate-300 leading-relaxed">90% CV ditolak bukan karena pengalaman kurang, tapi karena tidak lolos ATS. Di Rizky Jasa, kami tidak hanya mendesain CV agar enak dilihat, kami menyusunnya agar lolos robot ATS dan dilirik HRD. Berbasis di Citeureup, kami melayani jobseeker dari Sabang sampai Merauke secara online.</p>
+                <p class="mt-4 text-slate-300 leading-relaxed">Banyak CV tersingkir bukan karena pengalaman kurang, tapi karena formatnya sulit dibaca sistem ATS. Di Rizky Jasa, kami tidak hanya mendesain CV agar enak dilihat, kami menyusunnya agar lolos robot ATS dan dilirik HRD. Berbasis di Citeureup, kami melayani jobseeker dari Sabang sampai Merauke secara online.</p>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
@@ -237,8 +224,8 @@
                     <div class="w-12 h-12 rounded-2xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center mb-6 border border-cyan-500/20">
                         <i data-lucide="shield-check" class="w-6 h-6"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-3">1. Strategi ATS Proven</h3>
-                    <p class="text-sm text-slate-300 leading-relaxed">Format teruji lolos sistem rekrutmen perusahaan besar.</p>
+                    <h3 class="text-xl font-bold text-white mb-3">1. Format ATS Rapi</h3>
+                    <p class="text-sm text-slate-300 leading-relaxed">Struktur sederhana dan bersih, mudah dibaca sistem rekrutmen.</p>
                 </div>
 
                 <div class="glass-panel p-8 rounded-3xl relative overflow-hidden group">
@@ -460,7 +447,7 @@
         </div>
     </footer>
 
-    <!-- Three.js Neural Quantum DNA & Floating Data Constellation Matrix -->
+    <!-- Interactive Scripts & GSAP Animations -->
     <script>
         lucide.createIcons();
 
@@ -477,111 +464,6 @@
         const cursorGlow = document.getElementById('cursor-glow');
         window.addEventListener('mousemove', (e) => {
             gsap.to(cursorGlow, { x: e.clientX, y: e.clientY, duration: 0.5, ease: 'power2.out' });
-        });
-
-        // Neural Quantum DNA & Data Constellation Engine
-        const canvas = document.getElementById('webgl-canvas');
-        const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(65, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.z = 7;
-
-        // Neural Quantum Particles (DNA Double Helix & Data Nodes)
-        const particleCount = 2200;
-        const particleGeo = new THREE.BufferGeometry();
-        const positions = new Float32Array(particleCount * 3);
-        const originalY = new Float32Array(particleCount);
-
-        for (let i = 0; i < particleCount * 3; i += 3) {
-            const u = Math.random() * Math.PI * 2;
-            const h = (Math.random() - 0.5) * 16;
-            const r = 2.2 + Math.random() * 0.8;
-            
-            // Double helix DNA architecture combined with quantum cloud
-            positions[i] = Math.cos(u * 2 + h) * r;
-            positions[i + 1] = h;
-            positions[i + 2] = Math.sin(u * 2 + h) * r;
-            originalY[i / 3] = h;
-        }
-
-        particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-        const particleMat = new THREE.PointsMaterial({
-            size: 0.035,
-            color: 0x22d3ee,
-            transparent: true,
-            opacity: 0.8,
-            blending: THREE.AdditiveBlending
-        });
-        const particleSystem = new THREE.Points(particleGeo, particleMat);
-        scene.add(particleSystem);
-
-        // Interconnected Neural Data Wireframes
-        const neuralGroup = new THREE.Group();
-        
-        const coreIcosahedron = new THREE.Mesh(
-            new THREE.IcosahedronGeometry(2.0, 2),
-            new THREE.MeshBasicMaterial({ color: 0x22d3ee, wireframe: true, transparent: true, opacity: 0.25 })
-        );
-        neuralGroup.add(coreIcosahedron);
-
-        const outerOctahedron = new THREE.Mesh(
-            new THREE.OctahedronGeometry(3.5, 0),
-            new THREE.MeshBasicMaterial({ color: 0x06b6d4, wireframe: true, transparent: true, opacity: 0.15 })
-        );
-        neuralGroup.add(outerOctahedron);
-
-        scene.add(neuralGroup);
-
-        let mouseX = 0, mouseY = 0;
-        let targetX = 0, targetY = 0;
-        let clock = new THREE.Clock();
-
-        window.addEventListener('mousemove', (e) => {
-            mouseX = (e.clientX - window.innerWidth / 2) * 0.0025;
-            mouseY = (e.clientY - window.innerHeight / 2) * 0.0025;
-        });
-
-        function animate() {
-            requestAnimationFrame(animate);
-
-            const elapsedTime = clock.getElapsedTime();
-
-            targetX += (mouseX - targetX) * 0.06;
-            targetY += (mouseY - targetY) * 0.06;
-
-            // Neural particle wave pulsation
-            const posAttr = particleGeo.attributes.position;
-            for (let i = 0; i < particleCount; i++) {
-                let y = posAttr.getY(i);
-                y += Math.sin(elapsedTime * 2 + i) * 0.004;
-                posAttr.setY(i, y);
-            }
-            posAttr.needsUpdate = true;
-
-            particleSystem.rotation.y = elapsedTime * 0.15 + targetX * 3;
-            particleSystem.rotation.x = targetY * 3;
-
-            neuralGroup.rotation.x = elapsedTime * 0.1 + targetY * 2;
-            neuralGroup.rotation.y = elapsedTime * 0.12 + targetX * 2;
-            
-            coreIcosahedron.rotation.z += 0.004;
-            outerOctahedron.rotation.z -= 0.003;
-
-            camera.position.x += (targetX * 3 - camera.position.x) * 0.08;
-            camera.position.y += (-targetY * 3 - camera.position.y) * 0.08;
-            camera.lookAt(scene.position);
-
-            renderer.render(scene, camera);
-        }
-        animate();
-
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
         });
 
         // GSAP Hero Entrance Animations
