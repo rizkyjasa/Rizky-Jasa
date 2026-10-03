@@ -19,7 +19,7 @@
                             200: '#c7d6c8',
                             300: '#a3bba5',
                             400: '#7a9b7d',
-                            500: '#4F7557', /* Warna Utama Hijau Daun */
+                            500: '#4F7557', /* Utama Hijau Daun */
                             600: '#3e5e45',
                             700: '#334c38',
                             800: '#2a3e2f',
@@ -37,7 +37,7 @@
     <!-- Google Fonts Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <!-- Favicon & Apple Touch Icon -->
     <link rel="icon" type="image/png" href="https://files.catbox.moe/ktqqnd.png">
@@ -49,12 +49,15 @@
     <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+    <!-- jsPDF & jsPDF AutoTable CDN for Direct PDF Generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+
     <style>
         body {
             font-family: 'Inter', sans-serif;
             -webkit-tap-highlight-color: transparent;
         }
-        /* Custom scrollbar for mobile experience */
         ::-webkit-scrollbar {
             width: 4px;
             height: 4px;
@@ -66,7 +69,6 @@
         .dark ::-webkit-scrollbar-thumb {
             background: #475569;
         }
-        /* Custom select styling for proper dark mode options contrast */
         select option {
             background-color: #ffffff;
             color: #111827;
@@ -75,17 +77,63 @@
             background-color: #1f2937;
             color: #f9fafb;
         }
+
+        /* PRINT MEDIA STYLING (A4 Portrait Report Fallback) */
+        @media print {
+            @page {
+                size: A4 portrait;
+                margin: 12mm 15mm 12mm 15mm;
+            }
+            body > *:not(#print-report-container) {
+                display: none !important;
+            }
+            #print-report-container {
+                display: block !important;
+                position: static !important;
+                width: 100% !important;
+                height: auto !important;
+                overflow: visible !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                background: #ffffff !important;
+                color: #0f172a !important;
+                font-family: 'Inter', sans-serif;
+            }
+            .no-print {
+                display: none !important;
+            }
+            table {
+                width: 100% !important;
+                border-collapse: collapse !important;
+                page-break-inside: auto;
+            }
+            tr {
+                break-inside: avoid !important;
+                page-break-inside: avoid !important;
+            }
+            thead {
+                display: table-header-group !important;
+            }
+            .print-card {
+                break-inside: avoid !important;
+                page-break-inside: avoid !important;
+            }
+        }
+
+        @media screen {
+            #print-report-container {
+                display: none !important;
+            }
+        }
     </style>
 </head>
 <body class="bg-gray-100 dark:bg-gray-950 text-gray-900 dark:text-gray-100 antialiased min-h-full flex flex-col justify-between transition-colors duration-200">
 
-    <!-- App Mobile Layout Container (Max width 430px centered on larger displays) -->
     <div id="app" class="w-full max-w-md mx-auto min-h-screen bg-white dark:bg-gray-950 shadow-2xl flex flex-col justify-between relative pb-20">
 
         <!-- Header Bar -->
         <header class="sticky top-0 z-30 bg-white/95 dark:bg-gray-900/95 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 px-4 py-3 flex items-center justify-between">
             <div class="flex items-center space-x-3">
-                <!-- Logo Container: 44x44px (w-11 h-11), 0 padding, object-cover filling frame completely -->
                 <div id="logo-container" class="w-11 h-11 rounded-xl border border-gray-200 dark:border-gray-800 overflow-hidden shadow-sm flex-shrink-0 p-0">
                     <img src="https://files.catbox.moe/ktqqnd.png" alt="Leadger" class="w-full h-full object-cover block" onerror="showFallbackLogo()">
                 </div>
@@ -96,13 +144,11 @@
             </div>
 
             <div class="flex items-center space-x-2">
-                <!-- Backup Status Indicator -->
                 <button onclick="switchTab('pengaturan')" id="backup-warning-btn" class="hidden text-amber-700 dark:text-amber-300 hover:text-amber-800 p-1.5 rounded-lg bg-amber-50 dark:bg-amber-950/80 border border-amber-200 dark:border-amber-800 text-xs flex items-center gap-1 font-medium" title="Backup > 7 hari lalu">
                     <i class="fa-solid fa-triangle-exclamation"></i>
                     <span class="hidden sm:inline">Backup</span>
                 </button>
                 
-                <!-- Dark Mode Toggle Button -->
                 <button onclick="toggleDarkMode()" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700 transition">
                     <i id="theme-icon" class="fa-solid fa-moon"></i>
                 </button>
@@ -114,7 +160,6 @@
 
             <!-- TAB 1: BERANDA -->
             <section id="view-beranda" class="tab-content space-y-4">
-                <!-- Empty State Banner -->
                 <div id="beranda-empty-banner" class="hidden bg-emerald-50 dark:bg-gray-900 border border-emerald-200 dark:border-gray-800 rounded-xl p-4 text-center space-y-2">
                     <div class="w-10 h-10 rounded-full bg-emerald-100 dark:bg-emerald-950 text-brand-600 dark:text-emerald-400 flex items-center justify-center mx-auto text-lg font-bold">
                         <i class="fa-solid fa-inbox"></i>
@@ -126,7 +171,6 @@
                     </div>
                 </div>
 
-                <!-- Cycle & Target Banner -->
                 <div class="bg-gradient-to-br from-brand-600 to-brand-700 text-white p-4 rounded-2xl shadow-lg relative overflow-hidden">
                     <div class="absolute -right-4 -bottom-4 w-24 h-24 bg-white/10 rounded-full blur-xl pointer-events-none"></div>
                     <div class="flex justify-between items-start mb-2">
@@ -137,7 +181,6 @@
                         <span class="px-2 py-0.5 text-[10px] bg-white/20 backdrop-blur-sm rounded-full text-white font-medium">Aktif</span>
                     </div>
 
-                    <!-- Cycle Omzet & Savings -->
                     <div class="grid grid-cols-2 gap-2 my-3">
                         <div>
                             <p class="text-xs text-brand-100">Omzet Siklus Ini</p>
@@ -149,7 +192,6 @@
                         </div>
                     </div>
 
-                    <!-- Progress Bar Target -->
                     <div class="mt-2">
                         <div class="flex justify-between text-xs mb-1 text-brand-100">
                             <span>Target Omzet: <strong id="beranda-target-label" class="text-white">Rp0</strong></span>
@@ -161,7 +203,6 @@
                     </div>
                 </div>
 
-                <!-- Today Omzet Card -->
                 <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-3 flex justify-between items-center shadow-sm">
                     <div class="flex items-center space-x-3">
                         <div class="w-10 h-10 rounded-lg bg-emerald-100 dark:bg-emerald-950/80 text-brand-600 dark:text-emerald-400 flex items-center justify-center">
@@ -175,7 +216,6 @@
                     <span id="beranda-order-hari-ini-badge" class="text-xs bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200 font-medium px-2.5 py-1 rounded-full border border-gray-200 dark:border-gray-700">0 Order</span>
                 </div>
 
-                <!-- Quick Input Section -->
                 <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-4 shadow-sm space-y-3">
                     <div class="flex justify-between items-center">
                         <h3 class="text-sm font-semibold text-gray-900 dark:text-white flex items-center gap-1.5">
@@ -189,31 +229,24 @@
                             <i class="fa-solid fa-plus"></i> Tambah
                         </button>
                     </div>
-                    <!-- Quick Input Preview/Feedback -->
                     <div id="quick-input-preview" class="hidden text-xs p-2 rounded-lg bg-gray-50 dark:bg-gray-800/80 border border-dashed border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-200"></div>
                 </div>
 
-                <!-- Latest 5 Orders List -->
                 <div class="space-y-2">
                     <div class="flex justify-between items-center">
                         <h3 class="text-sm font-semibold text-gray-900 dark:text-white">5 Order Terbaru</h3>
                         <button onclick="switchTab('data')" class="text-xs text-brand-600 dark:text-emerald-400 font-medium hover:underline">Lihat Semua</button>
                     </div>
-                    <div id="beranda-latest-list" class="space-y-2">
-                        <!-- Populated dynamically -->
-                    </div>
+                    <div id="beranda-latest-list" class="space-y-2"></div>
                 </div>
             </section>
 
             <!-- TAB 2: ANALISIS -->
             <section id="view-analisis" class="tab-content hidden space-y-4">
-                <!-- Date Range & Validation Header -->
                 <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-3 shadow-sm space-y-2">
                     <div class="flex items-center justify-between">
                         <label class="text-xs font-semibold text-gray-700 dark:text-gray-300">Pilih Rentang Waktu:</label>
-                        <div id="analisis-validation-badge" class="text-[11px] px-2 py-0.5 rounded-full font-medium flex items-center gap-1">
-                            <!-- Populated dynamically -->
-                        </div>
+                        <div id="analisis-validation-badge" class="text-[11px] px-2 py-0.5 rounded-full font-medium flex items-center gap-1"></div>
                     </div>
                     
                     <div class="grid grid-cols-4 gap-1">
@@ -223,7 +256,6 @@
                         <button onclick="setAnalisisRange('custom')" id="btn-range-custom" class="range-btn text-xs py-1.5 rounded-lg border border-gray-200 dark:border-gray-700 font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800">Kustom</button>
                     </div>
 
-                    <!-- Custom Date Inputs (Hidden by default) -->
                     <div id="analisis-custom-dates" class="hidden grid grid-cols-2 gap-2 pt-1 border-t border-gray-100 dark:border-gray-800">
                         <div>
                             <label class="text-[10px] text-gray-500 dark:text-gray-400">Dari Tanggal</label>
@@ -235,12 +267,9 @@
                         </div>
                     </div>
 
-                    <p id="analisis-date-range-label" class="text-xs text-center font-medium text-brand-600 dark:text-emerald-400 pt-1">
-                        ...
-                    </p>
+                    <p id="analisis-date-range-label" class="text-xs text-center font-medium text-brand-600 dark:text-emerald-400 pt-1">...</p>
                 </div>
 
-                <!-- KPI Cards Grid -->
                 <div class="grid grid-cols-2 gap-2.5">
                     <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 p-3 rounded-xl shadow-sm">
                         <p class="text-[11px] text-gray-600 dark:text-gray-400 font-medium">Total Order</p>
@@ -279,19 +308,14 @@
                     </div>
                 </div>
 
-                <!-- Auto Insights Box (Dark mode contrast optimized) -->
                 <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-3.5 space-y-2 shadow-sm">
                     <h3 class="text-xs font-bold text-brand-600 dark:text-emerald-400 uppercase tracking-wide flex items-center gap-1.5">
                         <i class="fa-solid fa-lightbulb text-amber-500"></i> Insight Otomatis Bisnis
                     </h3>
-                    <ul id="analisis-insights-list" class="space-y-1.5 text-xs text-gray-700 dark:text-[#E8EDE9]">
-                        <!-- Populated dynamically -->
-                    </ul>
+                    <ul id="analisis-insights-list" class="space-y-1.5 text-xs text-gray-700 dark:text-[#E8EDE9]"></ul>
                 </div>
 
-                <!-- Charts Container -->
                 <div class="space-y-4">
-                    <!-- Daily Omzet Chart -->
                     <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-3 shadow-sm">
                         <h4 class="text-xs font-semibold text-gray-900 dark:text-white mb-2">Tren Omzet Harian</h4>
                         <div class="h-48 relative">
@@ -299,7 +323,6 @@
                         </div>
                     </div>
 
-                    <!-- Service Breakdown Chart -->
                     <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-3 shadow-sm">
                         <h4 class="text-xs font-semibold text-gray-900 dark:text-white mb-2">Kontribusi Layanan (Omzet)</h4>
                         <div class="h-48 relative">
@@ -307,7 +330,6 @@
                         </div>
                     </div>
 
-                    <!-- Customer Source Chart -->
                     <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-3 shadow-sm">
                         <h4 class="text-xs font-semibold text-gray-900 dark:text-white mb-2">Sumber Customer (Omzet & Order)</h4>
                         <div class="h-48 relative">
@@ -315,7 +337,6 @@
                         </div>
                     </div>
 
-                    <!-- Cycle Comparison Chart -->
                     <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-3 shadow-sm">
                         <h4 class="text-xs font-semibold text-gray-900 dark:text-white mb-2">Perbandingan 3 Siklus Terakhir</h4>
                         <div class="h-48 relative">
@@ -327,13 +348,10 @@
 
             <!-- TAB 3: REKAP -->
             <section id="view-rekap" class="tab-content hidden space-y-4">
-                <!-- Date Picker Controls -->
                 <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-3 shadow-sm space-y-3">
                     <div class="flex justify-between items-center">
                         <h3 class="text-xs font-bold text-gray-900 dark:text-white uppercase tracking-wider">Filter Periode Rekap</h3>
-                        <div id="rekap-validation-badge" class="text-[10px] px-2 py-0.5 rounded-full font-medium">
-                            <!-- Populated dynamically -->
-                        </div>
+                        <div id="rekap-validation-badge" class="text-[10px] px-2 py-0.5 rounded-full font-medium"></div>
                     </div>
 
                     <div class="grid grid-cols-2 gap-2">
@@ -352,9 +370,17 @@
                         <button onclick="presetRekap('prevCycle')" class="px-2.5 py-1 bg-gray-100 dark:bg-gray-800 hover:bg-brand-500 hover:text-white dark:hover:bg-brand-500 rounded-md text-gray-700 dark:text-gray-200 whitespace-nowrap transition">Siklus Lalu</button>
                         <button onclick="presetRekap('thisMonth')" class="px-2.5 py-1 bg-gray-100 dark:bg-gray-800 hover:bg-brand-500 hover:text-white dark:hover:bg-brand-500 rounded-md text-gray-700 dark:text-gray-200 whitespace-nowrap transition">Bulan Ini</button>
                     </div>
+
+                    <!-- PDF PRINT ACTION BUTTON -->
+                    <div class="pt-1">
+                        <button id="btn-print-pdf" onclick="openPrintPreviewModal()" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-semibold shadow-sm transition flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                            <i class="fa-solid fa-file-pdf"></i>
+                            <span>Cetak / Unduh PDF</span>
+                        </button>
+                        <p id="rekap-print-msg" class="text-[10px] text-center text-rose-500 dark:text-rose-400 mt-1 hidden">Tidak ada order pada rentang ini.</p>
+                    </div>
                 </div>
 
-                <!-- Rekap Summary Cards -->
                 <div class="grid grid-cols-2 gap-2.5">
                     <div class="bg-brand-500 text-white p-3.5 rounded-xl shadow-md">
                         <p class="text-xs text-brand-100 font-medium">Total Omzet</p>
@@ -374,22 +400,18 @@
                     </div>
                 </div>
 
-                <!-- Detailed Services Breakdown Table/List -->
                 <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-3.5 shadow-sm space-y-3">
                     <div class="flex justify-between items-center border-b border-gray-100 dark:border-gray-800 pb-2">
                         <h4 class="text-xs font-bold text-gray-900 dark:text-white uppercase">Rincian Per Layanan</h4>
                         <span id="rekap-layanan-count" class="text-xs text-gray-500 dark:text-gray-400">0 Jenis Layanan</span>
                     </div>
 
-                    <div id="rekap-services-list" class="space-y-3">
-                        <!-- Dynamic Service Rows -->
-                    </div>
+                    <div id="rekap-services-list" class="space-y-3"></div>
                 </div>
             </section>
 
             <!-- TAB 4: SEMUA DATA -->
             <section id="view-data" class="tab-content hidden space-y-3">
-                <!-- Search & Filters -->
                 <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-3 shadow-sm space-y-2">
                     <div class="relative">
                         <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-gray-400 text-xs"></i>
@@ -416,15 +438,11 @@
                     <span id="data-filtered-omzet" class="text-xs font-bold text-brand-600 dark:text-emerald-400">Rp0</span>
                 </div>
 
-                <!-- Orders List -->
-                <div id="data-orders-list" class="space-y-2">
-                    <!-- Dynamic Orders List -->
-                </div>
+                <div id="data-orders-list" class="space-y-2"></div>
             </section>
 
             <!-- TAB 5: PENGATURAN / MENU -->
             <section id="view-pengaturan" class="tab-content hidden space-y-4">
-                <!-- Backup Banner Warning if old -->
                 <div id="settings-backup-warning" class="hidden p-3 rounded-xl bg-amber-50 dark:bg-amber-950/80 border border-amber-200 dark:border-amber-800 text-amber-800 dark:text-amber-200 text-xs flex items-start gap-2">
                     <i class="fa-solid fa-triangle-exclamation text-amber-500 text-sm mt-0.5"></i>
                     <div>
@@ -433,7 +451,6 @@
                     </div>
                 </div>
 
-                <!-- General App Settings Card -->
                 <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-4 shadow-sm space-y-3">
                     <h3 class="text-xs font-bold text-gray-900 dark:text-white uppercase tracking-wider flex items-center gap-1.5">
                         <i class="fa-solid fa-sliders text-brand-500"></i> Parameter Bisnis
@@ -456,7 +473,6 @@
                     </div>
                 </div>
 
-                <!-- Manage Services List -->
                 <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-4 shadow-sm space-y-3">
                     <h3 class="text-xs font-bold text-gray-900 dark:text-white uppercase tracking-wider flex items-center gap-1.5">
                         <i class="fa-solid fa-list-check text-brand-500"></i> Daftar Layanan Jasa
@@ -467,12 +483,9 @@
                         <button onclick="addServiceSetting()" class="bg-brand-500 text-white text-xs px-3 py-2 rounded-lg font-medium hover:bg-brand-600 transition">Tambah</button>
                     </div>
 
-                    <ul id="settings-services-list" class="divide-y divide-gray-100 dark:divide-gray-800 text-xs">
-                        <!-- Populated dynamically -->
-                    </ul>
+                    <ul id="settings-services-list" class="divide-y divide-gray-100 dark:divide-gray-800 text-xs"></ul>
                 </div>
 
-                <!-- Manage Sources List -->
                 <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-4 shadow-sm space-y-3">
                     <h3 class="text-xs font-bold text-gray-900 dark:text-white uppercase tracking-wider flex items-center gap-1.5">
                         <i class="fa-solid fa-bullhorn text-brand-500"></i> Daftar Sumber Order
@@ -483,12 +496,9 @@
                         <button onclick="addSourceSetting()" class="bg-brand-500 text-white text-xs px-3 py-2 rounded-lg font-medium hover:bg-brand-600 transition">Tambah</button>
                     </div>
 
-                    <ul id="settings-sources-list" class="divide-y divide-gray-100 dark:divide-gray-800 text-xs">
-                        <!-- Populated dynamically -->
-                    </ul>
+                    <ul id="settings-sources-list" class="divide-y divide-gray-100 dark:divide-gray-800 text-xs"></ul>
                 </div>
 
-                <!-- Backup, Restore & Reset Card -->
                 <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-4 shadow-sm space-y-3">
                     <h3 class="text-xs font-bold text-gray-900 dark:text-white uppercase tracking-wider flex items-center gap-1.5">
                         <i class="fa-solid fa-database text-brand-500"></i> Backup & Data
@@ -516,7 +526,7 @@
             <i class="fa-solid fa-plus"></i>
         </button>
 
-        <!-- Bottom Navigation Bar (4 Tab Main View) -->
+        <!-- Bottom Navigation Bar -->
         <nav class="fixed bottom-0 left-0 right-0 z-30 max-w-md mx-auto bg-white/95 dark:bg-gray-900/95 backdrop-blur-md border-t border-gray-200 dark:border-gray-800 px-2 py-1 flex justify-around items-center">
             <button onclick="switchTab('beranda')" id="nav-beranda" class="nav-item flex flex-col items-center py-1 px-3 rounded-xl text-brand-600 dark:text-emerald-400 font-semibold text-[11px] transition">
                 <i class="fa-solid fa-house text-lg"></i>
@@ -560,9 +570,7 @@
 
                     <div>
                         <label class="text-xs font-medium text-gray-700 dark:text-gray-300">Layanan Jasa</label>
-                        <select id="form-order-layanan" required class="w-full text-xs bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg p-2 text-gray-900 dark:text-white mt-1">
-                            <!-- Populated dynamically -->
-                        </select>
+                        <select id="form-order-layanan" required class="w-full text-xs bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg p-2 text-gray-900 dark:text-white mt-1"></select>
                     </div>
 
                     <div>
@@ -573,9 +581,7 @@
 
                     <div>
                         <label class="text-xs font-medium text-gray-700 dark:text-gray-300">Sumber Order</label>
-                        <select id="form-order-sumber" required class="w-full text-xs bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg p-2 text-gray-900 dark:text-white mt-1">
-                            <!-- Populated dynamically -->
-                        </select>
+                        <select id="form-order-sumber" required class="w-full text-xs bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg p-2 text-gray-900 dark:text-white mt-1"></select>
                     </div>
 
                     <div class="grid grid-cols-2 gap-2">
@@ -618,9 +624,7 @@
                     </button>
                 </div>
 
-                <div id="modal-detail-content" class="space-y-2 text-xs text-gray-700 dark:text-gray-300">
-                    <!-- Populated dynamically -->
-                </div>
+                <div id="modal-detail-content" class="space-y-2 text-xs text-gray-700 dark:text-gray-300"></div>
 
                 <div class="pt-2 flex gap-2 border-t border-gray-100 dark:border-gray-800">
                     <button id="btn-edit-detail" class="w-1/2 py-2 bg-amber-500 text-white rounded-lg text-xs font-semibold hover:bg-amber-600 flex items-center justify-center gap-1">
@@ -629,6 +633,39 @@
                     <button id="btn-delete-detail" class="w-1/2 py-2 bg-rose-600 text-white rounded-lg text-xs font-semibold hover:bg-rose-700 flex items-center justify-center gap-1">
                         <i class="fa-solid fa-trash"></i> Hapus
                     </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODAL: PRINT & PDF PREVIEW OVERLAY -->
+        <div id="modal-print-preview" class="fixed inset-0 z-50 bg-gray-900/80 backdrop-blur-md hidden flex flex-col justify-between p-2 sm:p-4">
+            <div class="max-w-3xl w-full mx-auto bg-white dark:bg-gray-900 rounded-2xl shadow-2xl flex flex-col h-full overflow-hidden border border-gray-200 dark:border-gray-800">
+                <div class="px-4 py-3 border-b border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-800/80 flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <i class="fa-solid fa-file-pdf text-emerald-600 text-lg"></i>
+                        <h3 class="font-bold text-sm text-gray-900 dark:text-white">Pratinjau Laporan PDF</h3>
+                    </div>
+                    <div class="flex items-center gap-1.5 sm:gap-2">
+                        <button onclick="copySummaryText()" class="px-2.5 py-1.5 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-100 rounded-lg text-xs font-medium transition flex items-center gap-1">
+                            <i class="fa-solid fa-copy"></i>
+                            <span class="hidden sm:inline">Bagikan Ringkasan</span>
+                        </button>
+                        <button onclick="doPrintReport()" class="px-2.5 py-1.5 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200 rounded-lg text-xs font-medium transition flex items-center gap-1">
+                            <i class="fa-solid fa-print"></i>
+                            <span class="hidden sm:inline">Cetak</span>
+                        </button>
+                        <button onclick="downloadReportPDF()" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-semibold transition flex items-center gap-1 shadow-sm">
+                            <i class="fa-solid fa-download"></i>
+                            <span>Unduh PDF</span>
+                        </button>
+                        <button onclick="closePrintPreviewModal()" class="p-1.5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 rounded-lg">
+                            <i class="fa-solid fa-xmark text-lg"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="preview-report-body" class="flex-1 overflow-y-auto p-4 sm:p-6 bg-white text-gray-900">
+                    <!-- Dynamic Printable Content Rendered Here -->
                 </div>
             </div>
         </div>
@@ -667,6 +704,9 @@
 
     </div>
 
+    <!-- PRINTABLE REPORT CONTAINER (Targeted exclusively by @media print) -->
+    <div id="print-report-container" class="p-4 text-gray-900 bg-white"></div>
+
     <!-- JavaScript Business Engine & Application Logic -->
     <script>
         const STORAGE_KEY = 'leadgerV3';
@@ -687,9 +727,7 @@
             const rawVal = input.value;
             const caretPos = input.selectionStart || 0;
 
-            // Count how many numeric digits existed prior to the cursor position
             const digitsBeforeCaret = (rawVal.slice(0, caretPos).match(/\d/g) || []).length;
-
             const cleanDigits = rawVal.replace(/\D/g, '');
 
             if (!cleanDigits) {
@@ -702,7 +740,6 @@
             const formatted = numericValue.toLocaleString('id-ID');
             input.value = formatted;
 
-            // Restore caret position by locating where the Nth digit sits in formatted string
             let newCaretPos = 0;
             let seenDigits = 0;
             if (digitsBeforeCaret === 0) {
@@ -724,9 +761,7 @@
 
             try {
                 input.setSelectionRange(newCaretPos, newCaretPos);
-            } catch (e) {
-                // Input selection fallback
-            }
+            } catch (e) {}
 
             if (onValueChange) {
                 onValueChange(numericValue);
@@ -753,10 +788,9 @@
             formatRupiahInput(input);
         }
 
-        // Initial Default Settings
         const DEFAULT_SETTINGS = {
-            savingsRate: 30, // 30% default
-            monthlyTarget: 3000000, // Rp 3.000.000
+            savingsRate: 30,
+            monthlyTarget: 3000000,
             services: [
                 "CV",
                 "Paket CV + Surat Lamaran",
@@ -775,19 +809,16 @@
             lastBackupTimestamp: Date.now()
         };
 
-        // Chart instances holder
         let chartDailyOmzetInstance = null;
         let chartServicesInstance = null;
         let chartSourcesInstance = null;
         let chartCyclesInstance = null;
 
-        // Current active analytics range state
-        let currentAnalisisRange = 'cycle'; // '7d', '30d', 'cycle', 'custom'
+        let currentAnalisisRange = 'cycle';
 
         function getAppData() {
             const raw = localStorage.getItem(STORAGE_KEY);
             if (!raw) {
-                // First open: Initialize clean empty state without dummy data
                 const initialData = {
                     settings: DEFAULT_SETTINGS,
                     orders: []
@@ -830,11 +861,6 @@
             saveAppData(data);
         }
 
-        /**
-         * STREAMING_CHUNK:Defining core business metrics calculations...
-         * RULE 1 & 2: Single source of calculation for ALL views.
-         * Calculates metrics from a provided order array.
-         */
         function hitungMetrik(daftarOrder) {
             const totalOrder = daftarOrder.length;
             let totalOmzet = 0;
@@ -847,7 +873,6 @@
                 const harga = Number(ord.harga) || 0;
                 totalOmzet += harga;
 
-                // Layanan Breakdown
                 const lay = ord.layanan || 'Lainnya';
                 if (!layananMap[lay]) {
                     layananMap[lay] = { name: lay, count: 0, totalOmzet: 0 };
@@ -855,7 +880,6 @@
                 layananMap[lay].count += 1;
                 layananMap[lay].totalOmzet += harga;
 
-                // Sumber Breakdown
                 const sum = ord.sumber || 'Lainnya';
                 if (!sumberMap[sum]) {
                     sumberMap[sum] = { name: sum, count: 0, totalOmzet: 0 };
@@ -863,7 +887,6 @@
                 sumberMap[sum].count += 1;
                 sumberMap[sum].totalOmzet += harga;
 
-                // Status Breakdown
                 if (ord.status === 'Repeat Customer') repeatCount++;
                 if (ord.referral === 'Referral') referralCount++;
             });
@@ -875,13 +898,11 @@
             const repeatRate = totalOrder > 0 ? (repeatCount / totalOrder) * 100 : 0;
             const referralRate = totalOrder > 0 ? (referralCount / totalOrder) * 100 : 0;
 
-            // Compute Rincian Layanan Array
             const rincianLayanan = Object.values(layananMap).map(item => ({
                 ...item,
                 persentase: totalOmzet > 0 ? (item.totalOmzet / totalOmzet) * 100 : 0
             })).sort((a, b) => b.totalOmzet - a.totalOmzet);
 
-            // RULE 2 Validation: Sum of breakdown omzet & count must match exact totalOmzet & totalOrder
             const sumRincianOmzet = rincianLayanan.reduce((acc, r) => acc + r.totalOmzet, 0);
             const sumRincianCount = rincianLayanan.reduce((acc, r) => acc + r.count, 0);
             const isValid = (sumRincianOmzet === totalOmzet) && (sumRincianCount === totalOrder);
@@ -902,13 +923,10 @@
             };
         }
 
-        /**
-         * Monthly cycle rule: 22nd of previous month to 21st of current month.
-         */
         function getCycleRange(referenceDate = new Date()) {
             const d = new Date(referenceDate);
             const year = d.getFullYear();
-            const month = d.getMonth(); // 0-indexed
+            const month = d.getMonth();
             const dateNum = d.getDate();
 
             let startDate, endDate;
@@ -954,14 +972,10 @@
             });
         }
 
-        /**
-         * RULE 3: Compare with previous period of exact same duration.
-         */
         function calculatePeriodComparison(currentOrders, currentStart, currentEnd) {
             const allOrders = getOrders();
             if (allOrders.length === 0) return { canCompare: false, reason: "Belum bisa dibandingkan" };
 
-            // Find earliest date in dataset
             const timestamps = allOrders.map(o => new Date(o.timestamp).getTime());
             const earliestTimestamp = Math.min(...timestamps);
             const earliestDateObj = new Date(earliestTimestamp);
@@ -998,34 +1012,28 @@
         }
 
         function switchTab(tabName) {
-            // Hide all tab contents
             document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
             
-            // Unhighlight all nav buttons
             document.querySelectorAll('.nav-item').forEach(el => {
                 el.classList.remove('text-brand-600', 'dark:text-emerald-400', 'font-semibold');
                 el.classList.add('text-gray-500', 'dark:text-gray-400');
             });
 
-            // Show selected view
             const targetView = document.getElementById(`view-${tabName}`);
             if (targetView) targetView.classList.remove('hidden');
 
-            // Highlight nav button
             const targetNav = document.getElementById(`nav-${tabName}`);
             if (targetNav) {
                 targetNav.classList.add('text-brand-600', 'dark:text-emerald-400', 'font-semibold');
                 targetNav.classList.remove('text-gray-500', 'dark:text-gray-400');
             }
 
-            // Render view dynamic data
             if (tabName === 'beranda') renderBerandaView();
             if (tabName === 'analisis') renderAnalisisView();
             if (tabName === 'rekap') renderRekapView();
             if (tabName === 'data') renderDataView();
             if (tabName === 'pengaturan') renderSettingsView();
 
-            // Check backup warning state
             checkBackupWarning();
         }
 
@@ -1033,7 +1041,6 @@
             const allOrders = getOrders();
             const { startDate, endDate } = getCycleRange(new Date());
 
-            // Empty state banner visibility
             const emptyBanner = document.getElementById('beranda-empty-banner');
             if (emptyBanner) {
                 if (allOrders.length === 0) {
@@ -1043,18 +1050,14 @@
                 }
             }
 
-            // Cycle Label
             document.getElementById('beranda-cycle-dates').innerText = `${formatDateShort(startDate)} - ${formatDateShort(endDate)}`;
 
-            // Current cycle orders
             const cycleOrders = filterOrdersByDateRange(allOrders, startDate, endDate);
             const cycleMetrics = hitungMetrik(cycleOrders);
 
-            // Display Omzet & Tabungan Siklus
             document.getElementById('beranda-omzet-siklus').innerText = formatIDR(cycleMetrics.totalOmzet);
             document.getElementById('beranda-tabungan-siklus').innerText = formatIDR(cycleMetrics.tabungan);
 
-            // Target Omzet Progress
             const settings = getSettings();
             const targetOmzet = settings.monthlyTarget || 3000000;
             document.getElementById('beranda-target-label').innerText = formatIDR(targetOmzet);
@@ -1063,7 +1066,6 @@
             document.getElementById('beranda-target-percent').innerText = `${pct}%`;
             document.getElementById('beranda-target-bar').style.width = `${pct}%`;
 
-            // Today's Omzet
             const todayStart = new Date(); todayStart.setHours(0,0,0,0);
             const todayEnd = new Date(); todayEnd.setHours(23,59,59,999);
             const todayOrders = filterOrdersByDateRange(allOrders, todayStart, todayEnd);
@@ -1072,7 +1074,6 @@
             document.getElementById('beranda-omzet-hari-ini').innerText = formatIDR(todayMetrics.totalOmzet);
             document.getElementById('beranda-order-hari-ini-badge').innerText = `${todayMetrics.totalOrder} Order`;
 
-            // 5 Latest Orders
             const sortedLatest = [...allOrders].sort((a,b) => new Date(b.timestamp) - new Date(a.timestamp)).slice(0, 5);
             const latestContainer = document.getElementById('beranda-latest-list');
             latestContainer.innerHTML = '';
@@ -1214,13 +1215,11 @@
                 endDate = endVal ? new Date(endVal + "T23:59:59") : new Date();
             }
 
-            // Date Range Label (RULE 4)
             document.getElementById('analisis-date-range-label').innerText = `${formatDateShort(startDate)} - ${formatDateShort(endDate)}`;
 
             const filteredOrders = filterOrdersByDateRange(allOrders, startDate, endDate);
             const metrics = hitungMetrik(filteredOrders);
 
-            // Validation Badge (RULE 5)
             const badgeEl = document.getElementById('analisis-validation-badge');
             if (metrics.isValid) {
                 badgeEl.className = "text-[11px] px-2 py-0.5 rounded-full font-medium bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800 flex items-center gap-1";
@@ -1230,12 +1229,10 @@
                 badgeEl.innerHTML = `<i class="fa-solid fa-circle-exclamation"></i> Data Tidak Match`;
             }
 
-            // Fill KPI Values
             document.getElementById('kpi-total-order').innerText = `${metrics.totalOrder} Order`;
             document.getElementById('kpi-total-omzet').innerText = formatIDR(metrics.totalOmzet);
             document.getElementById('kpi-aov').innerText = formatIDR(metrics.aov);
 
-            // Days in period
             const diffDays = Math.max(1, Math.round((endDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24)));
             const avgDaily = Math.round(metrics.totalOmzet / diffDays);
             document.getElementById('kpi-avg-daily').innerText = formatIDR(avgDaily);
@@ -1243,7 +1240,6 @@
             document.getElementById('kpi-repeat-rate').innerText = `${metrics.repeatRate.toFixed(1)}%`;
             document.getElementById('kpi-referral-rate').innerText = `${metrics.referralRate.toFixed(1)}%`;
 
-            // Trend Comparisons (RULE 3)
             const comp = calculatePeriodComparison(filteredOrders, startDate, endDate);
 
             const renderTrendLabel = (elId, pctVal) => {
@@ -1266,10 +1262,7 @@
             renderTrendLabel('kpi-trend-repeat', comp.repeatDiffPct);
             renderTrendLabel('kpi-trend-referral', comp.referralDiffPct);
 
-            // Insights Otomatis (Max 3 points)
             renderInsights(metrics, filteredOrders);
-
-            // Render Charts
             renderCharts(filteredOrders, startDate, endDate, metrics);
         }
 
@@ -1284,20 +1277,17 @@
 
             const insights = [];
 
-            // 1. Top Service
             if (metrics.rincianLayanan.length > 0) {
                 const topService = metrics.rincianLayanan[0];
                 insights.push(`Layanan terlaris: <strong class="text-gray-900 dark:text-white font-bold">${topService.name}</strong> menyumbang <strong class="text-gray-900 dark:text-white font-bold">${formatIDR(topService.totalOmzet)}</strong> (${topService.persentase.toFixed(1)}% omzet).`);
             }
 
-            // 2. Top Source
             const sourcesArr = Object.values(metrics.sumberMap).sort((a,b) => b.totalOmzet - a.totalOmzet);
             if (sourcesArr.length > 0) {
                 const topSource = sourcesArr[0];
                 insights.push(`Sumber customer terbesar berasal dari <strong class="text-gray-900 dark:text-white font-bold">${topSource.name}</strong> dengan <strong class="text-gray-900 dark:text-white font-bold">${topSource.count} order</strong>.`);
             }
 
-            // 3. Peak Revenue Day (Specific format: "Hari paling ramai: Selasa (total Rp580.000 dari semua hari Selasa di periode ini)")
             const dayOmzetMap = {};
             filteredOrders.forEach(o => {
                 const dayName = new Date(o.timestamp).toLocaleDateString('id-ID', { weekday: 'long' });
@@ -1317,12 +1307,10 @@
         }
 
         function renderCharts(orders, startDate, endDate, metrics) {
-            // Chart Dark Mode Color Adaptations
             const isDark = document.documentElement.classList.contains('dark');
             const textColor = isDark ? '#cbd5e1' : '#475569';
             const gridColor = isDark ? '#1e293b' : '#f1f5f9';
 
-            // 1. Daily Omzet Chart
             const dailyLabels = [];
             const dailyData = [];
             const curr = new Date(startDate);
@@ -1360,7 +1348,6 @@
                 }
             });
 
-            // 2. Services Breakdown Chart
             const ctxService = document.getElementById('chart-services').getContext('2d');
             if (chartServicesInstance) chartServicesInstance.destroy();
             
@@ -1385,7 +1372,6 @@
                 }
             });
 
-            // 3. Customer Sources Chart
             const sourceKeys = Object.keys(metrics.sumberMap);
             const sourceOmzet = sourceKeys.map(k => metrics.sumberMap[k].totalOmzet);
             
@@ -1414,7 +1400,6 @@
                 }
             });
 
-            // 4. Cycle Comparison Chart (3 cycles back)
             const allOrders = getOrders();
             const cycleLabels = [];
             const cycleOmzets = [];
@@ -1488,7 +1473,6 @@
             const fromVal = document.getElementById('rekap-date-from').value;
             const toVal = document.getElementById('rekap-date-to').value;
 
-            // Default preset if unselected: current cycle
             if (!fromVal || !toVal) {
                 presetRekap('currentCycle');
                 return;
@@ -1499,11 +1483,8 @@
 
             const allOrders = getOrders();
             const filteredOrders = filterOrdersByDateRange(allOrders, startDate, endDate);
-            
-            // RULE 1 & 2: Calculate metrics with single function
             const metrics = hitungMetrik(filteredOrders);
 
-            // Validation Badge
             const badgeEl = document.getElementById('rekap-validation-badge');
             if (metrics.isValid) {
                 badgeEl.className = "text-[10px] px-2 py-0.5 rounded-full font-medium bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800";
@@ -1513,14 +1494,22 @@
                 badgeEl.innerText = "Data Tidak Match";
             }
 
-            // Fill Rekap Cards
             document.getElementById('rekap-total-omzet').innerText = formatIDR(metrics.totalOmzet);
             document.getElementById('rekap-savings-rate-label').innerText = metrics.savingsRate;
             document.getElementById('rekap-total-tabungan').innerText = formatIDR(metrics.tabungan);
             document.getElementById('rekap-total-order').innerText = `${metrics.totalOrder} Order`;
             document.getElementById('rekap-aov').innerText = formatIDR(metrics.aov);
 
-            // Render Service Breakdown List
+            const printBtn = document.getElementById('btn-print-pdf');
+            const printMsg = document.getElementById('rekap-print-msg');
+            if (metrics.totalOrder === 0) {
+                printBtn.disabled = true;
+                if (printMsg) printMsg.classList.remove('hidden');
+            } else {
+                printBtn.disabled = false;
+                if (printMsg) printMsg.classList.add('hidden');
+            }
+
             const listContainer = document.getElementById('rekap-services-list');
             document.getElementById('rekap-layanan-count').innerText = `${metrics.rincianLayanan.length} Jenis Layanan`;
             listContainer.innerHTML = '';
@@ -1553,6 +1542,627 @@
             });
         }
 
+        function generateReportHTML(startDate, endDate) {
+            const allOrders = getOrders();
+            const filteredOrders = filterOrdersByDateRange(allOrders, startDate, endDate);
+            const metrics = hitungMetrik(filteredOrders);
+
+            const sumberList = Object.values(metrics.sumberMap).map(s => ({
+                ...s,
+                persentase: metrics.totalOmzet > 0 ? (s.totalOmzet / metrics.totalOmzet) * 100 : 0
+            })).sort((a,b) => b.totalOmzet - a.totalOmzet);
+
+            const sortedAscOrders = [...filteredOrders].sort((a,b) => new Date(a.timestamp) - new Date(b.timestamp));
+
+            const diffDays = Math.max(1, Math.round((endDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24)));
+            const avgDaily = Math.round(metrics.totalOmzet / diffDays);
+
+            const dailyCanvas = document.getElementById('chart-daily-omzet');
+            const serviceCanvas = document.getElementById('chart-services');
+
+            const dailyImgData = dailyCanvas ? dailyCanvas.toDataURL('image/png') : '';
+            const serviceImgData = serviceCanvas ? serviceCanvas.toDataURL('image/png') : '';
+
+            const strFrom = formatDateShort(startDate);
+            const strTo = formatDateShort(endDate);
+            const printTimestamp = new Date().toLocaleString('id-ID', { dateStyle: 'medium', timeStyle: 'short' });
+
+            return `
+                <div style="border-bottom: 2px solid #334c38; padding-bottom: 12px; margin-bottom: 16px; display: flex; justify-between; align-items: center;">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <img src="https://files.catbox.moe/ktqqnd.png" alt="Leadger" style="width: 44px; height: 44px; object-fit: contain; border-radius: 8px; border: 1px solid #cbd5e1;">
+                        <div>
+                            <h1 style="font-size: 20px; font-weight: 800; color: #233427; margin: 0; line-height: 1.1;">Laporan Order - Leadger</h1>
+                            <p style="font-size: 11px; color: #475569; margin-top: 2px; font-weight: 500;">Periode: <strong>${strFrom} – ${strTo}</strong></p>
+                        </div>
+                    </div>
+                    <div style="text-align: right; font-size: 10px; color: #64748b;">
+                        <p style="margin: 0;">Dicetak pada:</p>
+                        <strong style="color: #0f172a;">${printTimestamp}</strong>
+                    </div>
+                </div>
+
+                <div class="print-card" style="margin-bottom: 20px;">
+                    <h2 style="font-size: 13px; font-weight: 700; color: #233427; text-transform: uppercase; margin-bottom: 8px; border-bottom: 1px solid #e2e8f0; padding-bottom: 4px;">1. Ringkasan Performa Bisnis</h2>
+                    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;">
+                        <div style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 8px; border-radius: 6px;">
+                            <span style="font-size: 10px; color: #64748b; font-weight: 500;">Total Omzet</span>
+                            <p style="font-size: 14px; font-weight: 800; color: #3e5e45; margin-top: 2px;">${formatIDR(metrics.totalOmzet)}</p>
+                        </div>
+                        <div style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 8px; border-radius: 6px;">
+                            <span style="font-size: 10px; color: #64748b; font-weight: 500;">Total Order</span>
+                            <p style="font-size: 14px; font-weight: 800; color: #0f172a; margin-top: 2px;">${metrics.totalOrder} Order</p>
+                        </div>
+                        <div style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 8px; border-radius: 6px;">
+                            <span style="font-size: 10px; color: #64748b; font-weight: 500;">Tabungan (${metrics.savingsRate}%)</span>
+                            <p style="font-size: 14px; font-weight: 800; color: #15803d; margin-top: 2px;">${formatIDR(metrics.tabungan)}</p>
+                        </div>
+                        <div style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 8px; border-radius: 6px;">
+                            <span style="font-size: 10px; color: #64748b; font-weight: 500;">AOV (Rata / Order)</span>
+                            <p style="font-size: 14px; font-weight: 800; color: #0f172a; margin-top: 2px;">${formatIDR(metrics.aov)}</p>
+                        </div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 8px;">
+                        <div style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 8px; border-radius: 6px;">
+                            <span style="font-size: 10px; color: #64748b; font-weight: 500;">Rata-rata Omzet / Hari</span>
+                            <p style="font-size: 12px; font-weight: 700; color: #0f172a; margin-top: 2px;">${formatIDR(avgDaily)}</p>
+                        </div>
+                        <div style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 8px; border-radius: 6px;">
+                            <span style="font-size: 10px; color: #64748b; font-weight: 500;">Repeat Customer Rate</span>
+                            <p style="font-size: 12px; font-weight: 700; color: #0f172a; margin-top: 2px;">${metrics.repeatRate.toFixed(1)}%</p>
+                        </div>
+                        <div style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 8px; border-radius: 6px;">
+                            <span style="font-size: 10px; color: #64748b; font-weight: 500;">Referral Rate</span>
+                            <p style="font-size: 12px; font-weight: 700; color: #0f172a; margin-top: 2px;">${metrics.referralRate.toFixed(1)}%</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="print-card" style="margin-bottom: 20px;">
+                    <h2 style="font-size: 13px; font-weight: 700; color: #233427; text-transform: uppercase; margin-bottom: 8px; border-bottom: 1px solid #e2e8f0; padding-bottom: 4px;">2. Rincian Per Layanan Jasa</h2>
+                    <table style="width: 100%; font-size: 11px; text-align: left; border: 1px solid #cbd5e1;">
+                        <thead>
+                            <tr style="background: #3e5e45; color: #ffffff;">
+                                <th style="padding: 6px 8px; border: 1px solid #334c38;">Layanan</th>
+                                <th style="padding: 6px 8px; border: 1px solid #334c38; text-align: center;">Jumlah Order</th>
+                                <th style="padding: 6px 8px; border: 1px solid #334c38; text-align: right;">Total Omzet</th>
+                                <th style="padding: 6px 8px; border: 1px solid #334c38; text-align: right;">Kontribusi (%)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${metrics.rincianLayanan.map(r => `
+                                <tr style="border-bottom: 1px solid #e2e8f0;">
+                                    <td style="padding: 5px 8px; font-weight: 600;">${r.name}</td>
+                                    <td style="padding: 5px 8px; text-align: center;">${r.count}</td>
+                                    <td style="padding: 5px 8px; text-align: right; font-weight: 700;">${formatIDR(r.totalOmzet)}</td>
+                                    <td style="padding: 5px 8px; text-align: right;">${r.persentase.toFixed(1)}%</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                        <tfoot>
+                            <tr style="background: #f1f5f9; font-weight: 800; border-top: 2px solid #cbd5e1;">
+                                <td style="padding: 6px 8px;">TOTAL HASIL</td>
+                                <td style="padding: 6px 8px; text-align: center;">${metrics.totalOrder} Order</td>
+                                <td style="padding: 6px 8px; text-align: right; color: #3e5e45;">${formatIDR(metrics.totalOmzet)}</td>
+                                <td style="padding: 6px 8px; text-align: right;">100.0%</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+                <div class="print-card" style="margin-bottom: 20px;">
+                    <h2 style="font-size: 13px; font-weight: 700; color: #233427; text-transform: uppercase; margin-bottom: 8px; border-bottom: 1px solid #e2e8f0; padding-bottom: 4px;">3. Rincian Sumber Customer</h2>
+                    <table style="width: 100%; font-size: 11px; text-align: left; border: 1px solid #cbd5e1;">
+                        <thead>
+                            <tr style="background: #3e5e45; color: #ffffff;">
+                                <th style="padding: 6px 8px; border: 1px solid #334c38;">Sumber Order</th>
+                                <th style="padding: 6px 8px; border: 1px solid #334c38; text-align: center;">Jumlah Order</th>
+                                <th style="padding: 6px 8px; border: 1px solid #334c38; text-align: right;">Total Omzet</th>
+                                <th style="padding: 6px 8px; border: 1px solid #334c38; text-align: right;">Porsi Omzet (%)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${sumberList.map(s => `
+                                <tr style="border-bottom: 1px solid #e2e8f0;">
+                                    <td style="padding: 5px 8px; font-weight: 600;">${s.name}</td>
+                                    <td style="padding: 5px 8px; text-align: center;">${s.count}</td>
+                                    <td style="padding: 5px 8px; text-align: right; font-weight: 700;">${formatIDR(s.totalOmzet)}</td>
+                                    <td style="padding: 5px 8px; text-align: right;">${s.persentase.toFixed(1)}%</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                        <tfoot>
+                            <tr style="background: #f1f5f9; font-weight: 800; border-top: 2px solid #cbd5e1;">
+                                <td style="padding: 6px 8px;">TOTAL HASIL</td>
+                                <td style="padding: 6px 8px; text-align: center;">${metrics.totalOrder} Order</td>
+                                <td style="padding: 6px 8px; text-align: right; color: #3e5e45;">${formatIDR(metrics.totalOmzet)}</td>
+                                <td style="padding: 6px 8px; text-align: right;">100.0%</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+                ${(dailyImgData || serviceImgData) ? `
+                <div class="print-card" style="margin-bottom: 20px;">
+                    <h2 style="font-size: 13px; font-weight: 700; color: #233427; text-transform: uppercase; margin-bottom: 8px; border-bottom: 1px solid #e2e8f0; padding-bottom: 4px;">4. Visualisasi Grafik</h2>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: center;">
+                        <div style="border: 1px solid #e2e8f0; padding: 6px; border-radius: 6px; text-align: center;">
+                            <p style="font-size: 10px; font-weight: 700; color: #475569; margin-bottom: 4px;">Tren Omzet Harian</p>
+                            <img src="${dailyImgData}" style="max-width: 100%; height: 160px; object-fit: contain; margin: 0 auto;">
+                        </div>
+                        <div style="border: 1px solid #e2e8f0; padding: 6px; border-radius: 6px; text-align: center;">
+                            <p style="font-size: 10px; font-weight: 700; color: #475569; margin-bottom: 4px;">Kontribusi Layanan</p>
+                            <img src="${serviceImgData}" style="max-width: 100%; height: 160px; object-fit: contain; margin: 0 auto;">
+                        </div>
+                    </div>
+                </div>
+                ` : ''}
+
+                <div class="print-card" style="margin-bottom: 12px;">
+                    <h2 style="font-size: 13px; font-weight: 700; color: #233427; text-transform: uppercase; margin-bottom: 8px; border-bottom: 1px solid #e2e8f0; padding-bottom: 4px;">5. Daftar Semua Transaksi Order (${metrics.totalOrder} Record)</h2>
+                    <table style="width: 100%; font-size: 10px; text-align: left; border: 1px solid #cbd5e1;">
+                        <thead>
+                            <tr style="background: #233427; color: #ffffff;">
+                                <th style="padding: 5px 6px; border: 1px solid #1a271d; width: 80px;">Tanggal</th>
+                                <th style="padding: 5px 6px; border: 1px solid #1a271d;">Layanan Jasa</th>
+                                <th style="padding: 5px 6px; border: 1px solid #1a271d;">Sumber</th>
+                                <th style="padding: 5px 6px; border: 1px solid #1a271d;">Status Cust</th>
+                                <th style="padding: 5px 6px; border: 1px solid #1a271d; text-align: right;">Harga (Rp)</th>
+                                <th style="padding: 5px 6px; border: 1px solid #1a271d; text-align: right;">Tabungan (Rp)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${sortedAscOrders.map(ord => {
+                                const d = new Date(ord.timestamp);
+                                const h = Number(ord.harga) || 0;
+                                const t = Math.round(h * (metrics.savingsRate / 100));
+                                return `
+                                    <tr style="border-bottom: 1px solid #e2e8f0;">
+                                        <td style="padding: 4px 6px; font-weight: 500; white-space: nowrap;">${formatDateShort(d)}</td>
+                                        <td style="padding: 4px 6px; font-weight: 600;">${ord.layanan}</td>
+                                        <td style="padding: 4px 6px;">${ord.sumber}</td>
+                                        <td style="padding: 4px 6px;">${ord.status}${ord.referral === 'Referral' ? ' (Ref)' : ''}</td>
+                                        <td style="padding: 4px 6px; text-align: right; font-weight: 700;">${formatIDR(h)}</td>
+                                        <td style="padding: 4px 6px; text-align: right; color: #15803d;">${formatIDR(t)}</td>
+                                    </tr>
+                                `;
+                            }).join('')}
+                        </tbody>
+                        <tfoot>
+                            <tr style="background: #f1f5f9; font-weight: 800; border-top: 2px solid #cbd5e1;">
+                                <td colspan="4" style="padding: 6px; text-align: right;">TOTAL OMZET & TABUNGAN:</td>
+                                <td style="padding: 6px; text-align: right; color: #3e5e45; font-size: 11px;">${formatIDR(metrics.totalOmzet)}</td>
+                                <td style="padding: 6px; text-align: right; color: #15803d; font-size: 11px;">${formatIDR(metrics.tabungan)}</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+                <div style="margin-top: 16px; border-top: 1px solid #cbd5e1; padding-top: 8px; text-align: justify; font-size: 9px; color: #64748b; display: flex; justify-between;">
+                    <span>Leadger - Order & Revenue Ledger System</span>
+                    <span>Halaman 1 dari 1</span>
+                </div>
+            `;
+        }
+
+        let activePrintStartDate = null;
+        let activePrintEndDate = null;
+
+        function openPrintPreviewModal() {
+            const fromVal = document.getElementById('rekap-date-from').value;
+            const toVal = document.getElementById('rekap-date-to').value;
+
+            if (!fromVal || !toVal) return;
+
+            activePrintStartDate = new Date(fromVal + "T00:00:00");
+            activePrintEndDate = new Date(toVal + "T23:59:59");
+
+            const allOrders = getOrders();
+            const filteredOrders = filterOrdersByDateRange(allOrders, activePrintStartDate, activePrintEndDate);
+
+            if (filteredOrders.length === 0) {
+                showAlertModal('Tidak ada order pada rentang tanggal ini untuk dicetak.', 'warning');
+                return;
+            }
+
+            const htmlContent = generateReportHTML(activePrintStartDate, activePrintEndDate);
+            
+            document.getElementById('preview-report-body').innerHTML = htmlContent;
+            document.getElementById('print-report-container').innerHTML = htmlContent;
+
+            document.getElementById('modal-print-preview').classList.remove('hidden');
+        }
+
+        function closePrintPreviewModal() {
+            document.getElementById('modal-print-preview').classList.add('hidden');
+        }
+
+        function doPrintReport() {
+            if (!activePrintStartDate || !activePrintEndDate) {
+                const fromVal = document.getElementById('rekap-date-from').value;
+                const toVal = document.getElementById('rekap-date-to').value;
+                activePrintStartDate = new Date(fromVal + "T00:00:00");
+                activePrintEndDate = new Date(toVal + "T23:59:59");
+            }
+
+            const htmlContent = generateReportHTML(activePrintStartDate, activePrintEndDate);
+            document.getElementById('print-report-container').innerHTML = htmlContent;
+
+            setTimeout(() => {
+                const oldTitle = document.title;
+                document.title = `Laporan Leadger ${formatDateISO(activePrintStartDate)} - ${formatDateISO(activePrintEndDate)}`;
+
+                try {
+                    window.print();
+                } catch (e) {
+                    console.error("Print Error:", e);
+                    showAlertModal("Buka halaman ini di Safari, lalu tekan Bagikan > Cetak atau Opsi > PDF > Simpan ke Files.", "warning");
+                }
+
+                setTimeout(() => {
+                    document.title = oldTitle;
+                }, 1000);
+            }, 300);
+        }
+
+        async function downloadReportPDF() {
+            if (!activePrintStartDate || !activePrintEndDate) {
+                const fromVal = document.getElementById('rekap-date-from').value;
+                const toVal = document.getElementById('rekap-date-to').value;
+                activePrintStartDate = new Date(fromVal + "T00:00:00");
+                activePrintEndDate = new Date(toVal + "T23:59:59");
+            }
+
+            const strFrom = formatDateISO(activePrintStartDate);
+            const strTo = formatDateISO(activePrintEndDate);
+            const filename = `Laporan-Leadger-${strFrom}_${strTo}.pdf`;
+
+            try {
+                const { jsPDF } = window.jspdf;
+                if (!jsPDF) {
+                    showAlertModal('Library PDF gagal dimuat. Pastikan perangkat terhubung ke internet.', 'error');
+                    return;
+                }
+
+                const doc = new jsPDF({
+                    orientation: 'portrait',
+                    unit: 'mm',
+                    format: 'a4'
+                });
+
+                const allOrders = getOrders();
+                const filteredOrders = filterOrdersByDateRange(allOrders, activePrintStartDate, activePrintEndDate);
+                const metrics = hitungMetrik(filteredOrders);
+
+                const diffDays = Math.max(1, Math.round((activePrintEndDate.getTime() - activePrintStartDate.getTime()) / (1000 * 3600 * 24)));
+                const avgDaily = Math.round(metrics.totalOmzet / diffDays);
+
+                let cursorY = 15;
+
+                // 1. KOP HEADER
+                doc.setFont('helvetica', 'bold');
+                doc.setFontSize(16);
+                doc.setTextColor(35, 52, 39); // #233427
+                doc.text("Laporan Order - Leadger", 15, cursorY + 4);
+
+                doc.setFont('helvetica', 'normal');
+                doc.setFontSize(9);
+                doc.setTextColor(71, 85, 105);
+                doc.text(`Periode: ${formatDateShort(activePrintStartDate)} - ${formatDateShort(activePrintEndDate)}`, 15, cursorY + 10);
+
+                const printTimeStr = new Date().toLocaleString('id-ID', { dateStyle: 'medium', timeStyle: 'short' });
+                doc.text(`Dicetak pada: ${printTimeStr}`, 195, cursorY + 10, { align: 'right' });
+
+                cursorY += 16;
+                doc.setDrawColor(203, 213, 225);
+                doc.setLineWidth(0.5);
+                doc.line(15, cursorY, 195, cursorY);
+                cursorY += 6;
+
+                // 2. RINGKASAN PERFORMA BISNIS (BOX KPI)
+                doc.setFont('helvetica', 'bold');
+                doc.setFontSize(10);
+                doc.setTextColor(35, 52, 39);
+                doc.text("1. RINGKASAN PERFORMA BISNIS", 15, cursorY);
+                cursorY += 4;
+
+                const kpiBoxData = [
+                    ["Total Omzet", formatIDR(metrics.totalOmzet)],
+                    ["Total Order", `${metrics.totalOrder} Order`],
+                    [`Tabungan (${metrics.savingsRate}%)`, formatIDR(metrics.tabungan)],
+                    ["AOV (Rata / Order)", formatIDR(metrics.aov)],
+                    ["Rata Omzet / Hari", formatIDR(avgDaily)],
+                    ["Repeat Rate", `${metrics.repeatRate.toFixed(1)}%`],
+                    ["Referral Rate", `${metrics.referralRate.toFixed(1)}%`]
+                ];
+
+                doc.autoTable({
+                    startY: cursorY,
+                    head: [["Indicator Metric", "Value"]],
+                    body: kpiBoxData,
+                    theme: 'grid',
+                    headStyles: { fillColor: [62, 94, 69], textColor: [255, 255, 255], fontStyle: 'bold', fontSize: 8 },
+                    bodyStyles: { fontSize: 8, textColor: [15, 23, 42] },
+                    columnStyles: {
+                        0: { cellWidth: 100, fontStyle: 'bold' },
+                        1: { cellWidth: 80, halign: 'right' }
+                    },
+                    margin: { left: 15, right: 15 }
+                });
+
+                cursorY = doc.lastAutoTable.finalY + 8;
+
+                // 3. RINCIAN LAYANAN JASA
+                doc.setFont('helvetica', 'bold');
+                doc.setFontSize(10);
+                doc.setTextColor(35, 52, 39);
+                doc.text("2. RINCIAN PER LAYANAN JASA", 15, cursorY);
+                cursorY += 4;
+
+                const serviceRows = metrics.rincianLayanan.map(r => [
+                    r.name,
+                    `${r.count} Order`,
+                    formatIDR(r.totalOmzet),
+                    `${r.persentase.toFixed(1)}%`
+                ]);
+
+                serviceRows.push([
+                    "TOTAL HASIL",
+                    `${metrics.totalOrder} Order`,
+                    formatIDR(metrics.totalOmzet),
+                    "100.0%"
+                ]);
+
+                doc.autoTable({
+                    startY: cursorY,
+                    head: [["Layanan Jasa", "Jumlah Order", "Total Omzet", "Kontribusi (%)"]],
+                    body: serviceRows,
+                    theme: 'striped',
+                    headStyles: { fillColor: [62, 94, 69], textColor: [255, 255, 255], fontStyle: 'bold', fontSize: 8 },
+                    bodyStyles: { fontSize: 8, textColor: [15, 23, 42] },
+                    columnStyles: {
+                        0: { fontStyle: 'bold' },
+                        1: { halign: 'center' },
+                        2: { halign: 'right', fontStyle: 'bold' },
+                        3: { halign: 'right' }
+                    },
+                    didParseCell: function(data) {
+                        if (data.row.index === serviceRows.length - 1) {
+                            data.cell.styles.fontStyle = 'bold';
+                            data.cell.styles.fillColor = [241, 245, 249];
+                        }
+                    },
+                    margin: { left: 15, right: 15 }
+                });
+
+                cursorY = doc.lastAutoTable.finalY + 8;
+
+                // 4. RINCIAN SUMBER CUSTOMER
+                doc.setFont('helvetica', 'bold');
+                doc.setFontSize(10);
+                doc.setTextColor(35, 52, 39);
+                doc.text("3. RINCIAN SUMBER CUSTOMER", 15, cursorY);
+                cursorY += 4;
+
+                const sumberList = Object.values(metrics.sumberMap).map(s => ({
+                    ...s,
+                    persentase: metrics.totalOmzet > 0 ? (s.totalOmzet / metrics.totalOmzet) * 100 : 0
+                })).sort((a,b) => b.totalOmzet - a.totalOmzet);
+
+                const sourceRows = sumberList.map(s => [
+                    s.name,
+                    `${s.count} Order`,
+                    formatIDR(s.totalOmzet),
+                    `${s.persentase.toFixed(1)}%`
+                ]);
+
+                sourceRows.push([
+                    "TOTAL HASIL",
+                    `${metrics.totalOrder} Order`,
+                    formatIDR(metrics.totalOmzet),
+                    "100.0%"
+                ]);
+
+                doc.autoTable({
+                    startY: cursorY,
+                    head: [["Sumber Order", "Jumlah Order", "Total Omzet", "Porsi Omzet (%)"]],
+                    body: sourceRows,
+                    theme: 'striped',
+                    headStyles: { fillColor: [62, 94, 69], textColor: [255, 255, 255], fontStyle: 'bold', fontSize: 8 },
+                    bodyStyles: { fontSize: 8, textColor: [15, 23, 42] },
+                    columnStyles: {
+                        0: { fontStyle: 'bold' },
+                        1: { halign: 'center' },
+                        2: { halign: 'right', fontStyle: 'bold' },
+                        3: { halign: 'right' }
+                    },
+                    didParseCell: function(data) {
+                        if (data.row.index === sourceRows.length - 1) {
+                            data.cell.styles.fontStyle = 'bold';
+                            data.cell.styles.fillColor = [241, 245, 249];
+                        }
+                    },
+                    margin: { left: 15, right: 15 }
+                });
+
+                cursorY = doc.lastAutoTable.finalY + 8;
+
+                // 5. EMBED CHART IMAGES IF AVAILABLE
+                const dailyCanvas = document.getElementById('chart-daily-omzet');
+                const serviceCanvas = document.getElementById('chart-services');
+
+                if (dailyCanvas && serviceCanvas && metrics.totalOrder > 0) {
+                    if (cursorY > 200) {
+                        doc.addPage();
+                        cursorY = 15;
+                    }
+
+                    doc.setFont('helvetica', 'bold');
+                    doc.setFontSize(10);
+                    doc.setTextColor(35, 52, 39);
+                    doc.text("4. VISUALISASI GRAFIK", 15, cursorY);
+                    cursorY += 4;
+
+                    try {
+                        const dailyImg = dailyCanvas.toDataURL('image/png');
+                        const serviceImg = serviceCanvas.toDataURL('image/png');
+
+                        doc.addImage(dailyImg, 'PNG', 15, cursorY, 85, 45);
+                        doc.addImage(serviceImg, 'PNG', 105, cursorY, 85, 45);
+                        cursorY += 50;
+                    } catch (e) {
+                        console.log("Chart snapshot skipped:", e);
+                    }
+                }
+
+                // 6. DAFTAR SEMUA TRANSAKSI
+                if (cursorY > 210) {
+                    doc.addPage();
+                    cursorY = 15;
+                }
+
+                doc.setFont('helvetica', 'bold');
+                doc.setFontSize(10);
+                doc.setTextColor(35, 52, 39);
+                doc.text(`5. DAFTAR SEMUA TRANSAKSI ORDER (${metrics.totalOrder} Record)`, 15, cursorY);
+                cursorY += 4;
+
+                const sortedAscOrders = [...filteredOrders].sort((a,b) => new Date(a.timestamp) - new Date(b.timestamp));
+
+                const transactionRows = sortedAscOrders.map(ord => {
+                    const d = new Date(ord.timestamp);
+                    const h = Number(ord.harga) || 0;
+                    const t = Math.round(h * (metrics.savingsRate / 100));
+                    return [
+                        formatDateShort(d),
+                        ord.layanan,
+                        ord.sumber,
+                        `${ord.status}${ord.referral === 'Referral' ? ' (Ref)' : ''}`,
+                        formatIDR(h),
+                        formatIDR(t)
+                    ];
+                });
+
+                transactionRows.push([
+                    "TOTAL",
+                    "-",
+                    "-",
+                    "-",
+                    formatIDR(metrics.totalOmzet),
+                    formatIDR(metrics.tabungan)
+                ]);
+
+                doc.autoTable({
+                    startY: cursorY,
+                    head: [["Tanggal", "Layanan Jasa", "Sumber", "Status Cust.", "Harga", "Tabungan"]],
+                    body: transactionRows,
+                    theme: 'grid',
+                    headStyles: { fillColor: [35, 52, 39], textColor: [255, 255, 255], fontStyle: 'bold', fontSize: 7.5 },
+                    bodyStyles: { fontSize: 7.5, textColor: [15, 23, 42] },
+                    columnStyles: {
+                        0: { cellWidth: 24 },
+                        1: { fontStyle: 'bold' },
+                        2: { cellWidth: 22 },
+                        3: { cellWidth: 26 },
+                        4: { halign: 'right', fontStyle: 'bold' },
+                        5: { halign: 'right', textColor: [21, 128, 61] }
+                    },
+                    didParseCell: function(data) {
+                        if (data.row.index === transactionRows.length - 1) {
+                            data.cell.styles.fontStyle = 'bold';
+                            data.cell.styles.fillColor = [241, 245, 249];
+                        }
+                    },
+                    margin: { left: 15, right: 15 }
+                });
+
+                // FOOTER PAGE NUMBERS
+                const totalPages = doc.getNumberOfPages();
+                for (let i = 1; i <= totalPages; i++) {
+                    doc.setPage(i);
+                    doc.setFont('helvetica', 'normal');
+                    doc.setFontSize(8);
+                    doc.setTextColor(100, 116, 139);
+                    doc.text(`Leadger - Order & Revenue Ledger System`, 15, 287);
+                    doc.text(`Halaman ${i} dari ${totalPages}`, 195, 287, { align: 'right' });
+                }
+
+                // delivery strategies
+                const pdfBlob = doc.output('blob');
+
+                // 1. Try Native iOS / Mobile Share API
+                try {
+                    const pdfFile = new File([pdfBlob], filename, { type: 'application/pdf' });
+                    if (navigator.canShare && navigator.canShare({ files: [pdfFile] })) {
+                        await navigator.share({
+                            title: `Laporan Leadger ${strFrom} - ${strTo}`,
+                            files: [pdfFile]
+                        });
+                        showAlertModal('PDF berhasil dibagikan / disimpan!', 'success');
+                        return;
+                    }
+                } catch (shareErr) {
+                    console.warn("Native share skipped/cancelled:", shareErr);
+                }
+
+                // 2. Try direct doc.save
+                try {
+                    doc.save(filename);
+                    showAlertModal('File PDF berhasil dibuat dan diunduh!', 'success');
+                    return;
+                } catch (saveErr) {
+                    console.warn("Direct save failed:", saveErr);
+                }
+
+                // 3. Fallback Blob URL
+                const blobUrl = URL.createObjectURL(pdfBlob);
+                window.open(blobUrl, '_blank');
+                showAlertModal('PDF telah dibuka di tab baru. Tekan Bagikan > Simpan ke Files di browser Anda.', 'info');
+
+            } catch (err) {
+                console.error("PDF Generation error:", err);
+                showAlertModal('Gagal membuat file PDF. Silakan gunakan tombol "Cetak" sebagai cadangan.', 'error');
+            }
+        }
+
+        function copySummaryText() {
+            const fromVal = document.getElementById('rekap-date-from').value;
+            const toVal = document.getElementById('rekap-date-to').value;
+            if (!fromVal || !toVal) return;
+
+            const startDate = new Date(fromVal + "T00:00:00");
+            const endDate = new Date(toVal + "T23:59:59");
+            const allOrders = getOrders();
+            const filteredOrders = filterOrdersByDateRange(allOrders, startDate, endDate);
+            const metrics = hitungMetrik(filteredOrders);
+
+            let summaryText = `📊 LAPORAN PERFORMA LEADGER\n`;
+            summaryText += `Periode: ${formatDateShort(startDate)} - ${formatDateShort(endDate)}\n`;
+            summaryText += `-----------------------------------\n`;
+            summaryText += `• Total Omzet: ${formatIDR(metrics.totalOmzet)}\n`;
+            summaryText += `• Total Order: ${metrics.totalOrder} Order\n`;
+            summaryText += `• Tabungan (${metrics.savingsRate}%): ${formatIDR(metrics.tabungan)}\n`;
+            summaryText += `• AOV (Rata/Order): ${formatIDR(metrics.aov)}\n`;
+            summaryText += `• Repeat Rate: ${metrics.repeatRate.toFixed(1)}%\n`;
+            summaryText += `• Referral Rate: ${metrics.referralRate.toFixed(1)}%\n\n`;
+            summaryText += `📦 RINCIAN LAYANAN:\n`;
+            metrics.rincianLayanan.forEach(r => {
+                summaryText += `- ${r.name}: ${r.count} Order | ${formatIDR(r.totalOmzet)} (${r.persentase.toFixed(1)}%)\n`;
+            });
+
+            const tempTextarea = document.createElement('textarea');
+            tempTextarea.value = summaryText;
+            document.body.appendChild(tempTextarea);
+            tempTextarea.select();
+            try {
+                document.execCommand('copy');
+                showAlertModal('Ringkasan laporan berhasil disalin ke clipboard!', 'success');
+            } catch (err) {
+                showAlertModal('Gagal menyalin ringkasan laporan.', 'error');
+            }
+            document.body.removeChild(tempTextarea);
+        }
+
         function renderDataView() {
             const allOrders = getOrders();
             const searchVal = document.getElementById('data-search-input').value.toLowerCase().trim();
@@ -1560,10 +2170,8 @@
             const filterSource = document.getElementById('data-filter-source').value;
             const filterStatus = document.getElementById('data-filter-status').value;
 
-            // Populate Filter Dropdowns
             populateDataFilterOptions();
 
-            // Filter logic
             const filtered = allOrders.filter(ord => {
                 const matchesSearch = !searchVal || 
                     ord.layanan.toLowerCase().includes(searchVal) || 
@@ -1577,10 +2185,8 @@
                 return matchesSearch && matchesService && matchesSource && matchesStatus;
             });
 
-            // Sort latest first
             filtered.sort((a,b) => new Date(b.timestamp) - new Date(a.timestamp));
 
-            // Compute Filtered Omzet using core function
             const metrics = hitungMetrik(filtered);
 
             document.getElementById('data-total-count').innerText = `Total: ${metrics.totalOrder} Order`;
@@ -1630,7 +2236,6 @@
             const currService = serviceSelect.value;
             const currSource = sourceSelect.value;
 
-            // Services
             serviceSelect.innerHTML = `<option value="">Semua Layanan</option>`;
             settings.services.forEach(s => {
                 const opt = document.createElement('option');
@@ -1640,7 +2245,6 @@
             });
             serviceSelect.value = currService;
 
-            // Sources
             sourceSelect.innerHTML = `<option value="">Semua Sumber</option>`;
             settings.sources.forEach(s => {
                 const opt = document.createElement('option');
@@ -1658,7 +2262,6 @@
             const targetVal = settings.monthlyTarget || 3000000;
             document.getElementById('setting-monthly-target').value = targetVal ? targetVal.toLocaleString('id-ID') : '';
 
-            // Render Services List
             const servicesList = document.getElementById('settings-services-list');
             servicesList.innerHTML = '';
             settings.services.forEach((s, idx) => {
@@ -1673,7 +2276,6 @@
                 servicesList.appendChild(li);
             });
 
-            // Render Sources List
             const sourcesList = document.getElementById('settings-sources-list');
             sourcesList.innerHTML = '';
             settings.sources.forEach((s, idx) => {
@@ -1779,10 +2381,6 @@
             showAlertModal('Backup JSON berhasil diunduh!', 'success');
         }
 
-        /**
-         * STREAMING_CHUNK:Managing backup JSON imports and modal controls...
-         * Legacy Import Converter & Deduplication
-         */
         function importBackupJSON(event) {
             const file = event.target.files[0];
             if (!file) return;
@@ -1805,7 +2403,6 @@
                     let addedCount = 0;
 
                     rawOrders.forEach(raw => {
-                        // Normalize Legacy Fields
                         let layananVal = raw.layanan || raw.service || 'Edit Dokumen';
                         if (layananVal === 'Lainnya') layananVal = 'Edit Dokumen';
 
@@ -1860,7 +2457,6 @@
             const form = document.getElementById('form-order');
             const titleEl = document.getElementById('modal-order-title');
 
-            // Populate Dropdowns in form
             const settings = getSettings();
             const layananSelect = document.getElementById('form-order-layanan');
             const sumberSelect = document.getElementById('form-order-sumber');
@@ -1882,7 +2478,6 @@
             });
 
             if (orderId) {
-                // Edit mode
                 const orders = getOrders();
                 const ord = orders.find(o => o.id === orderId);
                 if (!ord) return;
@@ -1905,7 +2500,6 @@
                 document.getElementById('form-order-referral').value = ord.referral;
                 document.getElementById('form-order-durasi').value = ord.durasi || 30;
             } else {
-                // New Order mode
                 titleEl.innerText = 'Tambah Order Baru';
                 form.reset();
                 document.getElementById('form-order-id').value = '';
@@ -1941,7 +2535,6 @@
             const orders = getOrders();
 
             if (id) {
-                // Update
                 const idx = orders.findIndex(o => o.id === id);
                 if (idx !== -1) {
                     orders[idx] = {
@@ -1956,7 +2549,6 @@
                     };
                 }
             } else {
-                // Insert
                 const newOrder = {
                     id: 'ORD-' + Date.now().toString().slice(-6),
                     timestamp: new Date(datetime).toISOString(),
@@ -1974,7 +2566,6 @@
             closeOrderModal();
             showAlertModal('Data order berhasil disimpan!', 'success');
 
-            // Refresh view
             renderBerandaView();
             renderDataView();
         }
@@ -2087,7 +2678,7 @@
                 'Tindakan ini akan menghapus semua order dan mengembalikan pengaturan ke awal!',
                 () => {
                     localStorage.removeItem(STORAGE_KEY);
-                    getAppData(); // re-initialize empty state
+                    getAppData();
                     showAlertModal('Seluruh data berhasil di-reset!', 'success');
                     switchTab('beranda');
                 },
@@ -2134,7 +2725,6 @@
                 localStorage.setItem('leadger_theme', 'dark');
             }
 
-            // Re-render charts to adjust text color contrast
             if (!document.getElementById('view-analisis').classList.contains('hidden')) {
                 renderAnalisisView();
             }
@@ -2158,7 +2748,7 @@
 
         window.onload = function() {
             initTheme();
-            getAppData(); // Ensure initial seed exists
+            getAppData();
             switchTab('beranda');
         };
     </script>
