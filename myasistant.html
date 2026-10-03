@@ -101,9 +101,6 @@
         .app-nav {
             padding-bottom: env(safe-area-inset-bottom, 0px);
         }
-        .main-content {
-            padding-bottom: calc(120px + env(safe-area-inset-bottom, 0px));
-        }
 
         /* PRINT MEDIA STYLING (A4 Portrait Report Fallback) */
         @media print {
@@ -183,7 +180,7 @@
         </header>
 
         <!-- Main Content Area -->
-        <main class="flex-1 px-4 py-4 overflow-y-auto main-content">
+        <main class="flex-1 px-4 pt-4 overflow-y-auto" style="padding-bottom: calc(140px + env(safe-area-inset-bottom, 0px));">
 
             <!-- TAB 1: BERANDA -->
             <section id="view-beranda" class="tab-content space-y-4">
@@ -259,7 +256,7 @@
                     <div id="quick-input-preview" class="hidden text-xs p-2 rounded-lg bg-gray-50 dark:bg-gray-800/80 border border-dashed border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-200"></div>
                 </div>
 
-                <div class="space-y-2">
+                <div class="space-y-2 pb-6">
                     <div class="flex justify-between items-center">
                         <h3 class="text-sm font-semibold text-gray-900 dark:text-white">5 Order Terbaru</h3>
                         <button onclick="switchTab('data')" class="text-xs text-brand-600 dark:text-emerald-400 font-medium hover:underline">Lihat Semua</button>
@@ -273,7 +270,7 @@
                 <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-3 shadow-sm space-y-2">
                     <div class="flex items-center justify-between">
                         <label class="text-xs font-semibold text-gray-700 dark:text-gray-300">Pilih Rentang Waktu:</label>
-                        <div id="analisis-validation-badge" class="text-[11px] px-2 py-0.5 rounded-full font-medium flex items-center gap-1"></div>
+                        <button id="analisis-validation-badge" class="text-[11px] px-2 py-0.5 rounded-full font-medium flex items-center gap-1 transition-transform active:scale-95"></button>
                     </div>
                     
                     <div class="grid grid-cols-4 gap-1">
@@ -342,7 +339,7 @@
                     <ul id="analisis-insights-list" class="space-y-1.5 text-xs text-gray-700 dark:text-[#E8EDE9]"></ul>
                 </div>
 
-                <div class="space-y-4">
+                <div class="space-y-4 pb-6">
                     <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-3 shadow-sm">
                         <h4 class="text-xs font-semibold text-gray-900 dark:text-white mb-2">Tren Omzet Harian</h4>
                         <div class="h-48 relative">
@@ -378,7 +375,7 @@
                 <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-3 shadow-sm space-y-3">
                     <div class="flex justify-between items-center">
                         <h3 class="text-xs font-bold text-gray-900 dark:text-white uppercase tracking-wider">Filter Periode Rekap</h3>
-                        <div id="rekap-validation-badge" class="text-[10px] px-2 py-0.5 rounded-full font-medium"></div>
+                        <button id="rekap-validation-badge" class="text-[10px] px-2 py-0.5 rounded-full font-medium transition-transform active:scale-95"></button>
                     </div>
 
                     <div class="grid grid-cols-2 gap-2">
@@ -427,7 +424,7 @@
                     </div>
                 </div>
 
-                <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-3.5 shadow-sm space-y-3">
+                <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-3.5 shadow-sm space-y-3 pb-6">
                     <div class="flex justify-between items-center border-b border-gray-100 dark:border-gray-800 pb-2">
                         <h4 class="text-xs font-bold text-gray-900 dark:text-white uppercase">Rincian Per Layanan</h4>
                         <span id="rekap-layanan-count" class="text-xs text-gray-500 dark:text-gray-400">0 Jenis Layanan</span>
@@ -465,7 +462,7 @@
                     <span id="data-filtered-omzet" class="text-xs font-bold text-brand-600 dark:text-emerald-400">Rp0</span>
                 </div>
 
-                <div id="data-orders-list" class="space-y-2"></div>
+                <div id="data-orders-list" class="space-y-2 pb-6"></div>
             </section>
 
             <!-- TAB 5: PENGATURAN / MENU -->
@@ -526,7 +523,7 @@
                     <ul id="settings-sources-list" class="divide-y divide-gray-100 dark:divide-gray-800 text-xs"></ul>
                 </div>
 
-                <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-4 shadow-sm space-y-3">
+                <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-4 shadow-sm space-y-3 pb-8">
                     <h3 class="text-xs font-bold text-gray-900 dark:text-white uppercase tracking-wider flex items-center gap-1.5">
                         <i class="fa-solid fa-database text-brand-500"></i> Backup & Data
                     </h3>
@@ -549,7 +546,7 @@
         </main>
 
         <!-- Floating Add Button -->
-        <button onclick="openOrderModal()" class="fixed bottom-[calc(65px+env(safe-area-inset-bottom,0px))] right-4 sm:right-auto sm:left-1/2 sm:translate-x-[160px] z-40 bg-brand-500 hover:bg-brand-600 text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center text-xl transition-transform active:scale-95 border-2 border-white dark:border-gray-900" title="Tambah Order">
+        <button id="floating-add-btn" onclick="openOrderModal()" class="fixed bottom-[calc(65px+env(safe-area-inset-bottom,0px))] right-4 sm:right-auto sm:left-1/2 sm:translate-x-[160px] z-40 bg-brand-500 hover:bg-brand-600 text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center text-xl transition-transform active:scale-95 border-2 border-white dark:border-gray-900" title="Tambah Order">
             <i class="fa-solid fa-plus"></i>
         </button>
 
@@ -729,6 +726,26 @@
             </div>
         </div>
 
+        <!-- MODAL: PROBLEMATIC ORDERS DETAIL -->
+        <div id="modal-problematic" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+            <div class="bg-white dark:bg-gray-900 rounded-2xl w-full max-w-sm p-4 shadow-2xl border border-gray-200 dark:border-gray-800 space-y-3 relative max-h-[85vh] flex flex-col">
+                <div class="flex justify-between items-center border-b border-gray-100 dark:border-gray-800 pb-2">
+                    <h3 class="text-sm font-bold text-gray-900 dark:text-white flex items-center gap-1.5">
+                        <i class="fa-solid fa-triangle-exclamation text-amber-500"></i> Order Perlu Dicek
+                    </h3>
+                    <button onclick="closeProblematicModal()" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 p-1">
+                        <i class="fa-solid fa-xmark text-lg"></i>
+                    </button>
+                </div>
+
+                <div id="problematic-orders-list" class="flex-1 overflow-y-auto space-y-2 pr-1 text-xs"></div>
+
+                <div class="pt-2 border-t border-gray-100 dark:border-gray-800">
+                    <button onclick="closeProblematicModal()" class="w-full py-2 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200 rounded-lg text-xs font-semibold hover:bg-gray-200 dark:hover:bg-gray-700">Tutup</button>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <!-- PRINTABLE REPORT CONTAINER (Targeted exclusively by @media print) -->
@@ -737,7 +754,7 @@
     <!-- JavaScript Business Engine & Application Logic -->
     <script>
         const STORAGE_KEY = 'leadgerV3';
-        
+
         /**
          * Parses a formatted string or raw input into a pure numeric integer.
          */
@@ -745,6 +762,26 @@
             if (typeof val === 'number') return Math.max(0, Math.floor(val));
             const clean = String(val || '').replace(/\D/g, '');
             return parseInt(clean, 10) || 0;
+        }
+
+        /**
+         * Calculates elapsed calendar days from startDate up to MIN(today, endDate).
+         * Calculated strictly based on dates (inclusive, minimum 1 day).
+         */
+        function hitungHariBerjalan(startDate, endDate) {
+            if (!startDate || !endDate) return 1;
+            const s = new Date(startDate);
+            s.setHours(0, 0, 0, 0);
+            const e = new Date(endDate);
+            e.setHours(23, 59, 59, 999);
+            
+            const now = new Date();
+            const eEffective = e > now ? new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59, 999) : e;
+            
+            if (eEffective < s) return 1;
+            const diffTime = eEffective.getTime() - s.getTime();
+            const days = Math.floor(diffTime / (1000 * 3600 * 24)) + 1;
+            return Math.max(1, days);
         }
 
         /**
@@ -797,7 +834,7 @@
 
         function updateTabunganHint(hargaNum) {
             const settings = getSettings();
-            const rate = Number(settings.savingsRate) || 30;
+            const rate = (settings.savingsRate !== undefined && settings.savingsRate !== null && !isNaN(settings.savingsRate)) ? Number(settings.savingsRate) : 30;
             const tabungan = Math.round((hargaNum || 0) * (rate / 100));
             const hintEl = document.getElementById('form-order-tabungan-hint');
             if (hintEl) {
@@ -879,7 +916,15 @@
         }
 
         function getSettings() {
-            return getAppData().settings || DEFAULT_SETTINGS;
+            const data = getAppData();
+            const s = data.settings || {};
+            return {
+                savingsRate: (s.savingsRate !== undefined && s.savingsRate !== null && !isNaN(s.savingsRate)) ? Number(s.savingsRate) : DEFAULT_SETTINGS.savingsRate,
+                monthlyTarget: (s.monthlyTarget !== undefined && s.monthlyTarget !== null && !isNaN(s.monthlyTarget)) ? Number(s.monthlyTarget) : DEFAULT_SETTINGS.monthlyTarget,
+                services: s.services || DEFAULT_SETTINGS.services,
+                sources: s.sources || DEFAULT_SETTINGS.sources,
+                lastBackupTimestamp: s.lastBackupTimestamp || DEFAULT_SETTINGS.lastBackupTimestamp
+            };
         }
 
         function saveSettings(settings) {
@@ -888,7 +933,10 @@
             saveAppData(data);
         }
 
-        function hitungMetrik(daftarOrder) {
+        /**
+         * Single unified business metrics calculation engine.
+         */
+        function hitungMetrik(daftarOrder, startDate = null, endDate = null) {
             const totalOrder = daftarOrder.length;
             let totalOmzet = 0;
             const layananMap = {};
@@ -919,13 +967,21 @@
             });
 
             const settings = getSettings();
-            const savingsRate = Number(settings.savingsRate) || 30;
-            const tabungan = totalOmzet * (savingsRate / 100);
+            const savingsRate = (settings.savingsRate !== undefined && settings.savingsRate !== null && !isNaN(settings.savingsRate)) ? Number(settings.savingsRate) : 30;
+            const tabungan = Math.round(totalOmzet * (savingsRate / 100));
             const aov = totalOrder > 0 ? Math.round(totalOmzet / totalOrder) : 0;
             const repeatRate = totalOrder > 0 ? (repeatCount / totalOrder) * 100 : 0;
             const referralRate = totalOrder > 0 ? (referralCount / totalOrder) * 100 : 0;
 
+            const daysCount = (startDate && endDate) ? hitungHariBerjalan(startDate, endDate) : 1;
+            const avgDaily = Math.round(totalOmzet / daysCount);
+
             const rincianLayanan = Object.values(layananMap).map(item => ({
+                ...item,
+                persentase: totalOmzet > 0 ? (item.totalOmzet / totalOmzet) * 100 : 0
+            })).sort((a, b) => b.totalOmzet - a.totalOmzet);
+
+            const sumberList = Object.values(sumberMap).map(item => ({
                 ...item,
                 persentase: totalOmzet > 0 ? (item.totalOmzet / totalOmzet) * 100 : 0
             })).sort((a, b) => b.totalOmzet - a.totalOmzet);
@@ -944,10 +1000,82 @@
                 repeatRate,
                 referralCount,
                 referralRate,
+                daysCount,
+                avgDaily,
                 rincianLayanan,
                 sumberMap,
+                sumberList,
                 isValid
             };
+        }
+
+        /**
+         * Inspects order list for data structure problems.
+         */
+        function getProblematicOrders(orders) {
+            const settings = getSettings();
+            const idCounts = {};
+            orders.forEach(o => {
+                if (o.id) idCounts[o.id] = (idCounts[o.id] || 0) + 1;
+            });
+
+            const problematic = [];
+            orders.forEach(ord => {
+                const issues = [];
+                const h = Number(ord.harga);
+                if (isNaN(h) || h <= 0) issues.push("Harga 0 atau tidak valid");
+                if (!ord.timestamp || isNaN(new Date(ord.timestamp).getTime())) issues.push("Tanggal/Waktu tidak valid");
+                if (ord.id && idCounts[ord.id] > 1) issues.push("ID order duplikat");
+                if (!settings.services.includes(ord.layanan)) issues.push(`Layanan '${ord.layanan || ''}' tidak di daftar Pengaturan`);
+                if (!settings.sources.includes(ord.sumber)) issues.push(`Sumber '${ord.sumber || ''}' tidak di daftar Pengaturan`);
+
+                if (issues.length > 0) {
+                    problematic.push({ order: ord, issues });
+                }
+            });
+            return problematic;
+        }
+
+        function updateDataBadge(badgeEl, filteredOrders) {
+            if (!badgeEl) return;
+            const problematic = getProblematicOrders(filteredOrders);
+
+            if (problematic.length === 0) {
+                badgeEl.className = "text-[11px] px-2 py-0.5 rounded-full font-medium bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800 flex items-center gap-1";
+                badgeEl.innerHTML = `<i class="fa-solid fa-circle-check"></i> Data Valid`;
+                badgeEl.onclick = null;
+            } else {
+                badgeEl.className = "text-[11px] px-2 py-0.5 rounded-full font-medium bg-amber-100 dark:bg-amber-950/80 text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-800 flex items-center gap-1 cursor-pointer hover:underline";
+                badgeEl.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> ${problematic.length} order perlu dicek`;
+                badgeEl.onclick = () => showProblematicOrdersModal(problematic);
+            }
+        }
+
+        function showProblematicOrdersModal(problematic) {
+            const listEl = document.getElementById('problematic-orders-list');
+            if (!listEl) return;
+            listEl.innerHTML = '';
+
+            problematic.forEach(item => {
+                const card = document.createElement('div');
+                card.className = "bg-gray-50 dark:bg-gray-800 p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 space-y-1";
+                card.innerHTML = `
+                    <div class="flex justify-between font-semibold text-gray-900 dark:text-white">
+                        <span>${item.order.id || 'Tanpa ID'} (${item.order.layanan || 'Tanpa Layanan'})</span>
+                        <span class="text-emerald-600 dark:text-emerald-400">${formatIDR(item.order.harga)}</span>
+                    </div>
+                    <ul class="text-[10px] text-rose-600 dark:text-rose-400 list-disc list-inside">
+                        ${item.issues.map(iss => `<li>${iss}</li>`).join('')}
+                    </ul>
+                `;
+                listEl.appendChild(card);
+            });
+
+            document.getElementById('modal-problematic').classList.remove('hidden');
+        }
+
+        function closeProblematicModal() {
+            document.getElementById('modal-problematic').classList.add('hidden');
         }
 
         function getCycleRange(referenceDate = new Date()) {
@@ -1003,37 +1131,65 @@
             const allOrders = getOrders();
             if (allOrders.length === 0) return { canCompare: false, reason: "Belum bisa dibandingkan" };
 
-            const timestamps = allOrders.map(o => new Date(o.timestamp).getTime());
-            const earliestTimestamp = Math.min(...timestamps);
-            const earliestDateObj = new Date(earliestTimestamp);
+            const validOrdersWithDates = allOrders.filter(o => o.timestamp && !isNaN(new Date(o.timestamp).getTime()));
+            if (validOrdersWithDates.length === 0) return { canCompare: false, reason: "Belum bisa dibandingkan" };
 
-            const durationMs = currentEnd.getTime() - currentStart.getTime();
-            const prevEnd = new Date(currentStart.getTime() - 1);
-            const prevStart = new Date(prevEnd.getTime() - durationMs);
+            // Find earliest date (midnight)
+            const timestamps = validOrdersWithDates.map(o => new Date(o.timestamp).getTime());
+            const earliestDate = new Date(Math.min(...timestamps));
+            earliestDate.setHours(0,0,0,0);
 
-            if (prevStart.getTime() < earliestTimestamp) {
+            const fullDurationMs = currentEnd.getTime() - currentStart.getTime();
+            const prevStart = new Date(currentStart.getTime() - fullDurationMs - 1);
+            prevStart.setHours(0,0,0,0);
+
+            // Check if earliest data starts after previous comparison start date
+            if (prevStart.getTime() < earliestDate.getTime()) {
                 return {
                     canCompare: false,
-                    reason: `Belum bisa dibandingkan (data mulai ${formatDateShort(earliestDateObj)})`
+                    reason: `Belum bisa dibandingkan (data mulai ${formatDateShort(earliestDate)})`
                 };
             }
 
-            const prevOrders = filterOrdersByDateRange(allOrders, prevStart, prevEnd);
-            const currMetrics = hitungMetrik(currentOrders);
-            const prevMetrics = hitungMetrik(prevOrders);
+            const now = new Date();
+            const isOngoing = now < currentEnd;
+            const daysInCurrentPeriod = hitungHariBerjalan(currentStart, currentEnd);
+
+            let prevEndForComparison;
+            let labelSuffix;
+
+            if (isOngoing) {
+                labelSuffix = `vs ${daysInCurrentPeriod} hari pertama periode lalu`;
+                prevEndForComparison = new Date(prevStart.getTime() + (daysInCurrentPeriod - 1) * 86400000);
+                prevEndForComparison.setHours(23, 59, 59, 999);
+            } else {
+                labelSuffix = `vs periode lalu`;
+                prevEndForComparison = new Date(currentStart.getTime() - 1);
+                prevEndForComparison.setHours(23, 59, 59, 999);
+            }
+
+            const prevOrders = filterOrdersByDateRange(allOrders, prevStart, prevEndForComparison);
+            const currMetrics = hitungMetrik(currentOrders, currentStart, currentEnd);
+            const prevMetrics = hitungMetrik(prevOrders, prevStart, prevEndForComparison);
 
             const calcPct = (curr, prev) => {
-                if (prev === 0) return curr > 0 ? 100 : 0;
+                if (prev === 0) return "Belum ada pembanding";
                 return ((curr - prev) / prev) * 100;
+            };
+
+            const calcPoint = (curr, prev) => {
+                return curr - prev;
             };
 
             return {
                 canCompare: true,
+                labelSuffix,
                 orderDiffPct: calcPct(currMetrics.totalOrder, prevMetrics.totalOrder),
                 omzetDiffPct: calcPct(currMetrics.totalOmzet, prevMetrics.totalOmzet),
                 aovDiffPct: calcPct(currMetrics.aov, prevMetrics.aov),
-                repeatDiffPct: calcPct(currMetrics.repeatRate, prevMetrics.repeatRate),
-                referralDiffPct: calcPct(currMetrics.referralRate, prevMetrics.referralRate),
+                dailyDiffPct: calcPct(currMetrics.avgDaily, prevMetrics.avgDaily),
+                repeatDiffPoint: calcPoint(currMetrics.repeatRate, prevMetrics.repeatRate),
+                referralDiffPoint: calcPoint(currMetrics.referralRate, prevMetrics.referralRate),
                 prevMetrics
             };
         }
@@ -1053,6 +1209,15 @@
             if (targetNav) {
                 targetNav.classList.add('text-brand-600', 'dark:text-emerald-400', 'font-semibold');
                 targetNav.classList.remove('text-gray-500', 'dark:text-gray-400');
+            }
+
+            const floatingAddBtn = document.getElementById('floating-add-btn');
+            if (floatingAddBtn) {
+                if (tabName === 'pengaturan') {
+                    floatingAddBtn.classList.add('hidden');
+                } else {
+                    floatingAddBtn.classList.remove('hidden');
+                }
             }
 
             if (tabName === 'beranda') renderBerandaView();
@@ -1080,23 +1245,23 @@
             document.getElementById('beranda-cycle-dates').innerText = `${formatDateShort(startDate)} - ${formatDateShort(endDate)}`;
 
             const cycleOrders = filterOrdersByDateRange(allOrders, startDate, endDate);
-            const cycleMetrics = hitungMetrik(cycleOrders);
+            const cycleMetrics = hitungMetrik(cycleOrders, startDate, endDate);
 
             document.getElementById('beranda-omzet-siklus').innerText = formatIDR(cycleMetrics.totalOmzet);
             document.getElementById('beranda-tabungan-siklus').innerText = formatIDR(cycleMetrics.tabungan);
 
             const settings = getSettings();
-            const targetOmzet = settings.monthlyTarget || 3000000;
+            const targetOmzet = settings.monthlyTarget !== undefined ? settings.monthlyTarget : 3000000;
             document.getElementById('beranda-target-label').innerText = formatIDR(targetOmzet);
 
-            const pct = Math.min(100, Math.round((cycleMetrics.totalOmzet / targetOmzet) * 100));
+            const pct = targetOmzet > 0 ? Math.min(100, Math.round((cycleMetrics.totalOmzet / targetOmzet) * 100)) : 0;
             document.getElementById('beranda-target-percent').innerText = `${pct}%`;
             document.getElementById('beranda-target-bar').style.width = `${pct}%`;
 
             const todayStart = new Date(); todayStart.setHours(0,0,0,0);
             const todayEnd = new Date(); todayEnd.setHours(23,59,59,999);
             const todayOrders = filterOrdersByDateRange(allOrders, todayStart, todayEnd);
-            const todayMetrics = hitungMetrik(todayOrders);
+            const todayMetrics = hitungMetrik(todayOrders, todayStart, todayEnd);
 
             document.getElementById('beranda-omzet-hari-ini').innerText = formatIDR(todayMetrics.totalOmzet);
             document.getElementById('beranda-order-hari-ini-badge').innerText = `${todayMetrics.totalOrder} Order`;
@@ -1147,34 +1312,64 @@
                 return;
             }
 
-            const layananInput = parts[0];
-            const hargaInput = parseInt(parts[1].replace(/\D/g, ''), 10) || 0;
-            let sumberInput = parts[2] || 'Facebook';
+            const settings = getSettings();
 
-            const sourceMap = {
-                'fb': 'Facebook',
-                'facebook': 'Facebook',
-                'tt': 'TikTok',
-                'tiktok': 'TikTok',
-                'ig': 'Instagram',
-                'instagram': 'Instagram',
-                'li': 'LinkedIn',
-                'linkedin': 'LinkedIn',
-                'ref': 'Referral',
-                'referral': 'Referral'
-            };
-            if (sourceMap[sumberInput.toLowerCase()]) {
-                sumberInput = sourceMap[sumberInput.toLowerCase()];
+            // Match Service
+            const serviceQuery = parts[0].toLowerCase();
+            const matchedServices = settings.services.filter(s =>
+                s.toLowerCase() === serviceQuery || s.toLowerCase().includes(serviceQuery)
+            );
+
+            if (matchedServices.length === 0) {
+                showAlertModal(`Layanan '${parts[0]}' tidak cocok dengan daftar Pengaturan.`, 'warning');
+                return;
+            } else if (matchedServices.length > 1) {
+                showAlertModal(`Layanan '${parts[0]}' cocok dengan lebih dari satu opsi (${matchedServices.join(', ')}). Harap lebih spesifik.`, 'warning');
+                return;
             }
+            const finalLayanan = matchedServices[0];
+
+            // Match Price
+            const hargaNum = parseRupiah(parts[1]);
+            if (hargaNum <= 0) {
+                showAlertModal('Harga harus lebih dari Rp0', 'warning');
+                return;
+            }
+
+            // Match Source
+            let sourceQuery = (parts[2] || 'Facebook').toLowerCase();
+            const sourceAbbreviations = {
+                'fb': 'facebook',
+                'ig': 'instagram',
+                'tt': 'tiktok',
+                'li': 'linkedin',
+                'ref': 'referral'
+            };
+            if (sourceAbbreviations[sourceQuery]) {
+                sourceQuery = sourceAbbreviations[sourceQuery];
+            }
+
+            const matchedSources = settings.sources.filter(s =>
+                s.toLowerCase() === sourceQuery || s.toLowerCase().includes(sourceQuery)
+            );
+
+            if (matchedSources.length === 0) {
+                showAlertModal(`Sumber '${parts[2] || 'Facebook'}' tidak cocok dengan daftar Pengaturan.`, 'warning');
+                return;
+            } else if (matchedSources.length > 1) {
+                showAlertModal(`Sumber '${parts[2]}' cocok dengan lebih dari satu opsi (${matchedSources.join(', ')}). Harap lebih spesifik.`, 'warning');
+                return;
+            }
+            const finalSumber = matchedSources[0];
 
             const newOrder = {
                 id: 'ORD-' + Date.now().toString().slice(-6),
                 timestamp: new Date().toISOString(),
-                layanan: layananInput,
-                harga: hargaInput,
-                sumber: sumberInput,
+                layanan: finalLayanan,
+                harga: hargaNum,
+                sumber: finalSumber,
                 status: 'Customer Baru',
-                referral: sumberInput === 'Referral' ? 'Referral' : 'Bukan Referral',
+                referral: finalSumber === 'Referral' ? 'Referral' : 'Bukan Referral',
                 durasi: 30
             };
 
@@ -1245,49 +1440,52 @@
             document.getElementById('analisis-date-range-label').innerText = `${formatDateShort(startDate)} - ${formatDateShort(endDate)}`;
 
             const filteredOrders = filterOrdersByDateRange(allOrders, startDate, endDate);
-            const metrics = hitungMetrik(filteredOrders);
+            const metrics = hitungMetrik(filteredOrders, startDate, endDate);
 
             const badgeEl = document.getElementById('analisis-validation-badge');
-            if (metrics.isValid) {
-                badgeEl.className = "text-[11px] px-2 py-0.5 rounded-full font-medium bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800 flex items-center gap-1";
-                badgeEl.innerHTML = `<i class="fa-solid fa-circle-check"></i> Data Valid`;
-            } else {
-                badgeEl.className = "text-[11px] px-2 py-0.5 rounded-full font-medium bg-rose-100 dark:bg-rose-950/80 text-rose-800 dark:text-rose-300 border border-rose-300 dark:border-rose-800 flex items-center gap-1";
-                badgeEl.innerHTML = `<i class="fa-solid fa-circle-exclamation"></i> Data Tidak Match`;
-            }
+            updateDataBadge(badgeEl, filteredOrders);
 
             document.getElementById('kpi-total-order').innerText = `${metrics.totalOrder} Order`;
             document.getElementById('kpi-total-omzet').innerText = formatIDR(metrics.totalOmzet);
             document.getElementById('kpi-aov').innerText = formatIDR(metrics.aov);
-
-            const diffDays = Math.max(1, Math.round((endDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24)));
-            const avgDaily = Math.round(metrics.totalOmzet / diffDays);
-            document.getElementById('kpi-avg-daily').innerText = formatIDR(avgDaily);
-
+            document.getElementById('kpi-avg-daily').innerText = formatIDR(metrics.avgDaily);
             document.getElementById('kpi-repeat-rate').innerText = `${metrics.repeatRate.toFixed(1)}%`;
             document.getElementById('kpi-referral-rate').innerText = `${metrics.referralRate.toFixed(1)}%`;
 
             const comp = calculatePeriodComparison(filteredOrders, startDate, endDate);
 
-            const renderTrendLabel = (elId, pctVal) => {
+            const renderTrendLabel = (elId, diffVal, isPoint = false) => {
                 const el = document.getElementById(elId);
+                if (!el) return;
                 if (!comp.canCompare) {
                     el.innerText = comp.reason;
                     el.className = "text-[10px] mt-1 text-gray-500 dark:text-gray-400 font-normal";
                     return;
                 }
-                const isPositive = pctVal >= 0;
-                const sign = isPositive ? '+' : '';
-                el.innerText = `${sign}${pctVal.toFixed(1)}% vs periode lalu`;
-                el.className = `text-[10px] mt-1 font-semibold ${isPositive ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'}`;
+                if (diffVal === "Belum ada pembanding" || diffVal === null || diffVal === undefined) {
+                    el.innerText = "Belum ada pembanding";
+                    el.className = "text-[10px] mt-1 text-gray-500 dark:text-gray-400 font-normal";
+                    return;
+                }
+                if (isPoint) {
+                    const sign = diffVal >= 0 ? '+' : '';
+                    const valStr = diffVal.toFixed(1).replace('.', ',');
+                    el.innerText = `${sign}${valStr} poin ${comp.labelSuffix}`;
+                    el.className = `text-[10px] mt-1 font-semibold ${diffVal >= 0 ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'}`;
+                } else {
+                    const sign = diffVal >= 0 ? '+' : '';
+                    const valStr = diffVal.toFixed(1).replace('.', ',');
+                    el.innerText = `${sign}${valStr}% ${comp.labelSuffix}`;
+                    el.className = `text-[10px] mt-1 font-semibold ${diffVal >= 0 ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'}`;
+                }
             };
 
             renderTrendLabel('kpi-trend-order', comp.orderDiffPct);
             renderTrendLabel('kpi-trend-omzet', comp.omzetDiffPct);
             renderTrendLabel('kpi-trend-aov', comp.aovDiffPct);
-            renderTrendLabel('kpi-trend-daily', comp.omzetDiffPct);
-            renderTrendLabel('kpi-trend-repeat', comp.repeatDiffPct);
-            renderTrendLabel('kpi-trend-referral', comp.referralDiffPct);
+            renderTrendLabel('kpi-trend-daily', comp.dailyDiffPct);
+            renderTrendLabel('kpi-trend-repeat', comp.repeatDiffPoint, true);
+            renderTrendLabel('kpi-trend-referral', comp.referralDiffPoint, true);
 
             renderInsights(metrics, filteredOrders);
             renderCharts(filteredOrders, startDate, endDate, metrics);
@@ -1309,9 +1507,8 @@
                 insights.push(`Layanan terlaris: <strong class="text-gray-900 dark:text-white font-bold">${topService.name}</strong> menyumbang <strong class="text-gray-900 dark:text-white font-bold">${formatIDR(topService.totalOmzet)}</strong> (${topService.persentase.toFixed(1)}% omzet).`);
             }
 
-            const sourcesArr = Object.values(metrics.sumberMap).sort((a,b) => b.totalOmzet - a.totalOmzet);
-            if (sourcesArr.length > 0) {
-                const topSource = sourcesArr[0];
+            if (metrics.sumberList.length > 0) {
+                const topSource = metrics.sumberList[0];
                 insights.push(`Sumber customer terbesar berasal dari <strong class="text-gray-900 dark:text-white font-bold">${topSource.name}</strong> dengan <strong class="text-gray-900 dark:text-white font-bold">${topSource.count} order</strong>.`);
             }
 
@@ -1435,7 +1632,7 @@
             for (let i = 0; i < 3; i++) {
                 const c = getCycleRange(refDate);
                 const cOrders = filterOrdersByDateRange(allOrders, c.startDate, c.endDate);
-                const cMet = hitungMetrik(cOrders);
+                const cMet = hitungMetrik(cOrders, c.startDate, c.endDate);
                 
                 cycleLabels.unshift(`${c.startDate.getDate()} ${formatDateShort(c.startDate).split(' ')[1]} - ${c.endDate.getDate()} ${formatDateShort(c.endDate).split(' ')[1]}`);
                 cycleOmzets.unshift(cMet.totalOmzet);
@@ -1510,16 +1707,10 @@
 
             const allOrders = getOrders();
             const filteredOrders = filterOrdersByDateRange(allOrders, startDate, endDate);
-            const metrics = hitungMetrik(filteredOrders);
+            const metrics = hitungMetrik(filteredOrders, startDate, endDate);
 
             const badgeEl = document.getElementById('rekap-validation-badge');
-            if (metrics.isValid) {
-                badgeEl.className = "text-[10px] px-2 py-0.5 rounded-full font-medium bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800";
-                badgeEl.innerText = "Data Valid";
-            } else {
-                badgeEl.className = "text-[10px] px-2 py-0.5 rounded-full font-medium bg-rose-100 dark:bg-rose-950/80 text-rose-800 dark:text-rose-300 border border-rose-300 dark:border-rose-800";
-                badgeEl.innerText = "Data Tidak Match";
-            }
+            updateDataBadge(badgeEl, filteredOrders);
 
             document.getElementById('rekap-total-omzet').innerText = formatIDR(metrics.totalOmzet);
             document.getElementById('rekap-savings-rate-label').innerText = metrics.savingsRate;
@@ -1569,33 +1760,117 @@
             });
         }
 
+        function buatGambarGrafik(orders, startDate, endDate, metrics) {
+            const canvasDaily = document.createElement('canvas');
+            canvasDaily.width = 700;
+            canvasDaily.height = 350;
+            canvasDaily.style.position = 'absolute';
+            canvasDaily.style.left = '-9999px';
+            document.body.appendChild(canvasDaily);
+
+            const canvasService = document.createElement('canvas');
+            canvasService.width = 700;
+            canvasService.height = 350;
+            canvasService.style.position = 'absolute';
+            canvasService.style.left = '-9999px';
+            document.body.appendChild(canvasService);
+
+            const dailyLabels = [];
+            const dailyData = [];
+            const curr = new Date(startDate);
+            while (curr <= endDate) {
+                const dateStr = formatDateISO(curr);
+                dailyLabels.push(`${curr.getDate()}/${curr.getMonth()+1}`);
+                const dayTotal = orders.filter(o => formatDateISO(new Date(o.timestamp)) === dateStr)
+                                       .reduce((sum, o) => sum + Number(o.harga), 0);
+                dailyData.push(dayTotal);
+                curr.setDate(curr.getDate() + 1);
+            }
+
+            const whiteBackgroundPlugin = {
+                id: 'whiteBackground',
+                beforeDraw: (chart) => {
+                    const ctx = chart.ctx;
+                    ctx.save();
+                    ctx.fillStyle = '#ffffff';
+                    ctx.fillRect(0, 0, chart.width, chart.height);
+                    ctx.restore();
+                }
+            };
+
+            const textColor = '#334155';
+            const gridColor = '#e2e8f0';
+
+            const chartDaily = new Chart(canvasDaily.getContext('2d'), {
+                type: 'bar',
+                plugins: [whiteBackgroundPlugin],
+                data: {
+                    labels: dailyLabels,
+                    datasets: [{
+                        label: 'Omzet Harian (Rp)',
+                        data: dailyData,
+                        backgroundColor: '#4F7557',
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: false,
+                    animation: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { ticks: { color: textColor, font: { size: 10 } }, grid: { display: false } },
+                        y: { ticks: { color: textColor, font: { size: 10 } }, grid: { color: gridColor } }
+                    }
+                }
+            });
+
+            const serviceLabels = metrics.rincianLayanan.map(r => r.name);
+            const serviceData = metrics.rincianLayanan.map(r => r.totalOmzet);
+
+            const chartService = new Chart(canvasService.getContext('2d'), {
+                type: 'doughnut',
+                plugins: [whiteBackgroundPlugin],
+                data: {
+                    labels: serviceLabels.length > 0 ? serviceLabels : ['Belum ada data'],
+                    datasets: [{
+                        data: serviceData.length > 0 ? serviceData : [1],
+                        backgroundColor: serviceData.length > 0 ? ['#4F7557', '#3b82f6', '#f59e0b', '#ec4899', '#8b5cf6', '#10b981', '#64748b'] : ['#e2e8f0']
+                    }]
+                },
+                options: {
+                    responsive: false,
+                    animation: false,
+                    plugins: {
+                        legend: { position: 'bottom', labels: { color: textColor, font: { size: 11 } } }
+                    }
+                }
+            });
+
+            const dailyImg = chartDaily.toBase64Image();
+            const serviceImg = chartService.toBase64Image();
+
+            chartDaily.destroy();
+            chartService.destroy();
+            canvasDaily.remove();
+            canvasService.remove();
+
+            return { dailyImg, serviceImg };
+        }
+
         function generateReportHTML(startDate, endDate) {
             const allOrders = getOrders();
             const filteredOrders = filterOrdersByDateRange(allOrders, startDate, endDate);
-            const metrics = hitungMetrik(filteredOrders);
-
-            const sumberList = Object.values(metrics.sumberMap).map(s => ({
-                ...s,
-                persentase: metrics.totalOmzet > 0 ? (s.totalOmzet / metrics.totalOmzet) * 100 : 0
-            })).sort((a,b) => b.totalOmzet - a.totalOmzet);
+            const metrics = hitungMetrik(filteredOrders, startDate, endDate);
 
             const sortedAscOrders = [...filteredOrders].sort((a,b) => new Date(a.timestamp) - new Date(b.timestamp));
-
-            const diffDays = Math.max(1, Math.round((endDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24)));
-            const avgDaily = Math.round(metrics.totalOmzet / diffDays);
-
-            const dailyCanvas = document.getElementById('chart-daily-omzet');
-            const serviceCanvas = document.getElementById('chart-services');
-
-            const dailyImgData = dailyCanvas ? dailyCanvas.toDataURL('image/png') : '';
-            const serviceImgData = serviceCanvas ? serviceCanvas.toDataURL('image/png') : '';
+            const { dailyImg, serviceImg } = buatGambarGrafik(filteredOrders, startDate, endDate, metrics);
 
             const strFrom = formatDateShort(startDate);
             const strTo = formatDateShort(endDate);
             const printTimestamp = new Date().toLocaleString('id-ID', { dateStyle: 'medium', timeStyle: 'short' });
 
             return `
-                <div style="border-bottom: 2px solid #334c38; padding-bottom: 12px; margin-bottom: 16px; display: flex; justify-between; align-items: center;">
+                <div style="border-bottom: 2px solid #334c38; padding-bottom: 12px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center;">
                     <div style="display: flex; align-items: center; gap: 12px;">
                         <img src="https://files.catbox.moe/ktqqnd.png" alt="Leadger" style="width: 44px; height: 44px; object-fit: contain; border-radius: 8px; border: 1px solid #cbd5e1;">
                         <div>
@@ -1632,7 +1907,7 @@
                     <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 8px;">
                         <div style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 8px; border-radius: 6px;">
                             <span style="font-size: 10px; color: #64748b; font-weight: 500;">Rata-rata Omzet / Hari</span>
-                            <p style="font-size: 12px; font-weight: 700; color: #0f172a; margin-top: 2px;">${formatIDR(avgDaily)}</p>
+                            <p style="font-size: 12px; font-weight: 700; color: #0f172a; margin-top: 2px;">${formatIDR(metrics.avgDaily)}</p>
                         </div>
                         <div style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 8px; border-radius: 6px;">
                             <span style="font-size: 10px; color: #64748b; font-weight: 500;">Repeat Customer Rate</span>
@@ -1689,7 +1964,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            ${sumberList.map(s => `
+                            ${metrics.sumberList.map(s => `
                                 <tr style="border-bottom: 1px solid #e2e8f0;">
                                     <td style="padding: 5px 8px; font-weight: 600;">${s.name}</td>
                                     <td style="padding: 5px 8px; text-align: center;">${s.count}</td>
@@ -1709,17 +1984,17 @@
                     </table>
                 </div>
 
-                ${(dailyImgData || serviceImgData) ? `
+                ${(dailyImg || serviceImg) ? `
                 <div class="print-card" style="margin-bottom: 20px;">
                     <h2 style="font-size: 13px; font-weight: 700; color: #233427; text-transform: uppercase; margin-bottom: 8px; border-bottom: 1px solid #e2e8f0; padding-bottom: 4px;">4. Visualisasi Grafik</h2>
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: center;">
                         <div style="border: 1px solid #e2e8f0; padding: 6px; border-radius: 6px; text-align: center;">
                             <p style="font-size: 10px; font-weight: 700; color: #475569; margin-bottom: 4px;">Tren Omzet Harian</p>
-                            <img src="${dailyImgData}" style="max-width: 100%; height: 160px; object-fit: contain; margin: 0 auto;">
+                            <img src="${dailyImg}" style="max-width: 100%; height: auto; object-fit: contain; margin: 0 auto;">
                         </div>
                         <div style="border: 1px solid #e2e8f0; padding: 6px; border-radius: 6px; text-align: center;">
                             <p style="font-size: 10px; font-weight: 700; color: #475569; margin-bottom: 4px;">Kontribusi Layanan</p>
-                            <img src="${serviceImgData}" style="max-width: 100%; height: 160px; object-fit: contain; margin: 0 auto;">
+                            <img src="${serviceImg}" style="max-width: 100%; height: auto; object-fit: contain; margin: 0 auto;">
                         </div>
                     </div>
                 </div>
@@ -1765,9 +2040,8 @@
                     </table>
                 </div>
 
-                <div style="margin-top: 16px; border-top: 1px solid #cbd5e1; padding-top: 8px; text-align: justify; font-size: 9px; color: #64748b; display: flex; justify-between;">
+                <div style="margin-top: 16px; border-top: 1px solid #cbd5e1; padding-top: 8px; text-align: justify; font-size: 9px; color: #64748b; display: flex; justify-content: space-between;">
                     <span>Leadger - Order & Revenue Ledger System</span>
-                    <span>Halaman 1 dari 1</span>
                 </div>
             `;
         }
@@ -1859,17 +2133,14 @@
 
                 const allOrders = getOrders();
                 const filteredOrders = filterOrdersByDateRange(allOrders, activePrintStartDate, activePrintEndDate);
-                const metrics = hitungMetrik(filteredOrders);
-
-                const diffDays = Math.max(1, Math.round((activePrintEndDate.getTime() - activePrintStartDate.getTime()) / (1000 * 3600 * 24)));
-                const avgDaily = Math.round(metrics.totalOmzet / diffDays);
+                const metrics = hitungMetrik(filteredOrders, activePrintStartDate, activePrintEndDate);
 
                 let cursorY = 15;
 
                 // 1. KOP HEADER
                 doc.setFont('helvetica', 'bold');
                 doc.setFontSize(16);
-                doc.setTextColor(35, 52, 39); // #233427
+                doc.setTextColor(35, 52, 39);
                 doc.text("Laporan Order - Leadger", 15, cursorY + 4);
 
                 doc.setFont('helvetica', 'normal');
@@ -1886,7 +2157,7 @@
                 doc.line(15, cursorY, 195, cursorY);
                 cursorY += 6;
 
-                // 2. RINGKASAN PERFORMA BISNIS (BOX KPI)
+                // 2. RINGKASAN PERFORMA BISNIS
                 doc.setFont('helvetica', 'bold');
                 doc.setFontSize(10);
                 doc.setTextColor(35, 52, 39);
@@ -1898,7 +2169,7 @@
                     ["Total Order", `${metrics.totalOrder} Order`],
                     [`Tabungan (${metrics.savingsRate}%)`, formatIDR(metrics.tabungan)],
                     ["AOV (Rata / Order)", formatIDR(metrics.aov)],
-                    ["Rata Omzet / Hari", formatIDR(avgDaily)],
+                    ["Rata Omzet / Hari", formatIDR(metrics.avgDaily)],
                     ["Repeat Rate", `${metrics.repeatRate.toFixed(1)}%`],
                     ["Referral Rate", `${metrics.referralRate.toFixed(1)}%`]
                 ];
@@ -1971,12 +2242,7 @@
                 doc.text("3. RINCIAN SUMBER CUSTOMER", 15, cursorY);
                 cursorY += 4;
 
-                const sumberList = Object.values(metrics.sumberMap).map(s => ({
-                    ...s,
-                    persentase: metrics.totalOmzet > 0 ? (s.totalOmzet / metrics.totalOmzet) * 100 : 0
-                })).sort((a,b) => b.totalOmzet - a.totalOmzet);
-
-                const sourceRows = sumberList.map(s => [
+                const sourceRows = metrics.sumberList.map(s => [
                     s.name,
                     `${s.count} Order`,
                     formatIDR(s.totalOmzet),
@@ -2014,11 +2280,8 @@
 
                 cursorY = doc.lastAutoTable.finalY + 8;
 
-                // 5. EMBED CHART IMAGES IF AVAILABLE
-                const dailyCanvas = document.getElementById('chart-daily-omzet');
-                const serviceCanvas = document.getElementById('chart-services');
-
-                if (dailyCanvas && serviceCanvas && metrics.totalOrder > 0) {
+                // 5. EMBED OFFSCREEN CHART IMAGES
+                if (metrics.totalOrder > 0) {
                     if (cursorY > 200) {
                         doc.addPage();
                         cursorY = 15;
@@ -2031,12 +2294,12 @@
                     cursorY += 4;
 
                     try {
-                        const dailyImg = dailyCanvas.toDataURL('image/png');
-                        const serviceImg = serviceCanvas.toDataURL('image/png');
+                        const { dailyImg, serviceImg } = buatGambarGrafik(filteredOrders, activePrintStartDate, activePrintEndDate, metrics);
 
-                        doc.addImage(dailyImg, 'PNG', 15, cursorY, 85, 45);
-                        doc.addImage(serviceImg, 'PNG', 105, cursorY, 85, 45);
-                        cursorY += 50;
+                        // Maintain aspect ratio (700x350 = 2:1 ratio)
+                        doc.addImage(dailyImg, 'PNG', 15, cursorY, 85, 42.5);
+                        doc.addImage(serviceImg, 'PNG', 105, cursorY, 85, 42.5);
+                        cursorY += 48;
                     } catch (e) {
                         console.log("Chart snapshot skipped:", e);
                     }
@@ -2114,10 +2377,9 @@
                     doc.text(`Halaman ${i} dari ${totalPages}`, 195, 287, { align: 'right' });
                 }
 
-                // delivery strategies
                 const pdfBlob = doc.output('blob');
 
-                // 1. Try Native iOS / Mobile Share API
+                // 1. Try Native Mobile Share API
                 try {
                     const pdfFile = new File([pdfBlob], filename, { type: 'application/pdf' });
                     if (navigator.canShare && navigator.canShare({ files: [pdfFile] })) {
@@ -2129,6 +2391,9 @@
                         return;
                     }
                 } catch (shareErr) {
+                    if (shareErr.name === 'AbortError') {
+                        return; // Return silently if user cancels share dialog
+                    }
                     console.warn("Native share skipped/cancelled:", shareErr);
                 }
 
@@ -2161,7 +2426,7 @@
             const endDate = new Date(toVal + "T23:59:59");
             const allOrders = getOrders();
             const filteredOrders = filterOrdersByDateRange(allOrders, startDate, endDate);
-            const metrics = hitungMetrik(filteredOrders);
+            const metrics = hitungMetrik(filteredOrders, startDate, endDate);
 
             let summaryText = `📊 LAPORAN PERFORMA LEADGER\n`;
             summaryText += `Periode: ${formatDateShort(startDate)} - ${formatDateShort(endDate)}\n`;
@@ -2201,9 +2466,9 @@
 
             const filtered = allOrders.filter(ord => {
                 const matchesSearch = !searchVal || 
-                    ord.layanan.toLowerCase().includes(searchVal) || 
-                    ord.sumber.toLowerCase().includes(searchVal) || 
-                    ord.id.toLowerCase().includes(searchVal);
+                    (ord.layanan && ord.layanan.toLowerCase().includes(searchVal)) || 
+                    (ord.sumber && ord.sumber.toLowerCase().includes(searchVal)) || 
+                    (ord.id && ord.id.toLowerCase().includes(searchVal));
 
                 const matchesService = !filterService || ord.layanan === filterService;
                 const matchesSource = !filterSource || ord.sumber === filterSource;
@@ -2257,14 +2522,20 @@
 
         function populateDataFilterOptions() {
             const settings = getSettings();
+            const allOrders = getOrders();
+
             const serviceSelect = document.getElementById('data-filter-service');
             const sourceSelect = document.getElementById('data-filter-source');
 
             const currService = serviceSelect.value;
             const currSource = sourceSelect.value;
 
+            // Combine configured settings and unique values present in actual orders
+            const serviceSet = new Set([...settings.services, ...allOrders.map(o => o.layanan).filter(Boolean)]);
+            const sourceSet = new Set([...settings.sources, ...allOrders.map(o => o.sumber).filter(Boolean)]);
+
             serviceSelect.innerHTML = `<option value="">Semua Layanan</option>`;
-            settings.services.forEach(s => {
+            serviceSet.forEach(s => {
                 const opt = document.createElement('option');
                 opt.value = s;
                 opt.innerText = s;
@@ -2273,7 +2544,7 @@
             serviceSelect.value = currService;
 
             sourceSelect.innerHTML = `<option value="">Semua Sumber</option>`;
-            settings.sources.forEach(s => {
+            sourceSet.forEach(s => {
                 const opt = document.createElement('option');
                 opt.value = s;
                 opt.innerText = s;
@@ -2284,10 +2555,10 @@
 
         function renderSettingsView() {
             const settings = getSettings();
-            document.getElementById('setting-savings-rate').value = settings.savingsRate || 30;
+            document.getElementById('setting-savings-rate').value = settings.savingsRate;
             
-            const targetVal = settings.monthlyTarget || 3000000;
-            document.getElementById('setting-monthly-target').value = targetVal ? targetVal.toLocaleString('id-ID') : '';
+            const targetVal = settings.monthlyTarget;
+            document.getElementById('setting-monthly-target').value = targetVal !== undefined && targetVal !== null ? targetVal.toLocaleString('id-ID') : '';
 
             const servicesList = document.getElementById('settings-services-list');
             servicesList.innerHTML = '';
@@ -2319,7 +2590,12 @@
         }
 
         function saveSavingsRateSetting() {
-            const val = parseInt(document.getElementById('setting-savings-rate').value) || 30;
+            const rawVal = document.getElementById('setting-savings-rate').value;
+            const val = parseInt(rawVal, 10);
+            if (isNaN(val) || val < 0) {
+                showAlertModal('Masukkan persentase tabungan yang valid (0-100%)', 'warning');
+                return;
+            }
             const settings = getSettings();
             settings.savingsRate = val;
             saveSettings(settings);
@@ -2327,7 +2603,12 @@
         }
 
         function saveMonthlyTargetSetting() {
-            const val = parseRupiah(document.getElementById('setting-monthly-target').value) || 3000000;
+            const rawVal = document.getElementById('setting-monthly-target').value;
+            const val = parseRupiah(rawVal);
+            if (isNaN(val) || val < 0) {
+                showAlertModal('Masukkan target omzet yang valid', 'warning');
+                return;
+            }
             const settings = getSettings();
             settings.monthlyTarget = val;
             saveSettings(settings);
@@ -2391,21 +2672,59 @@
             }
         }
 
-        function exportBackupJSON() {
+        async function exportBackupJSON() {
             const data = getAppData();
             data.settings.lastBackupTimestamp = Date.now();
             saveSettings(data.settings);
 
-            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(data, null, 2));
-            const downloadAnchor = document.createElement('a');
-            downloadAnchor.setAttribute("href", dataStr);
-            downloadAnchor.setAttribute("download", `leadger-backup-${formatDateISO(new Date())}.json`);
-            document.body.appendChild(downloadAnchor);
-            downloadAnchor.click();
-            downloadAnchor.remove();
+            const jsonStr = JSON.stringify(data, null, 2);
+            const blob = new Blob([jsonStr], { type: 'application/json' });
+            const filename = `leadger-backup-${formatDateISO(new Date())}.json`;
 
-            checkBackupWarning();
-            showAlertModal('Backup JSON berhasil diunduh!', 'success');
+            // 1. Try navigator.share with File if supported
+            try {
+                const file = new File([blob], filename, { type: 'application/json' });
+                if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                    await navigator.share({
+                        title: 'Backup Data Leadger',
+                        files: [file]
+                    });
+                    checkBackupWarning();
+                    showAlertModal('Backup JSON berhasil dibagikan / disimpan!', 'success');
+                    return;
+                }
+            } catch (err) {
+                if (err.name === 'AbortError') return;
+                console.warn("Share failed, falling back:", err);
+            }
+
+            // 2. Try anchor tag download attribute with object URL
+            try {
+                const blobUrl = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = blobUrl;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+                setTimeout(() => URL.revokeObjectURL(blobUrl), 1000);
+
+                checkBackupWarning();
+                showAlertModal('Backup JSON berhasil diunduh!', 'success');
+                return;
+            } catch (err) {
+                console.warn("Anchor download failed:", err);
+            }
+
+            // 3. Fallback: Open Blob URL in new window
+            try {
+                const blobUrl = URL.createObjectURL(blob);
+                window.open(blobUrl, '_blank');
+                checkBackupWarning();
+                showAlertModal('Backup JSON terbuka di tab baru. Gunakan menu "Bagikan > Simpan ke Files".', 'info');
+            } catch (err) {
+                showAlertModal('Gagal mengeksport data backup JSON.', 'error');
+            }
         }
 
         function importBackupJSON(event) {
@@ -2488,22 +2807,6 @@
             const layananSelect = document.getElementById('form-order-layanan');
             const sumberSelect = document.getElementById('form-order-sumber');
 
-            layananSelect.innerHTML = '';
-            settings.services.forEach(s => {
-                const opt = document.createElement('option');
-                opt.value = s;
-                opt.innerText = s;
-                layananSelect.appendChild(opt);
-            });
-
-            sumberSelect.innerHTML = '';
-            settings.sources.forEach(s => {
-                const opt = document.createElement('option');
-                opt.value = s;
-                opt.innerText = s;
-                sumberSelect.appendChild(opt);
-            });
-
             if (orderId) {
                 const orders = getOrders();
                 const ord = orders.find(o => o.id === orderId);
@@ -2511,6 +2814,29 @@
 
                 titleEl.innerText = 'Edit Order ' + ord.id;
                 document.getElementById('form-order-id').value = ord.id;
+
+                // Ensure existing order's service & source options are available even if deleted from settings
+                const serviceOptions = new Set([...settings.services]);
+                if (ord.layanan) serviceOptions.add(ord.layanan);
+
+                layananSelect.innerHTML = '';
+                serviceOptions.forEach(s => {
+                    const opt = document.createElement('option');
+                    opt.value = s;
+                    opt.innerText = s;
+                    layananSelect.appendChild(opt);
+                });
+
+                const sourceOptions = new Set([...settings.sources]);
+                if (ord.sumber) sourceOptions.add(ord.sumber);
+
+                sumberSelect.innerHTML = '';
+                sourceOptions.forEach(s => {
+                    const opt = document.createElement('option');
+                    opt.value = s;
+                    opt.innerText = s;
+                    sumberSelect.appendChild(opt);
+                });
                 
                 const d = new Date(ord.timestamp);
                 d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
@@ -2530,6 +2856,22 @@
                 titleEl.innerText = 'Tambah Order Baru';
                 form.reset();
                 document.getElementById('form-order-id').value = '';
+
+                layananSelect.innerHTML = '';
+                settings.services.forEach(s => {
+                    const opt = document.createElement('option');
+                    opt.value = s;
+                    opt.innerText = s;
+                    layananSelect.appendChild(opt);
+                });
+
+                sumberSelect.innerHTML = '';
+                settings.sources.forEach(s => {
+                    const opt = document.createElement('option');
+                    opt.value = s;
+                    opt.innerText = s;
+                    sumberSelect.appendChild(opt);
+                });
 
                 const now = new Date();
                 now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
